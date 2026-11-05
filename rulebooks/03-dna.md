@@ -8,7 +8,8 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 - Collages (max 10), metrics summary, transcript summary, cluster map summary.
 
 ## Collages (limits in `config/limits.json`)
-- Long edge at most 1568 px. 9:16 -> 4x2 tiles (392x697). 16:9 -> 3x3 tiles (522x294).
+- Long edge at most 1568 px. Biggest tiles that fit all scenes (`detail_layouts`): 16:9 -> 2x3 of 784x441,
+  9:16 -> 2x1 of 784x1394 or 3x1 of 522x929, else dense 4x2 (392x697) / 3x3 (522x294). Never stretched.
 - Each tile shows timestamp + frame number. Max 10 collages per video, never more.
 - Similar scenes are deduped (pHash + SSIM). Only one representative goes in a collage.
   Removed scenes stay in metrics as "pattern X, n times, total duration".

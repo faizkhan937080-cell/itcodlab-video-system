@@ -13,9 +13,14 @@ from .analyze import grab_frame_at
 from .common import fmt_ts
 
 
-def pick_layout(width, height, lim):
+def pick_layout(width, height, lim, scene_count=None):
+    """Aspect decides the grid. Biggest tiles that still fit every scene win (more detail per frame)."""
     ratio = width / float(height)
     key = "9:16" if ratio < 0.85 else "16:9" if ratio > 1.2 else "1:1"
+    if scene_count:
+        for lay in lim["collage"].get("detail_layouts", {}).get(key, []):
+            if scene_count <= capacity(lay, lim):
+                return key, lay
     return key, lim["collage"]["layouts"][key]
 
 
@@ -54,6 +59,11 @@ def plan_frames(scenes, clusters, layout, lim):
     return plan[:cap]
 
 
+def lim_label_px():
+    from .common import limits
+    return limits()["collage"].get("label_max_px", 22)
+
+
 def _font(size):
     try:
         return ImageFont.load_default(size=size)
@@ -71,7 +81,7 @@ def _tile(frame_bgr, tile_w, tile_h, label):
     canvas[y0:y0 + nh, x0:x0 + nw] = resized
     img = Image.fromarray(cv2.cvtColor(canvas, cv2.COLOR_BGR2RGB))
     d = ImageDraw.Draw(img)
-    fs = max(12, tile_w // 22)
+    fs = max(12, min(lim_label_px(), tile_w // 22))
     f = _font(fs)
     pad = 3
     tw = d.textlength(label, font=f)
@@ -83,7 +93,7 @@ def _tile(frame_bgr, tile_w, tile_h, label):
 def build_collages(video, outdir, scenes, clusters, info, fps, lim):
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
-    key, layout = pick_layout(info["width"], info["height"], lim)
+    key, layout = pick_layout(info["width"], info["height"], lim, len(scenes))
     cols, rows = layout["grid"]
     tw, th = layout["tile_px"]
     per = layout["frames_per_collage"]

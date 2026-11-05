@@ -99,9 +99,46 @@ def cmd_approve(a):
     return 0
 
 
+def cmd_mem(a):
+    from . import mem
+    if a.action == "brief":
+        print(mem.brief())
+    elif a.action == "index":
+        print("\n".join(mem.build_index()))
+    elif a.action == "find":
+        hits = mem.find(a.words)
+        print("\n".join(hits) if hits else "no match")
+    elif a.action == "add":
+        if len(a.words) < 2:
+            print("usage: mem add <shard> <text..>")
+            return 1
+        p = mem.add(a.words[0], " ".join(a.words[1:]), keys=a.keys or "")
+        mem.build_index()
+        print(f"added to {p.relative_to(mem.ROOT)}")
+    return 0
+
+
+def cmd_review_fetch(a):
+    from .review import fetch
+    for f in fetch(a.job, a.out):
+        print(f)
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="run", description="itcodlab video system")
     sub = p.add_subparsers(dest="cmd", required=True)
+
+    s = sub.add_parser("mem", help="project memory: brief | find | add | index")
+    s.add_argument("action", choices=["brief", "find", "add", "index"])
+    s.add_argument("words", nargs="*")
+    s.add_argument("--keys", default="")
+    s.set_defaults(fn=cmd_mem)
+
+    s = sub.add_parser("review-fetch", help="Claude: pull collages of a job from the review branch")
+    s.add_argument("job")
+    s.add_argument("--out", required=True)
+    s.set_defaults(fn=cmd_review_fetch)
 
     s = sub.add_parser("doctor", help="check tools and libraries")
     s.set_defaults(fn=cmd_doctor)

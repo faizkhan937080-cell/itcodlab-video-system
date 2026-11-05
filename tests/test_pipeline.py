@@ -32,11 +32,13 @@ def test_collage_limits(analysed):
     assert 1 <= manifest["collage_count"] <= 10
     pack = analysed["pack"]
     idx = json.loads((analysed["out_root"] / "collage_index.json").read_text())
-    assert idx["layout"] == "9:16" and idx["grid"] == [4, 2] and idx["tile_px"] == [392, 697]
+    assert idx["layout"] == "9:16"
+    assert idx["tile_px"] in ([784, 1394], [522, 929], [392, 697])
+    assert idx["grid"][0] * idx["grid"][1] <= 8
     for c in idx["collages"]:
         w, h = Image.open(pack / c["file"]).size
         assert max(w, h) <= 1568
-        assert len(c["tiles"]) <= 8
+        assert len(c["tiles"]) <= idx["grid"][0] * idx["grid"][1]
 
 
 def test_summary_is_small_and_complete(analysed):
@@ -100,3 +102,78 @@ def test_transcribe_never_breaks_the_job(tmp_path, monkeypatch):
     sf.write(str(wav), np.zeros(16000, dtype="float32"), 16000)
     res = audio.transcribe(wav)
     assert res["available"] is False and "metadata_errors" in res["error"]
+
+
+def test_layout_follows_aspect_and_tile_never_stretches():
+    import numpy as np
+    from scripts.collage import _tile, pick_layout
+    from scripts.common import limits
+    lim = limits()
+    key, lay = pick_layout(1916, 1078, lim, 16)
+    assert key == "16:9" and lay["tile_px"] == [784, 441]
+    assert pick_layout(1080, 1920, lim, 16)[0] == "9:16"
+    # too many scenes for the big tiles -> default dense layout
+    assert pick_layout(1916, 1078, lim, 200)[1] == lim["collage"]["layouts"]["16:9"]
+    frame = np.full((1078, 1916, 3), 200, dtype=np.uint8)
+    t = _tile(frame, 392, 697, "x")
+    col = t[:, 196]
+    rows = int((col[:, 0] > 100).sum())
+    assert abs(rows - 392 * 1078 / 1916) < 6  # same scale on both axes, bars above/below
+
+
+def test_transcribe_reruns_romanised_when_arabic_script(tmp_path, monkeypatch):
+    import sys
+    import types
+    import numpy as np
+    import soundfile as sf
+    from scripts import audio
+
+    calls = []
+
+    class Seg:
+        def __init__(self, t):
+            self.start, self.end, self.text = 0.0, 1.0, t
+
+    class Info:
+        def __init__(self, lang):
+            self.language = lang
+
+    class Fake:
+        def __init__(self, *a, **k):
+            pass
+
+        def transcribe(self, y, **kw):
+            calls.append(kw)
+            if kw.get("language") == "en":
+                return [Seg("jaha pe duniya bhar")], Info("en")
+            return [Seg("جہاں پر دنیا")], Info("hi")
+
+    fake = types.ModuleType("faster_whisper")
+    fake.WhisperModel = Fake
+    monkeypatch.setitem(sys.modules, "faster_whisper", fake)
+    wav = tmp_path / "a.wav"
+    sf.write(str(wav), np.zeros(16000, dtype="float32"), 16000)
+    res = audio.transcribe(wav)
+    assert res["available"] and res["romanised_rerun"] and "jaha" in res["text"] and len(calls) == 2
+
+
+def test_review_publish_and_fetch_roundtrip(tmp_path, monkeypatch):
+    import subprocess
+    from PIL import Image
+    from scripts import review
+    bare = tmp_path / "bare.git"
+    subprocess.run(["git", "init", "-q", "--bare", str(bare)], check=True)
+    repo = tmp_path / "repo"
+    subprocess.run(["git", "init", "-q", str(repo)], check=True)
+    subprocess.run(["git", "-C", str(repo), "remote", "add", "origin", str(bare)], check=True)
+    (repo / "work").mkdir()
+    monkeypatch.setattr(review, "ROOT", repo)
+    pack = tmp_path / "pack"
+    pack.mkdir()
+    Image.new("RGB", (64, 36), (1, 2, 3)).save(pack / "collage_01.jpg")
+    (pack / "metrics_summary.json").write_text("{}")
+    assert review.publish(pack, "job-a-001")["status"] == "ok"
+    assert review.publish(pack, "job-b-002")["status"] == "ok"  # second push into the existing branch
+    got = review.fetch("job-a-001", tmp_path / "out", repo=repo)
+    assert {p.split("/")[-1] for p in got} == {"collage_01.jpg", "metrics_summary.json"}
+    assert Image.open(tmp_path / "out" / "collage_01.jpg").size == (64, 36)

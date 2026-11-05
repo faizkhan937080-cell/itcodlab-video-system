@@ -18,7 +18,10 @@ Faiz types a command in chat. Claude does the rest. The worker (Colab now, VM la
 
 ## Collages (Claude must SEE them)
 - Drive connector returns images as base64 text, so Claude cannot view them from Drive.
-- Faiz attaches the collages in chat (max 10), or Claude Code reads a synced local folder.
+- Faiz never downloads or attaches anything. Worker copies the pack (collages, metrics, index) to GitHub
+  branch `review`, folder `review/<job>/`. Only exception to "outputs go to Drive": it is small (~1-2 MB/job).
+  Claude runs `python3 -m scripts.review <job> <dir>` then views the jpgs with Read. State key: `review`.
+- If `review.status` is failed: read `review.error`, fix, never ask Faiz to download.
 - Text route (no card): worker asks a free Gemini API key (env GEMINI_API_KEY) to describe every tile.
   Result: `analysis/<id>/pack/descriptions.json`. Claude reads it as text, plus `metrics_summary.json`.
   It is facts from a vision model, may miss detail: say so. Without it, never invent what a frame shows.

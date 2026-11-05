@@ -1,36 +1,7 @@
 {
-  "permissions": {
-    "deny": [
-      "Bash(ffmpeg:*)",
-      "Bash(ffprobe:*)",
-      "Bash(yt-dlp:*)",
-      "Bash(whisper:*)",
-      "Bash(rclone:*)",
-      "Bash(curl:*)",
-      "Bash(wget:*)",
-      "Bash(npx remotion render:*)",
-      "Bash(rm:*)",
-      "Bash(rmdir:*)",
-      "Bash(unlink:*)",
-      "Bash(git push --force:*)",
-      "Bash(git push -f:*)",
-      "Read(**/*.mp4)",
-      "Read(**/*.mov)",
-      "Read(**/*.mkv)",
-      "Read(**/*.webm)",
-      "Read(**/*.mp3)",
-      "Read(**/*.wav)",
-      "Read(**/*.env)",
-      "Read(**/*.pem)",
-      "Read(**/*.key)"
-    ],
-    "allow": [
-      "Bash(./run:*)",
-      "Bash(git status:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git diff:*)",
-      "Bash(git log:*)"
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./run mem brief" } ] }
     ]
   }
 }

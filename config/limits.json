@@ -25,24 +25,119 @@
     "dissolve_blend_ratio": 0.5,
     "min_scene_s": 0.2,
     "keyframe_jpeg_quality": 90,
-    "whisper_model": "base",
-    "motion_classes_flow_px": { "static": 0.15, "slow": 0.6, "medium": 1.6 }
+    "whisper_model": "small",
+    "motion_classes_flow_px": {
+      "static": 0.15,
+      "slow": 0.6,
+      "medium": 1.6
+    }
   },
   "collage": {
     "max_collages_per_video": 10,
     "max_long_edge_px": 1568,
     "jpeg_quality": 85,
     "layouts": {
-      "9:16": { "grid": [4, 2], "tile_px": [392, 697], "frames_per_collage": 8 },
-      "16:9": { "grid": [3, 3], "tile_px": [522, 294], "frames_per_collage": 9 },
-      "1:1": { "grid": [3, 3], "tile_px": [522, 522], "frames_per_collage": 9 }
+      "9:16": {
+        "grid": [
+          4,
+          2
+        ],
+        "tile_px": [
+          392,
+          697
+        ],
+        "frames_per_collage": 8
+      },
+      "16:9": {
+        "grid": [
+          3,
+          3
+        ],
+        "tile_px": [
+          522,
+          294
+        ],
+        "frames_per_collage": 9
+      },
+      "1:1": {
+        "grid": [
+          3,
+          3
+        ],
+        "tile_px": [
+          522,
+          522
+        ],
+        "frames_per_collage": 9
+      }
     },
-    "tile_overlay": ["cluster", "scene", "timestamp"],
+    "tile_overlay": [
+      "cluster",
+      "scene",
+      "timestamp"
+    ],
     "extra_frame_min_scene_s": 1.5,
-    "extra_frames_per_scene_max": 2
+    "extra_frames_per_scene_max": 2,
+    "detail_layouts": {
+      "_note": "Tried first, biggest tiles first. Used when scene count fits capacity (max collages x frames). Else the default in layouts.",
+      "9:16": [
+        {
+          "grid": [
+            2,
+            1
+          ],
+          "tile_px": [
+            784,
+            1394
+          ],
+          "frames_per_collage": 2
+        },
+        {
+          "grid": [
+            3,
+            1
+          ],
+          "tile_px": [
+            522,
+            929
+          ],
+          "frames_per_collage": 3
+        }
+      ],
+      "16:9": [
+        {
+          "grid": [
+            2,
+            3
+          ],
+          "tile_px": [
+            784,
+            441
+          ],
+          "frames_per_collage": 6
+        }
+      ],
+      "1:1": [
+        {
+          "grid": [
+            2,
+            2
+          ],
+          "tile_px": [
+            784,
+            784
+          ],
+          "frames_per_collage": 4
+        }
+      ]
+    },
+    "label_max_px": 22
   },
   "dedup": {
-    "methods": ["phash", "ssim"],
+    "methods": [
+      "phash",
+      "ssim"
+    ],
     "phash_hamming_max_start": 10,
     "ssim_min_start": 0.8,
     "relax_phash_step": 2,
@@ -50,15 +145,28 @@
     "relax_max_rounds": 8,
     "keep_removed_scenes_in_metrics": true
   },
-  "describe": { "enabled": true, "max_calls": 10, "models": ["gemini-flash-latest", "gemini-2.5-flash"] },
+  "describe": {
+    "enabled": true,
+    "max_calls": 10,
+    "models": [
+      "gemini-flash-latest",
+      "gemini-2.5-flash"
+    ]
+  },
   "pack": {
     "max_summary_kb": 24,
     "transcript_chars_in_summary": 3500
   },
   "render": {
     "master": {
-      "landscape": { "width": 3840, "height": 2160 },
-      "portrait": { "width": 2160, "height": 3840 },
+      "landscape": {
+        "width": 3840,
+        "height": 2160
+      },
+      "portrait": {
+        "width": 2160,
+        "height": 3840
+      },
       "codec": "h264",
       "pixel_format": "yuv420p",
       "colorspace": "bt709",
@@ -70,9 +178,16 @@
   },
   "storage": {
     "delete_allowed": false,
-    "overwrite_allowed_only_under": ["jobs/state/"],
+    "overwrite_allowed_only_under": [
+      "jobs/state/"
+    ],
     "upload_method": "copy, never sync, never overwrite",
     "dna_versioning": true
   },
-  "approval_gates": 6
+  "approval_gates": 6,
+  "review": {
+    "enabled": true,
+    "branch": "review",
+    "_note": "Collages + metrics copied to this GitHub branch so Claude can see them. Heavy files stay in Drive."
+  }
 }

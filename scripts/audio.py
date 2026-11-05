@@ -49,21 +49,31 @@ def analyze_audio(wav, cut_times, sr_target=22050):
 
 
 def transcribe(wav):
-    """Optional: faster-whisper. Never raises: any problem -> {'available': False, 'error': ...}.
-    Audio is loaded with librosa and passed as an array, so PyAV's decoder (version clashes) is not used."""
+    """Optional: faster-whisper. Never raises. Audio goes in as a librosa array (PyAV decoder clashes on Colab).
+    Hinglish is often detected as Hindi/Urdu and written in Arabic script. If so, run again as English with a
+    romanised-Hindi prompt so the text comes out in Latin letters."""
     try:
         from faster_whisper import WhisperModel
     except Exception:
         return {"available": False}
     try:
+        import re
         import librosa
         y, _ = librosa.load(str(wav), sr=16000, mono=True)
         model = WhisperModel(limits()["analysis"]["whisper_model"], device="auto", compute_type="int8")
-        segs, info = model.transcribe(y, vad_filter=True)
-        out = [{"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()} for s in segs]
-        log(f"transcript segments: {len(out)}")
-        return {"available": True, "language": info.language, "segments": out,
-                "text": " ".join(x["text"] for x in out)}
+
+        def run(**kw):
+            segs, info = model.transcribe(y, vad_filter=True, **kw)
+            return [{"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()} for s in segs], info
+
+        out, info = run()
+        text = " ".join(x["text"] for x in out)
+        lang, redo = info.language, False
+        if re.search(r"[\u0600-\u06FF]", text):  # Arabic/Urdu script = wrong for Hinglish
+            out, info = run(language="en", initial_prompt="Hinglish: Hindi words written in English letters, like jaha pe duniya bhar.")
+            text, lang, redo = " ".join(x["text"] for x in out), info.language, True
+        log(f"transcript segments: {len(out)}" + (" (re-run romanised)" if redo else ""))
+        return {"available": True, "language": lang, "romanised_rerun": redo, "segments": out, "text": text}
     except Exception as e:  # noqa: BLE001
         log(f"transcript skipped: {type(e).__name__}")
         return {"available": False, "error": tail(f"{type(e).__name__}: {e}", 3)}

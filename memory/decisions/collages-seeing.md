@@ -1,0 +1,7 @@
+# collages-seeing
+keys: collage tiles faces review branch gemini describe base64 transcript
+- 2026-11-05 20:48Z Collages: max 10 per analysis, long edge <= 1568 px, one representative per look (pHash+SSIM dedup), tile label = cluster, scene, timestamp. Removed look-alike scenes stay in metrics.
+- 2026-11-05 20:48Z 2026-11-06 Faiz saw strange-looking faces in the Drive preview of the collages. The code letterboxes frames (no stretch). Causes: small tiles (522x294) and Drive thumbnails crop the grid. Fix: biggest tiles that fit (784x441 for 16:9, 2x3 grid).
+- 2026-11-05 20:48Z Drive connector returns images as base64 text, so Claude cannot see them there. Decision 2026-11-06: worker copies the pack to GitHub branch review (private repo), Claude fetches with ./run review-fetch <job> --out <dir> and views the jpgs. Faiz downloads nothing.
+- 2026-11-05 20:48Z Optional second route: free Gemini API key (aistudio.google.com/apikey) makes pack/descriptions.json. Faiz found the key steps confusing and skipped it. Not needed while the review branch works.
+- 2026-11-05 20:48Z First real transcript was garbage: Whisper detected Hinglish as Urdu script. Do not use transcript text for DNA until fixed; use on-screen text (OCR) and collages for scripting.

@@ -1,10 +1,11 @@
 # itcodlab video system - router
 
 Claude = brain (coding + creative decisions). Worker (free Colab now, Google Cloud VM later) = muscle.
-Do NOT guess. Read only the files your task needs. Keep every file under 60 lines.
+Do NOT guess. Read only the files your task needs. Keep every rule, lesson and memory file under 60 lines (code is exempt: split by module).
 
 ## Before ANY task
-1. Read `rulebooks/00-core.md` and `lessons/core.md`.
+0. Run `./run mem brief` (state + index). Before asking Faiz anything: `./run mem find <word>`.
+1. Read `rulebooks/00-core.md` and `lessons/core.md`. Problem that comes back? `lessons/toolbook.md`.
 2. Then read ONLY the rulebook + lessons for your task type:
    - chat commands, jobs, Drive queue, collages -> `05-commands.md`
    - video / motion / Remotion code -> `01-video.md`, `lessons/video.md`
@@ -21,7 +22,8 @@ Do NOT guess. Read only the files your task needs. Keep every file under 60 line
 - Max 2 Claude calls per stage. After 2 failed retries: status FAILED and stop.
 - Error logs: read only the last 20 lines.
 - Outputs go to Drive via scripts. Rules and lessons go to GitHub only.
-- Lesson draft after a mistake: write it, ask approval, then save.
+- Lessons: Claude saves them itself (compact). Decisions/findings: `./run mem add <shard> <text>` at once, long form, never summarised.
+- Faiz downloads and attaches nothing. Collages come via GitHub branch `review` (`./run review-fetch <job> --out <dir>`).
 
 ## Where things live
 - GitHub: rules, lessons, config, scripts, Remotion code.

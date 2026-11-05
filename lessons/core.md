@@ -18,3 +18,5 @@ M: browser-agent Gemini stalls on confirm | C: asks before Generate/Delete | R: 
 M: Drive sync lag after file write | C: mounted Drive delay | R: wait ~60 s before reading state
 M: Colab userdata unusable inside `!` shell | C: only the notebook kernel has it | R: copy secrets into os.environ in a cell before the worker cell
 M: whisper crashed whole analysis (av version clash) | C: optional step not isolated | R: every optional step must catch errors and return available:false
+M: diagnosed 'weird face' without seeing the collage | C: Claude could not view Drive images | R: publish pack to review branch, view it, then judge
+M: Faiz asked to download/attach images | C: no self-fetch path | R: worker publishes to review branch; Faiz does nothing

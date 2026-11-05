@@ -81,7 +81,7 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
     out_root = Path(out_root)
     out_root.mkdir(parents=True, exist_ok=True)
     info, frames, scenes, fps = analyze_video(video, out_root, lim)
-    layout_key, layout = pick_layout(info["width"], info["height"], lim)
+    layout_key, layout = pick_layout(info["width"], info["height"], lim, len(scenes))
     clusters, rep = dedup(scenes, capacity(layout, lim), lim)
     write_json_local(out_root / "clusters.json", {"report": rep, "clusters": clusters})
     # re-save scenes with cluster ids

@@ -191,6 +191,8 @@ class Worker:
                 from .describe import describe_pack
                 idx = json.loads((res["out_root"] / "collage_index.json").read_text(encoding="utf-8"))
                 st["describe"] = describe_pack(res["pack"], idx)
+                from .review import publish
+                st["review"] = publish(res["pack"], jid, idx)
                 self.storage.put_tree(res["out_root"], f"analysis/{jid}")
                 st["paths"]["analysis"] = f"analysis/{jid}"
                 st["paths"]["pack"] = f"analysis/{jid}/pack"
