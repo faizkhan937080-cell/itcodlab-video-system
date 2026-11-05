@@ -178,3 +178,25 @@ def test_review_publish_and_fetch_roundtrip(tmp_path, monkeypatch):
     got = review.fetch("job-a-001", tmp_path / "out", repo=repo)
     assert {p.split("/")[-1] for p in got} == {"collage_01.jpg", "metrics_summary.json"}
     assert Image.open(tmp_path / "out" / "collage_01.jpg").size == (64, 36)
+
+
+def test_collage_tile_keeps_real_colors():
+    """Regression: tiles were returned RGB into a BGR canvas, so skin turned purple/blue."""
+    import numpy as np
+    from scripts.collage import _tile
+    frame = np.zeros((1078, 1916, 3), np.uint8)
+    frame[:] = (120, 160, 220)  # BGR skin-orange (R=220, G=160, B=120)
+    t = _tile(frame, 784, 441, "x")
+    assert t[220, 392].tolist() == [120, 160, 220]
+
+
+def test_written_collage_jpg_has_real_colors(tmp_path):
+    import cv2
+    import numpy as np
+    from scripts.collage import _tile
+    frame = np.zeros((1078, 1916, 3), np.uint8)
+    frame[:] = (30, 60, 200)  # BGR: strong red
+    out = tmp_path / "c.jpg"
+    cv2.imwrite(str(out), _tile(frame, 784, 441, "x"))
+    px = cv2.imread(str(out))[220, 392]
+    assert px[2] > 150 and px[0] < 90  # red channel (index 2 in BGR) still the strongest

@@ -20,3 +20,4 @@ M: Colab userdata unusable inside `!` shell | C: only the notebook kernel has it
 M: whisper crashed whole analysis (av version clash) | C: optional step not isolated | R: every optional step must catch errors and return available:false
 M: diagnosed 'weird face' without seeing the collage | C: Claude could not view Drive images | R: publish pack to review branch, view it, then judge
 M: Faiz asked to download/attach images | C: no self-fetch path | R: worker publishes to review branch; Faiz does nothing
+M: collages had red/blue swapped (purple skin), I blamed tile size | C: PIL RGB array pasted into BGR canvas; no color test | R: every image path gets a color regression test; look at real pixels before diagnosing

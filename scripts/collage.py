@@ -87,7 +87,7 @@ def _tile(frame_bgr, tile_w, tile_h, label):
     tw = d.textlength(label, font=f)
     d.rectangle([0, 0, tw + 2 * pad, fs + 2 * pad], fill=(0, 0, 0))
     d.text((pad, pad - 1), label, fill=(255, 255, 255), font=f)
-    return np.array(img)
+    return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)  # PIL is RGB; the canvas and cv2.imwrite are BGR
 
 
 def build_collages(video, outdir, scenes, clusters, info, fps, lim):

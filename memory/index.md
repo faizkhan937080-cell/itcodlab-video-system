@@ -3,7 +3,7 @@ Read memory/state.md first. Then open only the shard you need, or `./run mem fin
 format: path | files | lines | keys
 decisions/approvals-rules.md | 1 | 8 | approval gates meta ads numerology delete versions never overwrite
 decisions/architecture.md | 1 | 11 | architecture colab gcp github drive sheet remotion 4k limits worker
-decisions/collages-seeing.md | 1 | 8 | collage tiles faces review branch gemini describe base64 transcript
+decisions/collages-seeing.md | 1 | 9 | collage tiles faces review branch gemini describe base64 transcript
 decisions/creators-dna.md | 1 | 8 | creator folder instagram handle dna editing scripting sound style lookup sahilverma
 decisions/memory-rules.md | 1 | 7 | memory forget summary long form toolbook recurring problems ai pitfalls tokens
 decisions/working-style.md | 1 | 11 | working style hinglish short steps who decides secrets
