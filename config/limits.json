@@ -50,6 +50,7 @@
     "relax_max_rounds": 8,
     "keep_removed_scenes_in_metrics": true
   },
+  "describe": { "enabled": true, "max_calls": 10, "models": ["gemini-flash-latest", "gemini-2.5-flash"] },
   "pack": {
     "max_summary_kb": 24,
     "transcript_chars_in_summary": 3500

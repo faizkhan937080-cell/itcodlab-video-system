@@ -19,7 +19,9 @@ Faiz types a command in chat. Claude does the rest. The worker (Colab now, VM la
 ## Collages (Claude must SEE them)
 - Drive connector returns images as base64 text, so Claude cannot view them from Drive.
 - Faiz attaches the collages in chat (max 10), or Claude Code reads a synced local folder.
-- Without a view, Claude uses only `metrics_summary.json` and says so. Never invent what a frame shows.
+- Text route (no card): worker asks a free Gemini API key (env GEMINI_API_KEY) to describe every tile.
+  Result: `analysis/<id>/pack/descriptions.json`. Claude reads it as text, plus `metrics_summary.json`.
+  It is facts from a vision model, may miss detail: say so. Without it, never invent what a frame shows.
 
 ## Candidates
 - Claude writes `analysis/<id>/dna/candidate-<type>-v<K>.json` (types per mode: video=editing,

@@ -52,6 +52,10 @@ def run():
         add("PASS", "rclone remote", remote)
     else:
         add("WARN", "drive", "set ITCOD_DRIVE_ROOT (mounted Drive) or ITCOD_RCLONE_REMOTE")
+    if os.environ.get("GEMINI_API_KEY"):
+        add("PASS", "GEMINI_API_KEY", "frame descriptions on")
+    else:
+        add("WARN", "GEMINI_API_KEY", "not set: collages stay images only (no text descriptions)")
     free_gb = shutil.disk_usage(".").free / 1e9
     add("PASS" if free_gb >= 30 else "WARN", "free disk", f"{free_gb:.0f} GB")
     for level, name, detail in rows:

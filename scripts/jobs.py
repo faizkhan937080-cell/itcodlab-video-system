@@ -5,6 +5,7 @@ Commands reach the worker as small JSON files in Drive (written by Claude from c
 says so). State lives in Drive jobs/state/<id>.json. Nothing is deleted; inbox files stay forever.
 """
 import re
+import json
 import time
 import traceback
 from datetime import datetime, timezone
@@ -187,6 +188,9 @@ class Worker:
             try:
                 from .pack import run_pipeline
                 res = run_pipeline(st["paths"]["source_local"], wd / "analysis", job_id=jid, mode=job["mode"])
+                from .describe import describe_pack
+                idx = json.loads((res["out_root"] / "collage_index.json").read_text(encoding="utf-8"))
+                st["describe"] = describe_pack(res["pack"], idx)
                 self.storage.put_tree(res["out_root"], f"analysis/{jid}")
                 st["paths"]["analysis"] = f"analysis/{jid}"
                 st["paths"]["pack"] = f"analysis/{jid}/pack"

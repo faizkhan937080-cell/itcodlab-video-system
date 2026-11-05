@@ -62,3 +62,18 @@ def test_per_frame_metrics_saved(analysed):
         assert k in first
     assert (analysed["out_root"] / "keyframes").is_dir()
     assert any((analysed["out_root"] / "keyframes").iterdir())
+
+
+def test_describe_skipped_without_key_and_works_with_fake_model(analysed, monkeypatch):
+    from scripts import describe
+    idx = json.loads((analysed["out_root"] / "collage_index.json").read_text())
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.setattr(describe, "get_key", lambda: None)
+    assert describe.describe_pack(analysed["pack"], idx)["status"] == "skipped"
+    monkeypatch.setattr(describe, "get_key", lambda: "fake")
+    monkeypatch.setattr(describe, "_ask", lambda models, key, jpg: ("m1", [{"tile": "c1 s1", "shot": "wide"}]))
+    res = describe.describe_pack(analysed["pack"], idx)
+    assert res["status"] == "ok" and res["collages"] == len(idx["collages"])
+    doc = json.loads((analysed["pack"] / "descriptions.json").read_text())
+    assert doc["collages"][0]["tiles"][0]["shot"] == "wide"
+    (analysed["pack"] / "descriptions.json").unlink()  # test cleanup only
