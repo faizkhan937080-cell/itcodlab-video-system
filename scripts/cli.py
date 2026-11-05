@@ -199,6 +199,38 @@ def cmd_mem(a):
     return 0
 
 
+def cmd_story(a):
+    """'Kahani update': rebuild the memory index, check the 60-line rule, then save everything to GitHub so a lost
+    sandbox never loses the story. Claude runs it when Faiz says "kahani update" and on its own after work chats."""
+    from . import mem
+    from .common import ROOT, now_iso, run_cmd
+    mem.build_index()
+    over = []
+    for d in ("memory", "lessons", "rulebooks"):
+        for f in sorted((ROOT / d).rglob("*.md")):
+            n = len(f.read_text(encoding="utf-8").splitlines())
+            if n > 60:
+                over.append(f"{f.relative_to(ROOT)} ({n} lines)")
+    state = (ROOT / "memory" / "state.md").read_text(encoding="utf-8").splitlines()
+    upd = next((x for x in state if x.startswith("updated:")), "updated: ?")
+    print(f"state.md {upd}")
+    if over:
+        print("TOO LONG (split or roll): " + ", ".join(over))
+    paths = ["memory", "lessons", "rulebooks", "CLAUDE.md", "config"]
+    run_cmd(["git", "-C", str(ROOT), "add", *paths])
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "diff", "--cached", "--quiet"])
+    if rc == 0:
+        print("story already saved (nothing new)")
+        return 1 if over else 0
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "commit", "-q", "-m", f"story update {now_iso()}"])
+    if rc != 0:
+        print("commit failed: " + (err or out)[-200:])
+        return 1
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "push", "-q", "origin", "HEAD:main"], timeout=120)
+    print("story saved to GitHub" if rc == 0 else "push failed: " + err[-300:])
+    return 0 if rc == 0 and not over else 1
+
+
 def cmd_review_fetch(a):
     from .review import fetch
     for f in fetch(a.job, a.out):
@@ -215,6 +247,9 @@ def build_parser():
     s.add_argument("words", nargs="*")
     s.add_argument("--keys", default="")
     s.set_defaults(fn=cmd_mem)
+
+    s = sub.add_parser("story", help="kahani update: index + 60-line check + save memory/rules to GitHub")
+    s.set_defaults(fn=cmd_story)
 
     s = sub.add_parser("review-fetch", help="Claude: pull collages of a job from the review branch")
     s.add_argument("job")
