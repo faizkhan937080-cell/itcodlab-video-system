@@ -60,8 +60,12 @@ def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, 
         "audio": audio_res,
     }
     if transcript.get("available"):
-        summary["transcript"] = {"language": transcript["language"],
-                                 "text": transcript["text"][: lim["pack"]["transcript_chars_in_summary"]]}
+        n = lim["pack"]["transcript_chars_in_summary"]
+        summary["transcript"] = {"language": transcript["language"], "coverage_ratio": transcript.get("coverage_ratio"),
+                                 "text": transcript["text"][:n]}
+        if transcript.get("alt_english"):
+            summary["transcript"]["english_pass"] = {"coverage_ratio": transcript["alt_english"].get("coverage_ratio"),
+                                                      "text": transcript["alt_english"]["text"][:n]}
     else:
         summary["transcript"] = {"available": False}
     # keep it small: drop per-scene rows first, then trim clusters

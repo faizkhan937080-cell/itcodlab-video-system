@@ -121,7 +121,7 @@ def test_layout_follows_aspect_and_tile_never_stretches():
     assert abs(rows - 392 * 1078 / 1916) < 6  # same scale on both axes, bars above/below
 
 
-def test_transcribe_reruns_romanised_when_arabic_script(tmp_path, monkeypatch):
+def test_transcribe_keeps_both_passes_and_coverage(tmp_path, monkeypatch):
     import sys
     import types
     import numpy as np
@@ -131,8 +131,8 @@ def test_transcribe_reruns_romanised_when_arabic_script(tmp_path, monkeypatch):
     calls = []
 
     class Seg:
-        def __init__(self, t):
-            self.start, self.end, self.text = 0.0, 1.0, t
+        def __init__(self, t, e=1.0):
+            self.start, self.end, self.text = 0.0, e, t
 
     class Info:
         def __init__(self, lang):
@@ -144,17 +144,20 @@ def test_transcribe_reruns_romanised_when_arabic_script(tmp_path, monkeypatch):
 
         def transcribe(self, y, **kw):
             calls.append(kw)
+            assert kw["temperature"] == 0.0 and kw["condition_on_previous_text"] is False
             if kw.get("language") == "en":
-                return [Seg("jaha pe duniya bhar")], Info("en")
-            return [Seg("جہاں پر دنیا")], Info("hi")
+                return [Seg("jaha pe duniya bhar", 0.5)], Info("en")
+            return [Seg("जहाँ पर दुनिया", 0.25)], Info("hi")
 
     fake = types.ModuleType("faster_whisper")
     fake.WhisperModel = Fake
     monkeypatch.setitem(sys.modules, "faster_whisper", fake)
     wav = tmp_path / "a.wav"
-    sf.write(str(wav), np.zeros(16000, dtype="float32"), 16000)
+    sf.write(str(wav), np.zeros(16000, dtype="float32"), 16000)  # 1 s
     res = audio.transcribe(wav)
-    assert res["available"] and res["romanised_rerun"] and "jaha" in res["text"] and len(calls) == 2
+    assert res["available"] and len(calls) == 2
+    assert res["language"] == "hi" and res["coverage_ratio"] == 0.25
+    assert "jaha" in res["alt_english"]["text"] and res["alt_english"]["coverage_ratio"] == 0.5
 
 
 def test_review_publish_and_fetch_roundtrip(tmp_path, monkeypatch):

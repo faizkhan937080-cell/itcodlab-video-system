@@ -50,8 +50,10 @@ def analyze_audio(wav, cut_times, sr_target=22050):
 
 def transcribe(wav):
     """Optional: faster-whisper. Never raises. Audio goes in as a librosa array (PyAV decoder clashes on Colab).
-    Hinglish is often detected as Hindi/Urdu and written in Arabic script. If so, run again as English with a
-    romanised-Hindi prompt so the text comes out in Latin letters."""
+    Deterministic settings (temperature 0, no carry-over between segments) because runs of the same reel gave
+    full text once and only the first 8 s another time. Hinglish: pass A = auto language (often Devanagari with
+    English words spelled phonetically); pass B = English + romanised-Hindi prompt (English terms come out right).
+    Both are kept. `coverage_ratio` = last segment end / audio length, so a short transcript is visible."""
     try:
         from faster_whisper import WhisperModel
     except Exception:
@@ -59,21 +61,30 @@ def transcribe(wav):
     try:
         import re
         import librosa
-        y, _ = librosa.load(str(wav), sr=16000, mono=True)
+        y, sr = librosa.load(str(wav), sr=16000, mono=True)
+        dur = float(len(y)) / float(sr) if sr else 0.0
         model = WhisperModel(limits()["analysis"]["whisper_model"], device="auto", compute_type="int8")
 
         def run(**kw):
-            segs, info = model.transcribe(y, vad_filter=True, **kw)
-            return [{"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()} for s in segs], info
+            segs, info = model.transcribe(y, vad_filter=True, temperature=0.0, condition_on_previous_text=False,
+                                          beam_size=5, **kw)
+            out = [{"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()} for s in segs]
+            return out, info.language
 
-        out, info = run()
-        text = " ".join(x["text"] for x in out)
-        lang, redo = info.language, False
-        if re.search(r"[\u0600-\u06FF]", text):  # Arabic/Urdu script = wrong for Hinglish
-            out, info = run(language="en", initial_prompt="Hinglish: Hindi words written in English letters, like jaha pe duniya bhar.")
-            text, lang, redo = " ".join(x["text"] for x in out), info.language, True
-        log(f"transcript segments: {len(out)}" + (" (re-run romanised)" if redo else ""))
-        return {"available": True, "language": lang, "romanised_rerun": redo, "segments": out, "text": text}
+        def pack(out, lang):
+            text = " ".join(x["text"] for x in out)
+            cov = round((out[-1]["end"] / dur), 2) if out and dur else 0.0
+            return {"language": lang, "segments": out, "text": text, "coverage_ratio": cov}
+
+        a_out, a_lang = run()
+        a = pack(a_out, a_lang)
+        res = {"available": True, **a}
+        if a_lang in ("hi", "ur", "mr", "pa") or re.search(r"[\u0600-\u06FF\u0900-\u097F]", a["text"]):
+            b_out, b_lang = run(language="en", initial_prompt="Hinglish: Hindi words written in English letters, "
+                                "mixed with English tech words like animation, Claude, skill, free library.")
+            res["alt_english"] = pack(b_out, b_lang)
+        log(f"transcript segments: {len(a_out)}, coverage {a['coverage_ratio']}" + (", + english pass" if "alt_english" in res else ""))
+        return res
     except Exception as e:  # noqa: BLE001
         log(f"transcript skipped: {type(e).__name__}")
         return {"available": False, "error": tail(f"{type(e).__name__}: {e}", 3)}
