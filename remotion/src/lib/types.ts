@@ -6,9 +6,19 @@ export type TransitionDef = {
 export type SceneDef = {
   id: string;
   duration_s: number;
-  template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third';
+  template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video';
   props?: Record<string, any>;
   transition_in?: TransitionDef;
+};
+
+export type AudioDef = {
+  src: string;
+  at_s?: number;
+  trim_start_s?: number;
+  duration_s?: number;
+  volume?: number;
+  fade_in_s?: number;
+  fade_out_s?: number;
 };
 
 export type Plan = {
@@ -19,6 +29,7 @@ export type Plan = {
   height: number;
   brand?: {colors?: Record<string, string>; font?: string};
   grain?: boolean;
+  audio?: AudioDef[];
   scenes: SceneDef[];
 };
 

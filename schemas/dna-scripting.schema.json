@@ -1,36 +1,402 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Scripting DNA",
-  "type": "object",
-  "required": ["type", "source", "hook", "structure", "pacing", "tone", "language", "cta", "confidence"],
-  "properties": {
-    "type": { "const": "scripting" },
-    "source": {
-      "type": "object", "required": ["job_id"],
-      "properties": { "job_id": { "type": "string" }, "link": { "type": "string" }, "creator": { "type": "string" } }
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "Scripting DNA v2",
+ "type": "object",
+ "required": [
+  "type",
+  "schema_version",
+  "source",
+  "transcript_basis",
+  "framework",
+  "hook",
+  "structure",
+  "voice",
+  "language",
+  "lexicon",
+  "pacing",
+  "retention",
+  "cta",
+  "evidence",
+  "confidence"
+ ],
+ "properties": {
+  "type": {
+   "const": "scripting"
+  },
+  "schema_version": {
+   "const": 2
+  },
+  "source": {
+   "type": "object",
+   "required": [
+    "job_id"
+   ],
+   "properties": {
+    "job_id": {
+     "type": "string"
     },
-    "hook": {
-      "type": "object", "required": ["kind", "duration_s"],
-      "properties": { "kind": { "type": "string" }, "duration_s": { "type": "number" }, "pattern": { "type": "string" } }
+    "link": {
+     "type": "string"
     },
-    "structure": {
-      "type": "array", "minItems": 1,
+    "creator": {
+     "type": "string"
+    }
+   }
+  },
+  "transcript_basis": {
+   "type": "object",
+   "required": [
+    "coverage_ratio",
+    "complete"
+   ],
+   "properties": {
+    "coverage_ratio": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1.05
+    },
+    "complete": {
+     "type": "boolean"
+    },
+    "engine": {
+     "type": "string"
+    },
+    "phonetic_only": {
+     "type": "boolean"
+    }
+   }
+  },
+  "framework": {
+   "type": "object",
+   "required": [
+    "name"
+   ],
+   "properties": {
+    "name": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    }
+   }
+  },
+  "hook": {
+   "type": "object",
+   "required": [
+    "kind",
+    "duration_s",
+    "first_words",
+    "time_to_value_s"
+   ],
+   "properties": {
+    "kind": {
+     "type": "string"
+    },
+    "duration_s": {
+     "type": "number"
+    },
+    "first_words": {
+     "type": "string"
+    },
+    "time_to_value_s": {
+     "type": "number"
+    },
+    "pattern": {
+     "type": "string"
+    },
+    "open_loop": {
+     "type": "boolean"
+    },
+    "first_word_s": {
+     "type": "number"
+    }
+   }
+  },
+  "structure": {
+   "type": "array",
+   "minItems": 3,
+   "items": {
+    "type": "object",
+    "required": [
+     "beat",
+     "purpose",
+     "start_s",
+     "end_s",
+     "share"
+    ],
+    "properties": {
+     "beat": {
+      "type": "string"
+     },
+     "purpose": {
+      "type": "string"
+     },
+     "start_s": {
+      "type": "number"
+     },
+     "end_s": {
+      "type": "number"
+     },
+     "share": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+     },
+     "devices": {
+      "type": "array",
       "items": {
-        "type": "object", "required": ["beat", "purpose"],
-        "properties": { "beat": { "type": "string" }, "purpose": { "type": "string" }, "share": { "type": "number" } }
+       "type": "string"
       }
+     }
+    }
+   }
+  },
+  "voice": {
+   "type": "object",
+   "required": [
+    "person",
+    "register",
+    "energy"
+   ],
+   "properties": {
+    "person": {
+     "type": "string"
     },
-    "pacing": {
-      "type": "object",
-      "properties": { "words_per_min": { "type": "number" }, "sentence_length": { "type": "string" } }
+    "address_terms": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
     },
-    "tone": { "type": "string" },
-    "language": { "type": "string" },
-    "cta": {
-      "type": "object", "required": ["style"],
-      "properties": { "style": { "type": "string" }, "placement": { "type": "string" } }
+    "register": {
+     "type": "string"
     },
-    "confidence": { "type": "object", "additionalProperties": { "enum": ["measured", "estimated"] } },
-    "notes": { "type": "string" }
+    "energy": {
+     "type": "string"
+    },
+    "humor": {
+     "type": "string"
+    },
+    "formality": {
+     "type": "string"
+    },
+    "tone_tags": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "language": {
+   "type": "object",
+   "required": [
+    "primary",
+    "script"
+   ],
+   "properties": {
+    "primary": {
+     "type": "string"
+    },
+    "script": {
+     "enum": [
+      "roman",
+      "devanagari",
+      "mixed",
+      "other"
+     ]
+    },
+    "code_switching": {
+     "type": "string"
+    },
+    "english_term_domains": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "lexicon": {
+   "type": "object",
+   "required": [
+    "signature_phrases"
+   ],
+   "properties": {
+    "signature_phrases": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "filler_words": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "power_words": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "jargon_terms": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "pacing": {
+   "type": "object",
+   "required": [
+    "words_per_min_speaking",
+    "speech_ratio",
+    "sentence_words_mean"
+   ],
+   "properties": {
+    "words_per_min_speaking": {
+     "type": "number"
+    },
+    "words_per_min_overall": {
+     "type": "number"
+    },
+    "speech_ratio": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    },
+    "sentence_words_mean": {
+     "type": "number"
+    },
+    "sentence_words_p90": {
+     "type": "number"
+    },
+    "pause_mean_s": {
+     "type": "number"
+    },
+    "questions_per_min": {
+     "type": "number"
+    },
+    "numbers_per_min": {
+     "type": "number"
+    }
+   }
+  },
+  "retention": {
+   "type": "object",
+   "required": [
+    "open_loops",
+    "rehooks_at_s"
+   ],
+   "properties": {
+    "open_loops": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "rehooks_at_s": {
+     "type": "array",
+     "items": {
+      "type": "number"
+     }
+    },
+    "pattern_interrupts": {
+     "type": "string"
+    },
+    "payoff_at_s": {
+     "type": "number"
+    }
+   }
+  },
+  "cta": {
+   "type": "object",
+   "required": [
+    "type",
+    "placement_s",
+    "repeats"
+   ],
+   "properties": {
+    "type": {
+     "type": "string"
+    },
+    "ask": {
+     "type": "string"
+    },
+    "keyword": {
+     "type": "string"
+    },
+    "placement_s": {
+     "type": "number"
+    },
+    "repeats": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "incentive": {
+     "type": "string"
+    }
+   }
+  },
+  "evidence": {
+   "type": "array",
+   "minItems": 3,
+   "items": {
+    "type": "object",
+    "required": [
+     "claim",
+     "quote"
+    ],
+    "properties": {
+     "claim": {
+      "type": "string"
+     },
+     "quote": {
+      "type": "string"
+     },
+     "t": {
+      "type": "array",
+      "items": {
+       "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+     }
+    }
+   }
+  },
+  "confidence": {
+   "type": "object",
+   "minProperties": 3,
+   "additionalProperties": {
+    "enum": [
+     "measured",
+     "judged",
+     "estimated",
+     "unknown"
+    ]
+   },
+   "description": "One tag per top-level section: measured = a script produced the number; judged = Claude read it from collages/transcript and cites evidence; estimated = weak inference; unknown = not available yet."
+  },
+  "corpus": {
+   "type": "object",
+   "description": "Present when this DNA summarises many videos of one creator (see dna-corpus).",
+   "properties": {
+    "n_videos": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "job_ids": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "notes": {
+   "type": "string"
   }
+ }
 }

@@ -9,8 +9,12 @@
 - Collage building, dedup, preview render, 4K render, ffprobe checks, upload.
 
 ## Render targets (values in `config/limits.json`)
-- Preview first (scale 0.5). 4K final only after preview approval.
-- 4K master: 3840x2160, h264, bt709, crf from limits.json. No downscaling of the master.
+- OUTPUT QUALITY = SOURCE QUALITY (Faiz rule 2026-11-06): raw clips 4K -> final 4K; 1080p raw -> 1080p (never fake-upscale);
+  portrait phone 4K (rotation tag) -> 2160x3840. Biggest raw clip decides. `plan.output` overrides. No raw clip -> 4K master.
+- Raw footage goes in the plan as scene template `video` (props.src = Drive `input/...` or `assets/...` path,
+  optional trim_start_s, trim_end_s, fit, muted). Never re-encode raw before Remotion; Remotion reads exact frames.
+- Preview first (scale 0.5 of the output size, low quality is fine). Final only after preview approval (gate 5).
+- Final master: h264, bt709, crf from limits.json (16). No downscaling of the master.
 - Delivery files for other platforms are made by scripts from the master.
 
 ## Quality rules

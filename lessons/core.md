@@ -21,3 +21,6 @@ M: whisper crashed whole analysis (av version clash) | C: optional step not isol
 M: diagnosed 'weird face' without seeing the collage | C: Claude could not view Drive images | R: publish pack to review branch, view it, then judge
 M: Faiz asked to download/attach images | C: no self-fetch path | R: worker publishes to review branch; Faiz does nothing
 M: collages had red/blue swapped (purple skin), I blamed tile size | C: PIL RGB array pasted into BGR canvas; no color test | R: every image path gets a color regression test; look at real pixels before diagnosing
+M: DNA numbers typed by hand can be wrong, transcript covered 8 of 58 s unnoticed | C: no cross-check, no coverage field | R: dna-draft pre-fills measured parts; dna-check must PASS; transcript coverage<0.9 = estimated only
+M: approval page built for a user who listens, not reads | C: assumed a UI helps | R: ask Y/N in chat, short Hinglish, always
+M: output size fixed at 4K master | C: ignored the raw source size | R: output = largest raw clip size; test with 4K portrait rotation tag

@@ -41,3 +41,7 @@
 ## Link downloads
 - Instagram/YouTube may block cloud IPs. If download fails: status FAILED: download,
   user drops the file in Drive `input/references/`. Pipeline then continues as normal.
+
+## Remotion license (approved 2026-11-06)
+- Free for teams up to 3 people. Before any CLIENT video is rendered with Remotion, Faiz confirms the IT COD LAB
+  headcount in chat. Over 3 = buy the Remotion company license first (Creators $25/month per coder).

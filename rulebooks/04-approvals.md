@@ -26,9 +26,12 @@ Never assume. Never auto-approve. Claude cannot approve for the user.
 - After a Y for a batch, do exactly that list. Anything extra = a new ask.
 - Dev-phase scrap delete (00-core) already has a standing Y: do it, then report the list in one line.
 
-## Rule proposals (who decides what)
-- Coding / technical rules (code style, tests, script structure, tool choice): Claude decides, writes it in the
-  rulebook and lessons, tells Faiz in one line.
-- Any other rule (money, publishing, folder layout, approvals, creators, what Claude may touch): Claude PROPOSES it on
-  the "Rule Approvals" page (Approve / Not approve buttons). Written into a rulebook only after Approve.
-- Proposal text: title, why (one line), exact rule text. Not approve = never written; record the no in memory.
+## Rule proposals (who decides what) - IN CHAT, never a page
+- Faiz listens to chat; he does not read pages or docs. Every approval question is asked IN CHAT, short Hinglish,
+  one item per line, answer = Y or N. Never build an approval page/doc/tab.
+- Coding / technical rules: Claude decides, writes them, tells Faiz in one line.
+- Any other rule (money, publishing, folders, approvals, creators, what Claude may touch): ask in chat first
+  (rule text + why, 2 lines). Write to a rulebook only after Y. After N: record the no in memory.
+- Gate 2 is split per DNA type (approved 2026-11-06): scripting and sound may go to gate 3 once their data
+  (transcript with coverage_ratio >= 0.9, OCR, audio metrics) is complete and checked. Editing waits until
+  Claude has SEEN the collages.

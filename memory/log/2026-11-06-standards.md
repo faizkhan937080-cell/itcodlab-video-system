@@ -1,0 +1,3 @@
+# 2026-11-06-standards
+keys: build standards schema v2 loudness corpus clone render
+- 2026-11-05 22:25Z 04:3x IST built: output size = largest raw clip (render.master_size, video template OffthreadVideo, plan.output, plan.audio tracks, rotation-aware probe); DNA schemas v2 + legacy v1 files; scripts script_metrics, audio.loudness_ebu (LUFS/LRA/true peak, pyloudnorm), dna_check (accuracy gate, wired in worker _check_candidates), dna_corpus (50-video aggregate: signature/situational/targets), dna_draft (prefill measured parts), clone_report; CLI dna-check, dna-draft, corpus, clone-report; rulebooks 07-10; chat-only approvals. Trashed my two v1 draft candidates (wrong schema, scrap). 62 tests pass.

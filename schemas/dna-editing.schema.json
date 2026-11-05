@@ -1,57 +1,509 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Editing DNA",
-  "type": "object",
-  "required": ["type", "source", "cut_rhythm", "transitions", "motion", "text", "color", "layout", "confidence"],
-  "properties": {
-    "type": { "const": "editing" },
-    "source": {
-      "type": "object",
-      "required": ["job_id"],
-      "properties": { "job_id": { "type": "string" }, "link": { "type": "string" }, "creator": { "type": "string" } }
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "Editing DNA v2",
+ "type": "object",
+ "required": [
+  "type",
+  "schema_version",
+  "source",
+  "format",
+  "cut_rhythm",
+  "shots",
+  "transitions",
+  "motion",
+  "text",
+  "color",
+  "layout",
+  "recipe",
+  "evidence",
+  "confidence"
+ ],
+ "properties": {
+  "type": {
+   "const": "editing"
+  },
+  "schema_version": {
+   "const": 2
+  },
+  "source": {
+   "type": "object",
+   "required": [
+    "job_id"
+   ],
+   "properties": {
+    "job_id": {
+     "type": "string"
     },
-    "cut_rhythm": {
+    "link": {
+     "type": "string"
+    },
+    "creator": {
+     "type": "string"
+    }
+   }
+  },
+  "format": {
+   "type": "object",
+   "required": [
+    "width",
+    "height",
+    "fps",
+    "duration_s",
+    "orientation"
+   ],
+   "properties": {
+    "width": {
+     "type": "integer"
+    },
+    "height": {
+     "type": "integer"
+    },
+    "fps": {
+     "type": "number"
+    },
+    "duration_s": {
+     "type": "number"
+    },
+    "orientation": {
+     "enum": [
+      "portrait",
+      "landscape",
+      "square"
+     ]
+    },
+    "aspect": {
+     "type": "string"
+    }
+   }
+  },
+  "cut_rhythm": {
+   "type": "object",
+   "required": [
+    "asl_s",
+    "median_shot_s",
+    "std_shot_s",
+    "min_shot_s",
+    "max_shot_s",
+    "cuts_per_min",
+    "pattern",
+    "pace_curve"
+   ],
+   "properties": {
+    "asl_s": {
+     "type": "number"
+    },
+    "median_shot_s": {
+     "type": "number"
+    },
+    "std_shot_s": {
+     "type": "number"
+    },
+    "min_shot_s": {
+     "type": "number"
+    },
+    "max_shot_s": {
+     "type": "number"
+    },
+    "cuts_per_min": {
+     "type": "number"
+    },
+    "pattern": {
+     "type": "string"
+    },
+    "beat_synced_share": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    },
+    "pace_curve": {
+     "type": "array",
+     "minItems": 3,
+     "items": {
       "type": "object",
-      "required": ["avg_shot_s", "median_shot_s", "cuts_per_min", "pattern"],
+      "required": [
+       "part",
+       "cuts_per_min"
+      ],
       "properties": {
-        "avg_shot_s": { "type": "number" }, "median_shot_s": { "type": "number" },
-        "cuts_per_min": { "type": "number" }, "pattern": { "type": "string" }
+       "part": {
+        "type": "string"
+       },
+       "cuts_per_min": {
+        "type": "number"
+       }
       }
+     }
+    }
+   }
+  },
+  "shots": {
+   "type": "object",
+   "required": [
+    "scale_mix"
+   ],
+   "properties": {
+    "scale_mix": {
+     "type": "object",
+     "description": "shares of ecu,cu,mcu,ms,ws,ews (sum about 1)",
+     "additionalProperties": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+     }
     },
-    "transitions": {
+    "camera_angle": {
+     "type": "string"
+    },
+    "composition": {
+     "type": "string"
+    },
+    "broll_share": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    },
+    "screen_recording_share": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    }
+   }
+  },
+  "transitions": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "required": [
+     "type",
+     "share"
+    ],
+    "properties": {
+     "type": {
+      "enum": [
+       "hard_cut",
+       "jump_cut",
+       "match_cut",
+       "j_cut",
+       "l_cut",
+       "cutaway",
+       "smash_cut",
+       "whip_pan",
+       "dissolve",
+       "fade_black",
+       "wipe",
+       "slide",
+       "zoom_transition",
+       "glitch",
+       "other"
+      ]
+     },
+     "share": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+     },
+     "typical_duration_s": {
+      "type": "number"
+     }
+    }
+   }
+  },
+  "motion": {
+   "type": "object",
+   "required": [
+    "camera",
+    "elements"
+   ],
+   "properties": {
+    "camera": {
+     "type": "object",
+     "required": [
+      "moves",
+      "intensity"
+     ],
+     "properties": {
+      "moves": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "intensity": {
+       "enum": [
+        "static",
+        "slow",
+        "medium",
+        "fast"
+       ]
+      }
+     }
+    },
+    "elements": {
+     "type": "object",
+     "required": [
+      "easing"
+     ],
+     "properties": {
+      "easing": {
+       "type": "string"
+      },
+      "typical_duration_s": {
+       "type": "number"
+      },
+      "stagger_s": {
+       "type": "number"
+      }
+     }
+    },
+    "speed_ramps": {
+     "type": "string"
+    }
+   }
+  },
+  "text": {
+   "type": "object",
+   "required": [
+    "present"
+   ],
+   "properties": {
+    "present": {
+     "type": "boolean"
+    },
+    "role": {
+     "type": "string"
+    },
+    "font_class": {
+     "enum": [
+      "sans",
+      "serif",
+      "display",
+      "handwritten",
+      "mono",
+      "mixed"
+     ]
+    },
+    "weight": {
+     "type": "string"
+    },
+    "case": {
+     "type": "string"
+    },
+    "position": {
+     "type": "string"
+    },
+    "size_class": {
+     "type": "string"
+    },
+    "animation_in": {
+     "type": "string"
+    },
+    "animation_out": {
+     "type": "string"
+    },
+    "avg_on_screen_s": {
+     "type": "number"
+    },
+    "words_per_caption": {
+     "type": "number"
+    },
+    "safe_zone_respected": {
+     "type": "boolean"
+    }
+   }
+  },
+  "color": {
+   "type": "object",
+   "required": [
+    "palette",
+    "grade"
+   ],
+   "properties": {
+    "palette": {
+     "type": "array",
+     "minItems": 3,
+     "items": {
+      "type": "object",
+      "required": [
+       "hex",
+       "share"
+      ],
+      "properties": {
+       "hex": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$"
+       },
+       "share": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+       }
+      }
+     }
+    },
+    "grade": {
+     "type": "object",
+     "required": [
+      "look",
+      "contrast",
+      "temperature"
+     ],
+     "properties": {
+      "look": {
+       "type": "string"
+      },
+      "contrast": {
+       "enum": [
+        "low",
+        "medium",
+        "high"
+       ]
+      },
+      "temperature": {
+       "enum": [
+        "warm",
+        "neutral",
+        "cool"
+       ]
+      },
+      "saturation_mean": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "brightness_mean": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      }
+     }
+    }
+   }
+  },
+  "layout": {
+   "type": "object",
+   "required": [
+    "orientation"
+   ],
+   "properties": {
+    "orientation": {
+     "enum": [
+      "portrait",
+      "landscape",
+      "square"
+     ]
+    },
+    "safe_zones": {
+     "type": "string"
+    },
+    "framing_notes": {
+     "type": "string"
+    }
+   }
+  },
+  "recipe": {
+   "type": "object",
+   "required": [
+    "remotion_templates",
+    "typical_scene_s"
+   ],
+   "properties": {
+    "remotion_templates": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "string"
+     }
+    },
+    "typical_scene_s": {
+     "type": "number"
+    },
+    "spring": {
+     "type": "object",
+     "required": [],
+     "properties": {
+      "damping": {
+       "type": "number"
+      },
+      "stiffness": {
+       "type": "number"
+      },
+      "mass": {
+       "type": "number"
+      }
+     }
+    },
+    "notes": {
+     "type": "string"
+    }
+   }
+  },
+  "evidence": {
+   "type": "array",
+   "minItems": 3,
+   "items": {
+    "type": "object",
+    "required": [
+     "claim"
+    ],
+    "properties": {
+     "claim": {
+      "type": "string"
+     },
+     "scenes": {
       "type": "array",
       "items": {
-        "type": "object", "required": ["type", "share"],
-        "properties": { "type": { "type": "string" }, "share": { "type": "number", "minimum": 0, "maximum": 1 } }
+       "type": [
+        "integer",
+        "string"
+       ]
       }
+     },
+     "t": {
+      "type": "array",
+      "items": {
+       "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+     },
+     "quote": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "confidence": {
+   "type": "object",
+   "minProperties": 3,
+   "additionalProperties": {
+    "enum": [
+     "measured",
+     "judged",
+     "estimated",
+     "unknown"
+    ]
+   },
+   "description": "One tag per top-level section: measured = a script produced the number; judged = Claude read it from collages/transcript and cites evidence; estimated = weak inference; unknown = not available yet."
+  },
+  "corpus": {
+   "type": "object",
+   "description": "Present when this DNA summarises many videos of one creator (see dna-corpus).",
+   "properties": {
+    "n_videos": {
+     "type": "integer",
+     "minimum": 1
     },
-    "motion": {
-      "type": "object", "required": ["camera", "elements"],
-      "properties": { "camera": { "type": "string" }, "elements": { "type": "string" }, "speed_ramps": { "type": "string" } }
-    },
-    "text": {
-      "type": "object", "required": ["present"],
-      "properties": {
-        "present": { "type": "boolean" }, "style": { "type": "string" }, "position": { "type": "string" },
-        "size_class": { "type": "string" }, "animation": { "type": "string" }
-      }
-    },
-    "color": {
-      "type": "object", "required": ["palette", "grade"],
-      "properties": {
-        "palette": { "type": "array", "items": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" } },
-        "grade": { "type": "string" }
-      }
-    },
-    "layout": {
-      "type": "object", "required": ["orientation"],
-      "properties": { "orientation": { "enum": ["portrait", "landscape", "square"] }, "notes": { "type": "string" } }
-    },
-    "sound_sync": { "type": "string" },
-    "confidence": {
-      "type": "object",
-      "additionalProperties": { "enum": ["measured", "estimated"] }
-    },
-    "notes": { "type": "string" }
+    "job_ids": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "notes": {
+   "type": "string"
   }
+ }
 }

@@ -10,7 +10,9 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
    - chat commands, jobs, Drive queue, collages -> `05-commands.md`
    - video / motion / Remotion code -> `01-video.md`, `lessons/video.md`
    - scripting (general or creator)  -> `02-scripting.md`, `lessons/scripting.md`
-   - DNA building / merging          -> `03-dna.md`, `lessons/dna.md`
+   - DNA building / merging          -> `03-dna.md`, `lessons/dna.md`, and the standard of its type:
+     `07-standards-editing.md` | `08-standards-scripting.md` | `09-standards-sound.md`
+   - choosing a tool / render quality -> `10-tools.md`; output size = raw source size (`01-video.md`)
 3. Every step that saves, adds or renders needs approval: `rulebooks/04-approvals.md`.
 3b. Lanes, barriers, alerts, token economy: `rulebooks/06-fence.md` (hook `scripts/guard.py` blocks wrong-lane commands).
 4. Limits live in `config/limits.json`. Never override them.
@@ -24,6 +26,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
 - Error logs: read only the last 20 lines.
 - Outputs go to Drive via scripts. Rules and lessons go to GitHub only.
 - Lessons: Claude saves them itself (compact). Decisions/findings: `./run mem add <shard> <text>` at once, long form, never summarised.
+- Faiz approvals: ALWAYS in chat (short Hinglish, Y/N). Never a page, doc or tab. He listens, he does not read.
 - Faiz downloads and attaches nothing. Collages come via GitHub branch `review` (`./run review-fetch <job> --out <dir>`).
 
 ## Where things live

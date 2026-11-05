@@ -36,6 +36,47 @@ def cmd_validate(a):
     return 0 if not errs else 1
 
 
+def cmd_dna_check(a):
+    from .dna_check import check
+    obj = json.loads(Path(a.file).read_text(encoding="utf-8"))
+    summary = json.loads(Path(a.summary).read_text(encoding="utf-8")) if a.summary else None
+    probs = check(a.type, obj, summary)
+    print("PASS" + ("" if summary else " (schema+honesty only; give --summary to cross-check numbers)")
+          if not probs else "FAIL\n" + "\n".join(probs[:20]))
+    return 0 if not probs else 1
+
+
+def cmd_dna_draft(a):
+    from .dna_draft import DRAFTERS
+    sm = json.loads(Path(a.summary).read_text(encoding="utf-8"))
+    d = DRAFTERS[a.type](sm, a.job, a.link or "", a.creator or "")
+    Path(a.out).write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"measured part of {a.type} DNA written to {a.out}. Claude adds the judged sections, then ./run dna-check.")
+    return 0
+
+
+def cmd_clone_report(a):
+    from .dna_check import clone_report
+    tgt = json.loads(Path(a.target).read_text(encoding="utf-8"))
+    out = json.loads(Path(a.summary).read_text(encoding="utf-8"))
+    r = clone_report(a.type, tgt, out)
+    print("CLONE OK" if r["pass"] else "CLONE DIFFERS\n" + "\n".join(r["differences"][:20]))
+    return 0 if r["pass"] else 1
+
+
+def cmd_corpus(a):
+    from .dna import errors_tail, validate
+    from .dna_corpus import aggregate
+    dnas = [json.loads(Path(f).read_text(encoding="utf-8")) for f in a.files]
+    out = aggregate(a.type, a.creator, dnas)
+    errs = validate("corpus", out)
+    Path(a.out).write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"corpus of {out['n_videos']} video(s): {len(out['signature'])} signature, "
+          f"{len(out['situational'])} situational, provisional={out['provisional']}"
+          + ("" if not errs else "\nINVALID\n" + errors_tail(errs)))
+    return 0 if not errs else 1
+
+
 def cmd_render_local(a):
     from .render import render_plan
     plan = json.loads(Path(a.plan).read_text(encoding="utf-8"))
@@ -156,9 +197,37 @@ def build_parser():
     s.set_defaults(fn=cmd_analyze_local)
 
     s = sub.add_parser("validate", help="validate a JSON file against a schema")
-    s.add_argument("--schema", required=True, choices=["editing", "scripting", "sound", "scene", "job"])
+    s.add_argument("--schema", required=True, choices=["editing", "scripting", "sound", "corpus", "scene", "job"])
     s.add_argument("--file", required=True)
     s.set_defaults(fn=cmd_validate)
+
+    s = sub.add_parser("dna-check", help="accuracy gate for a DNA candidate (schema + honesty + cross-check)")
+    s.add_argument("--type", required=True, choices=["editing", "scripting", "sound"])
+    s.add_argument("--file", required=True)
+    s.add_argument("--summary", help="metrics_summary.json of the same job")
+    s.set_defaults(fn=cmd_dna_check)
+
+    s = sub.add_parser("dna-draft", help="pre-fill the measured sections of a DNA candidate from the pack")
+    s.add_argument("--type", required=True, choices=["editing", "scripting", "sound"])
+    s.add_argument("--summary", required=True)
+    s.add_argument("--job", required=True)
+    s.add_argument("--link")
+    s.add_argument("--creator")
+    s.add_argument("--out", required=True)
+    s.set_defaults(fn=cmd_dna_draft)
+
+    s = sub.add_parser("clone-report", help="compare our rendered video's metrics with the DNA it was made from")
+    s.add_argument("--type", required=True, choices=["editing", "scripting", "sound"])
+    s.add_argument("--target", required=True, help="DNA or corpus json")
+    s.add_argument("--summary", required=True, help="metrics_summary.json of OUR output video")
+    s.set_defaults(fn=cmd_clone_report)
+
+    s = sub.add_parser("corpus", help="aggregate many v2 DNA files of one creator into corpus DNA")
+    s.add_argument("--type", required=True, choices=["editing", "scripting", "sound"])
+    s.add_argument("--creator", required=True)
+    s.add_argument("--files", nargs="+", required=True)
+    s.add_argument("--out", required=True)
+    s.set_defaults(fn=cmd_corpus)
 
     s = sub.add_parser("render-local", help="render a scene plan locally")
     s.add_argument("--plan", required=True)

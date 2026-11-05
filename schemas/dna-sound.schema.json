@@ -1,26 +1,239 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Sound DNA",
-  "type": "object",
-  "required": ["type", "source", "bpm", "beat_sync", "loudness_db", "confidence"],
-  "properties": {
-    "type": { "const": "sound" },
-    "source": {
-      "type": "object", "required": ["job_id"],
-      "properties": { "job_id": { "type": "string" }, "link": { "type": "string" }, "creator": { "type": "string" } }
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "Sound DNA v2",
+ "type": "object",
+ "required": [
+  "type",
+  "schema_version",
+  "source",
+  "loudness",
+  "tempo",
+  "beat_sync",
+  "speech",
+  "silence",
+  "mix",
+  "evidence",
+  "confidence"
+ ],
+ "properties": {
+  "type": {
+   "const": "sound"
+  },
+  "schema_version": {
+   "const": 2
+  },
+  "source": {
+   "type": "object",
+   "required": [
+    "job_id"
+   ],
+   "properties": {
+    "job_id": {
+     "type": "string"
     },
-    "bpm": { "type": "number" },
-    "beat_sync": {
-      "type": "object", "required": ["share_within_80ms"],
-      "properties": { "share_within_80ms": { "type": "number", "minimum": 0, "maximum": 1 }, "notes": { "type": "string" } }
+    "link": {
+     "type": "string"
     },
-    "voice_music_balance": { "type": "string" },
-    "loudness_db": {
-      "type": "object", "required": ["mean"],
-      "properties": { "mean": { "type": "number" }, "max": { "type": "number" } }
+    "creator": {
+     "type": "string"
+    }
+   }
+  },
+  "loudness": {
+   "type": "object",
+   "required": [
+    "integrated_lufs",
+    "true_peak_dbtp"
+   ],
+   "properties": {
+    "integrated_lufs": {
+     "type": "number"
     },
-    "silence_usage": { "type": "string" },
-    "confidence": { "type": "object", "additionalProperties": { "enum": ["measured", "estimated"] } },
-    "notes": { "type": "string" }
+    "true_peak_dbtp": {
+     "type": "number"
+    },
+    "lra_lu": {
+     "type": "number"
+    },
+    "short_term_max_lufs": {
+     "type": "number"
+    },
+    "standard": {
+     "type": "string"
+    }
+   }
+  },
+  "tempo": {
+   "type": "object",
+   "required": [
+    "bpm"
+   ],
+   "properties": {
+    "bpm": {
+     "type": "number"
+    },
+    "feel": {
+     "type": "string"
+    }
+   }
+  },
+  "beat_sync": {
+   "type": "object",
+   "required": [
+    "share_within_80ms",
+    "cuts_checked"
+   ],
+   "properties": {
+    "share_within_80ms": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    },
+    "cuts_checked": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "median_offset_s": {
+     "type": "number"
+    },
+    "notes": {
+     "type": "string"
+    }
+   }
+  },
+  "speech": {
+   "type": "object",
+   "required": [
+    "speech_ratio"
+   ],
+   "properties": {
+    "speech_ratio": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    },
+    "voice_character": {
+     "type": "string"
+    },
+    "delivery": {
+     "type": "string"
+    }
+   }
+  },
+  "silence": {
+   "type": "object",
+   "required": [
+    "share"
+   ],
+   "properties": {
+    "share": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1
+    },
+    "usage": {
+     "type": "string"
+    },
+    "longest_s": {
+     "type": "number"
+    }
+   }
+  },
+  "mix": {
+   "type": "object",
+   "required": [
+    "voice_over_music"
+   ],
+   "properties": {
+    "voice_over_music": {
+     "type": "string"
+    },
+    "ducking": {
+     "type": "string"
+    },
+    "music_mood": {
+     "type": "string"
+    },
+    "music_genre": {
+     "type": "string"
+    },
+    "sfx_density_per_min": {
+     "type": "number"
+    },
+    "sfx_types": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "evidence": {
+   "type": "array",
+   "minItems": 3,
+   "items": {
+    "type": "object",
+    "required": [
+     "claim"
+    ],
+    "properties": {
+     "claim": {
+      "type": "string"
+     },
+     "scenes": {
+      "type": "array",
+      "items": {
+       "type": [
+        "integer",
+        "string"
+       ]
+      }
+     },
+     "t": {
+      "type": "array",
+      "items": {
+       "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+     },
+     "quote": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "confidence": {
+   "type": "object",
+   "minProperties": 3,
+   "additionalProperties": {
+    "enum": [
+     "measured",
+     "judged",
+     "estimated",
+     "unknown"
+    ]
+   },
+   "description": "One tag per top-level section: measured = a script produced the number; judged = Claude read it from collages/transcript and cites evidence; estimated = weak inference; unknown = not available yet."
+  },
+  "corpus": {
+   "type": "object",
+   "description": "Present when this DNA summarises many videos of one creator (see dna-corpus).",
+   "properties": {
+    "n_videos": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "job_ids": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "notes": {
+   "type": "string"
   }
+ }
 }

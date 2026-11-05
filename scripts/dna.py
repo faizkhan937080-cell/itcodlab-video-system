@@ -8,9 +8,9 @@ from .common import ROOT, now_iso, tail
 
 SCHEMAS = {
     "editing": "dna-editing.schema.json", "scripting": "dna-scripting.schema.json",
-    "sound": "dna-sound.schema.json", "scene": "scene.schema.json", "job": "job.schema.json",
+    "sound": "dna-sound.schema.json", "corpus": "dna-corpus.schema.json", "scene": "scene.schema.json", "job": "job.schema.json",
 }
-REQUIRED_TYPES = {"video": ["editing"], "audio": ["sound"], "both": ["editing", "scripting", "sound"]}
+REQUIRED_TYPES = {"video": ["editing"], "audio": ["sound", "scripting"], "both": ["editing", "scripting", "sound"]}
 
 
 def load_schema(name):

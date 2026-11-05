@@ -14,6 +14,7 @@ from pathlib import Path
 from . import render as render_mod
 from .common import limits, log, now_iso, tail, workdir
 from .dna import REQUIRED_TYPES, errors_tail, save_dna, validate
+from .dna_check import check as check_dna
 
 TERMINAL = {"DONE", "FAILED", "NEEDS_INPUT"}
 
@@ -133,6 +134,7 @@ class Worker:
         rc3, after, _ = run_cmd(["git", "-C", str(ROOT), "rev-parse", "HEAD"])
         if not (rc == 0 and rc2 == 0 and rc3 == 0) or before.strip() == after.strip():
             return
+        run_cmd([sys.executable, "-m", "pip", "install", "-q", "-r", str(ROOT / "requirements.txt")], timeout=600)  # new libs
         ok, _, err = run_cmd([sys.executable, "-c", "import scripts.cli, scripts.jobs, scripts.pack, scripts.review"],
                              cwd=str(ROOT), timeout=120)
         if ok != 0:
@@ -370,6 +372,13 @@ class Worker:
         except Exception:  # noqa: BLE001
             pass
 
+    def _pack_summary(self, st, job):
+        """metrics_summary.json of this job (numbers the DNA is cross-checked against). None if unreadable."""
+        try:
+            return self.storage.read_json(f"{self._analysis_rel(st, job)}/pack/metrics_summary.json")
+        except Exception:  # noqa: BLE001
+            return None
+
     def _check_candidates(self, job, st):
         jid, ver = job["id"], st["candidate_ver"]
         types = REQUIRED_TYPES[job["mode"]]
@@ -382,7 +391,7 @@ class Worker:
                 obj = self.storage.read_json(rel)
             except Exception:
                 continue  # half written
-            errs = validate(t, obj)
+            errs = check_dna(t, obj, self._pack_summary(st, job))
             if not errs and obj.get("source", {}).get("job_id") != jid:
                 errs = [f"source.job_id must be '{jid}'"]
             if errs:

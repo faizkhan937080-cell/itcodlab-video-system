@@ -12,6 +12,7 @@ from scripts.common import ROOT
 from scripts.dna import save_dna, validate
 from scripts.jobs import Worker
 from scripts.storage import Storage, StorageError
+from dna_fixtures import SCRIPT_METRICS, editing_dna, fit_editing, scripting_dna, sound_dna
 
 
 # ---------------------------------------------------------------- storage rules
@@ -37,31 +38,6 @@ def test_code_has_no_delete_calls():
 
 
 # ---------------------------------------------------------------- schemas
-def editing_dna(job_id):
-    return {"type": "editing", "source": {"job_id": job_id},
-            "cut_rhythm": {"avg_shot_s": 1.8, "median_shot_s": 1.5, "cuts_per_min": 30, "pattern": "fast, even"},
-            "transitions": [{"type": "hard_cut", "share": 0.8}, {"type": "dissolve", "share": 0.2}],
-            "motion": {"camera": "slow push-in", "elements": "pop-in text"},
-            "text": {"present": True, "style": "bold sans"},
-            "color": {"palette": ["#0A192F", "#FF5A5F"], "grade": "high contrast"},
-            "layout": {"orientation": "portrait"},
-            "confidence": {"cut_rhythm": "measured", "motion": "estimated"}}
-
-
-def scripting_dna(job_id):
-    return {"type": "scripting", "source": {"job_id": job_id},
-            "hook": {"kind": "question", "duration_s": 2.5},
-            "structure": [{"beat": "hook", "purpose": "stop the scroll"}, {"beat": "cta", "purpose": "ask"}],
-            "pacing": {"words_per_min": 150}, "tone": "friendly", "language": "hinglish",
-            "cta": {"style": "soft"}, "confidence": {"hook": "estimated"}}
-
-
-def sound_dna(job_id):
-    return {"type": "sound", "source": {"job_id": job_id}, "bpm": 120,
-            "beat_sync": {"share_within_80ms": 0.6}, "loudness_db": {"mean": -18},
-            "confidence": {"bpm": "measured"}}
-
-
 def test_schemas_accept_valid_and_reject_invalid():
     assert validate("editing", editing_dna("j1")) == []
     assert validate("scripting", scripting_dna("j1")) == []
@@ -132,18 +108,39 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
     assert st()["candidate_ver"] == 2 and "cut_rhythm" in st()["validation_errors"]
 
-    for t, fn in (("editing", editing_dna), ("scripting", scripting_dna), ("sound", sound_dna)):
-        drive.put_json(f"analysis/creators/rahul/an1/dna/candidate-{t}-v2.json", fn("an1"))
-    assert w.process_once() == [("an1", "AWAIT_GATE3")]
+    # the accuracy gate cross-checks numbers against the pack: a wrong measured number is refused
+    pack_summary = "analysis/creators/rahul/an1/pack/metrics_summary.json"
+    summ = drive.read_json(pack_summary)
+    summ["script_metrics"] = SCRIPT_METRICS          # the synthetic test video has no speech
+    summ["audio"] = {"has_audio": True, "bpm": 103.4, "silence_share": 0.0,
+                     "cut_beat_sync": {"share_within_80ms": 0.733, "cuts_checked": 15},
+                     "ebu_r128": {"integrated_lufs": -16.2, "true_peak_dbtp": -1.5}}
+    (drive.root / pack_summary).write_text(json.dumps(summ), encoding="utf-8")  # test edits the pack in place
+    wrong = fit_editing(editing_dna("an1"), summ)
+    wrong["cut_rhythm"]["cuts_per_min"] = 99.0
+    drive.put_json("analysis/creators/rahul/an1/dna/candidate-editing-v2.json", wrong)
+    drive.put_json("analysis/creators/rahul/an1/dna/candidate-scripting-v2.json", scripting_dna("an1"))
+    drive.put_json("analysis/creators/rahul/an1/dna/candidate-sound-v2.json", sound_dna("an1"))
+    assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
+    assert st()["candidate_ver"] == 3 and "cuts_per_min" in st()["validation_errors"]
+    st_ver = [3]
+
+    def good(ver):
+        drive.put_json(f"analysis/creators/rahul/an1/dna/candidate-editing-v{ver}.json", fit_editing(editing_dna("an1"), summ))
+        drive.put_json(f"analysis/creators/rahul/an1/dna/candidate-scripting-v{ver}.json", scripting_dna("an1"))
+        drive.put_json(f"analysis/creators/rahul/an1/dna/candidate-sound-v{ver}.json", sound_dna("an1"))
+
+    good(3)
+    r = w.process_once()
+    assert r == [("an1", "AWAIT_GATE3")], st().get("validation_errors")
 
     # rejection asks for v3 and needs a new approval file (rev 3), not the old one
-    approve(drive, "an1", 3, 2, "N", "palette too dull")
+    approve(drive, "an1", 3, 3, "N", "palette too dull")
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
-    assert st()["candidate_ver"] == 3
-    for t, fn in (("editing", editing_dna), ("scripting", scripting_dna), ("sound", sound_dna)):
-        drive.put_json(f"analysis/creators/rahul/an1/dna/candidate-{t}-v3.json", fn("an1"))
+    assert st()["candidate_ver"] == 4
+    good(4)
     assert w.process_once() == [("an1", "AWAIT_GATE3")]
-    approve(drive, "an1", 3, 3, "Y")
+    approve(drive, "an1", 3, 4, "Y")
     w.process_once()
     assert st()["status"] == "DONE"
     for t in ("editing", "scripting", "sound"):

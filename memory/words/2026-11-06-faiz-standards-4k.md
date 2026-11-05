@@ -1,0 +1,3 @@
+# 2026-11-06-faiz-standards-4k
+keys: 4k resolution standards clone 50 videos best tool accuracy chat approval
+- 2026-11-05 22:10Z verbatim gist 03:39 IST: output must match raw input quality (4K in -> 4K out), preview low. DNA for scripting/editing/sound must follow INTERNATIONAL standards, very precise, to CLONE a style; with 50 videos of one creator clone scripting understanding + tonality + every standard fully; same for editing. Always best-of-best tool (Remotion for motion graphics). Accuracy very high. System must check what is missing and build it. Approval page is unreadable for him: ask approve/disapprove IN CHAT; 'next time remember'.

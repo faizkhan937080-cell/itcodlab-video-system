@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Editing DNA",
+  "type": "object",
+  "required": ["type", "source", "cut_rhythm", "transitions", "motion", "text", "color", "layout", "confidence"],
+  "properties": {
+    "type": { "const": "editing" },
+    "source": {
+      "type": "object",
+      "required": ["job_id"],
+      "properties": { "job_id": { "type": "string" }, "link": { "type": "string" }, "creator": { "type": "string" } }
+    },
+    "cut_rhythm": {
+      "type": "object",
+      "required": ["avg_shot_s", "median_shot_s", "cuts_per_min", "pattern"],
+      "properties": {
+        "avg_shot_s": { "type": "number" }, "median_shot_s": { "type": "number" },
+        "cuts_per_min": { "type": "number" }, "pattern": { "type": "string" }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["type", "share"],
+        "properties": { "type": { "type": "string" }, "share": { "type": "number", "minimum": 0, "maximum": 1 } }
+      }
+    },
+    "motion": {
+      "type": "object", "required": ["camera", "elements"],
+      "properties": { "camera": { "type": "string" }, "elements": { "type": "string" }, "speed_ramps": { "type": "string" } }
+    },
+    "text": {
+      "type": "object", "required": ["present"],
+      "properties": {
+        "present": { "type": "boolean" }, "style": { "type": "string" }, "position": { "type": "string" },
+        "size_class": { "type": "string" }, "animation": { "type": "string" }
+      }
+    },
+    "color": {
+      "type": "object", "required": ["palette", "grade"],
+      "properties": {
+        "palette": { "type": "array", "items": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" } },
+        "grade": { "type": "string" }
+      }
+    },
+    "layout": {
+      "type": "object", "required": ["orientation"],
+      "properties": { "orientation": { "enum": ["portrait", "landscape", "square"] }, "notes": { "type": "string" } }
+    },
+    "sound_sync": { "type": "string" },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": { "enum": ["measured", "estimated"] }
+    },
+    "notes": { "type": "string" }
+  }
+}

@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 
 from . import audio as audio_mod
+from . import script_metrics
 from .analyze import analyze_video
 from .collage import build_collages, capacity, pick_layout
 from .common import limits, log, now_iso, write_json_local
@@ -28,7 +29,7 @@ def _overall_palette(scenes, k=6):
     return [{"hex": h, "share": round(v / tot, 3)} for h, v in sorted(acc.items(), key=lambda x: -x[1])[:k]]
 
 
-def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, transcript, lim):
+def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, transcript, lim, script_m=None):
     durs = [s["duration_s"] for s in scenes]
     trans = {}
     for s in scenes[1:]:
@@ -68,6 +69,7 @@ def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, 
                                                       "text": transcript["alt_english"]["text"][:n]}
     else:
         summary["transcript"] = {"available": False}
+    summary["script_metrics"] = script_m or {"available": False}
     # keep it small: drop per-scene rows first, then trim clusters
     cap = lim["pack"]["max_summary_kb"] * 1024
     if len(json.dumps(summary)) > cap:
@@ -103,7 +105,9 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
             transcript = audio_mod.transcribe(wav)
         write_json_local(out_root / "transcript.json", transcript)
         write_json_local(out_root / "audio.json", audio_res)
-    summary = build_summary(info, scenes, clusters, rep, idx, audio_res, transcript, lim)
+    script_m = script_metrics.compute(transcript, info["duration_s"])
+    write_json_local(out_root / "script_metrics.json", script_m)
+    summary = build_summary(info, scenes, clusters, rep, idx, audio_res, transcript, lim, script_m)
     write_json_local(pack / "metrics_summary.json", summary)
     manifest = {"job_id": job_id, "mode": mode, "created": now_iso(),
                 "files": sorted(p.name for p in pack.iterdir()),

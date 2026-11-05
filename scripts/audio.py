@@ -11,11 +11,49 @@ from .common import limits, log, run_cmd, tail
 def extract_wav(video, out_wav):
     out_wav = Path(out_wav)
     out_wav.parent.mkdir(parents=True, exist_ok=True)
-    rc, _, err = run_cmd(["ffmpeg", "-y", "-i", str(video), "-vn", "-ac", "1", "-ar", "22050",
+    rc, _, err = run_cmd(["ffmpeg", "-y", "-i", str(video), "-vn", "-ac", "1", "-ar", "48000",
                           "-f", "wav", str(out_wav)])
     if rc != 0:
         raise RuntimeError("audio extract failed:\n" + tail(err))
     return out_wav
+
+
+def loudness_ebu(wav):
+    """ITU-R BS.1770 / EBU R128 loudness: integrated LUFS, loudness range (LU), true peak (dBTP, 4x oversampled).
+    Mono mix of the file. Returns {} if pyloudnorm is missing or the audio is too short. Never raises."""
+    try:
+        import pyloudnorm as pyln
+        import soundfile as sf
+        from scipy.signal import resample_poly
+        data, sr = sf.read(str(wav), dtype="float64")
+        if data.ndim > 1:
+            data = data.mean(axis=1)
+        if len(data) < sr * 0.5:
+            return {}
+        meter = pyln.Meter(sr)
+        integrated = float(meter.integrated_loudness(data))
+        tp = float(np.max(np.abs(resample_poly(data, 4, 1))))
+        out = {"integrated_lufs": round(integrated, 1),
+               "true_peak_dbtp": round(20 * np.log10(max(tp, 1e-9)), 1)}
+        win, hop = int(3 * sr), int(1 * sr)
+        st = []
+        for a in range(0, max(len(data) - win, 0) + 1, hop):
+            seg = data[a:a + win]
+            if len(seg) >= win:
+                v = float(meter.integrated_loudness(seg))
+                if np.isfinite(v):
+                    st.append(v)
+        st = [v for v in st if v > -70.0]
+        if st:
+            rel = [v for v in st if v > integrated - 20.0] or st
+            out["short_term_max_lufs"] = round(max(st), 1)
+            if len(rel) >= 3:
+                out["lra_lu"] = round(float(np.percentile(rel, 95) - np.percentile(rel, 10)), 1)
+        out["method"] = "pyloudnorm BS.1770, mono mix"
+        return out
+    except Exception as e:  # noqa: BLE001
+        log(f"loudness_ebu skipped: {type(e).__name__}")
+        return {}
 
 
 def analyze_audio(wav, cut_times, sr_target=22050):
@@ -45,7 +83,8 @@ def analyze_audio(wav, cut_times, sr_target=22050):
     return {"has_audio": True, "duration_s": round(dur, 2), "bpm": round(bpm, 1),
             "beat_count": int(len(beats)), "beat_times_first_20": [round(float(b), 2) for b in beats[:20]],
             "loudness_db_mean": round(float(db.mean()), 1), "loudness_db_max": round(float(db.max()), 1),
-            "silences": silences[:20], "cut_beat_sync": sync}
+            "silences": silences[:20], "cut_beat_sync": sync, "ebu_r128": loudness_ebu(wav),
+            "silence_share": round(sum(b - a for a, b in silences) / dur, 3) if dur else 0.0}
 
 
 def transcribe(wav):

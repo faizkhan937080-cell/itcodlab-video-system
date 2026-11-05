@@ -17,12 +17,19 @@ from .common import limits, log, run_cmd, tail, write_json_local
 
 
 # ---------------------------------------------------------------- basics
-def probe(video):
-    rc, out, err = run_cmd(["ffprobe", "-v", "error", "-print_format", "json",
-                            "-show_streams", "-show_format", str(video)])
-    if rc != 0:
-        raise RuntimeError("ffprobe failed:\n" + tail(err))
-    j = json.loads(out)
+def _rotation(v):
+    """Phone videos store 4K portrait as 3840x2160 + rotation tag. Return degrees (0/90/180/270)."""
+    rot = (v.get("tags") or {}).get("rotate")
+    for sd in v.get("side_data_list") or []:
+        if "rotation" in sd:
+            rot = sd["rotation"]
+    try:
+        return int(round(float(rot))) % 360
+    except (TypeError, ValueError):
+        return 0
+
+
+def parse_probe(j):
     vs = [s for s in j["streams"] if s["codec_type"] == "video"]
     if not vs:
         raise RuntimeError("no video stream found")
@@ -31,9 +38,21 @@ def probe(video):
     num, den = v.get("r_frame_rate", "0/1").split("/")
     fps = float(num) / float(den) if float(den) else 0.0
     duration = float(j["format"].get("duration") or v.get("duration") or 0)
-    return {"width": int(v["width"]), "height": int(v["height"]), "fps": round(fps, 3),
+    w, h = int(v["width"]), int(v["height"])
+    rot = _rotation(v)
+    if rot in (90, 270):
+        w, h = h, w  # width/height as the viewer sees them
+    return {"width": w, "height": h, "fps": round(fps, 3), "rotation": rot,
             "duration_s": round(duration, 3), "codec": v.get("codec_name"),
             "has_audio": has_audio, "bit_rate": int(j["format"].get("bit_rate") or 0)}
+
+
+def probe(video):
+    rc, out, err = run_cmd(["ffprobe", "-v", "error", "-print_format", "json",
+                            "-show_streams", "-show_format", str(video)])
+    if rc != 0:
+        raise RuntimeError("ffprobe failed:\n" + tail(err))
+    return parse_probe(json.loads(out))
 
 
 def bits_to_hex(bits):

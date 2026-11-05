@@ -1,13 +1,15 @@
 import React from 'react';
 import {AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AudioTrack} from './components/AudioTrack';
 import {Banner} from './components/Banner';
 import {Grain} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
 import {LowerThird} from './components/LowerThird';
 import {Title} from './components/Title';
+import {VideoScene} from './components/VideoScene';
 import {easeOut} from './lib/anim';
-import {Colors, DEFAULT_COLORS, Plan, SceneDef, sceneFrames} from './lib/types';
+import {Colors, DEFAULT_COLORS, Plan, SceneDef, sceneFrames, totalFrames} from './lib/types';
 
 const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors}) => {
   const p = scene.props ?? {};
@@ -22,6 +24,17 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <ImageScene src={p.src} caption={p.caption} colors={colors} />;
     case 'lower_third':
       return <LowerThird name={p.name ?? ''} role={p.role} colors={colors} />;
+    case 'video':
+      return (
+        <VideoScene
+          src={p.src}
+          trimStartS={p.trim_start_s}
+          trimEndS={p.trim_end_s}
+          fit={p.fit}
+          muted={p.muted}
+          volume={p.volume}
+        />
+      );
     default:
       return null;
   }
@@ -66,6 +79,9 @@ export const Main: React.FC<Plan> = (plan) => {
         from += frames;
         return el;
       })}
+      {(plan.audio ?? []).map((t, i) => (
+        <AudioTrack key={`audio-${i}`} track={t} totalFrames={totalFrames(plan)} />
+      ))}
       {plan.grain ? <Grain /> : null}
     </AbsoluteFill>
   );

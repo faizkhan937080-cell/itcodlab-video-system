@@ -14,11 +14,19 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 - Similar scenes are deduped (pHash + SSIM). Only one representative goes in a collage.
   Removed scenes stay in metrics as "pattern X, n times, total duration".
 
-## DNA candidate contents
-- Editing: cut rhythm, transitions, camera/element motion, text style + position, color grade, layout.
-- Sound: BPM, beat-cut sync, voice/music balance, silence.
-- Scripting: hook, structure, pacing, tone, language.
-- Mark each item as measured or estimated. Fonts and easing are always estimated.
+## DNA candidate contents (v2 = international-standard, precise; details in 07, 08, 09)
+- Editing: 07-standards-editing.md. Scripting: 08-standards-scripting.md. Sound: 09-standards-sound.md.
+- Every section: confidence tag measured / judged / estimated / unknown, plus evidence (scenes, times, quotes).
+- Numbers come from the pack (`metrics_summary.json`, incl. `script_metrics`, `audio.ebu_r128`). Never retype by memory.
+- ACCURACY GATE: `./run dna-check --type T --file F --summary S` must PASS before upload. The worker runs it again and
+  refuses a candidate whose measured numbers differ from the pack (asks for the next version).
+- Job modes: video = editing; audio = sound + scripting (voice and sound, no collages needed); both = all three.
+
+## Many videos of one creator (clone a whole creator)
+- One analyze job per video (mode both). Per video, one DNA of each type. Then
+  `./run corpus --type T --creator <h> --files <dna1> <dna2> ... --out corpus.json` -> signature (clone), situational
+  (follows the topic), targets (value to aim at). Under 10 videos = provisional. Saved with approval as
+  `dna/creators/<h>/<type>/corpus-vN.json`. "Make it in <h>'s style": read corpus targets first, newest dna-vN second.
 
 ## Saving
 - Candidate -> user approval (gate 3) -> `dna-vN.json` in Drive `dna/<general|creators/<name>>/` -> row in DNA_Index.
