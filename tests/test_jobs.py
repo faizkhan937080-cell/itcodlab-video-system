@@ -242,3 +242,23 @@ def test_render_failure_retries_then_fails(drive, tmp_path, monkeypatch):
     assert seen == ["RENDERING_PREVIEW", "RENDERING_PREVIEW", "FAILED"]
     assert w.process_once() == []  # terminal: never retried again
     assert "remotion exploded" in drive.read_json("jobs/state/rn3.json")["error_tail"]
+
+
+# ---------------------------------------------------------------- creator handle from link metadata
+def test_creator_handle_is_read_from_metadata(drive, tmp_path):
+    w = Worker(drive, work=tmp_path / "work")
+    wd = tmp_path / "wd"
+    wd.mkdir()
+    (wd / "source.info.json").write_text(json.dumps(
+        {"channel": "Some.Creator_01", "uploader_id": "12345", "uploader": "Some Creator", "title": "t"}))
+    st = {"paths": {}}
+    w._resolve_creator({"target": "creator:auto"}, st, wd)
+    assert st["target"] == "creator:some.creator_01"
+    st2 = {"paths": {}}
+    w._resolve_creator({"target": "general"}, st2, wd)
+    assert st2["target"] == "general"
+    (wd / "source.info.json").write_text(json.dumps({"uploader_id": "999"}))
+    with pytest.raises(RuntimeError):
+        w._resolve_creator({"target": "creator:auto"}, {"paths": {}}, wd)
+    assert validate("job", {"id": "abc", "type": "analyze", "link": "http://x", "mode": "both",
+                            "target": "creator:auto", "gate1_approved_by_user": True}) == []

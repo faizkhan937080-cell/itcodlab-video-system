@@ -4,6 +4,7 @@ approval gate until a matching approval file (or Approvals-tab row) says Y.
 Commands reach the worker as small JSON files in Drive (written by Claude from chat after the user
 says so). State lives in Drive jobs/state/<id>.json. Nothing is deleted; inbox files stay forever.
 """
+import re
 import time
 import traceback
 from datetime import datetime, timezone
@@ -116,11 +117,32 @@ class Worker:
             summary.append((jid, st["status"]))
         return summary
 
+    def _self_update(self):
+        """git pull the code; if it changed, restart this process so new code is used (no human step)."""
+        import os
+        import sys
+        from .common import ROOT, run_cmd
+        if not (ROOT / ".git").exists():
+            return
+        rc, before, _ = run_cmd(["git", "-C", str(ROOT), "rev-parse", "HEAD"])
+        rc2, _, _ = run_cmd(["git", "-C", str(ROOT), "pull", "--ff-only", "-q"], timeout=120)
+        rc3, after, _ = run_cmd(["git", "-C", str(ROOT), "rev-parse", "HEAD"])
+        if rc == 0 and rc2 == 0 and rc3 == 0 and before.strip() != after.strip():
+            log(f"code updated {before.strip()[:7]} -> {after.strip()[:7]}; restarting worker")
+            os.execv(str(ROOT / "run"), [str(ROOT / "run"), *sys.argv[1:]])
+
     def loop(self, max_minutes=60):
         poll = self.lim["jobs"]["poll_seconds"]
         end = time.time() + max_minutes * 60
+        n = 0
         while time.time() < end:
             self.process_once()
+            n += 1
+            if n % 15 == 0:  # jobs run inside process_once, so no job is mid-run here
+                try:
+                    self._self_update()
+                except Exception as e:  # noqa: BLE001
+                    log(f"self-update skipped: {e}")
             time.sleep(poll)
 
     def step(self, job, st):
@@ -152,6 +174,7 @@ class Worker:
             try:
                 src = self._acquire(job, wd)
                 st["paths"]["source_local"] = str(src)
+                self._resolve_creator(job, st, wd)
                 rel = self.storage.put_file(src, f"analysis/{jid}/{src.name}")
                 st["paths"]["source_drive"] = rel
                 self.set_status(st, job, "ANALYZING", "frame-by-frame analysis running")
@@ -201,15 +224,23 @@ class Worker:
         if s == "SAVING_DNA":
             try:
                 saved = []
+                target = st.get("target") or job["target"]
                 for t, rel in st["candidates"].items():
                     obj = self.storage.read_json(rel)
-                    path, ver = save_dna(self.storage, job["target"], t, obj, jid)
+                    path, ver = save_dna(self.storage, target, t, obj, jid)
                     saved.append(path)
                     if self.sheets:
-                        creator = job["target"].split(":", 1)[1] if ":" in job["target"] else ""
+                        creator = target.split(":", 1)[1] if ":" in target else ""
                         self.sheets.add_dna_index(f"{t}-{jid}-v{ver}", "creator" if creator else "general",
                                                   creator, t, ver, path, jid)
                 st["dna_saved"] = saved
+                if target.startswith("creator:"):
+                    h = target.split(":", 1)[1]
+                    ptr = {"creator": h, "job": jid, "link": job.get("link", ""), "mode": job["mode"],
+                           "analysis": f"analysis/{jid}", "dna": saved, "meta": st.get("source_meta", {}),
+                           "saved": now_iso()}
+                    self.storage.put_json(f"dna/creators/{h}/sources/{jid}.json", ptr)
+                    self.storage.put_json(f"analysis/creators/{h}/{jid}.json", ptr)
                 st["output_link"] = saved[0] if saved else ""
                 self.set_status(st, job, "DONE", "DNA saved: " + ", ".join(saved))
                 return False
@@ -224,7 +255,7 @@ class Worker:
             return self.storage.fetch(job["file"], wd / name)
         import os
         from .common import run_cmd
-        cmd = ["yt-dlp", "-f", "bv*+ba/b", "--merge-output-format", "mp4", "--no-playlist",
+        cmd = ["yt-dlp", "-f", "bv*+ba/b", "--merge-output-format", "mp4", "--no-playlist", "--write-info-json",
                "-o", str(wd / "source.%(ext)s")]
         cookies = os.environ.get("ITCOD_COOKIES")
         if cookies and Path(cookies).exists():
@@ -232,10 +263,31 @@ class Worker:
         rc, out, err = run_cmd(cmd + [job["link"]], timeout=1800)
         if rc != 0:
             raise RuntimeError("yt-dlp failed:\n" + tail(err or out))
-        files = sorted(wd.glob("source.*"))
+        files = sorted(f for f in wd.glob("source.*") if f.suffix not in (".json", ".part"))
         if not files:
             raise RuntimeError("download finished but no file found")
         return files[0]
+
+    def _resolve_creator(self, job, st, wd):
+        """target 'creator:auto' -> creator:<instagram handle> read from yt-dlp metadata. One name everywhere."""
+        st["target"] = job["target"]
+        if job["target"] not in ("creator:auto", "creator"):
+            return
+        import json
+        handle = ""
+        info = wd / "source.info.json"
+        if info.exists():
+            meta = json.loads(info.read_text(encoding="utf-8"))
+            for k in ("channel", "uploader_id", "uploader"):
+                v = str(meta.get(k) or "").strip().lstrip("@")
+                if v and not v.isdigit():
+                    handle = v
+                    break
+            st["source_meta"] = {k: meta.get(k) for k in ("channel", "uploader_id", "uploader", "title", "duration", "webpage_url")}
+        handle = re.sub(r"[^a-z0-9_.-]", "", handle.lower())[:40]
+        if len(handle) < 2:
+            raise RuntimeError("could not read the creator handle from the link metadata")
+        st["target"] = f"creator:{handle}"
 
     def _check_candidates(self, job, st):
         jid, ver = job["id"], st["candidate_ver"]

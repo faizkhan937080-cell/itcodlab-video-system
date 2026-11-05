@@ -23,3 +23,11 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 - Candidate -> user approval (gate 3) -> `dna-vN.json` in Drive `dna/<general|creators/<name>>/` -> row in DNA_Index.
 - Never overwrite an older version. Never delete.
 - Mistake in DNA? Draft a lesson in `lessons/dna.md`, ask approval, then save.
+
+## Creator folders (one name everywhere)
+- Creator name = Instagram handle, lowercase, read from the link by the worker (target `creator:auto`).
+- Same name in: `dna/creators/<h>/{editing,scripting,sound}/dna-vN.json`, `dna/creators/<h>/sources/<job>.json`,
+  `analysis/creators/<h>/<job>.json` (pointer to the full analysis), Sheet DNA_Index.
+- "Make it in <name>'s style": list `dna/creators/`, match the handle (fuzzy), read the latest dna-vN
+  of each needed type (script -> scripting, video -> editing, both -> all three + sound), then plan.
+- Merge or compare creators only with approval. Old versions stay.

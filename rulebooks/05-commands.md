@@ -10,6 +10,7 @@ Faiz types a command in chat. Claude does the rest. The worker (Colab now, VM la
 - Colab cannot be started from chat. Faiz opens the notebook and presses Run all. It then polls Drive.
 
 ## Chat commands (examples)
+- "analyze <link> both creator" -> target creator:auto (handle read from link). "... general" -> general
 - "analyze <link> both general" -> analyze job (mode video|audio|both, target general|creator:<name>)
 - "approve gate 2" / "reject gate 3, palette dull" -> approval file with feedback
 - "render <idea>" -> render job, then scene plan `jobs/plans/<id>-v<N>.json`

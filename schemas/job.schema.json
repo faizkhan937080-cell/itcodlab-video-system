@@ -11,7 +11,7 @@
     "link": { "type": "string" },
     "file": { "type": "string", "description": "Drive path of a reference already in Drive, e.g. input/references/x.mp4" },
     "mode": { "enum": ["video", "audio", "both"] },
-    "target": { "type": "string", "pattern": "^(general|creator:[A-Za-z0-9_-]{2,40})$" },
+    "target": { "type": "string", "pattern": "^(general|creator:auto|creator:[A-Za-z0-9_.-]{2,40})$" },
     "gate1_approved_by_user": { "const": true },
     "plan_prefix": { "type": "string", "description": "render jobs: plans are jobs/plans/<id>-v<N>.json" }
   },
