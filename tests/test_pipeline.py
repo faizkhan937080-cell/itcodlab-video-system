@@ -161,6 +161,7 @@ def test_review_publish_and_fetch_roundtrip(tmp_path, monkeypatch):
     import subprocess
     from PIL import Image
     from scripts import review
+    monkeypatch.delenv("ITCOD_NO_REVIEW", raising=False)
     bare = tmp_path / "bare.git"
     subprocess.run(["git", "init", "-q", "--bare", str(bare)], check=True)
     repo = tmp_path / "repo"

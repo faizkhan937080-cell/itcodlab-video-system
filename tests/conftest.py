@@ -8,6 +8,12 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 
+@pytest.fixture(autouse=True)
+def _no_real_review_push(monkeypatch):
+    """Tests must never push to the real GitHub remote."""
+    monkeypatch.setenv("ITCOD_NO_REVIEW", "1")
+
+
 @pytest.fixture(scope="session")
 def test_video(tmp_path_factory):
     """24 s portrait video: A B A B (repeats), a dissolve, a hard cut and a pan, plus a 120 BPM click track."""

@@ -16,3 +16,5 @@ T: worker did not take new code | FIX: git remote in Colab clone must hold a tok
 T: rmtree/unlink in scripts | FIX: never; test_code_has_no_delete_calls fails. use fresh timestamped dirs | seen: 1
 T: file over 60 lines | FIX: shard it (./run mem add rolls over by itself) | seen: 0
 T: secret pasted in chat | FIX: never repeat or store; tell him to regenerate later | seen: 1
+T: git fetch of a single branch leaves no origin/<branch> | FIX: fetch with explicit refspec +refs/heads/X:refs/remotes/origin/X | seen: 1
+T: tests push/write to real remote or Drive | FIX: conftest autouse env ITCOD_NO_REVIEW; review/an1, an2 on branch review are old test junk, leave | seen: 1

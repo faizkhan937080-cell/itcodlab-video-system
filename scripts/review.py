@@ -4,6 +4,7 @@ Worker side: publish() copies the pack (collages + metrics + index) to GitHub br
 Claude side: fetch() reads that branch and writes the files into a local folder, so images can be viewed.
 Heavy files (video, frames) stay in Drive. Nothing is ever deleted. Never raises on the worker side.
 """
+import os
 import shutil
 import subprocess
 import sys
@@ -26,7 +27,7 @@ def _git(args, cwd, url="", timeout=180):
 
 def publish(pack_dir, job_id, collage_index=None):
     cfg = limits().get("review", {})
-    if not cfg.get("enabled"):
+    if not cfg.get("enabled") or os.environ.get("ITCOD_NO_REVIEW"):
         return {"status": "skipped", "reason": "disabled"}
     try:
         rc, url, _ = run_cmd(["git", "-C", str(ROOT), "remote", "get-url", "origin"])
@@ -72,7 +73,7 @@ def fetch(job_id, dest, repo=None):
     """Claude side: pull review/<job_id>/ from the review branch into `dest`. Returns list of local files."""
     repo = Path(repo or ROOT)
     branch = limits().get("review", {}).get("branch", "review")
-    rc, out, err = run_cmd(["git", "-C", str(repo), "fetch", "-q", "origin", branch], timeout=180)
+    rc, out, err = run_cmd(["git", "-C", str(repo), "fetch", "-q", "origin", f"+refs/heads/{branch}:refs/remotes/origin/{branch}"], timeout=180)
     if rc != 0:
         raise RuntimeError("fetch failed: " + tail(err, 3))
     rc, listing, err = run_cmd(["git", "-C", str(repo), "ls-tree", "-r", "--name-only", f"origin/{branch}",
