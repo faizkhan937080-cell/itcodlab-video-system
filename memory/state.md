@@ -1,14 +1,17 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 (UTC 21:1x on 11-05)
-## Jobs
-- test-render-001 render DONE. reel-DeoxIgMPlS analyze FAILED (old whisper bug). reel-DeoxIgMPlS-b AWAIT_GATE2 (old small tiles, superseded).
-- reel-DeoxIgMPlS-c: collages had red/blue swapped (DO_NOT_USE marker in Drive). reel-DeoxIgMPlS-d analyze AWAIT_GATE2: 7 color-fixed collages in Drive analysis/reel-DeoxIgMPlS-d/pack. review push FAILED 403. THIS is the job for gate 2.
+updated: 2026-11-06 03:30 IST
+## Jobs (Drive jobs/state JSONs are the ledger; scrap packs were trashed)
+- test-render-001 DONE (outputs trashed). reel-DeoxIgMPlS FAILED, -b, -c superseded (folders trashed).
+- reel-DeoxIgMPlS-d analyze AWAIT_GATE2, folder analysis/reel-DeoxIgMPlS-d (old layout), color-fixed, 7 collages. review push 403.
 ## Gate status
-- Gate 1 Y given. Gate 2 NOT answered. Claude has not yet SEEN the -c collages (only a phone photo of the old ones). No gate2 approval until seen + Faiz Y.
+- Gate 1 Y given. Gate 2 NOT answered. Claude has NOT seen any correct collage yet.
 ## Blocked on (human step)
-- Faiz must give the Colab GitHub fine-grained token Contents: Read and write (edit permissions; value unchanged). Worker then retries by itself within ~2 min; then ./run review-fetch reel-DeoxIgMPlS-d --out <dir>.
+- Faiz: GitHub fine-grained token needs Contents: Read and write (value unchanged). Worker retries with backoff, then ./run review-fetch <job> --out <dir>.
+## Next
+- Daily cap (5) is used up until 00:00 UTC (05:30 IST). Then send reel-DeoxIgMPlS-e (same link, mode both, target creator:auto) so the pack lands in analysis/creators/sahilverma.ai/<job>/ ; then trash -d (scrap). Skip -e if token fix already let Claude review -d AND Faiz prefers to keep -d.
+- After collages seen: gate 2 Y/N -> candidates editing+scripting+sound -> gate 3 -> dna/creators/sahilverma.ai/...
 ## Open
-- Daily job cap (5) probably reached today UTC; next new job after 05:30 IST.
-- Whisper small + rerun untested on real audio until -c summary is read.
-- Gemini key optional; GitHub token pasted earlier -> regenerate after setup; _connector_test_bands.png awaits his OK; GCP VM after card.
+- Whisper small text is Devanagari phonetic; ok as gist only.
+- Sheet keeps history rows of trashed jobs (harmless). GCP VM after card. Gemini key optional.
+- Regenerate the old pasted GitHub token after setup.

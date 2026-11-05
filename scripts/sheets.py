@@ -46,7 +46,8 @@ class SheetsClient:
             return
         try:
             ws = self._ws("Jobs")
-            row = [st["id"], job.get("link") or job.get("file", ""), job.get("mode", ""), job.get("target", ""),
+            folder = (st.get("paths") or {}).get("analysis") or st.get("target") or job.get("target", "")
+            row = [st["id"], job.get("link") or job.get("file", ""), job.get("mode", ""), folder,
                    st["status"], st.get("output_link", ""), (st.get("note") or st.get("error_tail") or "")[:300]]
             ids = ws.col_values(1)
             if st["id"] in ids:
@@ -76,6 +77,22 @@ class SheetsClient:
                 self._ws("Approvals").append_row([job_id, gate, rev, decision, feedback, now_iso()])
             except Exception as e:  # noqa: BLE001
                 log(f"sheet approval log failed: {str(e)[:120]}")
+
+    def upsert_creator(self, handle, job_id):
+        """Creators tab: one row per creator (same name as the folders), counts analysed videos."""
+        if not self.enabled:
+            return
+        try:
+            ws = self._ws("Creators")
+            names = ws.col_values(1)
+            if handle in names:
+                r = names.index(handle) + 1
+                n = int((ws.cell(r, 2).value or "0") or 0) + 1
+                ws.update(range_name=f"A{r}:D{r}", values=[[handle, n, job_id, "dna/creators/" + handle]])
+            else:
+                ws.append_row([handle, 1, job_id, "dna/creators/" + handle], value_input_option="USER_ENTERED")
+        except Exception as e:  # noqa: BLE001
+            log(f"sheet creator update failed: {str(e)[:120]}")
 
     def add_dna_index(self, dna_id, scope, creator, dna_type, version, path, job_id):
         if self.enabled:

@@ -267,6 +267,8 @@ class Worker:
                            "analysis": self._analysis_rel(st, job), "dna": saved, "meta": st.get("source_meta", {}),
                            "saved": now_iso()}
                     self.storage.put_json(f"dna/creators/{h}/sources/{jid}.json", ptr)
+                    if self.sheets:
+                        self.sheets.upsert_creator(h, jid)
                     self.storage.put_json(f"analysis/creators/{h}/{jid}.json", ptr)
                 st["output_link"] = saved[0] if saved else ""
                 self.set_status(st, job, "DONE", "DNA saved: " + ", ".join(saved))
@@ -336,15 +338,17 @@ class Worker:
             self.storage.ensure_dir(f"analysis/creators/{h}")
 
     def _retry_review(self, st, job, wd):
-        """If the collage copy to the review branch failed (e.g. token without write access), try again every
-        ~2 min while waiting for gate 2. No new job needed. Never raises."""
+        """If the collage copy to the review branch failed (e.g. token without write access), try again while the job
+        waits at gate 2: after 2, 4, 8, 16 min, then every 30 min. So it also works when Faiz fixes the token later.
+        No new job needed. Never raises."""
         rv = st.get("review") or {}
-        if rv.get("status") != "failed" or rv.get("tries", 1) >= 4:
-            return  # gives up after 4 tries; the state keeps the error for Claude to read
+        if rv.get("status") != "failed":
+            return
         try:
-            from datetime import datetime, timezone
+            tries = int(rv.get("tries", 1))
+            wait = min(120 * 2 ** (tries - 1), 1800)
             last = rv.get("tried")
-            if last and (datetime.now(timezone.utc) - datetime.fromisoformat(last.replace("Z", "+00:00"))).total_seconds() < 120:
+            if last and (datetime.now(timezone.utc) - datetime.fromisoformat(last.replace("Z", "+00:00"))).total_seconds() < wait:
                 return
             from .review import publish
             pack = wd / "analysis" / "pack"
@@ -354,7 +358,7 @@ class Worker:
             idx = json.loads(idx_p.read_text(encoding="utf-8")) if idx_p.exists() else None
             res = publish(pack, job["id"], idx)
             res["tried"] = now_iso()
-            res["tries"] = rv.get("tries", 1) + 1
+            res["tries"] = tries + 1
             st["review"] = res
             self.save(st, job)
         except Exception:  # noqa: BLE001

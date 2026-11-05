@@ -31,5 +31,5 @@ Faiz does not want Claude's tokens spent on work that scripts or Colab can do. T
 
 ## Loopholes already closed (do not reopen)
 - Bad code push: worker import-checks after pull and rolls back (`_self_update`).
-- Review branch holds only the newest job (force push); retries stop after 4.
+- Review branch holds only the newest job (force push); retries back off (2,4,8,16 min, then every 30 min) and never give up while at gate 2.
 - Finished jobs are not re-read each poll. Deleting state files would reset the daily cap: keep job JSONs.

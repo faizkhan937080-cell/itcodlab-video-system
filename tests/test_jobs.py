@@ -290,9 +290,24 @@ def test_review_retry_after_failed_push(tmp_path, monkeypatch):
     st2 = {"review": {"status": "failed", "tried": now_iso()}}
     Worker._retry_review(Fake(), st2, {"id": "job-q-002"}, wd)
     assert calls == ["job-q-001"]
-    # ok state is left alone
-    Worker._retry_review(Fake(), {"review": {"status": "ok"}}, {"id": "x"}, wd)
+    # backoff: 3rd try waits 8 min, so a failure 5 min ago is not retried; one 9 min ago is
+    from datetime import datetime, timedelta, timezone
+    def ago(m):
+        return (datetime.now(timezone.utc) - timedelta(minutes=m)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    st3 = {"review": {"status": "failed", "tries": 3, "tried": ago(5)}}
+    Worker._retry_review(Fake(), st3, {"id": "job-q-003"}, wd)
     assert calls == ["job-q-001"]
+    st4 = {"review": {"status": "failed", "tries": 3, "tried": ago(9)}}
+    Worker._retry_review(Fake(), st4, {"id": "job-q-004"}, wd)
+    assert calls == ["job-q-001", "job-q-004"] and st4["review"]["status"] == "ok"
+    # no give-up after many tries (30 min cap)
+    st5 = {"review": {"status": "failed", "tries": 50, "tried": ago(31)}}
+    Worker._retry_review(Fake(), st5, {"id": "job-q-005"}, wd)
+    assert calls[-1] == "job-q-005"
+    # ok state is left alone
+    n = len(calls)
+    Worker._retry_review(Fake(), {"review": {"status": "ok"}}, {"id": "x"}, wd)
+    assert len(calls) == n
 
 
 def test_self_update_rolls_back_broken_code(tmp_path, monkeypatch):
@@ -341,3 +356,40 @@ def test_finished_jobs_are_not_reread(drive, tmp_path):
     w = Worker(drive, work=tmp_path / "work")
     assert w.process_once() == [("bad2", "NEEDS_INPUT")]
     assert w.process_once() == []  # terminal job skipped without reading inbox/state again
+
+
+def test_sheet_creator_row_and_folder_column():
+    from scripts.sheets import SheetsClient
+
+    class WS:
+        def __init__(self):
+            self.rows = [["Creator", "Videos analyzed", "Last job", "Notes"]]
+
+        def col_values(self, c):
+            return [r[c - 1] for r in self.rows]
+
+        def append_row(self, row, value_input_option=None):
+            self.rows.append(list(row))
+
+        def cell(self, r, c):
+            class C:
+                value = str(self.rows[r - 1][c - 1])
+            return C
+
+        def update(self, range_name, values):
+            r = int(re.search(r"A(\d+)", range_name).group(1))
+            self.rows[r - 1] = list(values[0])
+
+    ws = WS()
+    sc = SheetsClient.__new__(SheetsClient)
+    sc.enabled = True
+    sc._ws = lambda name: ws
+    sc.upsert_creator("sahilverma.ai", "job-1")
+    sc.upsert_creator("sahilverma.ai", "job-2")
+    assert ws.rows[1] == ["sahilverma.ai", 2, "job-2", "dna/creators/sahilverma.ai"]
+    jobs = WS()
+    jobs.rows = [["ID"]]
+    sc._ws = lambda name: jobs
+    sc.upsert_job({"id": "j", "status": "DONE", "target": "creator:x", "paths": {"analysis": "analysis/creators/x/j"}},
+                  {"link": "l", "mode": "both", "target": "creator:auto"})
+    assert jobs.rows[1][3] == "analysis/creators/x/j"
