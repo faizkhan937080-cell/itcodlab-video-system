@@ -97,6 +97,8 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
            f"--scale={scale}"]
     if concurrency or os.environ.get("ITCOD_RENDER_CONCURRENCY"):
         cmd.append(f"--concurrency={concurrency or os.environ['ITCOD_RENDER_CONCURRENCY']}")
+    if os.environ.get("ITCOD_BROWSER"):  # use an installed Chromium instead of downloading one
+        cmd += [f"--browser-executable={os.environ['ITCOD_BROWSER']}", "--chrome-mode=chrome-for-testing"]
     log(f"rendering {quality}: {w}x{h} x{scale}")
     rc, out, err = run_cmd(cmd, cwd=str(REMOTION_DIR), timeout=60 * 60 * 3)
     if rc != 0:
