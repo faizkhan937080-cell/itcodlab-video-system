@@ -150,6 +150,21 @@ class Worker:
         log(f"code updated {before.strip()[:7]} -> {after.strip()[:7]}; restarting worker")
         os.execv(str(ROOT / "run"), [str(ROOT / "run"), *sys.argv[1:]])
 
+    def run_until_idle(self, max_minutes=330, grace_s=180):
+        """For GitHub Actions / one-shot hosts: work until nothing changes for `grace_s` seconds (new inbox jobs,
+        approvals or candidates that arrive meanwhile are still picked up), then return so the machine can stop."""
+        poll = self.lim["jobs"]["poll_seconds"]
+        end = time.time() + max_minutes * 60
+        last, changed = None, time.time()
+        while time.time() < end:
+            res = self.process_once()
+            if res != last:
+                last, changed = res, time.time()
+            elif time.time() - changed >= grace_s:
+                return last or []
+            time.sleep(poll)
+        return last or []
+
     def loop(self, max_minutes=60):
         poll = self.lim["jobs"]["poll_seconds"]
         end = time.time() + max_minutes * 60

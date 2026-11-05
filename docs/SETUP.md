@@ -1,3 +1,5 @@
+# NEW: no-PC setup is in docs/HOSTING.md (GitHub Actions). The Colab steps below are only a backup.
+
 # Setup (free path: Colab, no card)
 
 One-time, by Faiz himself (secrets never go in chat):

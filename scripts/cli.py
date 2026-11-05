@@ -90,12 +90,31 @@ def cmd_worker(a):
     from .sheets import SheetsClient
     sheets = None if a.no_sheet else SheetsClient()
     w = Worker(_storage(), sheets)
-    if a.loop:
+    if a.until_idle:
+        for jid, status in w.run_until_idle(max_minutes=a.max_minutes, grace_s=a.grace):
+            print(f"{jid}: {status}")
+    elif a.loop:
         w.loop(max_minutes=a.max_minutes)
     else:
         for jid, status in w.process_once():
             print(f"{jid}: {status}")
     return 0
+
+
+def cmd_wake(a):
+    """Claude's doorbell: push a tiny file under trigger/ so the GitHub Actions worker starts now."""
+    from .common import ROOT, now_iso, run_cmd
+    f = ROOT / "trigger" / "wake.txt"
+    f.parent.mkdir(exist_ok=True)
+    f.write_text(f"{now_iso()} {a.reason}\n", encoding="utf-8")
+    run_cmd(["git", "-C", str(ROOT), "add", "trigger/wake.txt"])
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "commit", "-q", "-m", f"wake worker: {a.reason}"])
+    if rc != 0:
+        print("nothing to commit: " + (err or out)[-200:])
+        return 1
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "push", "-q", "origin", "HEAD:main"], timeout=120)
+    print("worker woken (GitHub Actions starts in ~10 s)" if rc == 0 else "push failed: " + err[-300:])
+    return 0 if rc == 0 else 1
 
 
 def cmd_status(a):
@@ -237,9 +256,15 @@ def build_parser():
 
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")
+    s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")
+    s.add_argument("--grace", type=int, default=180)
     s.add_argument("--max-minutes", type=int, default=60)
     s.add_argument("--no-sheet", action="store_true")
     s.set_defaults(fn=cmd_worker)
+
+    s = sub.add_parser("wake", help="start the GitHub Actions worker now (after writing a job/approval/candidate)")
+    s.add_argument("--reason", default="work waiting")
+    s.set_defaults(fn=cmd_wake)
 
     s = sub.add_parser("status", help="show job status")
     s.add_argument("--job")
