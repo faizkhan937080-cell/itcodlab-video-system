@@ -208,3 +208,26 @@ def test_written_collage_jpg_has_real_colors(tmp_path):
     cv2.imwrite(str(out), _tile(frame, 784, 441, "x"))
     px = cv2.imread(str(out))[220, 392]
     assert px[2] > 150 and px[0] < 90  # red channel (index 2 in BGR) still the strongest
+
+
+def test_stems_optional_and_measured(tmp_path, monkeypatch):
+    import numpy as np
+    import soundfile as sf
+    from scripts import audio
+    wav = tmp_path / "a.wav"
+    sf.write(str(wav), 0.1 * np.sin(np.arange(48000 * 4) / 20.0), 48000)
+    monkeypatch.setattr("importlib.util.find_spec", lambda name: None)
+    assert audio.separate_stems(wav, tmp_path) == {}            # demucs missing -> skipped quietly
+    monkeypatch.undo()
+    import importlib.util
+    monkeypatch.setattr(importlib.util, "find_spec", lambda name: object())
+
+    def fake_run(cmd, **kw):                                      # pretend demucs wrote two stems
+        base = tmp_path / "stems" / "htdemucs" / "a"
+        base.mkdir(parents=True, exist_ok=True)
+        sf.write(str(base / "vocals.wav"), 0.1 * np.sin(np.arange(48000 * 4) / 20.0), 48000)
+        sf.write(str(base / "no_vocals.wav"), 0.05 * np.sin(np.arange(48000 * 4) / 20.0), 48000)
+        return 0, "", ""
+    monkeypatch.setattr(audio, "run_cmd", fake_run)
+    r = audio.separate_stems(wav, tmp_path)
+    assert r["voice_minus_music_lu"] == 6.0 and r["vocals_lufs"] > r["music_lufs"]

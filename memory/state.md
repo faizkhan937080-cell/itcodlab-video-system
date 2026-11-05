@@ -15,3 +15,4 @@ updated: 2026-11-06 04:40 IST
 ## Open
 - Remotion license: free up to 3 people; ask headcount. Whisper Devanagari is gist only.
 - Sheet keeps history rows of trashed jobs (harmless). GCP VM after card. Gemini key optional. Regenerate old pasted GitHub token.
+- 2026-11-05 22:48Z bulk-lite mode implemented and tested (72 tests green); pending: Faiz one-time RCLONE_TOKEN secret, Y/N re-run reel as -e after 05:30 IST, mode audio first

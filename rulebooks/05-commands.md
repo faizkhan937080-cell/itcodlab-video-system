@@ -33,3 +33,9 @@ Faiz types a command in chat. Claude does the rest. The worker (Colab now, VM la
 
 ## Local commands (`./run`, only these)
 doctor, selftest, analyze-local, validate, render-local, worker, status, new-job, approve.
+
+## Bulk (many reels of one creator, e.g. 50)
+- `./run bulk-jobs --creator <handle> --batch <name> --links-file <txt> [--mode both]` -> one job per link, ONE Y/N from Faiz for the whole batch (chat).
+- Bulk jobs: measured only (no collages to Claude, no gates, not in the daily Claude cap; own `claude.bulk_daily_cap`). End state MEASURED.
+- Each saves `<analysis>/dna/measured-<type>.json`. When all batch jobs are MEASURED the worker writes `analysis/creators/<h>/_batches/<batch>/corpus-<type>-measured.json` (provisional).
+- Claude then judges only a ~10-video sample (normal gates), merges with `./run corpus`, checks with `./run dna-check`.

@@ -26,3 +26,7 @@
 ## Revisions
 - Rejected video: feedback goes in the Sheet, status REVISE, re-render only the changed scene.
 - Mistake fixed? Draft a lesson in `lessons/video.md`, ask approval, then save.
+
+## Finishing (automatic at render stages)
+- Final render is loudness-normalised to target LUFS (plan.audio_target_lufs or sound DNA), -1 dBTP limiter (`scripts/finish.py`).
+- Clone check: our output is measured by the same scripts and compared to the DNA/corpus (10% / 0.5); differences go in the job note. Never skip.

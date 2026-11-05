@@ -72,6 +72,7 @@ def _crosscheck(dna_type, dna, summary):
         _cmp(p, dna, "loudness.true_peak_dbtp", summary, "audio.ebu_r128.true_peak_dbtp")
         _cmp(p, dna, "loudness.lra_lu", summary, "audio.ebu_r128.lra_lu")
         _cmp(p, dna, "silence.share", summary, "audio.silence_share")
+        _cmp(p, dna, "mix.voice_minus_music_lu", summary, "audio.stems.voice_minus_music_lu")
         _cmp(p, dna, "speech.speech_ratio", summary, "script_metrics.speech_ratio")
         if not _get(summary, "audio.ebu_r128.integrated_lufs") and conf.get("loudness") == "measured":
             p.append("loudness tagged measured but the pack has no ebu_r128 numbers (re-run analysis)")

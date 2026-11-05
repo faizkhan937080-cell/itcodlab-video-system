@@ -11,12 +11,13 @@ import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
+from . import finish as finish_mod
 from . import render as render_mod
 from .common import limits, log, now_iso, tail, workdir
 from .dna import REQUIRED_TYPES, errors_tail, save_dna, validate
 from .dna_check import check as check_dna
 
-TERMINAL = {"DONE", "FAILED", "NEEDS_INPUT"}
+TERMINAL = {"DONE", "FAILED", "NEEDS_INPUT", "MEASURED"}
 
 
 class Worker:
@@ -87,13 +88,14 @@ class Worker:
         return False
 
     # ------------------------------------------------------------ cap
-    def _started_today(self):
+    def _started_today(self, bulk=False):
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         n = 0
         for name in self.storage.list_dir("jobs/state"):
             if name.endswith(".json"):
                 try:
-                    if self.storage.read_json(f"jobs/state/{name}").get("started", "").startswith(today):
+                    sj = self.storage.read_json(f"jobs/state/{name}")
+                    if sj.get("started", "").startswith(today) and bool(sj.get("bulk")) == bulk:
                         n += 1
                 except Exception:
                     pass
@@ -197,7 +199,9 @@ class Worker:
             if errs:
                 self.set_status(st, job, "NEEDS_INPUT", "invalid job file:\n" + errors_tail(errs))
                 return False
-            if self._started_today() >= self.lim["claude"]["daily_job_cap"] and "started" not in st:
+            st["bulk"] = bool(job.get("bulk"))
+            cap = self.lim["claude"]["bulk_daily_cap" if st["bulk"] else "daily_job_cap"]
+            if self._started_today(st["bulk"]) >= cap and "started" not in st:
                 st["note"] = "daily job cap reached; will start tomorrow (UTC) or raise the cap in limits.json"
                 self.save(st, job)
                 return False
@@ -225,15 +229,23 @@ class Worker:
                 res = run_pipeline(st["paths"]["source_local"], wd / "analysis", job_id=jid, mode=job["mode"])
                 from .describe import describe_pack
                 idx = json.loads((res["out_root"] / "collage_index.json").read_text(encoding="utf-8"))
-                st["describe"] = describe_pack(res["pack"], idx)
-                from .review import publish
-                st["review"] = publish(res["pack"], jid, idx)
-                st["review"]["tried"] = now_iso()
+                bulk = bool(job.get("bulk"))
+                if not bulk:
+                    st["describe"] = describe_pack(res["pack"], idx)
+                    from .review import publish
+                    st["review"] = publish(res["pack"], jid, idx)
+                    st["review"]["tried"] = now_iso()
+                self._write_measured_drafts(res, job, st)
                 base = self._analysis_rel(st, job)
                 self.storage.put_tree(res["out_root"], base)
                 st["paths"]["analysis"] = base
                 st["paths"]["pack"] = f"{base}/pack"
                 st["pack_manifest"] = res["manifest"]
+                if bulk:
+                    self.set_status(st, job, "MEASURED", f"measured only (batch {job.get('batch', '-')}); "
+                                    f"drafts in {base}/dna/measured-<type>.json")
+                    self._maybe_corpus(job, st)
+                    return False
                 self.set_status(st, job, "AWAIT_GATE2",
                                 f"Analysis ready: {res['manifest']['collage_count']} collage(s) in "
                                 f"{st['paths']['pack']}. Look at them and approve gate 2.")
@@ -387,6 +399,60 @@ class Worker:
         except Exception:  # noqa: BLE001
             pass
 
+    def _write_measured_drafts(self, res, job, st):
+        """Measured part of every DNA type, saved next to the analysis (inputs for corpus building). Never raises."""
+        from .dna_draft import DRAFTERS
+        try:
+            sm = json.loads((res["pack"] / "metrics_summary.json").read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            return
+        creator = (st.get("target") or job.get("target") or "").split(":", 1)[-1]
+        creator = "" if creator in ("", "general", "auto") else creator
+        for t in REQUIRED_TYPES[job["mode"]]:
+            try:
+                d = DRAFTERS[t](sm, job["id"], job.get("link", ""), creator)
+            except Exception as e:  # noqa: BLE001
+                log(f"measured draft {t} skipped: {e}")
+                continue
+            (res["out_root"] / "dna").mkdir(parents=True, exist_ok=True)
+            (res["out_root"] / "dna" / f"measured-{t}.json").write_text(
+                json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    def _maybe_corpus(self, job, st):
+        """When every video of a batch is measured, aggregate them (scripts only, zero Claude tokens)."""
+        batch, size = job.get("batch"), job.get("batch_size")
+        if not batch or not size:
+            return
+        from .dna_corpus import aggregate
+        members = []
+        for name in self.storage.list_dir("jobs/inbox"):
+            try:
+                j = self.storage.read_json(f"jobs/inbox/{name}")
+                if j.get("batch") != batch:
+                    continue
+                sj = self.storage.read_json(self._state_rel(j["id"]))
+                if sj.get("status") == "MEASURED":
+                    members.append((j, sj))
+            except Exception:  # noqa: BLE001
+                continue
+        if len(members) < size:
+            return
+        h = (st.get("target") or job.get("target") or "general").split(":", 1)[-1]
+        outs = []
+        for t in ("editing", "scripting", "sound"):
+            dnas = []
+            for j, sj in members:
+                rel = f"{sj['paths'].get('analysis')}/dna/measured-{t}.json"
+                try:
+                    dnas.append(self.storage.read_json(rel))
+                except Exception:  # noqa: BLE001
+                    pass
+            if dnas:
+                c = aggregate(t, h, dnas, [j["id"] for j, _ in members])
+                outs.append(self.storage.put_json(f"analysis/creators/{h}/_batches/{batch}/corpus-{t}-measured.json", c))
+        st["note"] += f" | batch complete: {', '.join(outs)}"
+        self.save(st, job)
+
     def _pack_summary(self, st, job):
         """metrics_summary.json of this job (numbers the DNA is cross-checked against). None if unreadable."""
         try:
@@ -505,6 +571,17 @@ class Worker:
                         f"Gate {gate} rejected: {fb}. Waiting for plan {self._plan_rel(job, st)}")
         return True
 
+    def _plan_dnas(self, plan):
+        """DNA files the plan was made from (plan.dna.editing / sound = Drive path of a dna-vN.json or corpus)."""
+        out = {}
+        for t, rel in (plan.get("dna") or {}).items():
+            if t in ("editing", "sound") and isinstance(rel, str) and self.storage.exists(rel):
+                try:
+                    out[t] = self.storage.read_json(rel)
+                except Exception:  # noqa: BLE001
+                    pass
+        return out
+
     def _render_stage(self, job, st, wd, quality, folder, fname, next_status, note):
         try:
             plan = self.storage.read_json(st["paths"]["plan"])
@@ -512,11 +589,23 @@ class Worker:
             chk = render_mod.render_plan(plan, quality, out, storage=self.storage)
             if not chk["ok"]:
                 raise RuntimeError("output check failed: " + "; ".join(chk["problems"]))
+            dnas = self._plan_dnas(plan)
+            fin = {}
+            tl = finish_mod.target_lufs(plan, dnas) if quality == "final" else None
+            if tl is not None and chk["probe"].get("has_audio"):
+                fin["loudness"] = finish_mod.normalize_loudness(out, tl, wd)
+            if dnas:
+                fin["clone_check"] = finish_mod.clone_check(out, plan, dnas, wd)
+                rel_report = self.storage.put_json(f"{folder}/{Path(fname).stem}_clone_report.json", fin)
+                st["clone_report"] = rel_report
+                st["clone_ok"] = all(v.get("pass") for k, v in fin["clone_check"].items() if isinstance(v, dict) and "pass" in v)
             rel = self.storage.put_file(out, f"{folder}/{fname}")
             key = "preview" if quality == "preview" else "final_candidate"
             st["paths"][key] = rel
             st["output_link"] = rel
             st[f"{quality}_check"] = chk["probe"]
+            if "clone_ok" in st and dnas:
+                note += " | clone check " + ("OK" if st["clone_ok"] else "DIFFERS, see " + st["clone_report"])
             self.set_status(st, job, next_status, note)
             return True
         except Exception as e:  # noqa: BLE001

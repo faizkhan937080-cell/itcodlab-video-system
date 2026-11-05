@@ -1,0 +1,2 @@
+# worker only (CPU wheels): pip install -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
+demucs

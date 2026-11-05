@@ -170,6 +170,11 @@
           }
         }
       }
+    },
+    "audio_target_lufs": {
+      "type": "number",
+      "minimum": -40,
+      "maximum": -5
     }
   }
 }

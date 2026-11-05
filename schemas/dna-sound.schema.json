@@ -165,6 +165,9 @@
      "items": {
       "type": "string"
      }
+    },
+    "voice_minus_music_lu": {
+     "type": "number"
     }
    }
   },

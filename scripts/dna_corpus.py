@@ -51,10 +51,16 @@ def aggregate(dna_type, creator, dnas, job_ids=None):
     flats = [flatten(d) for d in dnas]
     n = len(dnas)
     paths = sorted({p for f in flats for p in f})
+    # coverage is measured against the videos that HAVE that section (judged sections exist only for the sample)
+    sec_n = {}
+    for d in dnas:
+        for k in d:
+            if k not in SKIP:
+                sec_n[k] = sec_n.get(k, 0) + 1
     fields, signature, situational, targets = {}, [], [], {}
     for p in paths:
         vals = [f[p] for f in flats if p in f]
-        cover = len(vals) / n
+        cover = len(vals) / max(sec_n.get(p.split('.')[0].split('[')[0], n), 1)
         kind = vals[0]
         if all(isinstance(v, bool) for v in vals):
             c = Counter(vals)

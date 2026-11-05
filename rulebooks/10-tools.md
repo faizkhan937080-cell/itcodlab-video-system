@@ -18,3 +18,4 @@ Choose the best proven tool per job. Change a tool only with evidence (a test or
 - Remotion for client work needs the headcount check (00-core).
 - A better tool appears? Test it on one reference, compare numbers, show Faiz in chat, then switch.
 - No reference match claim without a measured check (`clone-report`). Say what is approximate (3D, particles, fonts).
+- Stems (demucs, `requirements-heavy.txt`) are optional; used for voice_minus_music_lu. Survey of who measures what: `config/measurement_map.json`.

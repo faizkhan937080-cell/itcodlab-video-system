@@ -401,3 +401,23 @@ def test_worker_follows_a_job_folder_moved_into_creator_folder(drive, tmp_path):
     assert st["paths"]["pack"] == "analysis/creators/rahul/an9/pack"
     st2 = {"paths": {"analysis": "analysis/an8"}, "target": "creator:rahul"}  # nothing moved: unchanged
     assert w._analysis_rel(st2, {"id": "an8"}) == "analysis/an8"
+
+
+def test_bulk_jobs_are_measured_only_outside_the_cap_and_build_a_corpus(drive, test_video, tmp_path):
+    import shutil
+    ref = "input/references/b.mp4"
+    (drive.root / "input/references").mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(test_video, drive.root / ref)
+    for i in (1, 2):
+        drive.put_json(f"jobs/inbox/bt-{i:03d}.json", {"id": f"bt-{i:03d}", "type": "analyze", "file": ref, "mode": "video",
+                                                       "target": "creator:zed", "gate1_approved_by_user": True,
+                                                       "bulk": True, "batch": "bt1", "batch_size": 2})
+    w = Worker(drive, work=tmp_path / "work")
+    res = w.process_once()
+    assert res == [("bt-001", "MEASURED"), ("bt-002", "MEASURED")], drive.read_json("jobs/state/bt-001.json").get("note")
+    assert drive.exists("analysis/creators/zed/bt-001/dna/measured-editing.json")
+    assert not (drive.root / "dna/creators/zed/editing/dna-v1.json").exists()      # nothing saved without gates
+    assert drive.exists("analysis/creators/zed/_batches/bt1/corpus-editing-measured.json")
+    c = drive.read_json("analysis/creators/zed/_batches/bt1/corpus-editing-measured.json")
+    assert c["n_videos"] == 2 and c["provisional"] is True and "cut_rhythm.cuts_per_min" in c["signature"]
+    assert w._started_today(bulk=False) == 0 and w._started_today(bulk=True) == 2

@@ -133,3 +133,15 @@ def test_dna_draft_prefills_measured_parts_that_pass_the_gate_once_completed():
     import pytest
     with pytest.raises(ValueError):
         DRAFTERS["scripting"]({"script_metrics": {"available": False}}, "j")
+
+
+def test_every_dna_section_has_an_owner_in_the_measurement_map():
+    import json
+    from scripts.dna import load_schema
+    from scripts.common import ROOT
+    mp = json.loads((ROOT / "config" / "measurement_map.json").read_text())
+    skip = {"type", "schema_version", "source", "evidence", "confidence", "corpus", "notes"}
+    for t in ("editing", "scripting", "sound"):
+        sections = set(load_schema(t)["required"]) - skip
+        assert sections == set(mp[t]), (t, sections ^ set(mp[t]))
+        assert all(v["src"] in ("script", "claude", "mixed") for v in mp[t].values())

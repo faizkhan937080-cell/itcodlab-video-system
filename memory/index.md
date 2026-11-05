@@ -6,7 +6,7 @@ decisions/architecture.md | 1 | 12 | architecture colab gcp github drive sheet r
 decisions/collages-seeing.md | 1 | 9 | collage tiles faces review branch gemini describe base64 transcript
 decisions/creators-dna.md | 1 | 9 | creator folder instagram handle dna editing scripting sound style lookup sahilverma
 decisions/memory-rules.md | 1 | 7 | memory forget summary long form toolbook recurring problems ai pitfalls tokens
-decisions/roadmap-gaps.md | 1 | 3 | gaps roadmap demucs clone-report loudnorm cap bulk collage
+decisions/roadmap-gaps.md | 1 | 4 | gaps roadmap demucs clone-report loudnorm cap bulk collage
 decisions/tools-licenses.md | 1 | 3 | remotion license pricing colab headcount
 decisions/working-style.md | 1 | 11 | working style hinglish short steps who decides secrets
 log/2026-11-05-build.md | 1 | 16 | log build commits jobs colab worker analysis failures

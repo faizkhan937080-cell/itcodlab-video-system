@@ -1,0 +1,34 @@
+{
+  "_note": "Survey of every DNA section: who produces it. script = measured by code (cross-checked), claude = judged from collages/transcript with evidence, mixed = both. gap = nobody yet.",
+  "editing": {
+    "format": {"src": "script", "by": "analyze.probe (rotation aware)"},
+    "cut_rhythm": {"src": "script", "by": "analyze.detect_boundaries + dna_draft pace_curve + audio beat sync"},
+    "shots": {"src": "claude", "by": "collages (scale mix, angle, composition)"},
+    "transitions": {"src": "mixed", "by": "script: hard/dissolve share; Claude: J/L, match, whip names"},
+    "motion": {"src": "mixed", "by": "script: motion class, pan, zoom; Claude: easing, speed ramps"},
+    "text": {"src": "mixed", "by": "script: OCR text per scene; Claude: font class, animation, safe zone"},
+    "color": {"src": "mixed", "by": "script: palette, brightness, saturation; Claude: grade look, temperature"},
+    "layout": {"src": "mixed", "by": "script: orientation; Claude: framing notes"},
+    "recipe": {"src": "claude", "by": "maps the style to Remotion templates"}
+  },
+  "scripting": {
+    "transcript_basis": {"src": "script", "by": "audio.transcribe coverage_ratio"},
+    "framework": {"src": "claude", "by": "transcript"},
+    "hook": {"src": "mixed", "by": "script: first words, timing; Claude: hook kind"},
+    "structure": {"src": "claude", "by": "transcript + cuts, quotes as evidence"},
+    "voice": {"src": "mixed", "by": "script: person markers per 100 words; Claude: register, energy"},
+    "language": {"src": "mixed", "by": "script: script mix; Claude: code-switching rule"},
+    "lexicon": {"src": "mixed", "by": "script: repeated phrases, fillers; Claude: signature phrases"},
+    "pacing": {"src": "script", "by": "script_metrics"},
+    "retention": {"src": "claude", "by": "open loops, re-hooks from transcript"},
+    "cta": {"src": "mixed", "by": "script: CTA words; Claude: ask, placement, incentive"}
+  },
+  "sound": {
+    "loudness": {"src": "script", "by": "audio.loudness_ebu (BS.1770)"},
+    "tempo": {"src": "script", "by": "librosa beat_track"},
+    "beat_sync": {"src": "script", "by": "audio.analyze_audio"},
+    "speech": {"src": "script", "by": "script_metrics.speech_ratio"},
+    "silence": {"src": "script", "by": "audio silence_share"},
+    "mix": {"src": "mixed", "by": "script: stems balance (demucs, optional); Claude: mood, genre, SFX"}
+  }
+}

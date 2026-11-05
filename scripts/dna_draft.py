@@ -62,6 +62,10 @@ def draft_sound(sm, job_id, link="", creator=""):
          "silence": {"share": a.get("silence_share")},
          "confidence": {"loudness": "measured" if ebu else "unknown", "tempo": "measured",
                         "beat_sync": "measured", "silence": "measured"}}
+    st = a.get("stems") or {}
+    if st.get("voice_minus_music_lu") is not None:
+        d["mix"] = {"voice_minus_music_lu": st["voice_minus_music_lu"]}
+        d["confidence"]["mix"] = "measured"
     sp = (sm.get("script_metrics") or {}).get("speech_ratio")
     if sp is not None:
         d["speech"] = {"speech_ratio": sp}

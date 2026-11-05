@@ -117,6 +117,27 @@ def cmd_wake(a):
     return 0 if rc == 0 else 1
 
 
+def cmd_bulk_jobs(a):
+    """Many reels of one creator: one job file per link, measured only. Needs ONE Y from Faiz for the whole batch."""
+    from .common import now_iso
+    from .dna import errors_tail, validate
+    links = [x.strip() for x in Path(a.links_file).read_text(encoding="utf-8").splitlines() if x.strip()]
+    st = _storage()
+    made = []
+    for i, link in enumerate(links, 1):
+        job = {"id": f"{a.batch}-{i:03d}", "type": "analyze", "created": now_iso(), "link": link, "mode": a.mode,
+               "target": f"creator:{a.creator}", "gate1_approved_by_user": True, "bulk": True, "batch": a.batch,
+               "batch_size": len(links)}
+        errs = validate("job", job)
+        if errs:
+            print("INVALID\n" + errors_tail(errs))
+            return 1
+        st.put_json(f"jobs/inbox/{job['id']}.json", job)
+        made.append(job["id"])
+    print(f"{len(made)} bulk job(s) queued for creator {a.creator}: {made[0]} .. {made[-1]}")
+    return 0
+
+
 def cmd_status(a):
     st = _storage()
     names = [n for n in st.list_dir("jobs/state") if n.endswith(".json")]
@@ -265,6 +286,13 @@ def build_parser():
     s = sub.add_parser("wake", help="start the GitHub Actions worker now (after writing a job/approval/candidate)")
     s.add_argument("--reason", default="work waiting")
     s.set_defaults(fn=cmd_wake)
+
+    s = sub.add_parser("bulk-jobs", help="queue many reels of one creator (measured only, one approval)")
+    s.add_argument("--creator", required=True)
+    s.add_argument("--batch", required=True)
+    s.add_argument("--links-file", required=True)
+    s.add_argument("--mode", choices=["video", "audio", "both"], default="both")
+    s.set_defaults(fn=cmd_bulk_jobs)
 
     s = sub.add_parser("status", help="show job status")
     s.add_argument("--job")

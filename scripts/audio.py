@@ -56,6 +56,31 @@ def loudness_ebu(wav):
         return {}
 
 
+def separate_stems(wav, workdir):
+    """Voice vs music/everything-else with demucs (two stems), then measure each in LUFS.
+    Optional: returns {} when demucs is not installed or anything fails. Never raises."""
+    import importlib.util
+    import sys
+    if importlib.util.find_spec("demucs") is None:
+        return {}
+    try:
+        out = Path(workdir) / "stems"
+        rc, _, err = run_cmd([sys.executable, "-m", "demucs.separate", "--two-stems=vocals", "-n", "htdemucs",
+                              "-o", str(out), str(wav)], timeout=1500)
+        if rc != 0:
+            log("stems skipped: " + tail(err, 2))
+            return {}
+        base = out / "htdemucs" / Path(wav).stem
+        v, m = loudness_ebu(base / "vocals.wav"), loudness_ebu(base / "no_vocals.wav")
+        if not v or not m:
+            return {}
+        return {"vocals_lufs": v["integrated_lufs"], "music_lufs": m["integrated_lufs"],
+                "voice_minus_music_lu": round(v["integrated_lufs"] - m["integrated_lufs"], 1), "engine": "demucs htdemucs"}
+    except Exception as e:  # noqa: BLE001
+        log(f"stems skipped: {type(e).__name__}")
+        return {}
+
+
 def analyze_audio(wav, cut_times, sr_target=22050):
     import librosa
     y, sr = librosa.load(str(wav), sr=sr_target, mono=True)
@@ -84,6 +109,7 @@ def analyze_audio(wav, cut_times, sr_target=22050):
             "beat_count": int(len(beats)), "beat_times_first_20": [round(float(b), 2) for b in beats[:20]],
             "loudness_db_mean": round(float(db.mean()), 1), "loudness_db_max": round(float(db.max()), 1),
             "silences": silences[:20], "cut_beat_sync": sync, "ebu_r128": loudness_ebu(wav),
+            "stems": separate_stems(wav, Path(wav).parent) if limits()["analysis"].get("stems") and dur <= 900 else {},
             "silence_share": round(sum(b - a for a, b in silences) / dur, 3) if dur else 0.0}
 
 

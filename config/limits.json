@@ -5,7 +5,8 @@
     "error_log_tail_lines": 20,
     "default_model": "sonnet",
     "daily_job_cap": 5,
-    "fresh_session_per_job": true
+    "fresh_session_per_job": true,
+    "bulk_daily_cap": 40
   },
   "jobs": {
     "max_retries": 2,
@@ -30,7 +31,8 @@
       "static": 0.15,
       "slow": 0.6,
       "medium": 1.6
-    }
+    },
+    "stems": true
   },
   "collage": {
     "max_collages_per_video": 10,

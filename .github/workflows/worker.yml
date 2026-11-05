@@ -42,7 +42,7 @@ jobs:
           ffmpeg -version | head -1; rclone version | head -1
       - name: Python packages
         if: steps.chk.outputs.ready == 'true'
-        run: pip install -q -r requirements.txt && pip install -q -U yt-dlp
+        run: pip install -q -r requirements.txt && pip install -q -U yt-dlp && pip install -q -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
       - uses: actions/cache@v4
         if: steps.chk.outputs.ready == 'true'
         with:
