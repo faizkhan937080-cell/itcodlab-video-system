@@ -77,3 +77,26 @@ def test_describe_skipped_without_key_and_works_with_fake_model(analysed, monkey
     doc = json.loads((analysed["pack"] / "descriptions.json").read_text())
     assert doc["collages"][0]["tiles"][0]["shot"] == "wide"
     (analysed["pack"] / "descriptions.json").unlink()  # test cleanup only
+
+
+def test_transcribe_never_breaks_the_job(tmp_path, monkeypatch):
+    import sys
+    import types
+    from scripts import audio
+
+    class Boom:
+        def __init__(self, *a, **k):
+            pass
+
+        def transcribe(self, *a, **k):
+            raise TypeError("open() got an unexpected keyword argument 'metadata_errors'")
+
+    fake = types.ModuleType("faster_whisper")
+    fake.WhisperModel = Boom
+    monkeypatch.setitem(sys.modules, "faster_whisper", fake)
+    import numpy as np
+    import soundfile as sf
+    wav = tmp_path / "a.wav"
+    sf.write(str(wav), np.zeros(16000, dtype="float32"), 16000)
+    res = audio.transcribe(wav)
+    assert res["available"] is False and "metadata_errors" in res["error"]

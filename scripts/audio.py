@@ -49,14 +49,21 @@ def analyze_audio(wav, cut_times, sr_target=22050):
 
 
 def transcribe(wav):
-    """Optional: faster-whisper. Returns {'available': False} if not installed."""
+    """Optional: faster-whisper. Never raises: any problem -> {'available': False, 'error': ...}.
+    Audio is loaded with librosa and passed as an array, so PyAV's decoder (version clashes) is not used."""
     try:
         from faster_whisper import WhisperModel
     except Exception:
         return {"available": False}
-    model = WhisperModel(limits()["analysis"]["whisper_model"], device="auto", compute_type="int8")
-    segs, info = model.transcribe(str(wav), vad_filter=True)
-    out = [{"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()} for s in segs]
-    log(f"transcript segments: {len(out)}")
-    return {"available": True, "language": info.language, "segments": out,
-            "text": " ".join(x["text"] for x in out)}
+    try:
+        import librosa
+        y, _ = librosa.load(str(wav), sr=16000, mono=True)
+        model = WhisperModel(limits()["analysis"]["whisper_model"], device="auto", compute_type="int8")
+        segs, info = model.transcribe(y, vad_filter=True)
+        out = [{"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()} for s in segs]
+        log(f"transcript segments: {len(out)}")
+        return {"available": True, "language": info.language, "segments": out,
+                "text": " ".join(x["text"] for x in out)}
+    except Exception as e:  # noqa: BLE001
+        log(f"transcript skipped: {type(e).__name__}")
+        return {"available": False, "error": tail(f"{type(e).__name__}: {e}", 3)}
