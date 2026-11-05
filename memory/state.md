@@ -1,13 +1,14 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 04:40 IST
+updated: 2026-11-06 05:30 IST
 ## Jobs (Drive jobs/state JSONs are the ledger; scrap packs were trashed)
 - test-render-001 DONE (outputs trashed). reel-DeoxIgMPlS FAILED, -b, -c superseded (folders trashed).
 - reel-DeoxIgMPlS-d AWAIT_GATE2. Folder MOVED to analysis/creators/sahilverma.ai/reel-DeoxIgMPlS-d (worker follows). Has source.mp4, audio.wav, keyframes/, pack/, dna/ (empty: old v1 drafts trashed, schema is v2 now).
 ## Gate status
 - Gate 1 Y given. Gate 2 NOT answered. Claude has NOT seen any correct collage yet (editing DNA blocked).
 ## Blocked on (human step)
-- Faiz: GitHub fine-grained token needs Contents: Read and write (value unchanged). Then ./run review-fetch <job> --out <dir>.
+- Hosting DONE 05:19 IST: RCLONE_TOKEN secret added, workflow perms read+write saved, first Actions run green (7 min). Colab worker still running in Faiz's tab (403 on review push): Faiz asked to Disconnect+delete runtime. Real proof = reel -e job.
+- Scheduled task 05:32 IST: queue reel -e (mode audio first) + ./run wake. Then ./run review-fetch <job> --out <dir>.
 ## Next
 - Re-run reel as -e after cap reset 05:30 IST (needs Faiz Y in chat): new code gives full transcript, script_metrics, LUFS. Then ./run dna-draft + judged parts + dna-check.
 - Approvals ONLY in chat. Approved: batch asks, creator folders, Gate-2 split (mode audio = sound+scripting), Remotion headcount check.
