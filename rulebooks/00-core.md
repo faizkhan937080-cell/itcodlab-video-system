@@ -43,5 +43,5 @@
   user drops the file in Drive `input/references/`. Pipeline then continues as normal.
 
 ## Remotion license (approved 2026-11-06)
-- Free for teams up to 3 people. Before any CLIENT video is rendered with Remotion, Faiz confirms the IT COD LAB
-  headcount in chat. Over 3 = buy the Remotion company license first (Creators $25/month per coder).
+- Free for teams up to 3 people. CONFIRMED by Faiz 2026-11-06: IT COD LAB = 1 person, so Remotion is free.
+  Re-check in chat if the team grows past 3 (then Creators license $25/month per coder).

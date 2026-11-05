@@ -42,3 +42,14 @@ def test_repeated_phrases_found():
     segs = [{"start": 0, "end": 5, "text": "edit with claude today. edit with claude again"}]
     m = sm.compute(tr(segs), 5)
     assert any(p["phrase"] == "edit with claude" and p["count"] == 2 for p in m["repeated_phrases"])
+
+
+def test_repeated_lines_counted_once_with_count():
+    segs = [{"start": 0, "end": 2, "text": "Comment karo"}, {"start": 2, "end": 4, "text": "Seedha kaam ki baat"},
+            {"start": 4, "end": 6, "text": "comment  karo!"}]
+    u = sm.dedup_sentences([s["text"] for s in segs])
+    assert [x["count"] for x in u] == [2, 1] and u[0]["text"] == "Comment karo"
+    m = sm.compute(tr(segs), 6)
+    assert m["repeated_sentences"][0]["count"] == 2 and m["unique_sentence_share"] == round(2 / 3, 3)
+    from scripts.pack import _unique_text
+    assert _unique_text(segs) == "Comment karo (x2) | Seedha kaam ki baat"

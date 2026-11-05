@@ -59,6 +59,25 @@ def _repeated_phrases(words, n=3, min_count=2, top=8):
     return [{"phrase": g, "count": c} for g, c in rep[:top]]
 
 
+def _norm(sent):
+    return " ".join(w.lower() for w in _words(sent))
+
+
+def dedup_sentences(sentences):
+    """Repeated lines are kept ONCE (first position) with a count. Returns (unique list of {text, count})."""
+    seen, order = {}, []
+    for x in sentences:
+        k = _norm(x)
+        if not k:
+            continue
+        if k in seen:
+            seen[k]["count"] += 1
+        else:
+            seen[k] = {"text": x.strip(), "count": 1}
+            order.append(k)
+    return [seen[k] for k in order]
+
+
 def compute(transcript, duration_s):
     """Return a metrics dict, or {"available": False}."""
     if not transcript or not transcript.get("available") or not transcript.get("segments"):
@@ -101,6 +120,8 @@ def compute(transcript, duration_s):
         "fillers_per_100w": round(100 * sum(w in FILLERS for w in low) / len(words), 2),
         "cta_words": sorted({w for w in low if w in CTA_WORDS}),
         "repeated_phrases": _repeated_phrases(words),
+        "repeated_sentences": [u for u in dedup_sentences(sentences) if u["count"] > 1][:8],
+        "unique_sentence_share": round(len(dedup_sentences(sentences)) / max(len(sentences), 1), 3),
         "hook": {"first_word_s": round(segs[0]["start"], 2), "words_in_first_3s": words_before(segs, 3.0),
                  "words_in_first_5s": words_before(segs, 5.0), "first_12_words": " ".join(words[:12])},
         "vocabulary_note": "phonetic" if dev and not lat else "mixed" if dev else "roman",

@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 
 from . import audio as audio_mod
+from . import audit as audit_mod
 from . import script_metrics
 from .analyze import analyze_video
 from .collage import build_collages, capacity, pick_layout
@@ -27,6 +28,13 @@ def _overall_palette(scenes, k=6):
             acc[c["hex"]] = acc.get(c["hex"], 0) + c["share"] * s["duration_s"]
     tot = sum(acc.values()) or 1
     return [{"hex": h, "share": round(v / tot, 3)} for h, v in sorted(acc.items(), key=lambda x: -x[1])[:k]]
+
+
+def _unique_text(segments):
+    """Transcript for Claude: a repeated line appears once, with (xN) when it was said N times."""
+    from .script_metrics import dedup_sentences
+    return " | ".join(u["text"] + (f" (x{u['count']})" if u["count"] > 1 else "")
+                      for u in dedup_sentences([s["text"] for s in segments]))
 
 
 def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, transcript, lim, script_m=None):
@@ -63,7 +71,7 @@ def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, 
     if transcript.get("available"):
         n = lim["pack"]["transcript_chars_in_summary"]
         summary["transcript"] = {"language": transcript["language"], "coverage_ratio": transcript.get("coverage_ratio"),
-                                 "text": transcript["text"][:n]}
+                                 "text": _unique_text(transcript["segments"])[:n]}
         if transcript.get("alt_english"):
             summary["transcript"]["english_pass"] = {"coverage_ratio": transcript["alt_english"].get("coverage_ratio"),
                                                       "text": transcript["alt_english"]["text"][:n]}
@@ -105,9 +113,13 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
             transcript = audio_mod.transcribe(wav)
         write_json_local(out_root / "transcript.json", transcript)
         write_json_local(out_root / "audio.json", audio_res)
+    audit = audit_mod.build(info, len(frames), scenes, clusters, audio_res, transcript)
+    write_json_local(out_root / "audit.json", audit)
     script_m = script_metrics.compute(transcript, info["duration_s"])
     write_json_local(out_root / "script_metrics.json", script_m)
     summary = build_summary(info, scenes, clusters, rep, idx, audio_res, transcript, lim, script_m)
+    summary["audit"] = {k: audit[k] for k in ("frames", "scenes", "transcript_coverage", "lufs_measured", "warnings", "pass")}
+    summary["audit"]["per_minute"] = audit["per_minute"][:30]
     write_json_local(pack / "metrics_summary.json", summary)
     manifest = {"job_id": job_id, "mode": mode, "created": now_iso(),
                 "files": sorted(p.name for p in pack.iterdir()),

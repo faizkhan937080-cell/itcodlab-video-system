@@ -9,7 +9,9 @@ import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
-from .analyze import grab_frame_at
+from skimage.metrics import structural_similarity
+
+from .analyze import grab_frame_at, hamming_hex, phash64
 from .common import fmt_ts
 
 
@@ -47,6 +49,8 @@ def plan_frames(scenes, clusters, layout, lim):
         for s in longest:
             if s["duration_s"] < c_cfg["extra_frame_min_scene_s"]:
                 continue
+            if (s.get("motion") or {}).get("class") == "static":
+                continue  # a static scene looks the same all the way: one frame is enough
             cl = next(c["cluster"] for c in reps if c["rep_scene"] == s["id"])
             for frac in (0.15, 0.85)[: c_cfg["extra_frames_per_scene_max"]]:
                 if spare <= 0:
@@ -90,7 +94,23 @@ def _tile(frame_bgr, tile_w, tile_h, label):
     return cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)  # PIL is RGB; the canvas and cv2.imwrite are BGR
 
 
+def _sig(frame):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    small = cv2.resize(gray, (64, 64), interpolation=cv2.INTER_AREA)
+    return phash64(small), small
+
+
+def _is_dup(sig, kept, lim):
+    d = lim["dedup"]
+    for ph, small in kept:
+        if hamming_hex(sig[0], ph) <= d["phash_hamming_max_start"] and \
+                structural_similarity(sig[1], small, data_range=255) >= d["ssim_min_start"]:
+            return True
+    return False
+
+
 def build_collages(video, outdir, scenes, clusters, info, fps, lim):
+    """Each look appears ONCE: cluster representatives always, extra frames only when they show something new."""
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     key, layout = pick_layout(info["width"], info["height"], lim, len(scenes))
@@ -99,22 +119,37 @@ def build_collages(video, outdir, scenes, clusters, info, fps, lim):
     per = layout["frames_per_collage"]
     plan = plan_frames(scenes, clusters, layout, lim)
     max_n = lim["collage"]["max_collages_per_video"]
-    n_collages = math.ceil(len(plan) / per) if plan else 0
-    if n_collages > max_n:
-        raise RuntimeError(f"collage count {n_collages} > limit {max_n}")
     cap = cv2.VideoCapture(str(video))
     kf_dir = outdir.parent / "keyframes"
-    files, index = [], []
-    for ci in range(n_collages):
-        part = plan[ci * per:(ci + 1) * per]
-        canvas = np.full((rows * th, cols * tw, 3), 0, dtype=np.uint8)
-        for j, p in enumerate(part):
-            if p["keyframe"] and (kf_dir / p["keyframe"]).exists():
-                frame = cv2.imread(str(kf_dir / p["keyframe"]))
-            else:
-                frame = grab_frame_at(cap, p["t"], fps)
+    chosen, kept, dropped = [], [], []
+    for p in plan:  # reps first (plan is time-sorted, so do two passes)
+        if not p["extra"]:
+            frame = cv2.imread(str(kf_dir / p["keyframe"])) if p["keyframe"] and (kf_dir / p["keyframe"]).exists() \
+                else grab_frame_at(cap, p["t"], fps)
+            if frame is not None:
+                sig = _sig(frame)
+                kept.append(sig)
+                chosen.append((p, frame))
+    for p in plan:
+        if p["extra"]:
+            frame = grab_frame_at(cap, p["t"], fps)
             if frame is None:
                 continue
+            sig = _sig(frame)
+            if _is_dup(sig, kept, lim):
+                dropped.append({"scene": p["scene"], "t": p["t"]})
+                continue
+            kept.append(sig)
+            chosen.append((p, frame))
+    chosen.sort(key=lambda x: (x[0]["t"], x[0]["scene"]))
+    n_collages = math.ceil(len(chosen) / per) if chosen else 0
+    if n_collages > max_n:
+        raise RuntimeError(f"collage count {n_collages} > limit {max_n}")
+    files, index = [], []
+    for ci in range(n_collages):
+        part = chosen[ci * per:(ci + 1) * per]
+        canvas = np.full((rows * th, cols * tw, 3), 0, dtype=np.uint8)
+        for j, (p, frame) in enumerate(part):
             label = f"c{p['cluster']} s{p['scene']} {fmt_ts(p['t'])}"
             r, c = divmod(j, cols)
             canvas[r * th:(r + 1) * th, c * tw:(c + 1) * tw] = _tile(frame, tw, th, label)
@@ -125,7 +160,7 @@ def build_collages(video, outdir, scenes, clusters, info, fps, lim):
         files.append(name)
         index.append({"file": name, "size_px": [W, H], "tiles": [
             {"pos": j + 1, "cluster": p["cluster"], "scene": p["scene"], "t": p["t"], "extra": p["extra"]}
-            for j, p in enumerate(part)]})
+            for j, (p, _f) in enumerate(part)]})
     cap.release()
     return {"layout": key, "grid": [cols, rows], "tile_px": [tw, th], "collages": index,
-            "count": len(files), "max_allowed": max_n}
+            "count": len(files), "max_allowed": max_n, "extras_dropped_as_duplicates": len(dropped)}
