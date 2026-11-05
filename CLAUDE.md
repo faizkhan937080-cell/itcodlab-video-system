@@ -30,6 +30,12 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
 - Faiz approvals: ALWAYS in chat (short Hinglish, Y/N). Never a page, doc or tab. He listens, he does not read.
 - Faiz downloads and attaches nothing. Collages come via GitHub branch `review` (`./run review-fetch <job> --out <dir>`).
 
+## Story (kahani update) - memory discipline
+- Faiz says "kahani update" (or "story update"), or a work chat just ended: run `./run story` after adding anything durable
+  (`./run mem add <shard> <text>` decisions/context, lessons/ for mistakes, `memory/state.md` rewritten). Do it on your own, unasked.
+- Durable = context reused later, learnings, Faiz's rules/preferences, state changes. Not chatter, never secrets of others.
+- Before starting ANY development: read `./run mem brief` (state+index), then `./run mem find <word>` for the topic.
+
 ## Where things live
 - GitHub: rules, lessons, config, scripts, Remotion code.
 - Drive (`config/drive.json`): input, assets, analysis, dna, output.
