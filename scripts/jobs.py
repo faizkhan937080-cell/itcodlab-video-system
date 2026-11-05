@@ -322,9 +322,15 @@ class Worker:
         """Everything of a creator lives under that creator's name: analysis/creators/<h>/<job>.
         Jobs started before this layout keep the path already stored in their state."""
         p = (st.get("paths") or {}).get("analysis")
-        if p:
-            return p
         t = st.get("target") or job.get("target", "general")
+        if p:
+            if not self.storage.exists(p) and t.startswith("creator:") and t != "creator:auto":
+                alt = f"analysis/creators/{t.split(':', 1)[1]}/{job['id']}"
+                if self.storage.exists(alt):  # folder was moved into the creator's folder: follow it
+                    st["paths"]["analysis"] = alt
+                    st["paths"]["pack"] = f"{alt}/pack"
+                    return alt
+            return p
         if t.startswith("creator:") and t != "creator:auto":
             return f"analysis/creators/{t.split(':', 1)[1]}/{job['id']}"
         return f"analysis/general/{job['id']}"

@@ -393,3 +393,14 @@ def test_sheet_creator_row_and_folder_column():
     sc.upsert_job({"id": "j", "status": "DONE", "target": "creator:x", "paths": {"analysis": "analysis/creators/x/j"}},
                   {"link": "l", "mode": "both", "target": "creator:auto"})
     assert jobs.rows[1][3] == "analysis/creators/x/j"
+
+
+def test_worker_follows_a_job_folder_moved_into_creator_folder(drive, tmp_path):
+    w = Worker(drive, work=tmp_path / "work")
+    (drive.root / "analysis/creators/rahul/an9/pack").mkdir(parents=True)
+    st = {"paths": {"analysis": "analysis/an9", "pack": "analysis/an9/pack"}, "target": "creator:rahul"}
+    job = {"id": "an9", "target": "creator:auto"}
+    assert w._analysis_rel(st, job) == "analysis/creators/rahul/an9"
+    assert st["paths"]["pack"] == "analysis/creators/rahul/an9/pack"
+    st2 = {"paths": {"analysis": "analysis/an8"}, "target": "creator:rahul"}  # nothing moved: unchanged
+    assert w._analysis_rel(st2, {"id": "an8"}) == "analysis/an8"
