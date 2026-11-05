@@ -1,0 +1,23 @@
+{
+  "_note": "Google Drive and Sheet IDs. No passwords or tokens here.",
+  "root": { "name": "ITCODLAB-VIDEO", "id": "1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c" },
+  "folders": {
+    "input": "12c9rl0aOxAivagO7v1R0ap5thbmlZrbt",
+    "input/references": "1QvTUKGLe9G6gWgyleqrQdwAQpnJq3pOk",
+    "input/client-media": "1P0G_vw9h5RDqrGygGXnnj0CRUb_o495r",
+    "assets": "1eSP2FhMonRyUWIj_jbYAQ3AZBXz2NYj4",
+    "analysis": "1FXpY_EKvdeV9KAyc1tpCLslWwzVxljKj",
+    "dna": "1QQgfqKbfaUltErBfquxM0WyHsLOUyz8B",
+    "dna/general": "1-NcJE0Bw3svrR7OorgbvjidjTDbMrn8W",
+    "dna/creators": "1-23O0bnBQrDB8ZMaxDe5tuuQkWQ77tYJ",
+    "output": "1xZbldbr8cCfouwgv-No4AdJ8UeZXp5kK",
+    "output/previews": "1ag_fGDqICTtsGgZE0CcZ8tNJhto457AI",
+    "output/final-4k": "1QYAQcqBMyhNfHnBO92R7qbIOCwUJCYIJ"
+  },
+  "sheet": {
+    "name": "ITCODLAB-VIDEO-CONTROL",
+    "id": "1WNLqPdgSB48uFfoyrU34G-GDzdELXonlnMY_utBGucw",
+    "tabs": ["Jobs", "DNA_Index", "Creators", "Approvals"],
+    "jobs_columns": ["ID", "Link", "Mode", "Folder", "Status", "Output link", "Notes"]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "brand": "itcodlab",
+  "colors": {
+    "navy": "#0A192F",
+    "coral": "#FF5A5F"
+  },
+  "hashtags": {
+    "case": "lowercase"
+  },
+  "_note": "Add fonts, logo paths and other brand rules here as they are decided."
+}

@@ -1,0 +1,37 @@
+{
+  "_note": "Starting values. Tune after the pilot run. Scripts enforce these, not Claude.",
+  "claude": {
+    "max_calls_per_stage": 2,
+    "max_retries": 2,
+    "error_log_tail_lines": 20,
+    "default_model": "sonnet",
+    "daily_job_cap": 5,
+    "fresh_session_per_job": true
+  },
+  "collage": {
+    "max_collages_per_video": 10,
+    "max_long_edge_px": 1568,
+    "layouts": {
+      "9:16": { "grid": "4x2", "tile_px": [392, 697], "frames_per_collage": 8 },
+      "16:9": { "grid": "3x3", "tile_px": [522, 294], "frames_per_collage": 9 }
+    },
+    "tile_overlay": ["timestamp", "frame_number"]
+  },
+  "dedup": {
+    "methods": ["phash", "ssim"],
+    "threshold_start": "tune in pilot",
+    "raise_threshold_if_over_max_collages": true,
+    "keep_removed_scenes_in_metrics": true
+  },
+  "render": {
+    "master": { "width": 3840, "height": 2160, "codec": "h264", "colorspace": "bt709", "crf": 16 },
+    "preview_scale": 0.5,
+    "preview_before_final": true
+  },
+  "storage": {
+    "delete_allowed": false,
+    "upload_method": "rclone copy",
+    "dna_versioning": true
+  },
+  "approval_gates": 6
+}
