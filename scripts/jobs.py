@@ -193,6 +193,7 @@ class Worker:
                 st["describe"] = describe_pack(res["pack"], idx)
                 from .review import publish
                 st["review"] = publish(res["pack"], jid, idx)
+                st["review"]["tried"] = now_iso()
                 self.storage.put_tree(res["out_root"], f"analysis/{jid}")
                 st["paths"]["analysis"] = f"analysis/{jid}"
                 st["paths"]["pack"] = f"analysis/{jid}/pack"
@@ -204,6 +205,7 @@ class Worker:
             except Exception as e:  # noqa: BLE001
                 return self.failed(st, job, "analysis", e)
         if s == "AWAIT_GATE2":
+            self._retry_review(st, job, wd)
             dec, fb = self.approval(st, job, 2, 1)
             if dec == "Y":
                 types = REQUIRED_TYPES[job["mode"]]
@@ -294,6 +296,30 @@ class Worker:
         if len(handle) < 2:
             raise RuntimeError("could not read the creator handle from the link metadata")
         st["target"] = f"creator:{handle}"
+
+    def _retry_review(self, st, job, wd):
+        """If the collage copy to the review branch failed (e.g. token without write access), try again every
+        ~2 min while waiting for gate 2. No new job needed. Never raises."""
+        rv = st.get("review") or {}
+        if rv.get("status") != "failed":
+            return
+        try:
+            from datetime import datetime, timezone
+            last = rv.get("tried")
+            if last and (datetime.now(timezone.utc) - datetime.fromisoformat(last.replace("Z", "+00:00"))).total_seconds() < 120:
+                return
+            from .review import publish
+            pack = wd / "analysis" / "pack"
+            idx_p = wd / "analysis" / "collage_index.json"
+            if not pack.exists():
+                return
+            idx = json.loads(idx_p.read_text(encoding="utf-8")) if idx_p.exists() else None
+            res = publish(pack, job["id"], idx)
+            res["tried"] = now_iso()
+            st["review"] = res
+            self.save(st, job)
+        except Exception:  # noqa: BLE001
+            pass
 
     def _check_candidates(self, job, st):
         jid, ver = job["id"], st["candidate_ver"]

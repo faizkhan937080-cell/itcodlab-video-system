@@ -262,3 +262,32 @@ def test_creator_handle_is_read_from_metadata(drive, tmp_path):
         w._resolve_creator({"target": "creator:auto"}, {"paths": {}}, wd)
     assert validate("job", {"id": "abc", "type": "analyze", "link": "http://x", "mode": "both",
                             "target": "creator:auto", "gate1_approved_by_user": True}) == []
+
+
+def test_review_retry_after_failed_push(tmp_path, monkeypatch):
+    import json
+    from scripts import review
+    from scripts.jobs import Worker
+
+    wd = tmp_path / "wd"
+    (wd / "analysis" / "pack").mkdir(parents=True)
+    (wd / "analysis" / "collage_index.json").write_text("{}")
+    saved = []
+
+    class Fake:
+        def save(self, st, job):
+            saved.append(json.loads(json.dumps(st)))
+
+    calls = []
+    monkeypatch.setattr(review, "publish", lambda p, j, i=None: calls.append(j) or {"status": "ok"})
+    st = {"review": {"status": "failed", "error": "403", "tried": "2020-01-01T00:00:00Z"}}
+    Worker._retry_review(Fake(), st, {"id": "job-q-001"}, wd)
+    assert calls == ["job-q-001"] and st["review"]["status"] == "ok" and saved
+    # fresh failure (tried just now) is not retried yet
+    from scripts.common import now_iso
+    st2 = {"review": {"status": "failed", "tried": now_iso()}}
+    Worker._retry_review(Fake(), st2, {"id": "job-q-002"}, wd)
+    assert calls == ["job-q-001"]
+    # ok state is left alone
+    Worker._retry_review(Fake(), {"review": {"status": "ok"}}, {"id": "x"}, wd)
+    assert calls == ["job-q-001"]
