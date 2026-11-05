@@ -110,6 +110,13 @@ class Storage:
                 raise StorageError(f"upload failed for {rel}: {r.stderr[-300:]}")
         return rel
 
+    def ensure_dir(self, rel):
+        """Create an (empty) folder so it is visible in Drive. Never touches existing content."""
+        if self.root is not None:
+            (self.root / rel).mkdir(parents=True, exist_ok=True)
+        else:
+            subprocess.run(["rclone", "mkdir", f"{self.remote}/{rel}"], capture_output=True, text=True)
+
     def put_text(self, rel, text, versioned=True):
         with tempfile.NamedTemporaryFile("w", delete=False, suffix=".tmp", encoding="utf-8") as t:
             t.write(text)

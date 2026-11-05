@@ -101,8 +101,9 @@ class Worker:
     # ------------------------------------------------------------ main loop
     def process_once(self):
         summary = []
+        done = self.__dict__.setdefault("_finished", set())  # finished jobs are not re-read every 20 s
         for name in self.storage.list_dir("jobs/inbox"):
-            if not name.endswith(".json"):
+            if not name.endswith(".json") or name[:-5] in done:
                 continue
             try:
                 job = self.storage.read_json(f"jobs/inbox/{name}")
@@ -111,6 +112,7 @@ class Worker:
                 continue
             st = self.load_state(job)
             if st["status"] in TERMINAL:
+                done.add(name[:-5])
                 continue
             for _ in range(25):
                 if not self.step(job, st):
@@ -119,7 +121,8 @@ class Worker:
         return summary
 
     def _self_update(self):
-        """git pull the code; if it changed, restart this process so new code is used (no human step)."""
+        """git pull the code; if it changed, check the new code imports, then restart (no human step).
+        Broken new code is rolled back so the worker can never kill itself with a bad push."""
         import os
         import sys
         from .common import ROOT, run_cmd
@@ -128,9 +131,22 @@ class Worker:
         rc, before, _ = run_cmd(["git", "-C", str(ROOT), "rev-parse", "HEAD"])
         rc2, _, _ = run_cmd(["git", "-C", str(ROOT), "pull", "--ff-only", "-q"], timeout=120)
         rc3, after, _ = run_cmd(["git", "-C", str(ROOT), "rev-parse", "HEAD"])
-        if rc == 0 and rc2 == 0 and rc3 == 0 and before.strip() != after.strip():
-            log(f"code updated {before.strip()[:7]} -> {after.strip()[:7]}; restarting worker")
-            os.execv(str(ROOT / "run"), [str(ROOT / "run"), *sys.argv[1:]])
+        if not (rc == 0 and rc2 == 0 and rc3 == 0) or before.strip() == after.strip():
+            return
+        ok, _, err = run_cmd([sys.executable, "-c", "import scripts.cli, scripts.jobs, scripts.pack, scripts.review"],
+                             cwd=str(ROOT), timeout=120)
+        if ok != 0:
+            run_cmd(["git", "-C", str(ROOT), "reset", "-q", "--hard", before.strip()])
+            log(f"new code {after.strip()[:7]} does not import; rolled back to {before.strip()[:7]}")
+            try:
+                self.storage.write_state("jobs/state/_worker_alert.json", {
+                    "id": "_worker", "status": "ALERT", "updated": now_iso(),
+                    "note": f"update {after.strip()[:7]} broke imports, rolled back to {before.strip()[:7]}: " + tail(err, 3)})
+            except Exception:  # noqa: BLE001
+                pass
+            return
+        log(f"code updated {before.strip()[:7]} -> {after.strip()[:7]}; restarting worker")
+        os.execv(str(ROOT / "run"), [str(ROOT / "run"), *sys.argv[1:]])
 
     def loop(self, max_minutes=60):
         poll = self.lim["jobs"]["poll_seconds"]
@@ -176,7 +192,9 @@ class Worker:
                 src = self._acquire(job, wd)
                 st["paths"]["source_local"] = str(src)
                 self._resolve_creator(job, st, wd)
-                rel = self.storage.put_file(src, f"analysis/{jid}/{src.name}")
+                self._make_creator_folders(st)
+                st["paths"]["analysis"] = self._analysis_rel(st, job)
+                rel = self.storage.put_file(src, f"{st['paths']['analysis']}/{src.name}")
                 st["paths"]["source_drive"] = rel
                 self.set_status(st, job, "ANALYZING", "frame-by-frame analysis running")
                 return True
@@ -194,9 +212,10 @@ class Worker:
                 from .review import publish
                 st["review"] = publish(res["pack"], jid, idx)
                 st["review"]["tried"] = now_iso()
-                self.storage.put_tree(res["out_root"], f"analysis/{jid}")
-                st["paths"]["analysis"] = f"analysis/{jid}"
-                st["paths"]["pack"] = f"analysis/{jid}/pack"
+                base = self._analysis_rel(st, job)
+                self.storage.put_tree(res["out_root"], base)
+                st["paths"]["analysis"] = base
+                st["paths"]["pack"] = f"{base}/pack"
                 st["pack_manifest"] = res["manifest"]
                 self.set_status(st, job, "AWAIT_GATE2",
                                 f"Analysis ready: {res['manifest']['collage_count']} collage(s) in "
@@ -211,7 +230,7 @@ class Worker:
                 types = REQUIRED_TYPES[job["mode"]]
                 self.set_status(st, job, "AWAIT_CANDIDATE",
                                 f"Waiting for DNA candidate(s): {', '.join(types)} "
-                                f"(file analysis/{jid}/dna/candidate-<type>-v{st['candidate_ver']}.json)")
+                                f"(file {self._analysis_rel(st, job)}/dna/candidate-<type>-v{st['candidate_ver']}.json)")
                 return True
             if dec == "N":
                 self.set_status(st, job, "NEEDS_INPUT", f"Gate 2 rejected: {fb}. Send a new job with other settings.")
@@ -245,7 +264,7 @@ class Worker:
                 if target.startswith("creator:"):
                     h = target.split(":", 1)[1]
                     ptr = {"creator": h, "job": jid, "link": job.get("link", ""), "mode": job["mode"],
-                           "analysis": f"analysis/{jid}", "dna": saved, "meta": st.get("source_meta", {}),
+                           "analysis": self._analysis_rel(st, job), "dna": saved, "meta": st.get("source_meta", {}),
                            "saved": now_iso()}
                     self.storage.put_json(f"dna/creators/{h}/sources/{jid}.json", ptr)
                     self.storage.put_json(f"analysis/creators/{h}/{jid}.json", ptr)
@@ -297,12 +316,31 @@ class Worker:
             raise RuntimeError("could not read the creator handle from the link metadata")
         st["target"] = f"creator:{handle}"
 
+    def _analysis_rel(self, st, job):
+        """Everything of a creator lives under that creator's name: analysis/creators/<h>/<job>.
+        Jobs started before this layout keep the path already stored in their state."""
+        p = (st.get("paths") or {}).get("analysis")
+        if p:
+            return p
+        t = st.get("target") or job.get("target", "general")
+        if t.startswith("creator:") and t != "creator:auto":
+            return f"analysis/creators/{t.split(':', 1)[1]}/{job['id']}"
+        return f"analysis/general/{job['id']}"
+
+    def _make_creator_folders(self, st):
+        t = st.get("target", "")
+        if t.startswith("creator:") and t != "creator:auto":
+            h = t.split(":", 1)[1]
+            for sub in ("editing", "scripting", "sound", "sources"):
+                self.storage.ensure_dir(f"dna/creators/{h}/{sub}")
+            self.storage.ensure_dir(f"analysis/creators/{h}")
+
     def _retry_review(self, st, job, wd):
         """If the collage copy to the review branch failed (e.g. token without write access), try again every
         ~2 min while waiting for gate 2. No new job needed. Never raises."""
         rv = st.get("review") or {}
-        if rv.get("status") != "failed":
-            return
+        if rv.get("status") != "failed" or rv.get("tries", 1) >= 4:
+            return  # gives up after 4 tries; the state keeps the error for Claude to read
         try:
             from datetime import datetime, timezone
             last = rv.get("tried")
@@ -316,6 +354,7 @@ class Worker:
             idx = json.loads(idx_p.read_text(encoding="utf-8")) if idx_p.exists() else None
             res = publish(pack, job["id"], idx)
             res["tried"] = now_iso()
+            res["tries"] = rv.get("tries", 1) + 1
             st["review"] = res
             self.save(st, job)
         except Exception:  # noqa: BLE001
@@ -326,7 +365,7 @@ class Worker:
         types = REQUIRED_TYPES[job["mode"]]
         found, errors = {}, []
         for t in types:
-            rel = f"analysis/{jid}/dna/candidate-{t}-v{ver}.json"
+            rel = f"{self._analysis_rel(st, job)}/dna/candidate-{t}-v{ver}.json"
             if not self.storage.exists(rel):
                 continue
             try:

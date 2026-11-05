@@ -19,7 +19,7 @@ Faiz types a command in chat. Claude does the rest. The worker (Colab now, VM la
 ## Collages (Claude must SEE them)
 - Drive connector returns images as base64 text, so Claude cannot view them from Drive.
 - Faiz never downloads or attaches anything. Worker copies the pack (collages, metrics, index) to GitHub
-  branch `review`, folder `review/<job>/`. Only exception to "outputs go to Drive": it is small (~1-2 MB/job).
+  branch `review`, folder `review/<job>/` (branch keeps ONLY the newest job). Only exception to "outputs go to Drive": it is small (~1-2 MB/job).
   Claude runs `python3 -m scripts.review <job> <dir>` then views the jpgs with Read. State key: `review`.
 - If `review.status` is failed: read `review.error`, fix, never ask Faiz to download.
 - Text route (no card): worker asks a free Gemini API key (env GEMINI_API_KEY) to describe every tile.

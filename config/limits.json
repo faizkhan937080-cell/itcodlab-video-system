@@ -189,5 +189,16 @@
     "enabled": true,
     "branch": "review",
     "_note": "Collages + metrics copied to this GitHub branch so Claude can see them. Heavy files stay in Drive."
+  },
+  "phase": {
+    "name": "development",
+    "scrap_delete_approved_by_faiz": true,
+    "how": "Drive trash via connector only, logged in memory/log",
+    "never": [
+      "approved DNA",
+      "real client files",
+      "newest correct analysis",
+      "jobs/state/*.json"
+    ]
   }
 }

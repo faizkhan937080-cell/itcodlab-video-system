@@ -159,6 +159,7 @@ def test_transcribe_reruns_romanised_when_arabic_script(tmp_path, monkeypatch):
 
 def test_review_publish_and_fetch_roundtrip(tmp_path, monkeypatch):
     import subprocess
+    import pytest
     from PIL import Image
     from scripts import review
     monkeypatch.delenv("ITCOD_NO_REVIEW", raising=False)
@@ -174,10 +175,14 @@ def test_review_publish_and_fetch_roundtrip(tmp_path, monkeypatch):
     Image.new("RGB", (64, 36), (1, 2, 3)).save(pack / "collage_01.jpg")
     (pack / "metrics_summary.json").write_text("{}")
     assert review.publish(pack, "job-a-001")["status"] == "ok"
-    assert review.publish(pack, "job-b-002")["status"] == "ok"  # second push into the existing branch
     got = review.fetch("job-a-001", tmp_path / "out", repo=repo)
     assert {p.split("/")[-1] for p in got} == {"collage_01.jpg", "metrics_summary.json"}
     assert Image.open(tmp_path / "out" / "collage_01.jpg").size == (64, 36)
+    assert review.publish(pack, "job-a-001")["status"] == "ok"  # retry reuses the same scratch repo
+    assert review.publish(pack, "job-b-002")["status"] == "ok"  # newest job replaces the older one: no growth
+    assert review.fetch("job-b-002", tmp_path / "out2", repo=repo)
+    with pytest.raises(RuntimeError):
+        review.fetch("job-a-001", tmp_path / "out3", repo=repo)
 
 
 def test_collage_tile_keeps_real_colors():

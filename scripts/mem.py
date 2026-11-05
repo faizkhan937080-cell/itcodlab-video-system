@@ -14,8 +14,31 @@ from .common import ROOT
 
 MEM = ROOT / "memory"
 MAX_LINES = 58
-SECRET = re.compile(r"github_pat_[A-Za-z0-9_]{20,}|ghp_[A-Za-z0-9]{20,}|AIza[0-9A-Za-z_\-]{20,}|sk-[A-Za-z0-9]{20,}"
-                    r"|AKIA[0-9A-Z]{12,}|-----BEGIN|\b(?:\d[ -]?){13,16}\b")
+KEYS = re.compile(r"github_pat_[A-Za-z0-9_]{20,}|ghp_[A-Za-z0-9]{20,}|AIza[0-9A-Za-z_\-]{20,}|sk-[A-Za-z0-9]{20,}"
+                  r"|AKIA[0-9A-Z]{12,}|-----BEGIN")
+CARD = re.compile(r"\b(?:\d[ -]?){13,19}\b")
+
+
+def _luhn(digits):
+    total, alt = 0, False
+    for ch in reversed(digits):
+        d = int(ch)
+        if alt:
+            d = d * 2 - 9 if d * 2 > 9 else d * 2
+        total += d
+        alt = not alt
+    return total % 10 == 0
+
+
+def has_secret(text):
+    """Token/key patterns, or a Luhn-valid card number (random long numbers like timestamps are fine)."""
+    if KEYS.search(text):
+        return True
+    for m in CARD.finditer(text):
+        digits = re.sub(r"\D", "", m.group(0))
+        if 13 <= len(digits) <= 19 and _luhn(digits):
+            return True
+    return False
 
 
 def _now():
@@ -23,7 +46,7 @@ def _now():
 
 
 def check_secret(text):
-    if SECRET.search(text):
+    if has_secret(text):
         raise ValueError("refused: text looks like a secret (token, key or card number)")
 
 

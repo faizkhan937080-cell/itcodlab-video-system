@@ -10,7 +10,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from .common import ROOT, limits, log, now_iso, run_cmd, tail
+from .common import ROOT, limits, log, run_cmd, tail
 
 KEEP = ("collage_*.jpg", "metrics_summary.json", "manifest.json", "descriptions.json")
 
@@ -26,6 +26,8 @@ def _git(args, cwd, url="", timeout=180):
 
 
 def publish(pack_dir, job_id, collage_index=None):
+    """Copy the pack to branch `review`. The branch always holds ONLY the newest job (force push), so it can
+    never grow. Each job has its own scratch repo under work/, reused on retries (nothing is removed)."""
     cfg = limits().get("review", {})
     if not cfg.get("enabled") or os.environ.get("ITCOD_NO_REVIEW"):
         return {"status": "skipped", "reason": "disabled"}
@@ -35,15 +37,14 @@ def publish(pack_dir, job_id, collage_index=None):
         if rc != 0 or not url:
             return {"status": "skipped", "reason": "no git remote"}
         branch = cfg.get("branch", "review")
-        stamp = now_iso().replace(":", "").replace("-", "")
-        tmp = ROOT / "work" / f"_review_{job_id}_{stamp}"  # fresh scratch dir each time, nothing is removed
-        rc, out = _git(["clone", "-q", "--depth", "1", "--branch", branch, "--single-branch", url, str(tmp)], ROOT, url)
-        if rc != 0:  # branch does not exist yet: start it empty
-            tmp = ROOT / "work" / f"_review_{job_id}_{stamp}_init"
-            tmp.mkdir(parents=True)
+        tmp = ROOT / "work" / f"_review_{job_id}"
+        tmp.mkdir(parents=True, exist_ok=True)
+        if not (tmp / ".git").exists():
             _git(["init", "-q"], tmp)
             _git(["checkout", "-q", "--orphan", branch], tmp)
             _git(["remote", "add", "origin", url], tmp)
+        else:
+            _git(["remote", "set-url", "origin", url], tmp)
         dest = tmp / "review" / job_id
         dest.mkdir(parents=True, exist_ok=True)
         pack = Path(pack_dir)
@@ -57,16 +58,16 @@ def publish(pack_dir, job_id, collage_index=None):
             (dest / "collage_index.json").write_text(json.dumps(collage_index, ensure_ascii=False), encoding="utf-8")
         _git(["add", "-A"], tmp)
         rc, out = _git(["-c", "user.name=itcodlab-worker", "-c", "user.email=worker@itcodlab.local",
-                        "commit", "-q", "-m", f"review pack {job_id}"], tmp)
-        if rc != 0 and "nothing to commit" not in out:
-            return {"status": "failed", "error": tail(out, 3)}
-        rc, out = _git(["push", "-q", "origin", f"HEAD:{branch}"], tmp, url)
+                        "commit", "-q", "--allow-empty", "-m", f"review pack {job_id}"], tmp)
         if rc != 0:
             return {"status": "failed", "error": tail(out, 3)}
+        rc, out = _git(["push", "-q", "--force", "origin", f"HEAD:{branch}"], tmp, url)
+        if rc != 0:
+            return {"status": "failed", "error": tail(out, 3), "tries": 1}
         log(f"review pack published: {n} file(s) to branch {branch}")
         return {"status": "ok", "branch": branch, "path": f"review/{job_id}", "files": n}
     except Exception as e:  # noqa: BLE001
-        return {"status": "failed", "error": tail(f"{type(e).__name__}: {e}", 3)}
+        return {"status": "failed", "error": tail(f"{type(e).__name__}: {e}", 3), "tries": 1}
 
 
 def fetch(job_id, dest, repo=None):

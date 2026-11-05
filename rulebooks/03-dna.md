@@ -27,8 +27,10 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 
 ## Creator folders (one name everywhere)
 - Creator name = Instagram handle, lowercase, read from the link by the worker (target `creator:auto`).
-- Same name in: `dna/creators/<h>/{editing,scripting,sound}/dna-vN.json`, `dna/creators/<h>/sources/<job>.json`,
-  `analysis/creators/<h>/<job>.json` (pointer to the full analysis), Sheet DNA_Index.
+- Everything of a creator sits under that name. Worker creates the folders as soon as the handle is known:
+  `analysis/creators/<h>/<job>/` (source, pack, candidates), `dna/creators/<h>/{editing,scripting,sound,sources}/`,
+  pointer `analysis/creators/<h>/<job>.json`, Sheet DNA_Index. General jobs: `analysis/general/<job>/`.
+- Saved DNA: `dna/creators/<h>/<type>/dna-vN.json`. Only the 100% correct, approved version is kept in dev phase.
 - "Make it in <name>'s style": list `dna/creators/`, match the handle (fuzzy), read the latest dna-vN
   of each needed type (script -> scripting, video -> editing, both -> all three + sound), then plan.
 - Merge or compare creators only with approval. Old versions stay.

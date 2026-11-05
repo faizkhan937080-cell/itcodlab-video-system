@@ -113,9 +113,11 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     st = lambda: drive.read_json("jobs/state/an1.json")  # noqa: E731
 
     assert w.process_once() == [("an1", "AWAIT_GATE2")]
-    assert drive.exists("analysis/an1/pack/collage_01.jpg")
-    assert drive.exists("analysis/an1/pack/metrics_summary.json")
-    assert drive.exists("analysis/an1/test.mp4")
+    assert drive.exists("analysis/creators/rahul/an1/pack/collage_01.jpg")
+    assert drive.exists("analysis/creators/rahul/an1/pack/metrics_summary.json")
+    assert drive.exists("analysis/creators/rahul/an1/test.mp4")
+    for sub in ("editing", "scripting", "sound", "sources"):  # creator folders exist from the start
+        assert (drive.root / "dna/creators/rahul" / sub).is_dir()
     # no approval -> nothing moves, however often the worker runs
     for _ in range(3):
         assert w.process_once() == [("an1", "AWAIT_GATE2")]
@@ -124,14 +126,14 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
 
     # a broken candidate is refused and a new version is requested (never overwritten)
-    drive.put_json("analysis/an1/dna/candidate-editing-v1.json", {"type": "editing", "source": {"job_id": "an1"}})
-    drive.put_json("analysis/an1/dna/candidate-scripting-v1.json", scripting_dna("an1"))
-    drive.put_json("analysis/an1/dna/candidate-sound-v1.json", sound_dna("an1"))
+    drive.put_json("analysis/creators/rahul/an1/dna/candidate-editing-v1.json", {"type": "editing", "source": {"job_id": "an1"}})
+    drive.put_json("analysis/creators/rahul/an1/dna/candidate-scripting-v1.json", scripting_dna("an1"))
+    drive.put_json("analysis/creators/rahul/an1/dna/candidate-sound-v1.json", sound_dna("an1"))
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
     assert st()["candidate_ver"] == 2 and "cut_rhythm" in st()["validation_errors"]
 
     for t, fn in (("editing", editing_dna), ("scripting", scripting_dna), ("sound", sound_dna)):
-        drive.put_json(f"analysis/an1/dna/candidate-{t}-v2.json", fn("an1"))
+        drive.put_json(f"analysis/creators/rahul/an1/dna/candidate-{t}-v2.json", fn("an1"))
     assert w.process_once() == [("an1", "AWAIT_GATE3")]
 
     # rejection asks for v3 and needs a new approval file (rev 3), not the old one
@@ -139,7 +141,7 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
     assert st()["candidate_ver"] == 3
     for t, fn in (("editing", editing_dna), ("scripting", scripting_dna), ("sound", sound_dna)):
-        drive.put_json(f"analysis/an1/dna/candidate-{t}-v3.json", fn("an1"))
+        drive.put_json(f"analysis/creators/rahul/an1/dna/candidate-{t}-v3.json", fn("an1"))
     assert w.process_once() == [("an1", "AWAIT_GATE3")]
     approve(drive, "an1", 3, 3, "Y")
     w.process_once()
@@ -149,8 +151,8 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     saved = drive.read_json("dna/creators/rahul/editing/dna-v1.json")
     assert saved["_meta"]["source_job"] == "an1" and saved["_meta"]["scope"] == "creator:rahul"
     # all earlier candidate versions are still there
-    assert drive.exists("analysis/an1/dna/candidate-editing-v1.json")
-    assert drive.exists("analysis/an1/dna/candidate-editing-v2.json")
+    assert drive.exists("analysis/creators/rahul/an1/dna/candidate-editing-v1.json")
+    assert drive.exists("analysis/creators/rahul/an1/dna/candidate-editing-v2.json")
 
 
 def test_gate2_rejection_stops_the_job(drive, tmp_path, test_video):
@@ -291,3 +293,51 @@ def test_review_retry_after_failed_push(tmp_path, monkeypatch):
     # ok state is left alone
     Worker._retry_review(Fake(), {"review": {"status": "ok"}}, {"id": "x"}, wd)
     assert calls == ["job-q-001"]
+
+
+def test_self_update_rolls_back_broken_code(tmp_path, monkeypatch):
+    """A bad push must never kill the worker: new code that cannot import is rolled back and an alert is written."""
+    import subprocess
+    from scripts import common
+
+    def git(*a, cwd):
+        subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *a], cwd=cwd, check=True,
+                       capture_output=True)
+
+    bare = tmp_path / "bare.git"
+    subprocess.run(["git", "init", "-q", "--bare", "-b", "main", str(bare)], check=True)
+    seed = tmp_path / "seed"
+    seed.mkdir()
+    shutil.copytree(ROOT / "scripts", seed / "scripts", ignore=shutil.ignore_patterns("__pycache__"))
+    shutil.copytree(ROOT / "config", seed / "config")
+    shutil.copytree(ROOT / "schemas", seed / "schemas")
+    shutil.copyfile(ROOT / "run", seed / "run")
+    git("init", "-q", "-b", "main", cwd=seed)
+    git("add", "-A", cwd=seed)
+    git("commit", "-q", "-m", "good", cwd=seed)
+    git("remote", "add", "origin", str(bare), cwd=seed)
+    git("push", "-q", "origin", "main", cwd=seed)
+    clone = tmp_path / "clone"
+    subprocess.run(["git", "clone", "-q", str(bare), str(clone)], check=True)
+    good = subprocess.run(["git", "-C", str(clone), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    (seed / "scripts" / "review.py").write_text("this is not python (\n")
+    git("add", "-A", cwd=seed)
+    git("commit", "-q", "-m", "bad", cwd=seed)
+    git("push", "-q", "origin", "main", cwd=seed)
+
+    drive_root = tmp_path / "drive"
+    w = Worker(Storage(root=drive_root), work=tmp_path / "work")
+    monkeypatch.setattr(common, "ROOT", clone)
+    w._self_update()  # must not restart (os.execv) and must roll back
+    now = subprocess.run(["git", "-C", str(clone), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    assert now == good
+    alert = json.loads((drive_root / "jobs/state/_worker_alert.json").read_text())
+    assert alert["status"] == "ALERT" and "rolled back" in alert["note"]
+
+
+def test_finished_jobs_are_not_reread(drive, tmp_path):
+    drive.put_json("jobs/inbox/bad2.json", {"id": "bad2", "type": "analyze", "link": "http://x", "mode": "both",
+                                           "target": "general"})
+    w = Worker(drive, work=tmp_path / "work")
+    assert w.process_once() == [("bad2", "NEEDS_INPUT")]
+    assert w.process_once() == []  # terminal job skipped without reading inbox/state again

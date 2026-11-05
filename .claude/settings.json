@@ -2,6 +2,10 @@
   "hooks": {
     "SessionStart": [
       { "hooks": [ { "type": "command", "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./run mem brief" } ] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Bash|Write|Edit",
+        "hooks": [ { "type": "command", "command": "cd \"$CLAUDE_PROJECT_DIR\" && python3 -m scripts.guard" } ] }
     ]
   }
 }
