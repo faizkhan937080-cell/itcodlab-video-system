@@ -1,17 +1,17 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 03:30 IST
+updated: 2026-11-06 03:50 IST
 ## Jobs (Drive jobs/state JSONs are the ledger; scrap packs were trashed)
 - test-render-001 DONE (outputs trashed). reel-DeoxIgMPlS FAILED, -b, -c superseded (folders trashed).
-- reel-DeoxIgMPlS-d analyze AWAIT_GATE2, folder analysis/reel-DeoxIgMPlS-d (old layout), color-fixed, 7 collages. review push 403.
+- reel-DeoxIgMPlS-d AWAIT_GATE2. Folder MOVED to analysis/creators/sahilverma.ai/reel-DeoxIgMPlS-d (worker follows). Has source.mp4, audio.wav, keyframes/, pack/, dna/ with candidate-scripting-v1 + candidate-sound-v1 (DRAFTS, validated).
 ## Gate status
-- Gate 1 Y given. Gate 2 NOT answered. Claude has NOT seen any correct collage yet.
+- Gate 1 Y given. Gate 2 NOT answered. Claude has NOT seen any correct collage yet (editing DNA blocked).
 ## Blocked on (human step)
-- Faiz: GitHub fine-grained token needs Contents: Read and write (value unchanged). Worker retries with backoff, then ./run review-fetch <job> --out <dir>.
+- Faiz: GitHub fine-grained token needs Contents: Read and write (value unchanged). Then ./run review-fetch <job> --out <dir>.
 ## Next
-- Daily cap (5) is used up until 00:00 UTC (05:30 IST). Then send reel-DeoxIgMPlS-e (same link, mode both, target creator:auto) so the pack lands in analysis/creators/sahilverma.ai/<job>/ ; then trash -d (scrap). Skip -e if token fix already let Claude review -d AND Faiz prefers to keep -d.
-- After collages seen: gate 2 Y/N -> candidates editing+scripting+sound -> gate 3 -> dna/creators/sahilverma.ai/...
+- Transcript of -d covers only 0-8 s of 58 s (old code). Fixed in code (dual pass + coverage_ratio, commit 96fa3ad). After cap resets (05:30 IST) re-run reel as -e (Gate 1 Y), mode both, folder creator sahilverma.ai; then refine scripting v2 with full transcript.
+- Rule Approvals page (Artifact, db): proposals p03 Gate2-split, p04 Remotion headcount wait for Faiz. Read with ArtifactData; write approved ones into rulebooks.
+- After collages seen: gate 2 Y/N -> editing candidate -> gate 3 -> dna/creators/sahilverma.ai/...
 ## Open
-- Whisper small text is Devanagari phonetic; ok as gist only.
-- Sheet keeps history rows of trashed jobs (harmless). GCP VM after card. Gemini key optional.
-- Regenerate the old pasted GitHub token after setup.
+- Remotion license: free up to 3 people; ask headcount. Whisper Devanagari is gist only.
+- Sheet keeps history rows of trashed jobs (harmless). GCP VM after card. Gemini key optional. Regenerate old pasted GitHub token.

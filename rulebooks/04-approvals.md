@@ -18,3 +18,17 @@ Never assume. Never auto-approve. Claude cannot approve for the user.
 - Lessons and creator-DNA merges also need approval before saving.
 - Approvals are logged in the Approvals tab. Logs are never deleted.
 - No publishing anywhere. Final files stay in Drive for the user to use.
+
+## Batch approvals (Faiz rule, 2026-11-06)
+- Similar actions = ONE ask. Several deletes, moves, uploads or renames of the same kind: list every item once
+  (name + where), ask ONE Y/N. Never ask per item, never repeat the same kind of question.
+- Different kinds of action (e.g. delete AND publish) = one ask per kind. Gates 1-6 stay separate asks.
+- After a Y for a batch, do exactly that list. Anything extra = a new ask.
+- Dev-phase scrap delete (00-core) already has a standing Y: do it, then report the list in one line.
+
+## Rule proposals (who decides what)
+- Coding / technical rules (code style, tests, script structure, tool choice): Claude decides, writes it in the
+  rulebook and lessons, tells Faiz in one line.
+- Any other rule (money, publishing, folder layout, approvals, creators, what Claude may touch): Claude PROPOSES it on
+  the "Rule Approvals" page (Approve / Not approve buttons). Written into a rulebook only after Approve.
+- Proposal text: title, why (one line), exact rule text. Not approve = never written; record the no in memory.

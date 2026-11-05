@@ -21,7 +21,7 @@ Faiz does not want Claude's tokens spent on work that scripts or Colab can do. T
 - STOP: job FAILED after 2 retries; daily cap reached; `jobs/state/_worker_alert.json` exists.
 - STOP: Claude has not seen the collages (review branch) -> no gate 2 question, no DNA candidate.
 - STOP: tests fail -> no push. Secret in a command/file -> blocked, warn Faiz to regenerate it.
-- STOP: any delete not on Faiz's approved list (see 00-core "Nothing is deleted").
+- STOP: any delete not on Faiz's approved list (see 00-core "Nothing is deleted"). Approved batches: ask ONCE (04-approvals).
 - No success claims without proof: read the state file, run the test, view the image.
 
 ## Alerts (what Faiz hears)
