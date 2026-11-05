@@ -2,35 +2,75 @@
   "_note": "Starting values. Tune after the pilot run. Scripts enforce these, not Claude.",
   "claude": {
     "max_calls_per_stage": 2,
-    "max_retries": 2,
     "error_log_tail_lines": 20,
     "default_model": "sonnet",
     "daily_job_cap": 5,
     "fresh_session_per_job": true
   },
+  "jobs": {
+    "max_retries": 2,
+    "poll_seconds": 20
+  },
+  "analysis": {
+    "max_frames_analyzed": 6000,
+    "metrics_long_edge_px": 320,
+    "flow_long_edge_px": 160,
+    "cut_hist_min": 0.35,
+    "cut_hist_factor": 4.0,
+    "dissolve_window_s": 0.5,
+    "dissolve_hist_min": 0.35,
+    "dissolve_monotonic_min": 0.8,
+    "dissolve_max_flow": 1.0,
+    "dissolve_max_coherence": 0.5,
+    "dissolve_blend_ratio": 0.5,
+    "min_scene_s": 0.2,
+    "keyframe_jpeg_quality": 90,
+    "whisper_model": "base",
+    "motion_classes_flow_px": { "static": 0.15, "slow": 0.6, "medium": 1.6 }
+  },
   "collage": {
     "max_collages_per_video": 10,
     "max_long_edge_px": 1568,
+    "jpeg_quality": 85,
     "layouts": {
-      "9:16": { "grid": "4x2", "tile_px": [392, 697], "frames_per_collage": 8 },
-      "16:9": { "grid": "3x3", "tile_px": [522, 294], "frames_per_collage": 9 }
+      "9:16": { "grid": [4, 2], "tile_px": [392, 697], "frames_per_collage": 8 },
+      "16:9": { "grid": [3, 3], "tile_px": [522, 294], "frames_per_collage": 9 },
+      "1:1": { "grid": [3, 3], "tile_px": [522, 522], "frames_per_collage": 9 }
     },
-    "tile_overlay": ["timestamp", "frame_number"]
+    "tile_overlay": ["cluster", "scene", "timestamp"],
+    "extra_frame_min_scene_s": 1.5,
+    "extra_frames_per_scene_max": 2
   },
   "dedup": {
     "methods": ["phash", "ssim"],
-    "threshold_start": "tune in pilot",
-    "raise_threshold_if_over_max_collages": true,
+    "phash_hamming_max_start": 10,
+    "ssim_min_start": 0.8,
+    "relax_phash_step": 2,
+    "relax_ssim_step": 0.03,
+    "relax_max_rounds": 8,
     "keep_removed_scenes_in_metrics": true
   },
+  "pack": {
+    "max_summary_kb": 24,
+    "transcript_chars_in_summary": 3500
+  },
   "render": {
-    "master": { "width": 3840, "height": 2160, "codec": "h264", "colorspace": "bt709", "crf": 16 },
+    "master": {
+      "landscape": { "width": 3840, "height": 2160 },
+      "portrait": { "width": 2160, "height": 3840 },
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "colorspace": "bt709",
+      "crf": 16
+    },
     "preview_scale": 0.5,
-    "preview_before_final": true
+    "preview_before_final": true,
+    "duration_tolerance_s": 0.25
   },
   "storage": {
     "delete_allowed": false,
-    "upload_method": "rclone copy",
+    "overwrite_allowed_only_under": ["jobs/state/"],
+    "upload_method": "copy, never sync, never overwrite",
     "dna_versioning": true
   },
   "approval_gates": 6

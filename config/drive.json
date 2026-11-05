@@ -12,12 +12,20 @@
     "dna/creators": "1-23O0bnBQrDB8ZMaxDe5tuuQkWQ77tYJ",
     "output": "1xZbldbr8cCfouwgv-No4AdJ8UeZXp5kK",
     "output/previews": "1ag_fGDqICTtsGgZE0CcZ8tNJhto457AI",
-    "output/final-4k": "1QYAQcqBMyhNfHnBO92R7qbIOCwUJCYIJ"
+    "output/final-4k": "1QYAQcqBMyhNfHnBO92R7qbIOCwUJCYIJ",
+    "jobs": "1qBTZk_EEPIK6EVF-mHog4cRRC9e5JrPy",
+    "jobs/inbox": "1AC0vOQaPcVCGQM58LSzWbWQCHxYRLuf4",
+    "jobs/state": "1bNDcxP0TWZxatAs6TLUK8nv1Xz-lM9z4",
+    "jobs/approvals": "1EYPesmt1pqIRACJT6Jij5EqrzyNtDHi2",
+    "jobs/plans": "1SvtiM5gMiFteDe0v9HkWV6m3tg7VRYXD"
   },
   "sheet": {
     "name": "ITCODLAB-VIDEO-CONTROL",
     "id": "1WNLqPdgSB48uFfoyrU34G-GDzdELXonlnMY_utBGucw",
     "tabs": ["Jobs", "DNA_Index", "Creators", "Approvals"],
-    "jobs_columns": ["ID", "Link", "Mode", "Folder", "Status", "Output link", "Notes"]
+    "jobs_columns": ["ID", "Link", "Mode", "Folder", "Status", "Output link", "Notes"],
+    "dna_index_columns": ["DNA ID", "Scope", "Creator", "Type", "Version", "Drive path", "Source job", "Saved at"],
+    "creators_columns": ["Creator", "Videos analyzed", "Last job", "Notes"],
+    "approvals_columns": ["Job ID", "Gate", "Rev", "Decision", "Feedback", "Time"]
   }
 }

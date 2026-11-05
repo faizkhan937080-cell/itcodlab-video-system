@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Job file (dropped in Drive jobs/inbox/<id>.json)",
+  "type": "object",
+  "required": ["id", "type"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{3,60}$" },
+    "type": { "enum": ["analyze", "render"] },
+    "created": { "type": "string" },
+    "command_text": { "type": "string" },
+    "link": { "type": "string" },
+    "file": { "type": "string", "description": "Drive path of a reference already in Drive, e.g. input/references/x.mp4" },
+    "mode": { "enum": ["video", "audio", "both"] },
+    "target": { "type": "string", "pattern": "^(general|creator:[A-Za-z0-9_-]{2,40})$" },
+    "gate1_approved_by_user": { "const": true },
+    "plan_prefix": { "type": "string", "description": "render jobs: plans are jobs/plans/<id>-v<N>.json" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "analyze" } } },
+      "then": {
+        "required": ["mode", "target", "gate1_approved_by_user"],
+        "anyOf": [{ "required": ["link"] }, { "required": ["file"] }]
+      }
+    }
+  ]
+}

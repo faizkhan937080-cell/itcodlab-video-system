@@ -1,11 +1,12 @@
 # itcodlab video system - router
 
-Claude = brain (coding + creative decisions). Google Cloud VM = muscle (all heavy work).
+Claude = brain (coding + creative decisions). Worker (free Colab now, Google Cloud VM later) = muscle.
 Do NOT guess. Read only the files your task needs. Keep every file under 60 lines.
 
 ## Before ANY task
 1. Read `rulebooks/00-core.md` and `lessons/core.md`.
 2. Then read ONLY the rulebook + lessons for your task type:
+   - chat commands, jobs, Drive queue, collages -> `05-commands.md`
    - video / motion / Remotion code -> `01-video.md`, `lessons/video.md`
    - scripting (general or creator)  -> `02-scripting.md`, `lessons/scripting.md`
    - DNA building / merging          -> `03-dna.md`, `lessons/dna.md`

@@ -1,0 +1,24 @@
+{
+  "title": "itcodlab pipeline test",
+  "fps": 30,
+  "orientation": "portrait",
+  "brand": { "colors": { "navy": "#0A192F", "coral": "#FF5A5F" } },
+  "grain": false,
+  "scenes": [
+    {
+      "id": "s1", "duration_s": 1.5, "template": "title",
+      "props": { "text": "itcodlab", "subtitle": "digital that delivers" },
+      "transition_in": { "type": "fade", "duration_s": 0.3 }
+    },
+    {
+      "id": "s2", "duration_s": 2.0, "template": "kinetic_text",
+      "props": { "text": "Grow faster with smart video", "highlight": ["smart", "video"] },
+      "transition_in": { "type": "slide", "duration_s": 0.3 }
+    },
+    {
+      "id": "s3", "duration_s": 1.5, "template": "banner",
+      "props": { "tag": "new", "headline": "Book a free call", "sub": "itcodlab.com" },
+      "transition_in": { "type": "zoom", "duration_s": 0.3 }
+    }
+  ]
+}

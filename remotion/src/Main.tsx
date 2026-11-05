@@ -1,0 +1,72 @@
+import React from 'react';
+import {AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
+import {Banner} from './components/Banner';
+import {Grain} from './components/Grain';
+import {ImageScene} from './components/ImageScene';
+import {KineticText} from './components/KineticText';
+import {LowerThird} from './components/LowerThird';
+import {Title} from './components/Title';
+import {easeOut} from './lib/anim';
+import {Colors, DEFAULT_COLORS, Plan, SceneDef, sceneFrames} from './lib/types';
+
+const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors}) => {
+  const p = scene.props ?? {};
+  switch (scene.template) {
+    case 'title':
+      return <Title text={p.text ?? ''} subtitle={p.subtitle} colors={colors} />;
+    case 'kinetic_text':
+      return <KineticText text={p.text ?? ''} highlight={p.highlight} colors={colors} />;
+    case 'banner':
+      return <Banner headline={p.headline ?? ''} sub={p.sub} tag={p.tag} colors={colors} />;
+    case 'image':
+      return <ImageScene src={p.src} caption={p.caption} colors={colors} />;
+    case 'lower_third':
+      return <LowerThird name={p.name ?? ''} role={p.role} colors={colors} />;
+    default:
+      return null;
+  }
+};
+
+/** Intro animation of a scene (the transition into it). 'cut' = none. */
+const SceneWrap: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors}) => {
+  const frame = useCurrentFrame();
+  const {fps, width} = useVideoConfig();
+  const t = scene.transition_in ?? {type: 'cut'};
+  const dur = Math.max(1, Math.round((t.duration_s ?? 0.4) * fps));
+  const prog = easeOut(frame, 0, dur);
+  let style: React.CSSProperties = {};
+  if (t.type === 'fade') style = {opacity: prog};
+  if (t.type === 'slide') style = {opacity: prog, transform: `translateX(${(1 - prog) * width * 0.12}px)`};
+  if (t.type === 'zoom') style = {opacity: prog, transform: `scale(${1.15 - 0.15 * prog})`};
+  return (
+    <AbsoluteFill style={style}>
+      <SceneBody scene={scene} colors={colors} />
+    </AbsoluteFill>
+  );
+};
+
+export const Main: React.FC<Plan> = (plan) => {
+  const {fps} = useVideoConfig();
+  const colors: Colors = {...DEFAULT_COLORS, ...(plan.brand?.colors ?? {})};
+  let from = 0;
+  return (
+    <AbsoluteFill
+      style={{
+        backgroundColor: colors.navy,
+        fontFamily: plan.brand?.font ?? 'Inter, "Helvetica Neue", Arial, sans-serif',
+      }}
+    >
+      {plan.scenes.map((scene) => {
+        const frames = sceneFrames(scene.duration_s, fps);
+        const el = (
+          <Sequence key={scene.id} from={from} durationInFrames={frames}>
+            <SceneWrap scene={scene} colors={colors} />
+          </Sequence>
+        );
+        from += frames;
+        return el;
+      })}
+      {plan.grain ? <Grain /> : null}
+    </AbsoluteFill>
+  );
+};

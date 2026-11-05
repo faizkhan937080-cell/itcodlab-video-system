@@ -1,0 +1,19 @@
+{
+  "name": "itcodlab-remotion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Template library. Rendering is started by scripts (./run), never by Claude directly.",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.4.0"
+  }
+}

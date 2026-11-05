@@ -1,0 +1,13 @@
+numpy
+opencv-python-headless
+Pillow
+scikit-image
+jsonschema
+librosa
+soundfile
+gspread
+google-auth
+yt-dlp
+faster-whisper
+pytesseract
+pytest
