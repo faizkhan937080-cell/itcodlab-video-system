@@ -5,6 +5,11 @@
 - VM scripts: download, frame analysis, audio, dedup, collage, render, checks, upload.
 - Drive: heavy files. Sheet: queue + approvals. GitHub: rules + code.
 
+## Who decides
+- Coding, tools, fixes, lessons: Claude decides alone (Faiz is not technical).
+- Faiz decides: every approval gate, folder layout, spending, deleting, publishing.
+- Faiz never types code. Steps for him: short, exact button names, a few at a time.
+
 ## Token rules
 - Input to Claude: collages (max 10 images) + metrics summary + one rulebook. Never raw media.
 - Max 2 Claude calls per stage. Retry twice, then FAILED.
