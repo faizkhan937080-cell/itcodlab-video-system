@@ -123,6 +123,8 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
     if storage is not None:
         stage_assets(plan, storage)
     ensure_node_deps()
+    from .grade_video import grade_plan
+    plan, grade_report = grade_plan(plan, storage, lim=lim)   # graded copies of footage; never fails the render
     w, h = master_size(plan, lim, probe_sources(plan))
     scale = lim["render"]["preview_scale"] if quality == "preview" else 1.0
     out_path = Path(out_path)
@@ -144,4 +146,6 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
     rc, out, err = run_cmd(cmd, cwd=str(REMOTION_DIR), timeout=60 * 60 * 3)
     if rc != 0:
         raise RuntimeError("remotion render failed:\n" + tail(err or out))
-    return check_output(out_path, plan, quality, lim, size=(w, h))
+    res = check_output(out_path, plan, quality, lim, size=(w, h))
+    res["grade"] = grade_report
+    return res

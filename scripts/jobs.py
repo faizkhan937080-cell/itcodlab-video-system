@@ -651,14 +651,19 @@ class Worker:
             if not chk["ok"]:
                 raise RuntimeError("output check failed: " + "; ".join(chk["problems"]))
             dnas = self._plan_dnas(plan)
-            fin = {}
+            fin = {"grade": chk.get("grade")} if chk.get("grade") else {}
             tl = finish_mod.target_lufs(plan, dnas) if quality == "final" else None
             if tl is not None and chk["probe"].get("has_audio"):
                 fin["loudness"] = finish_mod.normalize_loudness(out, tl, wd)
-            if dnas:
-                fin["clone_check"] = finish_mod.clone_check(out, plan, dnas, wd)
+            if chk.get("grade"):
+                from .grade_video import summary_line
+                note += " | " + summary_line(chk["grade"])
+            if dnas or fin:
+                if dnas:
+                    fin["clone_check"] = finish_mod.clone_check(out, plan, dnas, wd)
                 rel_report = self.storage.put_json(f"{folder}/{Path(fname).stem}_clone_report.json", fin)
                 st["clone_report"] = rel_report
+            if dnas:
                 st["clone_ok"] = all(v.get("pass") for k, v in fin["clone_check"].items() if isinstance(v, dict) and "pass" in v)
             rel = self.storage.put_file(out, f"{folder}/{fname}")
             key = "preview" if quality == "preview" else "final_candidate"

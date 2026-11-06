@@ -288,6 +288,29 @@
           ]
         }
       }
+    },
+    "grade": {
+      "type": "object",
+      "description": "Colour grade of the FOOTAGE and pictures (never text/graphics). Default when absent = auto.",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "auto",
+            "natural",
+            "off"
+          ]
+        },
+        "ref": {
+          "type": "string",
+          "description": "Drive path of a reel's grade.json (the look to match)"
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
     }
   }
 }

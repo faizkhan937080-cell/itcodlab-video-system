@@ -14,6 +14,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
      `07-standards-editing.md` | `08-standards-scripting.md` | `09-standards-sound.md`
    - choosing a tool / render quality -> `10-tools.md`; output size = raw source size (`01-video.md`)
    - folders, reel IDs, clients/, assets/library, licences, audit -> `12-structure.md`
+   - colour grade / look / HDR, editing effects (speed, zoom, track, voice) -> `13-grade.md`, `14-effects.md`
 3. Every step that saves, adds or renders needs approval: `rulebooks/04-approvals.md`.
 3a. After writing any job, approval or candidate: `./run wake` (starts the no-PC worker). Hosting: `rulebooks/11-hosting.md`.
 3b. Lanes, barriers, alerts, token economy: `rulebooks/06-fence.md` (hook `scripts/guard.py` blocks wrong-lane commands).

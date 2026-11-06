@@ -110,6 +110,20 @@ def _listen(video, wav, lim):
     return listen.listen(wav, meta, os.environ.get("ACOUSTID_KEY"), scorer)
 
 
+def _grade_look(video, out_root, lim):
+    """The reel's colour look (grade.json): what 'make it like this reel' matches. Never fails the job."""
+    import tempfile
+    if not lim["analysis"].get("grade_look", True):
+        return
+    try:
+        from . import grade_video
+        with tempfile.TemporaryDirectory() as tmp:
+            res = grade_video.reference_stats(video, tmp, lim)
+    except Exception as e:  # noqa: BLE001
+        res = {"usable": False, "reason": f"{type(e).__name__}: {e}"[:200]}
+    write_json_local(Path(out_root) / "grade.json", res)
+
+
 def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=True):
     """Everything between 'video file' and 'pack ready'. Returns dict of paths."""
     lim = limits()
@@ -136,6 +150,8 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
         (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
         write_json_local(out_root / "audio.json", audio_res)
         write_json_local(out_root / "listen.json", _listen(video, wav, lim))
+    if job_id != "selfcheck":
+        _grade_look(video, out_root, lim)
     audit = audit_mod.build(info, len(frames), scenes, clusters, audio_res, transcript)
     write_json_local(out_root / "audit.json", audit)
     script_m = script_metrics.compute(transcript, info["duration_s"])
