@@ -44,12 +44,20 @@ jobs:
         if: steps.chk.outputs.ready == 'true'
         timeout-minutes: 25
         run: |
-          # apt sometimes hangs on a slow mirror: short network timeouts + up to 3 tries, each capped at 4 minutes
+          # apt sometimes hangs on a slow mirror. Install first WITHOUT an update (the runner image has package lists),
+          # update only if that fails; rclone falls back to its official installer. Missing tools = the step FAILS (never a silent pass).
           APT="-o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20"
+          PKGS="ffmpeg tesseract-ocr rclone libnss3 libatk-bridge2.0-0 libcups2 libgbm1 libxkbcommon0 libasound2t64 libchromaprint-tools"
           for i in 1 2 3; do
+            timeout 180 sudo apt-get -qq $APT install -y $PKGS > /dev/null && break
             timeout 240 sudo apt-get -qq $APT update || true
-            timeout 240 sudo apt-get -qq $APT install -y ffmpeg tesseract-ocr rclone libnss3 libatk-bridge2.0-0 libcups2 libgbm1 libxkbcommon0 libasound2t64 libchromaprint-tools > /dev/null && break || echo "apt try $i failed"
+            timeout 240 sudo apt-get -qq $APT install -y $PKGS > /dev/null && break || echo "apt try $i failed"
           done
+          if ! command -v rclone >/dev/null; then
+            curl -fsSL -o /tmp/rclone.zip https://downloads.rclone.org/rclone-current-linux-amd64.zip
+            unzip -q -o /tmp/rclone.zip -d /tmp/rclone-dl && sudo install -m 0755 /tmp/rclone-dl/rclone-*-linux-amd64/rclone /usr/local/bin/rclone || true
+          fi
+          for t in ffmpeg rclone tesseract; do command -v $t >/dev/null || { echo "MISSING TOOL: $t"; exit 1; }; done
           ffmpeg -version | head -1; rclone version | head -1
       - name: Virus scanner (checks every file we bring in)
         if: steps.chk.outputs.ready == 'true'
