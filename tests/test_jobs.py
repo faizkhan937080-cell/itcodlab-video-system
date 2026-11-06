@@ -504,3 +504,18 @@ def test_analyzing_job_resumes_on_a_fresh_machine(drive, tmp_path, test_video, m
     monkeypatch.setattr(pack, "run_pipeline", real)
     assert Worker(drive, work=tmp_path / "work2").process_once() == [("rs1", "AWAIT_GATE2")]
     assert (tmp_path / "work2" / "rs1" / "source.mp4").is_file()
+
+
+def test_pack_summary_recomputes_script_numbers_from_saved_transcript(drive):
+    w = Worker(drive)
+    st = {"paths": {"analysis": "analysis/x"}}
+    job = {"id": "j"}
+    drive.put_json("analysis/x/pack/metrics_summary.json",
+                   {"video": {"duration_s": 10.0}, "script_metrics": {"available": True, "words_per_min_speaking": 5}})
+    eng = [{"start": 0.0, "end": 5.0, "text": "one two three four five six seven eight nine ten"},
+           {"start": 5.5, "end": 9.5, "text": "and then eleven twelve thirteen fourteen fifteen"}]
+    drive.put_json("analysis/x/transcript.json", {"available": True, "segments": [{"start": 0, "end": 1, "text": "ek"}],
+                   "coverage_ratio": 0.4, "loop_words_removed": 30,
+                   "alt_english": {"segments": eng, "coverage_ratio": 1.0, "text": "x"}})
+    m = w._pack_summary(st, job)["script_metrics"]
+    assert m["pass_used"] == "english" and m["words"] == 17

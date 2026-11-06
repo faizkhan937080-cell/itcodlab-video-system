@@ -93,3 +93,16 @@ def test_numpy_timestamps_give_plain_python_json():
     m = sm.compute(tr(segs), np.float64(10.0))
     json.dumps(m)  # no default= on purpose
     assert type(m["pauses"]["count_gt_0_5s"]) is int and m["pauses"]["count_gt_0_5s"] == 1
+
+
+def test_degraded_auto_pass_falls_back_to_english_pass():
+    from scripts.script_metrics import compute
+    auto = [{"start": 0.0, "end": 5.0, "text": "ek do teen"}, {"start": 5.0, "end": 9.0, "text": "x", "loop": True}]
+    eng = [{"start": 0.0, "end": 5.0, "text": "one two three four five six seven eight nine ten"},
+           {"start": 5.5, "end": 9.5, "text": "and then eleven twelve thirteen fourteen fifteen"}]
+    t = {"available": True, "segments": auto, "coverage_ratio": 0.5, "loop_words_removed": 40,
+         "alt_english": {"segments": eng, "text": " ".join(s["text"] for s in eng), "coverage_ratio": 1.0}}
+    m = compute(t, 10.0)
+    assert m["pass_used"] == "english" and m["words"] == 17 and m["coverage_ratio"] == 1.0
+    ok = {"available": True, "segments": eng, "coverage_ratio": 1.0, "alt_english": {"segments": eng, "coverage_ratio": 1.0}}
+    assert compute(ok, 10.0)["pass_used"] == "auto"

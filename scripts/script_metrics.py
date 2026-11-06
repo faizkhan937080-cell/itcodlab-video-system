@@ -106,11 +106,29 @@ def dedup_sentences(sentences):
     return [seen[k] for k in order]
 
 
+def _pass_words(segs):
+    return sum(len(_words(s["text"])) for s in segs if s.get("text") and not s.get("loop"))
+
+
+def best_pass(transcript):
+    """Pick the pass the numbers are measured on. Hindi auto pass can degrade (loops, garbage at the end) while the
+    English pass has full timed segments. Use the English pass when the auto pass lost many words (loops removed, or
+    under 60% of the English word count). Returns (segments, name)."""
+    main = transcript.get("segments") or []
+    alt = (transcript.get("alt_english") or {}).get("segments") or []
+    if alt:
+        nm, na = _pass_words(main), _pass_words(alt)
+        if na and (nm < 0.6 * na or transcript.get("loop_words_removed", 0) > 0.5 * nm):
+            return alt, "english"
+    return main, "auto"
+
+
 def compute(transcript, duration_s):
     """Return a metrics dict, or {"available": False}."""
     if not transcript or not transcript.get("available") or not transcript.get("segments"):
         return {"available": False}
-    segs = [s for s in transcript["segments"] if s.get("text") and not s.get("loop")]
+    used, pass_name = best_pass(transcript)
+    segs = [s for s in used if s.get("text") and not s.get("loop")]
     text = " ".join(s["text"] for s in segs)
     words = _words(text)
     if not words:
@@ -127,8 +145,11 @@ def compute(transcript, duration_s):
     dev, lat = len(DEVANAGARI.findall(text)), len(LATIN.findall(text))
     letters = max(dev + lat, 1)
     cov = transcript.get("coverage_ratio")
+    if pass_name == "english":
+        cov = (transcript.get("alt_english") or {}).get("coverage_ratio", cov)
     out = {
         "available": True,
+        "pass_used": pass_name,
         "coverage_ratio": cov,
         "complete": bool(cov is not None and cov >= 0.9),
         "words": len(words),

@@ -561,10 +561,21 @@ class Worker:
 
     def _pack_summary(self, st, job):
         """metrics_summary.json of this job (numbers the DNA is cross-checked against). None if unreadable."""
+        base = self._analysis_rel(st, job)
         try:
-            return self.storage.read_json(f"{self._analysis_rel(st, job)}/pack/metrics_summary.json")
+            summary = self.storage.read_json(f"{base}/pack/metrics_summary.json")
         except Exception:  # noqa: BLE001
             return None
+        try:  # packs made before best_pass(): recompute the script numbers from the saved transcript with the current code
+            from . import script_metrics
+            tr = self.storage.read_json(f"{base}/transcript.json")
+            m = script_metrics.compute(tr, summary["video"]["duration_s"])
+            if m.get("available") and m.get("pass_used") == "english" and \
+                    (summary.get("script_metrics") or {}).get("pass_used") != "english":
+                summary["script_metrics"] = m
+        except Exception:  # noqa: BLE001
+            pass
+        return summary
 
     def _check_candidates(self, job, st):
         jid, ver = job["id"], st["candidate_ver"]
