@@ -9,7 +9,7 @@ from . import audit as audit_mod
 from . import script_metrics
 from .analyze import analyze_video, probe
 from .collage import build_collages, capacity, pick_layout
-from .common import json_default, limits, log, now_iso, to_native, write_json_local
+from .common import json_default, limits, log, now_iso, stage, stage_times, to_native, write_json_local
 from .dedup import dedup
 
 
@@ -135,27 +135,73 @@ def _grade_look(video, out_root, lim):
     write_json_local(Path(out_root) / "grade.json", res)
 
 
+def _ears_cache_dir(video, lim):
+    """Same file + same settings = same transcript/listen/voice. Keyed by sha1 of the source bytes (17-speed #2).
+    Lives on the worker's disk (the VM keeps it between runs); a miss or a broken file just means 'compute again'."""
+    import hashlib
+    import os
+    a = lim["analysis"]
+    h = hashlib.sha1()
+    with open(video, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 22), b""):
+            h.update(chunk)
+    h.update(f"|{a.get('whisper_model')}|{a.get('word_timestamps', True)}|{a.get('listen_sound_events')}|v1".encode())
+    root = Path(os.environ.get("ITCOD_CACHE", Path.home() / ".cache" / "itcod")) / "ears"
+    return root / h.hexdigest()[:20]
+
+
 def _ears(video, out_root, lim, with_transcript):
     """Everything that listens and does not need the picture: wav, transcript, music/sound names, voice. Own thread."""
-    wav = audio_mod.extract_wav(video, out_root / "audio.wav")
-    transcript = audio_mod.transcribe(wav) if with_transcript else {"available": False}
+    with stage("wav"):
+        wav = audio_mod.extract_wav(video, out_root / "audio.wav")
+    names = ("transcript.json", "listen.json", "voice.json")
+    cache = None
+    if with_transcript and lim["analysis"].get("ears_cache", True):
+        try:
+            with stage("hash"):
+                cache = _ears_cache_dir(video, lim)
+            if all((cache / n).exists() for n in names):
+                got = [json.loads((cache / n).read_text(encoding="utf-8")) for n in names]
+                if got[0].get("available"):
+                    for n, v in zip(names, got):
+                        write_json_local(out_root / n, v)
+                    transcript = got[0]
+                    (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
+                    log(f"ears from cache {cache.name} (same file, same settings): whisper/listen/voice skipped")
+                    return wav, transcript, got[2]
+        except Exception as e:  # noqa: BLE001
+            log(f"ears cache read skipped: {type(e).__name__}")
+    with stage("transcribe"):
+        transcript = audio_mod.transcribe(wav) if with_transcript else {"available": False}
     write_json_local(out_root / "transcript.json", transcript)
     (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
-    write_json_local(out_root / "listen.json", _listen(video, wav, lim))
-    voice = _voice(wav, transcript)
+    with stage("listen"):
+        lis = _listen(video, wav, lim)
+    write_json_local(out_root / "listen.json", lis)
+    with stage("voice"):
+        voice = _voice(wav, transcript)
     write_json_local(out_root / "voice.json", voice)
+    if cache is not None and transcript.get("available"):
+        try:
+            cache.mkdir(parents=True, exist_ok=True)
+            for n in names:
+                (cache / n).write_text((out_root / n).read_text(encoding="utf-8"), encoding="utf-8")
+        except Exception as e:  # noqa: BLE001
+            log(f"ears cache write skipped: {type(e).__name__}")
     return wav, transcript, voice
 
 
 def _video_side(video, out_root, lim):
-    info, frames, scenes, fps = analyze_video(video, out_root, lim)
+    with stage("frames"):
+        info, frames, scenes, fps = analyze_video(video, out_root, lim)
     layout_key, layout = pick_layout(info["width"], info["height"], lim, len(scenes))
     clusters, rep = dedup(scenes, capacity(layout, lim), lim)
     write_json_local(out_root / "clusters.json", {"report": rep, "clusters": clusters})
     write_json_local(out_root / "scenes.json",
                      [{k: v for k, v in s.items() if not k.startswith("_")} for s in scenes])
     pack = out_root / "pack"
-    idx = build_collages(video, pack, scenes, clusters, info, fps, lim)
+    with stage("collages"):
+        idx = build_collages(video, pack, scenes, clusters, info, fps, lim)
     write_json_local(out_root / "collage_index.json", idx)
     return info, frames, scenes, fps, clusters, rep, pack, idx
 
@@ -184,7 +230,8 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
         audio_res = audio_mod.analyze_audio(wav, [s["start_s"] for s in scenes[1:]])
         write_json_local(out_root / "audio.json", audio_res)
     if job_id != "selfcheck":
-        _grade_look(video, out_root, lim)
+        with stage("grade"):
+            _grade_look(video, out_root, lim)
     audit = audit_mod.build(info, len(frames), scenes, clusters, audio_res, transcript)
     write_json_local(out_root / "audit.json", audit)
     script_m = to_native(script_metrics.compute(transcript, info["duration_s"]))
@@ -199,6 +246,7 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
                 "summary_bytes": (pack / "metrics_summary.json").stat().st_size,
                 "collage_bytes": sum((pack / c["file"]).stat().st_size for c in idx["collages"])}
     write_json_local(pack / "manifest.json", manifest)
+    write_json_local(out_root / "timings.json", stage_times(reset=True))
     log(f"pack ready: {idx['count']} collage(s), summary {manifest['summary_bytes']} bytes")
     return {"out_root": out_root, "pack": pack, "info": info, "scenes": scenes,
             "clusters": clusters, "dedup_report": rep, "manifest": manifest}

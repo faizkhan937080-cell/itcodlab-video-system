@@ -36,7 +36,8 @@
     "stems": true,
     "grade_look": true,
     "word_timestamps": true,
-    "parallel": true
+    "parallel": true,
+  "ears_cache": true
   },
   "collage": {
     "max_collages_per_video": 10,

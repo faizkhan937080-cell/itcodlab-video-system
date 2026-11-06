@@ -93,3 +93,30 @@ def write_json_local(path, obj):
 def fmt_ts(seconds):
     m, s = divmod(max(0.0, float(seconds)), 60)
     return f"{int(m):02d}:{s:04.1f}"
+
+
+# ---- stage timers (17-speed): how long each stage takes, so a speed claim is seconds saved at equal output ----
+import contextlib as _cl
+import threading as _th
+
+_TIMES, _TLOCK = {}, _th.Lock()
+
+
+@_cl.contextmanager
+def stage(name):
+    t0 = time.time()
+    try:
+        yield
+    finally:
+        dt = round(time.time() - t0, 1)
+        with _TLOCK:
+            _TIMES[name] = round(_TIMES.get(name, 0) + dt, 1)
+        log(f"stage {name}: {dt}s")
+
+
+def stage_times(reset=False):
+    with _TLOCK:
+        out = dict(_TIMES)
+        if reset:
+            _TIMES.clear()
+    return out
