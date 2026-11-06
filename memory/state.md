@@ -1,6 +1,6 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-07 00:00 IST
+updated: 2026-11-07 00:50 IST
 ## Jobs (Drive jobs/state JSONs = ledger + daily cap; never delete)
 - reel-DeoxIgMPlS-g (sahilverma.ai EP-01): DNA saved, DONE (recipe.json/RECIPE.md). Junk measured-*.json in its dna folder still to trash (approved scrap).
 - reel-DfWAlgTxEkL-a (general, SFX reel): gate 3 Y given; sound + scripting DNA saved (dna/general/..).
@@ -26,3 +26,4 @@ updated: 2026-11-07 00:00 IST
 - Verify new worker code on a real run (listen CLAP, grade.json, Gemini describe, AcoustID; voice.json worked 22:3x). Remotion first real end-to-end render.
 - OWN SERVER: Faiz pastes Cloud Shell block (VM itcod-worker, e2-standard-4, asia-south1-b, scripts/vm/startup.sh; runner token expires ~23:33 IST). Then runner 'itcod-vm' must show Idle; then repo var WORKER_RUNS_ON=["self-hosted","itcod"] (Faiz/Gemini only), wake, test run; add GCP budget alert + auto-stop.
 - Rules: rulebooks/12-structure.md. Storage clean-up only on Faiz's command.
+- 2026-11-07: layout simplified (reel-<code>/ flat, 7e12622). Gate 3 for -b still pending (Faiz Y/N). Trash batch pending Y/N: 9 junk files, _stale-INDEX-delete.md, empty dna/videos folders. Gemini key 401 -> Faiz must update GEMINI_API_KEY secret.
