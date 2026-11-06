@@ -52,11 +52,14 @@ def fingerprint_lookup(wav, key, run=subprocess.run, get=None):
     return {}
 
 
-def sound_events(wav, score_fn, labels=LABELS, min_score=MIN_SCORE):
+CLAP_SR = 48000   # CLAP's feature extractor only accepts 48 kHz audio (16 kHz raised ValueError on the first real run)
+
+
+def sound_events(wav, score_fn, labels=LABELS, min_score=MIN_SCORE, sr=CLAP_SR):
     """score_fn(window_samples, sr, labels) -> {label: 0..1}. Windows with a clear label become events;
     neighbours with the same label are merged. Returns [{label, t, end, score}]."""
     import librosa
-    y, sr = librosa.load(str(wav), sr=16000, mono=True)
+    y, sr = librosa.load(str(wav), sr=sr, mono=True)
     win, hop = int(WINDOW_S * sr), int(HOP_S * sr)
     events = []
     for i in range(0, max(1, len(y) - win + 1), hop):
@@ -111,7 +114,7 @@ def listen(wav, meta, acoustid_key=None, score_fn=None):
             out["sound_events"] = sound_events(wav, score_fn)
         except Exception as e:  # noqa: BLE001
             out["sound_events"] = []
-            out["sound_events_error"] = f"{type(e).__name__}"
+            out["sound_events_error"] = f"{type(e).__name__}: {e}"[:160]
     else:
         out["sound_events"] = []
         out["sound_events_note"] = "model not run"
