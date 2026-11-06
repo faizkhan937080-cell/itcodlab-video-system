@@ -51,11 +51,22 @@ def run_cmd(cmd, timeout=None, cwd=None, env=None):
     return r.returncode, r.stdout, r.stderr
 
 
+def json_default(o):
+    """numpy numbers/arrays (and sets) are not JSON by default: convert them instead of crashing a whole analysis."""
+    if hasattr(o, "item") and getattr(o, "shape", None) == ():
+        return o.item()
+    if hasattr(o, "tolist"):
+        return o.tolist()
+    if isinstance(o, (set, frozenset)):
+        return sorted(o)
+    raise TypeError(f"Object of type {o.__class__.__name__} is not JSON serializable")
+
+
 def write_json_local(path, obj):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(obj, f, ensure_ascii=False, indent=2)
+        json.dump(obj, f, ensure_ascii=False, indent=2, default=json_default)
     return path
 
 

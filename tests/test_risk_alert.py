@@ -21,3 +21,11 @@ def test_library_add_needs_words_for_uncleared(drive):
     ent = library.add_entry(drive, "sfx", "vine boom", "unknown", "https://example.org/x", accept_risk="Faiz: use it")
     assert ent["risk_accepted"]["by"] == "faiz"
     assert library.add_entry(drive, "sfx", "airhorn", "cc0")["licence"] == "cc0"
+
+
+def test_write_json_local_accepts_numpy(tmp_path):
+    import json
+    import numpy as np
+    from scripts.common import write_json_local
+    p = write_json_local(tmp_path / "x.json", {"a": np.int64(3), "b": np.float32(1.5), "c": np.array([1, 2]), "d": {1, 2}})
+    assert json.loads(p.read_text()) == {"a": 3, "b": 1.5, "c": [1, 2], "d": [1, 2]}
