@@ -35,8 +35,12 @@ def get_key():
 def _post(model, key, body, timeout=180):
     req = urllib.request.Request(URL.format(model=model), data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json", "x-goog-api-key": key})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read().decode())
+    from .netguard import guard
+
+    def go():
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return json.loads(r.read().decode())
+    return guard().call("gemini", go)
 
 
 def _ask(models, key, jpg_bytes, retries=2):

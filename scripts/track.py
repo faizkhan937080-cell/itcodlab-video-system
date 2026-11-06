@@ -4,7 +4,6 @@
 Face finding: Haar cascade if this OpenCV ships it, else the small YuNet model (downloaded once from opencv_zoo, worker only).
 No face detector = the effect says so and falls back (centre crop) or asks for a box. Never guesses.
 """
-import urllib.request
 from pathlib import Path
 
 import cv2
@@ -25,7 +24,8 @@ def default_face_detector(cache_dir=None):
         d.mkdir(parents=True, exist_ok=True)
         model = d / "yunet.onnx"
         if not model.exists():
-            urllib.request.urlretrieve(YUNET_URL, model)  # noqa: S310
+            from .netguard import safe_download
+            safe_download(YUNET_URL, model, "model", only_hosts=["github.com", "githubusercontent.com"])
         det = cv2.FaceDetectorYN.create(str(model), "", (320, 320), 0.7)
 
         def run(im):

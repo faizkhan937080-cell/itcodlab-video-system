@@ -58,6 +58,11 @@ class Worker:
         self.sheets = sheets
         self.work = Path(work) if work else workdir()
         self.lim = limits()
+        try:
+            from .netguard import guard
+            guard().attach(storage)        # shared per-host counters + cooldowns (Drive jobs/state/_net.json)
+        except Exception:  # noqa: BLE001
+            pass
 
     # ------------------------------------------------------------ state
     def _state_rel(self, jid):
@@ -252,6 +257,18 @@ class Worker:
                 self.set_status(st, job, "ANALYZING", "frame-by-frame analysis running")
                 return True
             except Exception as e:  # noqa: BLE001
+                from .netguard import HostBlocked
+                from .security import SecurityError
+                if isinstance(e, (HostBlocked, SecurityError)):      # no retries: retrying is exactly what gets accounts banned
+                    why = ("ALERT a site asked us to stop | need: wait, or put the video file in Drive input/references/ and send a job with 'file'"
+                           if isinstance(e, HostBlocked) else "ALERT the downloaded file failed the safety check | need: check the source, send another file")
+                    try:
+                        self.storage.write_state("jobs/state/_worker_alert.json", {"id": "_worker", "status": "ALERT", "updated": now_iso(),
+                                                                                 "note": f"{why}: {str(e)[:200]}"})
+                    except Exception:  # noqa: BLE001
+                        pass
+                    self.set_status(st, job, "NEEDS_INPUT", f"{why}. Detail: {str(e)[:200]}")
+                    return False
                 return self.failed(st, job, "acquire", e, terminal="NEEDS_INPUT",
                                    terminal_note=("Could not get the video from the link. Put the video file in "
                                                   "Drive input/references/ and send a new job with 'file'."))
@@ -354,19 +371,31 @@ class Worker:
         wd.mkdir(parents=True, exist_ok=True)
         if job.get("file"):
             name = Path(job["file"]).name
-            return self.storage.fetch(job["file"], wd / name)
+            got = self.storage.fetch(job["file"], wd / name)
+            from .security import require_safe
+            require_safe(got, "video")
+            return got
         import os
         from .common import run_cmd
+        from .netguard import config as net_config, guard, host_key
+        cfg = net_config()
         cmd = ["yt-dlp", "-f", "bv*+ba/b", "--merge-output-format", "mp4", "--no-playlist", "--write-info-json",
-               "-o", str(wd / "source.%(ext)s")]
+               "-o", str(wd / "source.%(ext)s"), *cfg["yt_dlp_polite"]]
         cookies = os.environ.get("ITCOD_COOKIES")
         if cookies and Path(cookies).exists():
             cmd += ["--cookies", cookies]
+        key = host_key(job["link"], cfg)
+        g = guard()
+        g.before(key)                      # gap, daily maximum, cooldown (raises HostBlocked)
         rc, out, err = run_cmd(cmd + [job["link"]], timeout=1800)
         if rc != 0:
+            g.after(key, None, err or out)  # a block signal starts the cooldown; nothing else is tried
             raise RuntimeError("yt-dlp failed:\n" + tail(err or out))
         merge_streams(wd)
-        return pick_source(list(wd.glob("source.*")))
+        src = pick_source(list(wd.glob("source.*")))
+        from .security import require_safe
+        require_safe(src, "video")
+        return src
 
     def _resolve_creator(self, job, st, wd):
         """target 'creator:auto' -> creator:<instagram handle> read from yt-dlp metadata. One name everywhere."""

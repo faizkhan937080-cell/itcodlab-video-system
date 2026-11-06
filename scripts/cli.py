@@ -287,6 +287,35 @@ def cmd_snapshot(a):
     return 0
 
 
+def cmd_security(a):
+    from . import security
+    if a.baseline:
+        d = security.write_baseline()
+        print(f"baseline written for {len(d)} critical file(s)")
+        return 0
+    r = security.report()
+    print(f"SECURITY {r['verdict']}")
+    for k in ("secrets", "workflows", "integrity"):
+        for x in r[k]:
+            print(f"  [{k}] {x}")
+    if a.net:
+        from .netguard import guard
+        try:
+            guard().attach(_storage())
+        except Exception as e:  # noqa: BLE001
+            print(f"  [net] could not read the shared ledger: {type(e).__name__}")
+        for host, v in guard().status().items():
+            print(f"  [net] {host}: today {v['today']}, strikes {v['strikes']}, {'BLOCKED' if v['blocked'] else 'ok'}{' - ' + str(v['reason']) if v['reason'] else ''}")
+    return 1 if r["verdict"] == "FAIL" and a.strict else 0
+
+
+def cmd_vet(a):
+    from . import security
+    v = security.vet_file(a.file, a.kind)
+    print(json.dumps(v))
+    return 0 if v["ok"] else 1
+
+
 def cmd_audit_links(a):
     from . import linkcheck
     issues = linkcheck.run(_storage())
@@ -377,6 +406,15 @@ def build_parser():
     s = sub.add_parser("snapshot", help="text manifest of what is in Drive (goes to GitHub)")
     s.add_argument("--out", default="docs/snapshots/drive-manifest.json")
     s.set_defaults(fn=cmd_snapshot)
+    s = sub.add_parser("security", help="secrets, workflows, guard-file integrity (+ --net: per-host counters and cooldowns)")
+    s.add_argument("--baseline", action="store_true", help="renew the integrity baseline AFTER checking the change")
+    s.add_argument("--net", action="store_true")
+    s.add_argument("--strict", action="store_true", help="exit 1 on FAIL (CI)")
+    s.set_defaults(fn=cmd_security)
+    s = sub.add_parser("vet", help="safety-check one incoming file (type, size, virus scan)")
+    s.add_argument("file")
+    s.add_argument("kind", choices=["video", "audio", "image", "font", "pdf", "model", "other"])
+    s.set_defaults(fn=cmd_vet)
     s = sub.add_parser("audit-links", help="find orphans, duplicates, broken links (read-only)")
     s.set_defaults(fn=cmd_audit_links)
     s = sub.add_parser("clients", help="company folders: init | made-from | gate")

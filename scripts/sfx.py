@@ -72,11 +72,15 @@ def search_q(query, category="sound_effect", duration="short", page_size=20, tok
     if duration:
         p["duration"] = duration
     q = urllib.parse.urlencode(p)
-    req = urllib.request.Request(f"{OPENVERSE}?{q}", headers={"User-Agent": "itcodlab-video-system"})
+    from .netguard import config, guard
+    req = urllib.request.Request(f"{OPENVERSE}?{q}", headers={"User-Agent": config()["user_agent"]})
     if token:
         req.add_header("Authorization", f"Bearer {token}")
-    with urllib.request.urlopen(req, timeout=30) as r:  # noqa: S310
-        return json.loads(r.read().decode("utf-8")).get("results", [])
+
+    def go():
+        with urllib.request.urlopen(req, timeout=30) as r:  # noqa: S310
+            return json.loads(r.read().decode("utf-8")).get("results", [])
+    return guard().call("openverse", go)
 
 
 def audio_defs(cues, files, volume=SFX_VOLUME):
@@ -113,9 +117,9 @@ def measure(path):
 
 
 def download(url, dest):
-    req = urllib.request.Request(url, headers={"User-Agent": "itcodlab-video-system"})
-    with urllib.request.urlopen(req, timeout=60) as r, open(dest, "wb") as f:  # noqa: S310
-        f.write(r.read())
+    """https only, public addresses only, size cap, content must really be audio (no programs, archives or web pages)."""
+    from .netguard import safe_download
+    return safe_download(url, dest, "audio")
 
 
 def fetch_all(plan, out_dir, rel_prefix="assets/sfx", token=None, search_fn=None, download_fn=None, measure_fn=None):

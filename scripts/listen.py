@@ -36,7 +36,11 @@ def fingerprint_lookup(wav, key, run=subprocess.run, get=None):
         r = run(["fpcalc", "-json", str(wav)], capture_output=True, text=True, timeout=120)
         fp = json.loads(r.stdout)
         q = urllib.parse.urlencode({"client": key, "meta": "recordings", "duration": int(fp["duration"]), "fingerprint": fp["fingerprint"]})
-        raw = get(q) if get else urllib.request.urlopen(f"https://api.acoustid.org/v2/lookup?{q}", timeout=30).read().decode()  # noqa: S310
+        if get:
+            raw = get(q)
+        else:
+            from .netguard import guard
+            raw = guard().call("acoustid", lambda: urllib.request.urlopen(f"https://api.acoustid.org/v2/lookup?{q}", timeout=30).read().decode())  # noqa: S310
         for res in sorted(json.loads(raw).get("results", []), key=lambda x: -x.get("score", 0)):
             for rec in res.get("recordings", []):
                 if rec.get("title"):

@@ -1,0 +1,27 @@
+# Security check: weekly + on every push. Read-only. No secrets used. Fails loudly, changes nothing.
+name: security
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '41 3 * * 1'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Our own checks (secrets, workflows, guard files)
+        run: python3 -m scripts.cli security --strict
+      - name: Known vulnerabilities in Python packages
+        run: |
+          pip install -q pip-audit
+          pip-audit -r requirements.txt --progress-spinner off || echo "::warning::pip-audit found issues (see log)"
+      - name: Known vulnerabilities in Remotion packages
+        run: cd remotion && npm audit --omit=dev --audit-level=high || echo "::warning::npm audit found issues (see log)"

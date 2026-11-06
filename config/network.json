@@ -1,0 +1,23 @@
+{
+  "_note": "Polite-network rules (scripts/netguard.py, rulebooks/15-security.md). Slow, honest, official APIs first. A block signal = stop that host and alert; never work around it.",
+  "user_agent": "itcodlab-video-system/1.0 (private research tool)",
+  "hosts": {
+    "instagram": {"match": ["instagram.com", "cdninstagram.com", "fbcdn.net"], "min_gap_s": 60, "jitter_s": 30, "daily_max": 30, "cooldown_h": [2, 12, 48]},
+    "openverse": {"match": ["openverse.org"], "min_gap_s": 1.5, "jitter_s": 1, "daily_max": 400, "cooldown_h": [1, 6, 24]},
+    "acoustid": {"match": ["acoustid.org"], "min_gap_s": 0.5, "jitter_s": 0.2, "daily_max": 800, "cooldown_h": [1, 6, 24]},
+    "gemini": {"match": ["generativelanguage.googleapis.com"], "min_gap_s": 4, "jitter_s": 1, "daily_max": 400, "cooldown_h": [1, 6, 24]},
+    "models": {"match": ["github.com", "githubusercontent.com", "huggingface.co"], "min_gap_s": 2, "jitter_s": 1, "daily_max": 100, "cooldown_h": [1, 6, 24]},
+    "default": {"match": [], "min_gap_s": 3, "jitter_s": 2, "daily_max": 200, "cooldown_h": [1, 6, 24]}
+  },
+  "block_signals": [
+    "HTTP Error 429", "HTTP Error 403", "Too Many Requests", "rate.?limit", "login required", "checkpoint", "challenge",
+    "captcha", "Just a moment", "cf-mitigated", "Attention Required", "Sign in to confirm", "temporarily blocked", "unusual traffic", "Access Denied"
+  ],
+  "download": {
+    "max_mb": {"audio": 40, "image": 30, "font": 10, "model": 10, "video": 800, "pdf": 30},
+    "redirects_max": 4,
+    "timeout_s": 60
+  },
+  "yt_dlp_polite": ["--sleep-requests", "1.5", "--sleep-interval", "6", "--max-sleep-interval", "15", "--retries", "2",
+                    "--extractor-retries", "1", "--retry-sleep", "exp=5:120"]
+}

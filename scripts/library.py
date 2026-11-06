@@ -112,6 +112,8 @@ def add_file(storage, local_path, type_, name, licence, source="", credit="", ta
         raise ValueError(f"type must be one of {TYPES}")
     if licence.lower() not in SAFE:
         raise ValueError(f"licence '{licence}' not allowed for commercial use (allowed: {SAFE})")
+    from .security import require_safe
+    require_safe(local_path, {"music": "audio", "sfx": "audio", "font": "font", "image": "image", "texture": "image", "brush": "image"}.get(type_, "other"))
     fp = fingerprint(local_path, type_)
     items = load(storage)
     hit, tier, dist = _classify_against(items, fp, type_)

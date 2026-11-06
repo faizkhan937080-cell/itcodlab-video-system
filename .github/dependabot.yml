@@ -1,0 +1,12 @@
+# Weekly update PRs for the three things that run on the worker. Nothing merges by itself.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule: {interval: weekly}
+  - package-ecosystem: pip
+    directory: "/"
+    schedule: {interval: weekly}
+  - package-ecosystem: npm
+    directory: "/remotion"
+    schedule: {interval: weekly}
