@@ -21,6 +21,10 @@ from .common import limits
 STATE_PREFIXES = tuple(limits()["storage"]["overwrite_allowed_only_under"])
 
 
+# generated lists that are rebuilt from other files (creator INDEX): safe to refresh in place
+DERIVED_SUFFIXES = ("/INDEX.md", "/INDEX.json")
+
+
 class StorageError(RuntimeError):
     pass
 
@@ -97,7 +101,7 @@ class Storage:
             raise StorageError(f"local file missing: {local_path}")
         if versioned and self.exists(rel):
             rel = _versioned_name(rel, self.exists)
-        elif not versioned and not rel.startswith(STATE_PREFIXES):
+        elif not versioned and not rel.startswith(STATE_PREFIXES) and not rel.endswith(DERIVED_SUFFIXES):
             raise StorageError(f"in-place update not allowed outside {STATE_PREFIXES}: {rel}")
         if self.root is not None:
             dest = self.root / rel

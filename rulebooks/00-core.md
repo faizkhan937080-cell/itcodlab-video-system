@@ -21,7 +21,7 @@
 - Daily job cap and limits: `config/limits.json`.
 
 ## Nothing is deleted (except approved dev scrap)
-- Source video stays in Drive `analysis/creators/<handle>/<job>/source.mp4` (general: `analysis/general/<job>/`).
+- Source video stays in Drive `creators/<handle>/videos/<job>/source.mp4` (general: `analysis/general/<job>/`).
 - Per-frame metrics and full-res keyframes stay. DNA is versioned: dna-v1.json, dna-v2.json. Never overwrite.
 - Dedup removes scenes from the collage only. Scripts copy, never sync. rm/delete is denied for scripts and Claude's shell.
 - DEV PHASE (set by Faiz 2026-11-06, config `phase`): 100% scrap may go: failed/superseded analysis packs, test
@@ -49,3 +49,8 @@
 ## Save only real work (Faiz rule 2026-11-06 06:53 IST)
 - Save to Drive/Sheet/DNA ONLY what comes from a reel/video Faiz gave. Test, trial, scratch and probe runs stay local (temp dir) and are never saved.
 - Tests must not write to Drive, Sheet, the `review` branch or DNA. If a test needs a job, use a temp folder and delete it after.
+
+## One command = the whole job (Faiz rule 2026-11-06 16:06 IST)
+- When Faiz says "extract DNA / style / other factors from this reel", do ALL of it in one go: every DNA type, editing + content
+  factors, hook, pacing, sound, extras, saved in the creator's folder. Never ask again per type or per step.
+- Ask only for something EXTRA beyond his command. Tell him only what truly needs a human (110% sure Claude cannot do it).

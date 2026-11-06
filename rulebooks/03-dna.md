@@ -26,7 +26,7 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 - One analyze job per video (mode both). Per video, one DNA of each type. Then
   `./run corpus --type T --creator <h> --files <dna1> <dna2> ... --out corpus.json` -> signature (clone), situational
   (follows the topic), targets (value to aim at). Under 10 videos = provisional. Saved with approval as
-  `dna/creators/<h>/<type>/corpus-vN.json`. "Make it in <h>'s style": read corpus targets first, newest dna-vN second.
+  `creators/<h>/style/<type>/corpus-vN.json`. "Make it in <h>'s style": read corpus targets first, newest dna-vN second.
 
 ## Saving
 - Candidate -> user approval (gate 3) -> `dna-vN.json` in Drive `dna/<general|creators/<name>>/` -> row in DNA_Index.
@@ -35,10 +35,9 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 
 ## Creator folders (one name everywhere)
 - Creator name = Instagram handle, lowercase, read from the link by the worker (target `creator:auto`).
-- Everything of a creator sits under that name. Worker creates the folders as soon as the handle is known:
-  `analysis/creators/<h>/<job>/` (source, pack, candidates), `dna/creators/<h>/{editing,scripting,sound,sources}/`,
-  pointer `analysis/creators/<h>/<job>.json`, Sheet DNA_Index. General jobs: `analysis/general/<job>/`.
-- Saved DNA: `dna/creators/<h>/<type>/dna-vN.json`. Only the 100% correct, approved version is kept in dev phase.
-- "Make it in <name>'s style": list `dna/creators/`, match the handle (fuzzy), read the latest dna-vN
-  of each needed type (script -> scripting, video -> editing, both -> all three + sound), then plan.
-- Merge or compare creators only with approval. Old versions stay.
+- Everything of a creator sits in ONE folder `creators/<h>/` (Faiz 2026-11-06). Worker creates it as soon as the handle is known:
+  `videos/<job>/` (source, pack, candidates, reel.json), `dna/` (approved DNA, file = `<job>__<type>__vN.json` so the reel is in the name),
+  `style/<type>/` (corpus = whole-creator clone), `ideas/`, `scripts/`, `made/` (videos made in this style), `INDEX.md` (reel -> DNA, auto).
+- General jobs: `analysis/general/<job>/`, DNA `dna/general/<type>/dna-vN.json`.
+- Only the 100% correct, approved version is kept in dev phase. Never overwrite, never delete older versions.
+- "Make it in <name>'s style": list `creators/`, match the handle (fuzzy), read INDEX.md, then corpus targets, then newest DNA files.

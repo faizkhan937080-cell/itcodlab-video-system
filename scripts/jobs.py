@@ -278,6 +278,12 @@ class Worker:
                                     f"drafts in {base}/dna/measured-<type>.json")
                     self._maybe_corpus(job, st)
                     return False
+                if job["mode"] == "audio" and self._audio_data_complete(res["pack"]):
+                    types = REQUIRED_TYPES["audio"]  # no collages to judge: sound + scripting go straight to DNA drafting
+                    self.set_status(st, job, "AWAIT_CANDIDATE",
+                                    f"Audio data complete (gate 2 not needed). Waiting for DNA candidate(s): {', '.join(types)} "
+                                    f"(file {base}/dna/candidate-<type>-v{st['candidate_ver']}.json)")
+                    return True
                 self.set_status(st, job, "AWAIT_GATE2",
                                 f"Analysis ready: {res['manifest']['collage_count']} collage(s) in "
                                 f"{st['paths']['pack']}. Look at them and approve gate 2.")
@@ -327,10 +333,11 @@ class Worker:
                     ptr = {"creator": h, "job": jid, "link": job.get("link", ""), "mode": job["mode"],
                            "analysis": self._analysis_rel(st, job), "dna": saved, "meta": st.get("source_meta", {}),
                            "saved": now_iso()}
-                    self.storage.put_json(f"dna/creators/{h}/sources/{jid}.json", ptr)
+                    self.storage.put_json(f"{self._analysis_rel(st, job)}/reel.json", ptr)
+                    from .creator_index import write_index
+                    write_index(self.storage, h)
                     if self.sheets:
                         self.sheets.upsert_creator(h, jid)
-                    self.storage.put_json(f"analysis/creators/{h}/{jid}.json", ptr)
                 st["output_link"] = saved[0] if saved else ""
                 self.set_status(st, job, "DONE", "DNA saved: " + ", ".join(saved))
                 return False
@@ -377,30 +384,41 @@ class Worker:
             raise RuntimeError("could not read the creator handle from the link metadata")
         st["target"] = f"creator:{handle}"
 
+    @staticmethod
+    def _audio_data_complete(pack_dir):
+        """Transcript covers >= 90 %, loudness measured, audit passed -> nothing for a human to look at."""
+        try:
+            m = json.loads((Path(pack_dir) / "metrics_summary.json").read_text(encoding="utf-8"))
+            return (m["transcript"]["coverage_ratio"] >= 0.9 and bool(m["audio"].get("ebu_r128"))
+                    and m["audit"]["pass"] is True)
+        except Exception:  # noqa: BLE001
+            return False
+
     def _analysis_rel(self, st, job):
-        """Everything of a creator lives under that creator's name: analysis/creators/<h>/<job>.
-        Jobs started before this layout keep the path already stored in their state."""
+        """Everything of a creator lives in ONE folder: creators/<h>/videos/<job>.
+        Jobs started before this layout keep the path stored in their state (followed if the folder was moved)."""
         p = (st.get("paths") or {}).get("analysis")
         t = st.get("target") or job.get("target", "general")
+        is_creator = t.startswith("creator:") and t != "creator:auto"
         if p:
-            if not self.storage.exists(p) and t.startswith("creator:") and t != "creator:auto":
-                alt = f"analysis/creators/{t.split(':', 1)[1]}/{job['id']}"
-                if self.storage.exists(alt):  # folder was moved into the creator's folder: follow it
-                    st["paths"]["analysis"] = alt
-                    st["paths"]["pack"] = f"{alt}/pack"
-                    return alt
+            if not self.storage.exists(p) and is_creator:
+                h = t.split(":", 1)[1]
+                for alt in (f"creators/{h}/videos/{job['id']}", f"analysis/creators/{h}/{job['id']}"):
+                    if self.storage.exists(alt):  # folder was moved into the creator's folder: follow it
+                        st["paths"]["analysis"] = alt
+                        st["paths"]["pack"] = f"{alt}/pack"
+                        return alt
             return p
-        if t.startswith("creator:") and t != "creator:auto":
-            return f"analysis/creators/{t.split(':', 1)[1]}/{job['id']}"
+        if is_creator:
+            return f"creators/{t.split(':', 1)[1]}/videos/{job['id']}"
         return f"analysis/general/{job['id']}"
 
     def _make_creator_folders(self, st):
         t = st.get("target", "")
         if t.startswith("creator:") and t != "creator:auto":
             h = t.split(":", 1)[1]
-            for sub in ("editing", "scripting", "sound", "sources"):
-                self.storage.ensure_dir(f"dna/creators/{h}/{sub}")
-            self.storage.ensure_dir(f"analysis/creators/{h}")
+            for sub in ("videos", "dna", "style", "ideas", "scripts", "made"):
+                self.storage.ensure_dir(f"creators/{h}/{sub}")
 
     def _retry_review(self, st, job, wd):
         """If the collage copy to the review branch failed (e.g. token without write access), try again while the job
@@ -479,7 +497,7 @@ class Worker:
                     pass
             if dnas:
                 c = aggregate(t, h, dnas, [j["id"] for j, _ in members])
-                outs.append(self.storage.put_json(f"analysis/creators/{h}/_batches/{batch}/corpus-{t}-measured.json", c))
+                outs.append(self.storage.put_json(f"creators/{h}/style/_batches/{batch}/corpus-{t}-measured.json", c))
         st["note"] += f" | batch complete: {', '.join(outs)}"
         self.save(st, job)
 

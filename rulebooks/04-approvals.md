@@ -35,3 +35,5 @@ Never assume. Never auto-approve. Claude cannot approve for the user.
 - Gate 2 is split per DNA type (approved 2026-11-06): scripting and sound may go to gate 3 once their data
   (transcript with coverage_ratio >= 0.9, OCR, audio metrics) is complete and checked. Editing waits until
   Claude has SEEN the collages.
+- Audio mode (2026-11-06): no collages to judge, so gate 2 is skipped when transcript coverage >= 0.9, loudness is measured and the audit passes.
+  Worker goes straight to AWAIT_CANDIDATE. Gate 3 (DNA candidate) stays Faiz's Y.

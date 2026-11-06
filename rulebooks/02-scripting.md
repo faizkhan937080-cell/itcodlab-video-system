@@ -2,7 +2,7 @@
 
 ## Two kinds of scripting DNA
 - General: `dna/general/scripting/` for everyone.
-- Creator: `dna/creators/<creator-name>/scripting/` for one creator only.
+- Creator: `creators/<creator-name>/dna/<job>__scripting__vN.json` for one creator only.
 The user says which one to use. If not said, ask. Never mix them silently.
 
 ## How a script is made

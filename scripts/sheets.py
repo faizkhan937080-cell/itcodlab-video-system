@@ -88,9 +88,9 @@ class SheetsClient:
             if handle in names:
                 r = names.index(handle) + 1
                 n = int((ws.cell(r, 2).value or "0") or 0) + 1
-                ws.update(range_name=f"A{r}:D{r}", values=[[handle, n, job_id, "dna/creators/" + handle]])
+                ws.update(range_name=f"A{r}:D{r}", values=[[handle, n, job_id, "creators/" + handle]])
             else:
-                ws.append_row([handle, 1, job_id, "dna/creators/" + handle], value_input_option="USER_ENTERED")
+                ws.append_row([handle, 1, job_id, "creators/" + handle], value_input_option="USER_ENTERED")
         except Exception as e:  # noqa: BLE001
             log(f"sheet creator update failed: {str(e)[:120]}")
 

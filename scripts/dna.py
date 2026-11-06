@@ -37,11 +37,11 @@ def dna_dir(target, dna_type):
     if target == "general":
         return f"dna/general/{dna_type}"
     name = target.split(":", 1)[1]
-    return f"dna/creators/{name}/{dna_type}"
+    return f"creators/{name}/dna"  # one folder with every DNA of the creator; the file name carries reel + type
 
 
-def next_version(storage, folder):
-    pat = re.compile(r"^dna-v(\d+)\.json$")
+def next_version(storage, folder, prefix=None):
+    pat = re.compile(rf"^{re.escape(prefix)}__v(\d+)\.json$") if prefix else re.compile(r"^dna-v(\d+)\.json$")
     nums = [int(m.group(1)) for n in storage.list_dir(folder) if (m := pat.match(n))]
     return (max(nums) + 1) if nums else 1
 
@@ -49,9 +49,11 @@ def next_version(storage, folder):
 def save_dna(storage, target, dna_type, candidate, job_id):
     """Write dna-vN.json (N = next free number). Returns (rel_path, version)."""
     folder = dna_dir(target, dna_type)
-    ver = next_version(storage, folder)
+    prefix = None if target == "general" else f"{job_id}__{dna_type}"
+    ver = next_version(storage, folder, prefix)
     obj = dict(candidate)
     obj["_meta"] = {"version": ver, "scope": target, "source_job": job_id,
                     "approved_gate": 3, "saved_at": now_iso()}
-    rel = storage.put_json(f"{folder}/dna-v{ver}.json", obj)
+    name = f"dna-v{ver}.json" if prefix is None else f"{prefix}__v{ver}.json"
+    rel = storage.put_json(f"{folder}/{name}", obj)
     return rel, ver
