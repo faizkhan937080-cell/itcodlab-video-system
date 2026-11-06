@@ -112,6 +112,7 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
         if with_transcript:
             transcript = audio_mod.transcribe(wav)
         write_json_local(out_root / "transcript.json", transcript)
+        (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
         write_json_local(out_root / "audio.json", audio_res)
     audit = audit_mod.build(info, len(frames), scenes, clusters, audio_res, transcript)
     write_json_local(out_root / "audit.json", audit)

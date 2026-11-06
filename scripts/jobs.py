@@ -320,6 +320,8 @@ class Worker:
                 saved = []
                 target = st.get("target") or job["target"]
                 for t, rel in st["candidates"].items():
+                    if not self.storage.exists(rel):  # reel folder was moved: candidate sits under the followed folder
+                        rel = f"{self._analysis_rel(st, job)}/dna/{rel.rsplit('/', 1)[-1]}"
                     obj = self.storage.read_json(rel)
                     path, ver = save_dna(self.storage, target, t, obj, jid)
                     saved.append(path)
@@ -334,6 +336,8 @@ class Worker:
                            "analysis": self._analysis_rel(st, job), "dna": saved, "meta": st.get("source_meta", {}),
                            "saved": now_iso()}
                     self.storage.put_json(f"{self._analysis_rel(st, job)}/reel.json", ptr)
+                    from .recipe import write as write_recipe
+                    write_recipe(self.storage, ptr)
                     from .creator_index import write_index
                     write_index(self.storage, h)
                     if self.sheets:

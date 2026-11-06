@@ -217,6 +217,22 @@ def cmd_sfx(a):
     return 0
 
 
+def cmd_library(a):
+    """Asset library: scan (index files Faiz dropped in), add (free item with licence), find, list."""
+    from . import library
+    st = _storage()
+    if a.action == "scan":
+        res = library.scan(st)
+        print(json.dumps({"new": [r["id"] for r in res]}, indent=2))
+    elif a.action == "add":
+        print(json.dumps(library.add_entry(st, a.type, a.name, a.licence, a.source, a.file, a.credit,
+                                           [t for t in (a.tags or "").split(",") if t]), indent=2, ensure_ascii=False))
+    else:
+        items = library.find(st, a.word, a.type) if a.action == "find" else library.load(st)
+        print("\n".join(f"{i['id']} | {i['licence']} | {i.get('file') or i.get('source')}" for i in items) or "empty")
+    return 0
+
+
 def cmd_story(a):
     """'Kahani update': rebuild the memory index, check the 60-line rule, then save everything to GitHub so a lost
     sandbox never loses the story. Claude runs it when Faiz says "kahani update" and on its own after work chats."""
@@ -271,6 +287,13 @@ def build_parser():
     s.add_argument("--assets-dir", required=True, help="folder that becomes assets/sfx for the render")
     s.add_argument("--dry-run", action="store_true")
     s.set_defaults(fn=cmd_sfx)
+    s = sub.add_parser("library", help="asset library: scan | add | find | list")
+    s.add_argument("action", choices=["scan", "add", "find", "list"])
+    s.add_argument("word", nargs="?", default="")
+    s.add_argument("--type", default=None)
+    s.add_argument("--name"); s.add_argument("--licence"); s.add_argument("--source", default="")
+    s.add_argument("--file", default=None); s.add_argument("--credit", default=""); s.add_argument("--tags", default="")
+    s.set_defaults(fn=cmd_library)
     s = sub.add_parser("story", help="kahani update: index + 60-line check + save memory/rules to GitHub")
     s.set_defaults(fn=cmd_story)
 

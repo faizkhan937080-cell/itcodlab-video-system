@@ -158,3 +158,26 @@ def compute(transcript, duration_s):
         out["english_pass"] = {"coverage_ratio": alt.get("coverage_ratio"), "words": len(aw),
                                "first_12_words": " ".join(aw[:12])}
     return out
+
+
+def _clock(t):
+    t = max(0.0, float(t))
+    return f"{int(t // 60):02d}:{t % 60:04.1f}"
+
+
+def transcript_txt(transcript):
+    """Human-readable timed transcript (plain text) from transcript.json. Both passes, loop segments skipped."""
+    if not transcript or not transcript.get("available"):
+        return "Transcript not available for this reel.\n"
+    blocks = [("MAIN PASS (language: %s)" % transcript.get("language", "?"), transcript)]
+    if transcript.get("alt_english"):
+        blocks.append(("ENGLISH PASS (English words come out right here)", transcript["alt_english"]))
+    out = []
+    for title, tr in blocks:
+        out += [title, "=" * len(title)]
+        for x in tr.get("segments", []):
+            if x.get("loop") or not x.get("text"):
+                continue
+            out.append(f"[{_clock(x['start'])} - {_clock(x['end'])}] {x['text']}")
+        out.append("")
+    return "\n".join(out)

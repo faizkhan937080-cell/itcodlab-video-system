@@ -460,3 +460,20 @@ def test_creator_index_lists_reel_to_dna(drive):
     md = drive.read_text("creators/rahul/INDEX.md")
     assert "an1__scripting__v1.json" in md and "http://x/1" in md
     assert not drive.exists("creators/rahul/INDEX_v2.md")
+
+
+def test_recipe_card_links_reel_dna_and_elements(drive):
+    from scripts.recipe import write
+    drive.put_json("creators/rahul/videos/an1/elements.json",
+                   {"fonts": [{"name": "Courier Prime Bold", "role": "title"}], "music": {"bpm": 103.4, "usable_audio": False},
+                    "junk": 1})
+    reel = {"creator": "rahul", "job": "an1", "link": "http://x/1", "mode": "audio", "saved": "t",
+            "analysis": "creators/rahul/videos/an1",
+            "dna": ["creators/rahul/dna/an1__scripting__v1.json", "creators/rahul/dna/an1__sound__v1.json"]}
+    card = write(drive, reel)
+    assert card["dna"]["scripting"].endswith("an1__scripting__v1.json") and "junk" not in card["elements"]
+    write(drive, reel)  # refresh in place, no _v2
+    assert not drive.exists("creators/rahul/videos/an1/recipe_v2.json")
+    assert "Courier Prime Bold" in drive.read_text("creators/rahul/videos/an1/RECIPE.md")
+    write(drive, {**reel, "job": "an2", "analysis": "creators/rahul/videos/an2"})  # no elements.json: still a card
+    assert drive.exists("creators/rahul/videos/an2/recipe.json")

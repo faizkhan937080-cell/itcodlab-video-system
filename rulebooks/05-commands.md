@@ -39,3 +39,7 @@ doctor, selftest, analyze-local, validate, render-local, worker, status, new-job
 - Bulk jobs: measured only (no collages to Claude, no gates, not in the daily Claude cap; own `claude.bulk_daily_cap`). End state MEASURED.
 - Each saves `<analysis>/dna/measured-<type>.json`. When all batch jobs are MEASURED the worker writes `creators/<h>/style/_batches/<batch>/corpus-<type>-measured.json` (provisional).
 - Claude then judges only a ~10-video sample (normal gates), merges with `./run corpus`, checks with `./run dna-check`.
+- Asset library (Drive `assets/library/{font,music,sfx,motion,texture,brush,image}` + INDEX.json/INDEX.md): Faiz drops files in, `./run library scan`
+  indexes them (licence `user-supplied`). Free items Claude fetches: `./run library add --type T --name N --licence cc0|pdm|by|ofl|mit|apache-2.0 --source URL --tags a,b`
+  (non-commercial licences are refused). `./run library find <word> [--type T]`. Google fonts need no download: `@remotion/google-fonts` loads them by name.
+

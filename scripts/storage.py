@@ -22,7 +22,7 @@ STATE_PREFIXES = tuple(limits()["storage"]["overwrite_allowed_only_under"])
 
 
 # generated lists that are rebuilt from other files (creator INDEX): safe to refresh in place
-DERIVED_SUFFIXES = ("/INDEX.md", "/INDEX.json")
+DERIVED_SUFFIXES = ("/INDEX.md", "/INDEX.json", "/recipe.json", "/RECIPE.md")
 
 
 class StorageError(RuntimeError):

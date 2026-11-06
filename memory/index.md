@@ -1,6 +1,7 @@
 # memory index (auto-built by ./run mem index)
 Read memory/state.md first. Then open only the shard you need, or `./run mem find <word>`.
 format: path | files | lines | keys
+creators-dna.md | 1 | 3 | creators dna
 decisions/approvals-rules.md | 1 | 11 | approval gates meta ads numerology delete versions never overwrite
 decisions/architecture.md | 1 | 12 | architecture colab gcp github drive sheet remotion 4k limits worker
 decisions/collages-seeing.md | 1 | 9 | collage tiles faces review branch gemini describe base64 transcript

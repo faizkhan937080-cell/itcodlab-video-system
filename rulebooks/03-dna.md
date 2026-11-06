@@ -41,3 +41,12 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 - General jobs: `analysis/general/<job>/`, DNA `dna/general/<type>/dna-vN.json`.
 - Only the 100% correct, approved version is kept in dev phase. Never overwrite, never delete older versions.
 - "Make it in <name>'s style": list `creators/`, match the handle (fuzzy), read INDEX.md, then corpus targets, then newest DNA files.
+
+## Recipe card per reel (Faiz 2026-11-06 16:39)
+- Each reel folder holds: `transcript.txt` (timed, readable), `elements.json` (Claude judges: fonts, music, sfx, motion, textures,
+  tools_named, layout, captions, assets_needed - names + times), `recipe.json` + `RECIPE.md` (auto at SAVING_DNA: reel link -> DNA files -> elements).
+- "Make it like THIS reel": read only that reel's RECIPE.md, its DNA files and elements. Never learn the whole creator for it.
+- Music: demucs music stem is bad quality, NEVER reused. Save only measured numbers + mood/bpm + a search hint; take real music/SFX/fonts
+  from `assets/library` (`./run library find <word>`).
+- Dev phase: repeated same-name folders/files = scrap. Trash the superseded ones (Faiz approved this batch rule); keep job state JSONs (cap ledger).
+

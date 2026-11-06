@@ -72,3 +72,13 @@ def test_loop_segments_are_left_out_of_metrics():
             {"start": 5.0, "end": 9.0, "text": "करेट", "loop": True}]
     m = sm.compute(tr(segs), 9.0)
     assert m["words"] == 7
+
+
+def test_transcript_txt_two_passes_skips_loops():
+    tr = {"available": True, "language": "hi",
+          "segments": [{"start": 0, "end": 2.5, "text": "namaste"}, {"start": 3, "end": 9, "text": "x", "loop": True}],
+          "alt_english": {"segments": [{"start": 65.2, "end": 70, "text": "hello world"}]}}
+    t = sm.transcript_txt(tr)
+    assert "[00:00.0 - 00:02.5] namaste" in t and "[01:05.2 - 01:10.0] hello world" in t
+    assert "x" not in t.split("ENGLISH")[0].split("namaste")[1]
+    assert "not available" in sm.transcript_txt({"available": False})
