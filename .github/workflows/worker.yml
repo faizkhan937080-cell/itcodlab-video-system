@@ -39,10 +39,14 @@ jobs:
           cache: pip
       - name: System tools
         if: steps.chk.outputs.ready == 'true'
-        timeout-minutes: 12
+        timeout-minutes: 25
         run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install -y ffmpeg tesseract-ocr rclone libnss3 libatk-bridge2.0-0 libcups2 libgbm1 libxkbcommon0 libasound2t64 libchromaprint-tools > /dev/null || true
+          # apt sometimes hangs on a slow mirror: short network timeouts + up to 3 tries, each capped at 4 minutes
+          APT="-o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20"
+          for i in 1 2 3; do
+            timeout 240 sudo apt-get -qq $APT update || true
+            timeout 240 sudo apt-get -qq $APT install -y ffmpeg tesseract-ocr rclone libnss3 libatk-bridge2.0-0 libcups2 libgbm1 libxkbcommon0 libasound2t64 libchromaprint-tools > /dev/null && break || echo "apt try $i failed"
+          done
           ffmpeg -version | head -1; rclone version | head -1
       - name: Virus scanner (checks every file we bring in)
         if: steps.chk.outputs.ready == 'true'
