@@ -95,3 +95,20 @@ def test_scene_fx_validate_and_bad_rejected():
     assert validate("scene", plan) == []
     plan["scenes"][0]["fx"] = [{"type": "explode", "start_s": 0}]
     assert validate("scene", plan)
+
+
+def test_sfx_cues_add_meme_fx_idempotent_and_valid():
+    from scripts import sfx
+    plan = {"title": "t", "fps": 30, "orientation": "portrait", "scenes": [
+        {"id": "a", "duration_s": 2, "template": "title", "props": {"text": "x"}},
+        {"id": "b", "duration_s": 2, "template": "quote", "props": {"text": "y"}, "transition_in": {"type": "zoom"},
+         "fx": [{"type": "glitch", "start_s": 1.0}]}]}
+    cues = sfx.plan_cues(plan)
+    n1 = sfx.fx_for_cues(plan, cues)
+    first = [dict(f) for sc in plan["scenes"] for f in sc.get("fx", [])]
+    n2 = sfx.fx_for_cues(plan, cues)
+    assert n1 == n2 and n1 >= 4
+    assert first == [f for sc in plan["scenes"] for f in sc.get("fx", [])]
+    assert any(f["type"] == "glitch" and not f.get("auto") for f in plan["scenes"][1]["fx"])
+    assert any(f["type"] == "rgb_split" and f["start_s"] == 0.0 for f in plan["scenes"][1]["fx"])
+    assert validate("scene", plan) == []

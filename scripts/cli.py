@@ -223,6 +223,8 @@ def cmd_sfx(a):
     if not a.dry_run:
         plan["audio"] = [x for x in plan.get("audio", []) if not str(x.get("src", "")).startswith("assets/sfx/")]
         plan["audio"] += sfx.audio_defs(cues, res["files"])
+        if getattr(a, "meme_fx", False):
+            print(f"meme fx added: {sfx.fx_for_cues(plan, cues)}")
         plan_path.write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8")
         if res["credits"]:
             (plan_path.parent / "sfx_credits.json").write_text(json.dumps(res["credits"], indent=2, ensure_ascii=False), encoding="utf-8")
@@ -400,6 +402,7 @@ def build_parser():
     s.add_argument("--plan", required=True)
     s.add_argument("--assets-dir", required=True, help="folder that becomes assets/sfx for the render")
     s.add_argument("--dry-run", action="store_true")
+    s.add_argument("--meme-fx", action="store_true", help="also add picture effects (zoom-punch, shake, flash, RGB split) on the hit/whoosh cues")
     s.set_defaults(fn=cmd_sfx)
     s = sub.add_parser("resolve", help="clone by name: recipe elements -> library found / missing")
     s.add_argument("reel")

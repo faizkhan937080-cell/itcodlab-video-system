@@ -31,7 +31,7 @@ Numbers: `limits.json -> safezone` = `remotion/src/lib/safe.ts` (test keeps them
 ## Meme kit (scene `fx`, plain code, no asset files)
 `scene.fx: [{type, start_s, dur_s?, strength?}]` types: shake, zoom_punch, flash, rgb_split, glitch, freeze (scene time).
 Templates `meme_text` (Impact caption, position top/bottom/center) and `sticker` (emoji pop; x,y,size,rotate_deg), also as overlays.
-Pair an fx with an SFX hit at the same time (sound rulebook 09). rgb_split/glitch re-draw the scene 3-5x for a few frames: keep them short.
+`./run sfx --plan P --assets-dir D --meme-fx` adds fx (auto:true) on hit/whoosh cues; re-run replaces only the auto ones. rgb_split/glitch re-draw the scene 3-5x for a few frames: keep them short.
 Sounds/memes come from licensed sources (library fetch) or Faiz's own files; licence gate only alerts (rulebook 18).
 
 ## Honest limits

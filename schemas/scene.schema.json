@@ -287,6 +287,9 @@
                   "type": "number",
                   "minimum": 0,
                   "maximum": 2
+                },
+                "auto": {
+                  "type": "boolean"
                 }
               }
             }

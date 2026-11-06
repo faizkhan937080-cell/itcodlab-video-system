@@ -37,6 +37,39 @@ def plan_cues(plan):
     return sorted(cues, key=lambda c: c["t"])
 
 
+# meme effect that goes with a sound cue (opt-in: `sfx --meme-fx`); picture lands exactly on the sound
+FX_FOR_CUE = {
+    "hit": [("zoom_punch", 0.25, 1.0), ("shake", 0.35, 0.8), ("flash", 0.12, 0.7)],
+    "whoosh": [("rgb_split", 0.25, 0.8)],
+}
+
+
+def fx_for_cues(plan, cues, lead_s=LEAD_S):
+    """Add scene.fx at the scene time of each hit/whoosh cue. Idempotent: earlier auto fx are replaced, hand-written fx stay."""
+    starts, t = {}, 0.0
+    for sc in plan["scenes"]:
+        starts[sc["id"]] = t
+        t += float(sc["duration_s"])
+        sc["fx"] = [f for f in (sc.get("fx") or []) if not f.get("auto")]
+    added = 0
+    for c in cues:
+        kinds = FX_FOR_CUE.get(c["kind"])
+        sc = next((x for x in plan["scenes"] if x["id"] == c["scene"]), None)
+        if not kinds or sc is None:
+            continue
+        # a whoosh cue starts `lead_s` before the cut: the picture effect belongs to the cut itself
+        at = max(0.0, c["t"] - starts[c["scene"]] + (lead_s if c["kind"] == "whoosh" else 0.0))
+        for typ, dur, k in kinds:
+            if len(sc["fx"]) >= 24:
+                break
+            sc["fx"].append({"type": typ, "start_s": round(at, 3), "dur_s": dur, "strength": k, "auto": True})
+            added += 1
+    for sc in plan["scenes"]:
+        if not sc["fx"]:
+            del sc["fx"]
+    return added
+
+
 def rank(results, max_s=MAX_DURATION_S):
     """Allowed results, best first: CC0 before PDM before CC BY, then shorter."""
     good = []
