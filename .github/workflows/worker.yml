@@ -23,6 +23,7 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       ACOUSTID_KEY: ${{ secrets.ACOUSTID_KEY }}
       OPENVERSE_TOKEN: ${{ secrets.OPENVERSE_TOKEN }}
+      PIXABAY_KEY: ${{ secrets.PIXABAY_KEY }}
     steps:
       - uses: actions/checkout@v4
       - name: Check the one-time secret
