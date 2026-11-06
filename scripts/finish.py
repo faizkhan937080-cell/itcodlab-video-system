@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .common import log, run_cmd, tail
 from .dna_check import clone_report
+from .tune import tune_hints
 
 TP_LIMIT_DBTP = -1.0   # EBU R128 true-peak ceiling
 
@@ -55,6 +56,7 @@ def clone_check(video, plan, dnas, work):
         for t in ("editing", "sound"):
             if dnas.get(t):
                 res[t] = clone_report(t, dnas[t], summary)
+                res[t]["hints"] = tune_hints(t, dnas[t], summary)
         res["summary_audit_pass"] = bool((summary.get("audit") or {}).get("pass"))
     except Exception as e:  # noqa: BLE001
         log(f"clone check skipped: {type(e).__name__}: {e}")
