@@ -1,6 +1,6 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 18:20 IST
+updated: 2026-11-06 18:40 IST
 ## Jobs (Drive jobs/state JSONs = ledger + daily cap; never delete)
 - reel-DeoxIgMPlS-g (sahilverma.ai EP-01, folder creators/sahilverma.ai/videos/reel-DeoxIgMPlS-g): AWAIT_GATE3 (sound+scripting candidates valid). Waiting Faiz Y/N.
 - reel-DfWAlgTxEkL-a (general, SFX reel): AWAIT_GATE2. Waiting Faiz.
@@ -13,6 +13,7 @@ updated: 2026-11-06 18:20 IST
 - Approvals written 17:56 IST: -g gate 3 and -a gate 2 (worker run 42213429391 was processing them ~18:08 IST; recipe.json/RECIPE.md written for DeoxIgMPlS-).
 - Job reel-DeoxIgMPlS--r2 MEASURED (v2 files OK: transcript, audio, scenes, listen.json). CLAP failed (16 kHz) -> fixed to 48 kHz, pushed. grade.json not seen: check next run. Junk to trash (approved dev scrap): measured-*.json in -g dna folder, style/_batches/pipeline-check; keep state file.
 - 2026-11-06 18:20 IST: security/ban-safety system (15-security.md, netguard/security.py, ClamAV, tripwire) + pro-editing QA gate (16-pro-editing.md: qa.py, plan_edit beat snap + J/L, cover.py, CFR/denoise) + Remotion lottie/audio_bars/fit text/new transitions built, 181 tests green, pushed.
+- 2026-11-06 18:40 IST: voice micro-analysis (voice.json), word timestamps, parallel ears, rulebook 17-speed.md pushed; 190 tests green. First real run with voice.json still to verify on worker.
 ## Waiting on Faiz (human only)
 - Gate 3 Y/N for -g; gate 2 for -a. Gemini key (AI Studio, free) and AcoustID key (free) for the ears. Company Drive link when he has it.
 - Optional: Openverse key; Reels benchmark rule Y/N.
