@@ -4,7 +4,7 @@
     "max_calls_per_stage": 2,
     "error_log_tail_lines": 20,
     "default_model": "sonnet",
-    "daily_job_cap": 5,
+    "daily_job_cap": 6,
     "fresh_session_per_job": true,
     "bulk_daily_cap": 40
   },
