@@ -421,3 +421,13 @@ def test_bulk_jobs_are_measured_only_outside_the_cap_and_build_a_corpus(drive, t
     c = drive.read_json("analysis/creators/zed/_batches/bt1/corpus-editing-measured.json")
     assert c["n_videos"] == 2 and c["provisional"] is True and "cut_rhythm.cuts_per_min" in c["signature"]
     assert w._started_today(bulk=False) == 0 and w._started_today(bulk=True) == 2
+
+
+def test_pick_source_ignores_single_stream_leftovers(tmp_path):
+    from scripts.jobs import pick_source
+    for n, size in (("source.fdash-3688a.m4a", 10), ("source.fdash-3688b.mp4", 50), ("source.mp4", 60), ("source.info.json", 1)):
+        (tmp_path / n).write_bytes(b"x" * size)
+    assert pick_source(list(tmp_path.glob("source.*"))).name == "source.mp4"
+    (tmp_path / "source.mp4").unlink()
+    with pytest.raises(RuntimeError, match="no merged video"):
+        pick_source(list(tmp_path.glob("source.*")))

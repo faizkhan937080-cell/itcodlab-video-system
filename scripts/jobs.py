@@ -20,6 +20,19 @@ from .dna_check import check as check_dna
 TERMINAL = {"DONE", "FAILED", "NEEDS_INPUT", "MEASURED"}
 
 
+VIDEO_SUFFIXES = (".mp4", ".mkv", ".webm", ".mov")
+
+
+def pick_source(files):
+    """The merged video yt-dlp wrote. Never a leftover single stream (source.fdash-123.m4a / .fdash-123.mp4):
+    those sort first alphabetically and are audio-only or video-only (job reel-DeoxIgMPlS-e failed on one)."""
+    ok = [f for f in files if f.suffix.lower() in VIDEO_SUFFIXES and ".f" not in f.name[len("source"):-len(f.suffix)]]
+    if not ok:
+        raise RuntimeError("download has no merged video file (only single streams: "
+                           + ", ".join(sorted(f.name for f in files)) + ")")
+    return max(ok, key=lambda f: f.stat().st_size)
+
+
 class Worker:
     def __init__(self, storage, sheets=None, work=None):
         self.storage = storage
@@ -321,10 +334,7 @@ class Worker:
         rc, out, err = run_cmd(cmd + [job["link"]], timeout=1800)
         if rc != 0:
             raise RuntimeError("yt-dlp failed:\n" + tail(err or out))
-        files = sorted(f for f in wd.glob("source.*") if f.suffix not in (".json", ".part"))
-        if not files:
-            raise RuntimeError("download finished but no file found")
-        return files[0]
+        return pick_source(list(wd.glob("source.*")))
 
     def _resolve_creator(self, job, st, wd):
         """target 'creator:auto' -> creator:<instagram handle> read from yt-dlp metadata. One name everywhere."""
