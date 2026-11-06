@@ -14,7 +14,7 @@ lessons.md | 1 | 4 | lessons
 log/2026-11-05-build.md | 1 | 16 | log build commits jobs colab worker analysis failures
 log/2026-11-06-cleanup.md | 1 | 5 | 2026 11 06 cleanup
 log/2026-11-06-standards.md | 1 | 3 | build standards schema v2 loudness corpus clone render
-memory-rules.md | 1 | 3 | memory rules
+memory-rules.md | 1 | 4 | memory rules
 words/2026-11-05-early-recovered.md | 1 | 13 | faiz early words credit card gemini prompts takeover lessons folders reel creator instagra
 words/2026-11-06-faiz-cleanup-fence.md | 1 | 6 | faiz verbatim creator name folders delete scrap development phase loophole barrier alert f
 words/2026-11-06-faiz-scripting-dna.md | 1 | 3 | scripting dna creator folder assets batch approve remotion token saving

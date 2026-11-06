@@ -45,3 +45,7 @@
 ## Remotion license (approved 2026-11-06)
 - Free for teams up to 3 people. CONFIRMED by Faiz 2026-11-06: IT COD LAB = 1 person, so Remotion is free.
   Re-check in chat if the team grows past 3 (then Creators license $25/month per coder).
+
+## Save only real work (Faiz rule 2026-11-06 06:53 IST)
+- Save to Drive/Sheet/DNA ONLY what comes from a reel/video Faiz gave. Test, trial, scratch and probe runs stay local (temp dir) and are never saved.
+- Tests must not write to Drive, Sheet, the `review` branch or DNA. If a test needs a job, use a temp folder and delete it after.
