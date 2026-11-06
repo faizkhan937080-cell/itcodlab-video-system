@@ -17,9 +17,9 @@ updated: 2026-11-06 19:35 IST
 - 2026-11-06 19:30 IST: alert-only copyright gate (rulebook 18, Faiz decides) + meme kit (fx, meme_text, sticker; rulebook 14) pushed, 193 tests green. Not yet seen on a real worker run: voice.json, grade.json, listen CLAP events.
 ## Waiting on Faiz (human only)
 - Y/N: gate 3 for -a; import Remotion repos (Remocn/Curvable/reactvideoeditor); Pixabay API + LottieFiles in library; Kaggle free GPU worker.
-- Sign in to studio.youtube.com in browser pane (YouTube connect).
 - Gate 3 Y/N for -g; gate 2 for -a. Gemini key (AI Studio, free) and AcoustID key (free) for the ears. Company Drive link when he has it.
 - Optional: Openverse key; Reels benchmark rule Y/N.
+- YouTube/Studio connected 19:30 IST (new empty channel); see mem decisions.
 ## Next
 - Verify new worker code on a real run (listen.json, transcript.txt). Remotion first real end-to-end render. GCP VM later (card).
 - Rules: rulebooks/12-structure.md. Storage clean-up only on Faiz's command.
