@@ -1,6 +1,6 @@
 """./run audit-links: finds orphan/unfinished reel folders, the same reel in two places, broken made_from links,
 library entries without a file and exact-duplicate library files. Read-only. Run after every job."""
-from . import clients, library
+from . import clients, layout, library
 from .reelid import shortcode
 
 
@@ -16,8 +16,7 @@ def run(storage):
             if _TEST.match(n):
                 issues.append(f"test/trial data inside the system (never save tests): {base}/{n}")
     for h in storage.list_dir("creators"):
-        for d in storage.list_dir(f"creators/{h}/videos"):
-            rel = f"creators/{h}/videos/{d}"
+        for d, rel in layout.reel_dirs(storage, h):
             if d in seen:
                 issues.append(f"duplicate reel {d}: {seen[d]} and {rel}")
             seen[d] = rel
@@ -28,7 +27,7 @@ def run(storage):
             if r.get("layout_version") != 2:
                 issues.append(f"old layout (no layout_version 2): {rel}")
             code = shortcode(r.get("link", ""))
-            if code and code != d and r.get("reel_id") != code:
+            if code and code != d.removeprefix("reel-") and r.get("reel_id") != code:
                 issues.append(f"folder name {d} is not the reel code {code}: {rel}")
             for p in r.get("dna", []):
                 if not storage.exists(p):

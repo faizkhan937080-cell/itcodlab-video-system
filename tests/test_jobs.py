@@ -89,10 +89,10 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     st = lambda: drive.read_json("jobs/state/an1.json")  # noqa: E731
 
     assert w.process_once() == [("an1", "AWAIT_GATE2")]
-    assert drive.exists("creators/rahul/videos/an1/pack/collage_01.jpg")
-    assert drive.exists("creators/rahul/videos/an1/pack/metrics_summary.json")
-    assert drive.exists("creators/rahul/videos/an1/test.mp4")
-    for sub in ("videos", "dna", "style", "ideas", "scripts", "made"):  # creator folders exist from the start
+    assert drive.exists("creators/rahul/reel-an1/pack/collage_01.jpg")
+    assert drive.exists("creators/rahul/reel-an1/pack/metrics_summary.json")
+    assert drive.exists("creators/rahul/reel-an1/test.mp4")
+    for sub in ("dna", "style", "ideas", "scripts", "made"):  # creator folders exist from the start
         assert (drive.root / "creators/rahul" / sub).is_dir()
     # no approval -> nothing moves, however often the worker runs
     for _ in range(3):
@@ -102,14 +102,14 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
 
     # a broken candidate is refused and a new version is requested (never overwritten)
-    drive.put_json("creators/rahul/videos/an1/dna/candidate-editing-v1.json", {"type": "editing", "source": {"job_id": "an1"}})
-    drive.put_json("creators/rahul/videos/an1/dna/candidate-scripting-v1.json", scripting_dna("an1"))
-    drive.put_json("creators/rahul/videos/an1/dna/candidate-sound-v1.json", sound_dna("an1"))
+    drive.put_json("creators/rahul/reel-an1/candidate-editing-v1.json", {"type": "editing", "source": {"job_id": "an1"}})
+    drive.put_json("creators/rahul/reel-an1/candidate-scripting-v1.json", scripting_dna("an1"))
+    drive.put_json("creators/rahul/reel-an1/candidate-sound-v1.json", sound_dna("an1"))
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
     assert st()["candidate_ver"] == 2 and "cut_rhythm" in st()["validation_errors"]
 
     # the accuracy gate cross-checks numbers against the pack: a wrong measured number is refused
-    pack_summary = "creators/rahul/videos/an1/pack/metrics_summary.json"
+    pack_summary = "creators/rahul/reel-an1/pack/metrics_summary.json"
     summ = drive.read_json(pack_summary)
     summ["script_metrics"] = SCRIPT_METRICS          # the synthetic test video has no speech
     summ["audio"] = {"has_audio": True, "bpm": 103.4, "silence_share": 0.0,
@@ -118,17 +118,17 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     (drive.root / pack_summary).write_text(json.dumps(summ), encoding="utf-8")  # test edits the pack in place
     wrong = fit_editing(editing_dna("an1"), summ)
     wrong["cut_rhythm"]["cuts_per_min"] = 99.0
-    drive.put_json("creators/rahul/videos/an1/dna/candidate-editing-v2.json", wrong)
-    drive.put_json("creators/rahul/videos/an1/dna/candidate-scripting-v2.json", scripting_dna("an1"))
-    drive.put_json("creators/rahul/videos/an1/dna/candidate-sound-v2.json", sound_dna("an1"))
+    drive.put_json("creators/rahul/reel-an1/candidate-editing-v2.json", wrong)
+    drive.put_json("creators/rahul/reel-an1/candidate-scripting-v2.json", scripting_dna("an1"))
+    drive.put_json("creators/rahul/reel-an1/candidate-sound-v2.json", sound_dna("an1"))
     assert w.process_once() == [("an1", "AWAIT_CANDIDATE")]
     assert st()["candidate_ver"] == 3 and "cuts_per_min" in st()["validation_errors"]
     st_ver = [3]
 
     def good(ver):
-        drive.put_json(f"creators/rahul/videos/an1/dna/candidate-editing-v{ver}.json", fit_editing(editing_dna("an1"), summ))
-        drive.put_json(f"creators/rahul/videos/an1/dna/candidate-scripting-v{ver}.json", scripting_dna("an1"))
-        drive.put_json(f"creators/rahul/videos/an1/dna/candidate-sound-v{ver}.json", sound_dna("an1"))
+        drive.put_json(f"creators/rahul/reel-an1/candidate-editing-v{ver}.json", fit_editing(editing_dna("an1"), summ))
+        drive.put_json(f"creators/rahul/reel-an1/candidate-scripting-v{ver}.json", scripting_dna("an1"))
+        drive.put_json(f"creators/rahul/reel-an1/candidate-sound-v{ver}.json", sound_dna("an1"))
 
     good(3)
     r = w.process_once()
@@ -148,8 +148,8 @@ def test_analyze_job_stops_at_every_gate(drive, tmp_path, test_video):
     saved = drive.read_json("creators/rahul/dna/an1__editing__v1.json")
     assert saved["_meta"]["source_job"] == "an1" and saved["_meta"]["scope"] == "creator:rahul"
     # all earlier candidate versions are still there
-    assert drive.exists("creators/rahul/videos/an1/dna/candidate-editing-v1.json")
-    assert drive.exists("creators/rahul/videos/an1/dna/candidate-editing-v2.json")
+    assert drive.exists("creators/rahul/reel-an1/candidate-editing-v1.json")
+    assert drive.exists("creators/rahul/reel-an1/candidate-editing-v2.json")
 
 
 def test_gate2_rejection_stops_the_job(drive, tmp_path, test_video):
@@ -418,7 +418,7 @@ def test_bulk_jobs_are_measured_only_outside_the_cap_and_build_a_corpus(drive, t
     w = Worker(drive, work=tmp_path / "work")
     res = w.process_once()
     assert res == [("bt-001", "MEASURED"), ("bt-002", "MEASURED")], drive.read_json("jobs/state/bt-001.json").get("note")
-    assert drive.exists("creators/zed/videos/bt-001/dna/measured-editing.json")
+    assert drive.exists("creators/zed/reel-bt-001/measured-editing.json")
     assert not (drive.root / "creators/zed/dna/bt-001__editing__v1.json").exists()      # nothing saved without gates
     assert drive.exists("creators/zed/style/_batches/bt1/corpus-editing-measured.json")
     c = drive.read_json("creators/zed/style/_batches/bt1/corpus-editing-measured.json")
@@ -519,3 +519,16 @@ def test_pack_summary_recomputes_script_numbers_from_saved_transcript(drive):
                    "alt_english": {"segments": eng, "coverage_ratio": 1.0, "text": "x"}})
     m = w._pack_summary(st, job)["script_metrics"]
     assert m["pass_used"] == "english" and m["words"] == 17
+
+
+def test_layout_new_reels_are_flat_and_old_ones_still_read(drive):
+    from scripts import creator_index, layout
+    assert layout.reel_rel("h", "ABC") == "creators/h/reel-ABC"
+    assert layout.cand_dir("creators/h/reel-ABC") == "creators/h/reel-ABC"          # new: candidates sit in the reel folder
+    assert layout.cand_dir("creators/h/videos/ABC") == "creators/h/videos/ABC/dna"   # old: dna/ subfolder
+    assert layout.cand_dir("analysis/general/ABC") == "analysis/general/ABC/dna"
+    assert layout.cand_dir("creators/h/videos/reel-ABC") == "creators/h/videos/reel-ABC/dna"
+    drive.put_json("creators/h/reel-NEW1/reel.json", {"job": "reel-NEW1", "dna": []})
+    drive.put_json("creators/h/videos/OLD1/reel.json", {"job": "reel-OLD1", "dna": []})
+    assert [r["job"] for r in creator_index.rows(drive, "h")] == ["reel-NEW1", "reel-OLD1"]
+    assert not drive.exists("creators/h/videos/NEW1")

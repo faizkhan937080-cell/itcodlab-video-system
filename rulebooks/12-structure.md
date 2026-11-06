@@ -1,7 +1,7 @@
 # Structure, IDs, company folders, licences
 
 ## One reel = one ID, company videos, licences (Faiz 2026-11-06 17:13, loophole review)
-- Reel ID = Instagram shortcode. Folder `creators/<h>/videos/<code>/` (`creators/_unassigned` if the creator is unknown). `new-job` cleans the link,
+- Reel ID = Instagram shortcode. Folder `creators/<h>/reel-<code>/` = EVERYTHING of that reel, flat (source, transcript, candidates, measured, reel.json, RECIPE.md; only `pack/` for collages). Old reels stay in `creators/<h>/videos/<code>/` (+`dna/`), both read via `scripts/layout.py`. (`creators/_unassigned` if the creator is unknown). `new-job` cleans the link,
   refuses a second job for the same reel (use --rerun). Job ids: `reel-<code>`, retries `-r2`. Never move a folder while the worker runs (`gh run list`).
 - Company work: `clients/<company>/{brand,briefs,videos/<video>/}`; each video has `made_from.json` (reel + DNA files pinned by sha256) and `credits.json`.
   `./run clients made-from|gate`. Delivery: gate ALERTS when a licence is not commercial-ok; Faiz's word (`--accept-risk`) lets it pass and is recorded (rulebook 18). Company data never enters creator DNA or another company's video.

@@ -1,6 +1,8 @@
 """One reel = one permanent ID = its Instagram shortcode. Same reel sent again (other link params, retry) never makes a second folder."""
 import re
 
+from . import layout
+
 _RE = re.compile(r"instagram\.com/(?:[A-Za-z0-9_.]+/)?(?:reel|reels|p|tv)/([A-Za-z0-9_-]{5,20})", re.I)
 TERMINAL_BAD = ("FAILED", "NEEDS_INPUT")
 
@@ -19,7 +21,10 @@ def find_reel(storage, code):
     """Where is this reel's folder already? Looks in every creator folder, _unassigned and general."""
     if not code:
         return ""
-    for rel in [f"analysis/general/{code}"] + [f"creators/{h}/videos/{code}" for h in storage.list_dir("creators")]:
+    cands = [f"analysis/general/{code}"]
+    for h in storage.list_dir("creators"):
+        cands += [layout.reel_rel(h, code), f"creators/{h}/videos/{code}"]
+    for rel in cands:
         if storage.exists(rel):
             return rel
     return ""

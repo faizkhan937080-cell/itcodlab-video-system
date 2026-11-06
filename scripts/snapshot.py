@@ -3,6 +3,7 @@ Big media files are NOT copied: a reel can be fetched again from its link, and t
 import hashlib
 import json
 
+from . import layout
 from .common import now_iso
 
 
@@ -10,9 +11,9 @@ def build(storage):
     out = {"taken": now_iso(), "creators": {}, "clients": {}, "library": [], "external": []}
     for h in storage.list_dir("creators"):
         reels = []
-        for d in storage.list_dir(f"creators/{h}/videos"):
+        for d, rel in layout.reel_dirs(storage, h):
             try:
-                r = storage.read_json(f"creators/{h}/videos/{d}/reel.json")
+                r = storage.read_json(f"{rel}/reel.json")
             except Exception:  # noqa: BLE001
                 reels.append({"reel": d, "finished": False})
                 continue

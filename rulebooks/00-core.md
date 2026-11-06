@@ -21,7 +21,7 @@
 - Daily job cap and limits: `config/limits.json`.
 
 ## Nothing is deleted (except approved dev scrap)
-- Source video stays in Drive `creators/<handle>/videos/<job>/source.mp4` (general: `analysis/general/<job>/`).
+- Source video stays in Drive `creators/<handle>/reel-<code>/source.mp4` (old: `videos/<job>/`) (general: `analysis/general/<job>/`).
 - Per-frame metrics and full-res keyframes stay. DNA is versioned: dna-v1.json, dna-v2.json. Never overwrite.
 - Dedup removes scenes from the collage only. Scripts copy, never sync. rm/delete is denied for scripts and Claude's shell.
 - DEV PHASE (set by Faiz 2026-11-06, config `phase`): 100% scrap may go: failed/superseded analysis packs, test

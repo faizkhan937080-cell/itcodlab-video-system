@@ -4,6 +4,7 @@ credits.json lists every third-party item used; the licence gate blocks delivery
 import hashlib
 import re
 
+from . import layout
 from .common import now_iso
 from .library import SAFE
 
@@ -30,13 +31,13 @@ def sha256_text(storage, rel):
 def find_reel_json(storage, ref):
     """ref = reel code or job id. Returns (reel.json dict, folder)."""
     for h in storage.list_dir("creators"):
-        for d in storage.list_dir(f"creators/{h}/videos"):
+        for d, rel in layout.reel_dirs(storage, h):
             if d == ref or d == f"reel-{ref}":
                 try:
-                    return storage.read_json(f"creators/{h}/videos/{d}/reel.json"), f"creators/{h}/videos/{d}"
+                    return storage.read_json(f"{rel}/reel.json"), rel
                 except Exception:  # noqa: BLE001
                     continue
-    raise LookupError(f"reel {ref} not found in any creators/<h>/videos (analysis finished?)")
+    raise LookupError(f"reel {ref} not found in any creators/<h>/reel-* (analysis finished?)")
 
 
 def write_made_from(storage, company, video, ref, credits=()):

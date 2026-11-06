@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from . import finish as finish_mod
+from . import layout
 from . import render as render_mod
 from .common import limits, log, now_iso, tail, workdir
 from .dna import REQUIRED_TYPES, errors_tail, save_dna, validate
@@ -308,14 +309,14 @@ class Worker:
                 st["pack_manifest"] = res["manifest"]
                 if bulk:
                     self.set_status(st, job, "MEASURED", f"measured only (batch {job.get('batch', '-')}); "
-                                    f"drafts in {base}/dna/measured-<type>.json")
+                                    f"drafts in {layout.cand_dir(base)}/measured-<type>.json")
                     self._maybe_corpus(job, st)
                     return False
                 if job["mode"] == "audio" and self._audio_data_complete(res["pack"]):
                     types = REQUIRED_TYPES["audio"]  # no collages to judge: sound + scripting go straight to DNA drafting
                     self.set_status(st, job, "AWAIT_CANDIDATE",
                                     f"Audio data complete (gate 2 not needed). Waiting for DNA candidate(s): {', '.join(types)} "
-                                    f"(file {base}/dna/candidate-<type>-v{st['candidate_ver']}.json)")
+                                    f"(file {layout.cand_dir(base)}/candidate-<type>-v{st['candidate_ver']}.json)")
                     return True
                 self.set_status(st, job, "AWAIT_GATE2",
                                 f"Analysis ready: {res['manifest']['collage_count']} collage(s) in "
@@ -330,7 +331,7 @@ class Worker:
                 types = REQUIRED_TYPES[job["mode"]]
                 self.set_status(st, job, "AWAIT_CANDIDATE",
                                 f"Waiting for DNA candidate(s): {', '.join(types)} "
-                                f"(file {self._analysis_rel(st, job)}/dna/candidate-<type>-v{st['candidate_ver']}.json)")
+                                f"(file {layout.cand_dir(self._analysis_rel(st, job))}/candidate-<type>-v{st['candidate_ver']}.json)")
                 return True
             if dec == "N":
                 self.set_status(st, job, "NEEDS_INPUT", f"Gate 2 rejected: {fb}. Send a new job with other settings.")
@@ -354,7 +355,7 @@ class Worker:
                 target = st.get("target") or job["target"]
                 for t, rel in st["candidates"].items():
                     if not self.storage.exists(rel):  # reel folder was moved: candidate sits under the followed folder
-                        rel = f"{self._analysis_rel(st, job)}/dna/{rel.rsplit('/', 1)[-1]}"
+                        rel = f"{layout.cand_dir(self._analysis_rel(st, job))}/{rel.rsplit('/', 1)[-1]}"
                     obj = self.storage.read_json(rel)
                     path, ver = save_dna(self.storage, target, t, obj, jid)
                     saved.append(path)
@@ -452,7 +453,7 @@ class Worker:
         return job.get("reel_id") or shortcode(job.get("link", "")) or job["id"]
 
     def _analysis_rel(self, st, job):
-        """Everything of a creator lives in ONE folder: creators/<h>/videos/<job>.
+        """Everything of one reel lives in ONE folder: creators/<h>/reel-<code>/ (see layout.py).
         Jobs started before this layout keep the path stored in their state (followed if the folder was moved)."""
         p = (st.get("paths") or {}).get("analysis")
         t = st.get("target") or job.get("target", "general")
@@ -460,22 +461,22 @@ class Worker:
         if p:
             if not self.storage.exists(p) and is_creator:
                 h = t.split(":", 1)[1]
-                for alt in (f"creators/{h}/videos/{self._reel_code(job)}", f"creators/{h}/videos/{job['id']}",
-                            f"analysis/creators/{h}/{job['id']}"):
+                for alt in (layout.reel_rel(h, self._reel_code(job)), f"creators/{h}/videos/{self._reel_code(job)}",
+                            f"creators/{h}/videos/{job['id']}", f"analysis/creators/{h}/{job['id']}"):
                     if self.storage.exists(alt):  # folder was moved into the creator's folder: follow it
                         st["paths"]["analysis"] = alt
                         st["paths"]["pack"] = f"{alt}/pack"
                         return alt
             return p
         if is_creator:
-            return f"creators/{t.split(':', 1)[1]}/videos/{self._reel_code(job)}"
+            return layout.reel_rel(t.split(":", 1)[1], self._reel_code(job))
         return f"analysis/general/{self._reel_code(job)}"
 
     def _make_creator_folders(self, st):
         t = st.get("target", "")
         if t.startswith("creator:") and t != "creator:auto":
             h = t.split(":", 1)[1]
-            for sub in ("videos", "dna", "style", "ideas", "scripts", "made"):
+            for sub in ("dna", "style", "ideas", "scripts", "made"):
                 self.storage.ensure_dir(f"creators/{h}/{sub}")
 
     def _retry_review(self, st, job, wd):
@@ -520,8 +521,9 @@ class Worker:
             except Exception as e:  # noqa: BLE001
                 log(f"measured draft {t} skipped: {e}")
                 continue
-            (res["out_root"] / "dna").mkdir(parents=True, exist_ok=True)
-            (res["out_root"] / "dna" / f"measured-{t}.json").write_text(
+            dd = res["out_root"] if layout.is_flat(self._analysis_rel(st, job)) else res["out_root"] / "dna"
+            dd.mkdir(parents=True, exist_ok=True)
+            (dd / f"measured-{t}.json").write_text(
                 json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
 
     def _maybe_corpus(self, job, st):
@@ -548,7 +550,7 @@ class Worker:
         for t in ("editing", "scripting", "sound"):
             dnas = []
             for j, sj in members:
-                rel = f"{sj['paths'].get('analysis')}/dna/measured-{t}.json"
+                rel = f"{layout.cand_dir(sj['paths'].get('analysis'))}/measured-{t}.json"
                 try:
                     dnas.append(self.storage.read_json(rel))
                 except Exception:  # noqa: BLE001
@@ -582,7 +584,7 @@ class Worker:
         types = REQUIRED_TYPES[job["mode"]]
         found, errors = {}, []
         for t in types:
-            rel = f"{self._analysis_rel(st, job)}/dna/candidate-{t}-v{ver}.json"
+            rel = f"{layout.cand_dir(self._analysis_rel(st, job))}/candidate-{t}-v{ver}.json"
             if not self.storage.exists(rel):
                 continue
             try:

@@ -1,13 +1,14 @@
-"""Per-creator INDEX: which reel gave which DNA. Rebuilt from creators/<h>/videos/*/reel.json (never edited by hand)."""
+"""Per-creator INDEX: which reel gave which DNA. Rebuilt from creators/<h>/reel-*/reel.json (never edited by hand)."""
 from pathlib import PurePosixPath
+
+from . import layout
 
 
 def rows(storage, handle):
-    base = f"creators/{handle}/videos"
     out = []
-    for name in sorted(storage.list_dir(base)):
+    for name, rel in layout.reel_dirs(storage, handle):
         try:
-            r = storage.read_json(f"{base}/{name}/reel.json")
+            r = storage.read_json(f"{rel}/reel.json")
         except Exception:  # noqa: BLE001  (folder without reel.json yet = analysis not finished)
             continue
         if isinstance(r, dict):
@@ -21,7 +22,7 @@ def render(handle, reels):
     for r in reels:
         dna = ", ".join(PurePosixPath(p).name for p in r.get("dna", [])) or "-"
         lines.append(f"| {r.get('job', '?')} | {r.get('link', '')} | {str(r.get('saved', ''))[:10]} | {r.get('mode', '')} | {dna} | {r.get('analysis', '')}/RECIPE.md |")
-    lines += ["", "Folders: videos/ (reel ka source, collages, metrics) - dna/ (approved DNA, naam mein reel ka naam) - "
+    lines += ["", "Folders: reel-<code>/ (us reel ki sari files ek jagah: source, collages, metrics, candidates) - dna/ (approved DNA, naam mein reel ka naam) - "
               "style/ (poore creator ka clone) - ideas/ - scripts/ - made/ (is style mein bani videos)."]
     return "\n".join(lines) + "\n"
 

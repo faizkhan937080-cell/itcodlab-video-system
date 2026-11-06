@@ -36,7 +36,7 @@ Types: editing, scripting, sound. Mode from the command: video / audio / both.
 ## Creator folders (one name everywhere)
 - Creator name = Instagram handle, lowercase, read from the link by the worker (target `creator:auto`).
 - Everything of a creator sits in ONE folder `creators/<h>/` (Faiz 2026-11-06). Worker creates it as soon as the handle is known:
-  `videos/<job>/` (source, pack, candidates, reel.json), `dna/` (approved DNA, file = `<job>__<type>__vN.json` so the reel is in the name),
+  `reel-<code>/` (one flat folder per reel: source, pack/, candidates, reel.json; old `videos/<job>/`), `dna/` (approved DNA, file = `<job>__<type>__vN.json` so the reel is in the name),
   `style/<type>/` (corpus = whole-creator clone), `ideas/`, `scripts/`, `made/` (videos made in this style), `INDEX.md` (reel -> DNA, auto).
 - General jobs: `analysis/general/<job>/`, DNA `dna/general/<type>/dna-vN.json`.
 - Only the 100% correct, approved version is kept in dev phase. Never overwrite, never delete older versions.
