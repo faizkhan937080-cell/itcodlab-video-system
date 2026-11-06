@@ -35,7 +35,8 @@
 ## Scene templates (remotion/src/components, schema enum in schemas/scene.schema.json)
 - title, kinetic_text, banner, image, lower_third, video + counter (value/prefix/suffix/decimals/label), bar_chart (title, items[{label,value}], suffix),
   checklist (title, items[]), split_compare (left/right {title, points[]}), quote (text, author),
-  stroke (text, shape underline|circle|arrow|scribble, color: hand-drawn stroke that draws itself).
+  stroke (text, shape underline|circle|arrow|scribble, color: hand-drawn stroke that draws itself),
+  paper_cutout (src, caption, rotate_deg, size 0.4-1, seed: torn-paper photo with white border, stop-motion wobble).
 - New template = component + types.ts union + Main.tsx case + schema enum (tests/test_scene_templates.py checks all four match).
 - No blur / boxShadow / SVG filters in templates: cloud renders have no GPU.
 - Captions: `plan.captions` = [{text,start_s,end_s,words?[{text,start_s,end_s}]}], `plan.caption_style` = {position bottom|center|top, max_words 1-8 (default 4),

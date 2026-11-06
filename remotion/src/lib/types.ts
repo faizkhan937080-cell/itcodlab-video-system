@@ -9,7 +9,7 @@ export type SceneDef = {
   id: string;
   duration_s: number;
   template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video'
-    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke';
+    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout';
   props?: Record<string, any>;
   transition_in?: TransitionDef;
 };

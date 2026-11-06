@@ -10,6 +10,7 @@ import {Grain} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
 import {LowerThird} from './components/LowerThird';
+import {PaperCutout} from './components/PaperCutout';
 import {Quote} from './components/Quote';
 import {SplitCompare} from './components/SplitCompare';
 import {Stroke} from './components/Stroke';
@@ -61,6 +62,10 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <SplitCompare left={p.left ?? {title: ''}} right={p.right ?? {title: ''}} colors={colors} />;
     case 'quote':
       return <Quote text={p.text ?? ''} author={p.author} colors={colors} />;
+    case 'paper_cutout':
+      return (
+        <PaperCutout src={p.src ?? ''} caption={p.caption} rotateDeg={p.rotate_deg} size={p.size} seed={p.seed} colors={colors} />
+      );
     case 'stroke':
       return <Stroke text={p.text} shape={p.shape} color={p.color} colors={colors} />;
     default:

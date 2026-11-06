@@ -20,6 +20,7 @@ def test_new_templates_validate():
         "split_compare": {"left": {"title": "Before", "points": ["x"]}, "right": {"title": "After", "points": ["y"]}},
         "quote": {"text": "Hello", "author": "Faiz"},
         "stroke": {"text": "Important", "shape": "circle", "color": "coral"},
+        "paper_cutout": {"src": "assets/pagoda.png", "caption": "China", "rotate_deg": -3, "size": 0.7, "seed": 5},
     }
     for tpl, props in samples.items():
         assert validate("scene", _plan(tpl, props)) == [], tpl
