@@ -1,10 +1,10 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 22:58 IST
+updated: 2026-11-07 00:00 IST
 ## Jobs (Drive jobs/state JSONs = ledger + daily cap; never delete)
 - reel-DeoxIgMPlS-g (sahilverma.ai EP-01): DNA saved, DONE (recipe.json/RECIPE.md). Junk measured-*.json in its dna folder still to trash (approved scrap).
 - reel-DfWAlgTxEkL-a (general, SFX reel): gate 3 Y given; sound + scripting DNA saved (dna/general/..).
-- reel-DfMQ7zqkuxO-b (creator neuraltech.ai, mode both): ANALYZING, attempts.analysis=2 (ONE left). -a FAILED (int64). Fixes a5a20b7 (numpy JSON) + b104183 (resume on fresh runner) pushed; worker run 42261565691 started 22:55 IST. Next: ./run review-fetch, view collages, write DNA candidates, ask gate 2/3 in easy Hinglish.
+- reel-DfMQ7zqkuxO-b (neuraltech.ai, both): analysis done, gate 2 Y given. DNA candidates v1 editing/scripting/sound pass dna-check, uploaded to Drive creators/neuraltech.ai/videos/DfMQ7zqkuxO/dna/. WAITING gate 3 Y/N from Faiz (asked in chat). Worker then re-checks (recomputes script numbers from transcript.json, b420a84) and saves dna-v1 + recipe card. elements.json not yet written. VM runner itcod-vm online; WORKER_RUNS_ON set.
 - Old DeoxIgMPlS, -b, -c, -d, -e, -f: superseded/failed, folders trashed. Cap 5/UTC day (resets 05:30 IST); 6 used 2026-11-06 -> daily_job_cap=6 for TODAY only (revert to 5 after 05:30 IST Nov 7; reminder 05:45 IST).
 ## Built (all in GitHub main, tests green)
 - Scene library + captions + stop-motion + SFX (Openverse); creator layout creators/<h>/{videos,dna,style,ideas,scripts,made}.
