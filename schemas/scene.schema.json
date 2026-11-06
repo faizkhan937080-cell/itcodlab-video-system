@@ -87,7 +87,8 @@
               "bar_chart",
               "checklist",
               "split_compare",
-              "quote"
+              "quote",
+              "stroke"
             ]
           },
           "props": {
@@ -254,6 +255,11 @@
           "maximum": 2.5
         }
       }
+    },
+    "step_fps": {
+      "type": "number",
+      "minimum": 4,
+      "maximum": 24
     }
   }
 }

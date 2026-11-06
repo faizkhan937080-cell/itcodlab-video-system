@@ -19,6 +19,7 @@ def test_new_templates_validate():
         "checklist": {"title": "Steps", "items": ["one", "two"]},
         "split_compare": {"left": {"title": "Before", "points": ["x"]}, "right": {"title": "After", "points": ["y"]}},
         "quote": {"text": "Hello", "author": "Faiz"},
+        "stroke": {"text": "Important", "shape": "circle", "color": "coral"},
     }
     for tpl, props in samples.items():
         assert validate("scene", _plan(tpl, props)) == [], tpl
@@ -53,3 +54,11 @@ def test_captions_validate_and_bad_style_rejected():
 def test_captions_wired_into_main():
     main = (ROOT / "remotion/src/Main.tsx").read_text(encoding="utf-8")
     assert "<Captions" in main and "plan.captions" in main
+
+
+def test_step_fps_range():
+    plan = _plan("stroke", {"text": "x"})
+    plan["step_fps"] = 8
+    assert validate("scene", plan) == []
+    plan["step_fps"] = 2
+    assert validate("scene", plan)

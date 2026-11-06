@@ -34,9 +34,11 @@
 
 ## Scene templates (remotion/src/components, schema enum in schemas/scene.schema.json)
 - title, kinetic_text, banner, image, lower_third, video + counter (value/prefix/suffix/decimals/label), bar_chart (title, items[{label,value}], suffix),
-  checklist (title, items[]), split_compare (left/right {title, points[]}), quote (text, author).
+  checklist (title, items[]), split_compare (left/right {title, points[]}), quote (text, author),
+  stroke (text, shape underline|circle|arrow|scribble, color: hand-drawn stroke that draws itself).
 - New template = component + types.ts union + Main.tsx case + schema enum (tests/test_scene_templates.py checks all four match).
 - No blur / boxShadow / SVG filters in templates: cloud renders have no GPU.
 - Captions: `plan.captions` = [{text,start_s,end_s,words?[{text,start_s,end_s}]}], `plan.caption_style` = {position bottom|center|top, max_words 1-8 (default 4),
   highlight brand-colour key, size}. Spoken word is highlighted (Remotion TikTok-caption pattern). No word times -> words spread evenly in the segment.
 - Reels: captions on by default for speech videos; keep max_words 3-4; position bottom (above the 220 px UI safe zone).
+- Paper-cutout / stop-motion look: `plan.step_fps` 4-24 (8-12 typical) freezes scene content on every Nth frame; raw `video` scenes stay smooth.

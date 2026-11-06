@@ -137,9 +137,20 @@ def transcribe(wav):
             return out, info.language
 
         def pack(out, lang):
-            text = " ".join(x["text"] for x in out)
-            cov = round((out[-1]["end"] / dur), 2) if out and dur else 0.0
-            return {"language": lang, "segments": out, "text": text, "coverage_ratio": cov}
+            from .script_metrics import collapse_loops
+            looped = 0
+            for x in out:  # whisper repetition loops: keep one copy, drop pure-loop segments from text and coverage
+                x["text"], gone, is_loop = collapse_loops(x["text"])
+                looped += gone
+                if is_loop:
+                    x["loop"] = True
+            good = [x for x in out if not x.get("loop")]
+            text = " ".join(x["text"] for x in good)
+            cov = round((good[-1]["end"] / dur), 2) if good and dur else 0.0
+            res = {"language": lang, "segments": out, "text": text, "coverage_ratio": cov}
+            if looped:
+                res["loop_words_removed"] = looped
+            return res
 
         a_out, a_lang = run()
         a = pack(a_out, a_lang)

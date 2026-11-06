@@ -9,7 +9,7 @@ export type SceneDef = {
   id: string;
   duration_s: number;
   template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video'
-    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote';
+    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke';
   props?: Record<string, any>;
   transition_in?: TransitionDef;
 };
@@ -35,6 +35,7 @@ export type Plan = {
   audio?: AudioDef[];
   captions?: CaptionDef[];
   caption_style?: CaptionStyle;
+  step_fps?: number; // paper-cutout / stop-motion feel: scenes (not raw video) update only this many times per second
   scenes: SceneDef[];
 };
 

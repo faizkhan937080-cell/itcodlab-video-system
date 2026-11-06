@@ -53,3 +53,22 @@ def test_repeated_lines_counted_once_with_count():
     assert m["repeated_sentences"][0]["count"] == 2 and m["unique_sentence_share"] == round(2 / 3, 3)
     from scripts.pack import _unique_text
     assert _unique_text(segs) == "Comment karo (x2) | Seedha kaam ki baat"
+
+
+def test_collapse_loops_keeps_real_repeats_and_flags_whisper_loops():
+    clean, gone, loop = sm.collapse_loops("करेट करेट करेट करेट करेट करेट करेट करेट")
+    assert clean == "करेट" and gone == 7 and loop
+    clean, gone, loop = sm.collapse_loops("so so good and so on, go go go")  # 3x is natural speech, kept
+    assert gone == 0 and not loop and clean.startswith("so so good")
+    clean, gone, loop = sm.collapse_loops("hello world ok ok ok ok ok ok bye")
+    assert clean == "hello world ok bye" and gone == 5 and not loop
+    clean, gone, loop = sm.collapse_loops("a b a b a b a b a b end")  # two-word unit loop
+    assert clean == "a b end" and gone == 8
+    assert sm.collapse_loops("") == ("", 0, False)
+
+
+def test_loop_segments_are_left_out_of_metrics():
+    segs = [{"start": 0.0, "end": 5.0, "text": "hello there my friend how are you"},
+            {"start": 5.0, "end": 9.0, "text": "करेट", "loop": True}]
+    m = sm.compute(tr(segs), 9.0)
+    assert m["words"] == 7

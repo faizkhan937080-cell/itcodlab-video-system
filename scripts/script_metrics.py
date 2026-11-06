@@ -26,6 +26,32 @@ def _words(text):
     return [w for w in WORD.findall(text or "")]
 
 
+def collapse_loops(text, min_repeat=4, max_n=4):
+    """Whisper sometimes loops ("करेट करेट करेट ..."). Collapse any 1-4 word unit repeated >= min_repeat times in a row
+    to one copy. Returns (clean_text, removed_words, is_loop) where is_loop = the segment is (almost) only a loop, i.e. removed copies >= 3x the words kept."""
+    toks = (text or "").split()
+    out, removed, i = [], 0, 0
+    while i < len(toks):
+        hit = False
+        for n in range(1, max_n + 1):
+            unit = toks[i:i + n]
+            if len(unit) < n:
+                break
+            reps, j = 1, i + n
+            while toks[j:j + n] == unit:
+                reps += 1
+                j += n
+            if reps >= min_repeat:
+                out.extend(unit)
+                removed += (reps - 1) * n
+                i, hit = j, True
+                break
+        if not hit:
+            out.append(toks[i])
+            i += 1
+    return " ".join(out), removed, bool(out) and removed >= 3 * len(out)
+
+
 def _pct(vals, q):
     if not vals:
         return None
@@ -82,7 +108,7 @@ def compute(transcript, duration_s):
     """Return a metrics dict, or {"available": False}."""
     if not transcript or not transcript.get("available") or not transcript.get("segments"):
         return {"available": False}
-    segs = [s for s in transcript["segments"] if s.get("text")]
+    segs = [s for s in transcript["segments"] if s.get("text") and not s.get("loop")]
     text = " ".join(s["text"] for s in segs)
     words = _words(text)
     if not words:

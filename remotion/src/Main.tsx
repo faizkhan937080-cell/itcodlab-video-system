@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Freeze, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
 import {AudioTrack} from './components/AudioTrack';
 import {Banner} from './components/Banner';
 import {BarChart} from './components/BarChart';
@@ -12,6 +12,7 @@ import {KineticText} from './components/KineticText';
 import {LowerThird} from './components/LowerThird';
 import {Quote} from './components/Quote';
 import {SplitCompare} from './components/SplitCompare';
+import {Stroke} from './components/Stroke';
 import {Title} from './components/Title';
 import {VideoScene} from './components/VideoScene';
 import {easeOut} from './lib/anim';
@@ -60,25 +61,35 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <SplitCompare left={p.left ?? {title: ''}} right={p.right ?? {title: ''}} colors={colors} />;
     case 'quote':
       return <Quote text={p.text ?? ''} author={p.author} colors={colors} />;
+    case 'stroke':
+      return <Stroke text={p.text} shape={p.shape} color={p.color} colors={colors} />;
     default:
       return null;
   }
 };
 
 /** Intro animation of a scene (the transition into it). 'cut' = none. */
-const SceneWrap: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors}) => {
+const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> = ({scene, colors, stepFps}) => {
   const frame = useCurrentFrame();
   const {fps, width} = useVideoConfig();
   const t = scene.transition_in ?? {type: 'cut'};
   const dur = Math.max(1, Math.round((t.duration_s ?? 0.4) * fps));
   const prog = easeOut(frame, 0, dur);
+  // stop-motion look: freeze the scene content on every Nth frame (never raw video: it must stay smooth)
+  const step = stepFps && scene.template !== 'video' ? Math.max(1, Math.round(fps / stepFps)) : 1;
   let style: React.CSSProperties = {};
   if (t.type === 'fade') style = {opacity: prog};
   if (t.type === 'slide') style = {opacity: prog, transform: `translateX(${(1 - prog) * width * 0.12}px)`};
   if (t.type === 'zoom') style = {opacity: prog, transform: `scale(${1.15 - 0.15 * prog})`};
   return (
     <AbsoluteFill style={style}>
-      <SceneBody scene={scene} colors={colors} />
+      {step > 1 ? (
+        <Freeze frame={Math.floor(frame / step) * step}>
+          <SceneBody scene={scene} colors={colors} />
+        </Freeze>
+      ) : (
+        <SceneBody scene={scene} colors={colors} />
+      )}
     </AbsoluteFill>
   );
 };
@@ -98,7 +109,7 @@ export const Main: React.FC<Plan> = (plan) => {
         const frames = sceneFrames(scene.duration_s, fps);
         const el = (
           <Sequence key={scene.id} from={from} durationInFrames={frames}>
-            <SceneWrap scene={scene} colors={colors} />
+            <SceneWrap scene={scene} colors={colors} stepFps={plan.step_fps} />
           </Sequence>
         );
         from += frames;
