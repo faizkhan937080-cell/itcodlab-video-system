@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import {easeOut, unit} from '../lib/anim';
+import {insets} from '../lib/safe';
 import {Colors} from '../lib/types';
 
 export const LowerThird: React.FC<{name: string; role?: string; colors: Colors}> = ({name, role, colors}) => {
@@ -9,11 +10,11 @@ export const LowerThird: React.FC<{name: string; role?: string; colors: Colors}>
   const u = unit(width, height);
   const x = easeOut(frame, 0, 18, -width * 0.6, 0);
   return (
-    <AbsoluteFill style={{justifyContent: 'flex-end', paddingBottom: 220 * u}}>
+    <AbsoluteFill style={{justifyContent: 'flex-end', paddingBottom: Math.max(220 * u, insets(width, height).bottom)}}>
       <div
         style={{
           transform: `translateX(${x}px)`,
-          marginLeft: 60 * u,
+          marginLeft: Math.max(60 * u, insets(width, height).side),
           padding: `${28 * u}px ${48 * u}px`,
           background: colors.navy,
           borderLeft: `${14 * u}px solid ${colors.coral}`,

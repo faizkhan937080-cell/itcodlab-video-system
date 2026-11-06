@@ -123,7 +123,9 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
     if storage is not None:
         stage_assets(plan, storage)
     ensure_node_deps()
+    from . import fx
     from .grade_video import grade_plan
+    plan, fx_report = fx.expand_plan(plan, lim=lim)            # stabilise / speed ramp / voice / cut-out / tracks (copies; never fails the render)
     plan, grade_report = grade_plan(plan, storage, lim=lim)   # graded copies of footage; never fails the render
     w, h = master_size(plan, lim, probe_sources(plan))
     scale = lim["render"]["preview_scale"] if quality == "preview" else 1.0
@@ -148,4 +150,7 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
         raise RuntimeError("remotion render failed:\n" + tail(err or out))
     res = check_output(out_path, plan, quality, lim, size=(w, h))
     res["grade"] = grade_report
+    res["effects"] = fx_report
+    from .safezone import lint
+    res["safe_zone"] = lint(plan, (w, h), lim)
     return res

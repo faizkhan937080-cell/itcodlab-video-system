@@ -1,4 +1,5 @@
 import {CaptionDef, CaptionStyle} from './captions';
+import {FollowPoint, ZoomKey} from './zoom';
 
 export type TransitionDef = {
   type?: 'cut' | 'fade' | 'slide' | 'zoom' | 'wipe';
@@ -13,6 +14,17 @@ export type SceneDef = {
     | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout';
   props?: Record<string, any>;
   transition_in?: TransitionDef;
+  zoom?: ZoomKey[]; // punch-in / slow push keyframes on the whole scene (footage + overlays move together)
+  overlays?: OverlayDef[]; // graphics drawn over the scene, optionally following a tracked subject
+};
+
+export type OverlayDef = {
+  template: SceneDef['template'];
+  props?: Record<string, any>;
+  start_s?: number; // scene time
+  end_s?: number;
+  box?: {x: number; y: number; w: number; h: number}; // fixed box, fractions of the frame (centre x,y)
+  follow?: FollowPoint[]; // tracked box over scene time (scripts/track.py fills it from props.track_from)
 };
 
 export type AudioDef = {
@@ -23,6 +35,8 @@ export type AudioDef = {
   volume?: number;
   fade_in_s?: number;
   fade_out_s?: number;
+  role?: 'voice' | 'music' | 'sfx';
+  duck?: {from_s: number; to_s: number; gain?: number}[]; // windows (track time) where this track is lowered under speech
 };
 
 export type Plan = {
@@ -33,6 +47,8 @@ export type Plan = {
   height: number;
   brand?: {colors?: Record<string, string>; font?: string};
   grain?: boolean;
+  grain_src?: string; // noise tile written by scripts/fx.py when grain is true
+  vignette?: number; // 0..1 edge darkening, no filters
   audio?: AudioDef[];
   captions?: CaptionDef[];
   caption_style?: CaptionStyle;

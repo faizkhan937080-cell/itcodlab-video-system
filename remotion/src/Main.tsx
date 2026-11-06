@@ -6,7 +6,7 @@ import {BarChart} from './components/BarChart';
 import {Checklist} from './components/Checklist';
 import {Captions} from './components/Captions';
 import {Counter} from './components/Counter';
-import {Grain} from './components/Grain';
+import {Grain, Vignette} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
 import {LowerThird} from './components/LowerThird';
@@ -17,7 +17,8 @@ import {Stroke} from './components/Stroke';
 import {Title} from './components/Title';
 import {VideoScene} from './components/VideoScene';
 import {easeOut} from './lib/anim';
-import {Colors, DEFAULT_COLORS, Plan, SceneDef, sceneFrames, totalFrames} from './lib/types';
+import {Colors, DEFAULT_COLORS, OverlayDef, Plan, SceneDef, sceneFrames, totalFrames} from './lib/types';
+import {followAt, zoomAt} from './lib/zoom';
 
 const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors}) => {
   const p = scene.props ?? {};
@@ -41,6 +42,9 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           fit={p.fit}
           muted={p.muted}
           volume={p.volume}
+          transparent={p.transparent}
+          reframePath={p.reframe_path}
+          srcAspect={p.src_aspect}
         />
       );
     case 'counter':
@@ -73,6 +77,25 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
   }
 };
 
+/** A graphic over the scene. With `follow` it moves with the tracked subject (stroke: stretched over its box; others: shifted). */
+const Overlay: React.FC<{ov: OverlayDef; colors: Colors}> = ({ov, colors}) => {
+  const frame = useCurrentFrame();
+  const {fps, width, height} = useVideoConfig();
+  const t = (ov.start_s ?? 0) + frame / fps;
+  const f = followAt(ov.follow, t);
+  const props = {...(ov.props ?? {})};
+  if (ov.template === 'stroke') {
+    const box = f ? {x: f.x, y: f.y, w: f.w, h: f.h} : ov.box;
+    return <Stroke text={props.text} shape={props.shape ?? 'circle'} color={props.color} colors={colors} box={box} />;
+  }
+  const shift = f ? `translate(${(f.x - 0.5) * width}px, ${(f.y - 0.5) * height}px)` : undefined;
+  return (
+    <AbsoluteFill style={{transform: shift}}>
+      <SceneBody scene={{id: 'overlay', duration_s: 1, template: ov.template, props}} colors={colors} />
+    </AbsoluteFill>
+  );
+};
+
 /** Intro animation of a scene (the transition into it). 'cut' = none. */
 const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> = ({scene, colors, stepFps}) => {
   const frame = useCurrentFrame();
@@ -87,15 +110,29 @@ const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> =
   if (t.type === 'slide') style = {opacity: prog, transform: `translateX(${(1 - prog) * width * 0.12}px)`};
   if (t.type === 'zoom') style = {opacity: prog, transform: `scale(${1.15 - 0.15 * prog})`};
   if (t.type === 'wipe') style = {clipPath: `inset(0 ${(1 - prog) * 100}% 0 0)`};
+  const z = zoomAt(scene.zoom, frame / fps);
+  const zoomStyle: React.CSSProperties =
+    scene.zoom && scene.zoom.length ? {transform: `scale(${z.scale})`, transformOrigin: `${z.x * 100}% ${z.y * 100}%`} : {};
   return (
     <AbsoluteFill style={style}>
-      {step > 1 ? (
-        <Freeze frame={Math.floor(frame / step) * step}>
+      <AbsoluteFill style={zoomStyle}>
+        {step > 1 ? (
+          <Freeze frame={Math.floor(frame / step) * step}>
+            <SceneBody scene={scene} colors={colors} />
+          </Freeze>
+        ) : (
           <SceneBody scene={scene} colors={colors} />
-        </Freeze>
-      ) : (
-        <SceneBody scene={scene} colors={colors} />
-      )}
+        )}
+        {(scene.overlays ?? []).map((ov, i) => {
+          const from = Math.round((ov.start_s ?? 0) * fps);
+          const to = ov.end_s !== undefined ? Math.round(ov.end_s * fps) : Math.round(scene.duration_s * fps);
+          return (
+            <Sequence key={`ov-${i}`} from={from} durationInFrames={Math.max(1, to - from)}>
+              <Overlay ov={ov} colors={colors} />
+            </Sequence>
+          );
+        })}
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
@@ -135,7 +172,8 @@ export const Main: React.FC<Plan> = (plan) => {
       {(plan.audio ?? []).map((t, i) => (
         <AudioTrack key={`audio-${i}`} track={t} totalFrames={totalFrames(plan)} />
       ))}
-      {plan.grain ? <Grain /> : null}
+      {plan.grain ? <Grain src={plan.grain_src} /> : null}
+      {plan.vignette ? <Vignette strength={plan.vignette} /> : null}
     </AbsoluteFill>
   );
 };

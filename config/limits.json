@@ -222,5 +222,24 @@
     "exposure_limit_stops": 1.0,
     "strength": 0.85,
     "intermediate_crf": 12
+  },
+  "matte": {
+    "max_frames": 360,
+    "_note": "background removal on video: at most this many frames per clip (CPU time)"
+  },
+  "safezone": {
+    "_note": "Instagram Reels / 9:16. strict = recommended text-free zone (Meta ad guidance), hard = never put text here.",
+    "strict": {
+      "top": 0.14,
+      "bottom": 0.35,
+      "side": 0.06
+    },
+    "hard": {
+      "top": 0.078,
+      "bottom": 0.146,
+      "left": 0.1,
+      "right": 0.083
+    },
+    "landscape_margin": 0.05
   }
 }

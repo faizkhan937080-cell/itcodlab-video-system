@@ -2,12 +2,14 @@ import React from 'react';
 import {AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
 import {easeOut, unit} from '../lib/anim';
 import {buildPages, CaptionDef, CaptionPage, CaptionStyle} from '../lib/captions';
+import {insets} from '../lib/safe';
 import {Colors} from '../lib/types';
 
 const Page: React.FC<{page: CaptionPage; style: CaptionStyle; colors: Colors}> = ({page, style, colors}) => {
   const frame = useCurrentFrame();
   const {fps, width, height} = useVideoConfig();
   const u = unit(width, height);
+  const safe = insets(width, height);
   const now = page.start_s + frame / fps;
   const pos = style.position ?? 'bottom';
   const hi = colors[style.highlight ?? 'coral'] ?? colors.coral;
@@ -17,7 +19,7 @@ const Page: React.FC<{page: CaptionPage; style: CaptionStyle; colors: Colors}> =
       style={{
         justifyContent: justify,
         alignItems: 'center',
-        padding: `${pos === 'center' ? 0 : 220 * u}px ${60 * u}px`,
+        padding: pos === 'center' ? `0px ${Math.max(60 * u, safe.side)}px` : `${Math.max(220 * u, safe.top)}px ${Math.max(60 * u, safe.side)}px ${Math.max(220 * u, safe.bottom)}px`,
         opacity: easeOut(frame, 0, 4),
       }}
     >

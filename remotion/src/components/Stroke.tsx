@@ -12,17 +12,29 @@ const PATHS: Record<string, string> = {
 };
 
 /** Hand-drawn stroke that draws itself over a text. props: text, shape (underline|circle|arrow|scribble), color (brand key). No filters. */
-export const Stroke: React.FC<{text?: string; shape?: string; color?: string; colors: Colors}> = ({
+export const Stroke: React.FC<{text?: string; shape?: string; color?: string; colors: Colors; box?: {x: number; y: number; w: number; h: number}}> = ({
   text,
   shape = 'underline',
   color = 'coral',
   colors,
+  box,
 }) => {
   const frame = useCurrentFrame();
   const {width, height} = useVideoConfig();
   const u = unit(width, height);
   const prog = easeOut(frame, 8, 8 + 26);
   const d = PATHS[shape] ?? PATHS.underline;
+  if (box) {
+    // follows a tracked subject: the shape is stretched over the box (x,y = centre, fractions of the frame), 25% wider than the subject
+    const k = 1.25;
+    return (
+      <AbsoluteFill>
+        <svg viewBox="0 0 1000 300" preserveAspectRatio="none" style={{position: 'absolute', left: `${(box.x - (box.w * k) / 2) * 100}%`, top: `${(box.y - (box.h * k) / 2) * 100}%`, width: `${box.w * k * 100}%`, height: `${box.h * k * 100}%`}}>
+          <path d={d} pathLength={1} fill="none" stroke={colors[color] ?? colors.coral} strokeWidth={14} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={1} strokeDashoffset={1 - prog} />
+        </svg>
+      </AbsoluteFill>
+    );
+  }
   return (
     <AbsoluteFill style={{justifyContent: 'center', alignItems: 'center'}}>
       <div style={{position: 'relative', width: 920 * u, height: 420 * u, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
