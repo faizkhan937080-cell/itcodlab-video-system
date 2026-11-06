@@ -180,6 +180,80 @@
       "type": "number",
       "minimum": -40,
       "maximum": -5
+    },
+    "captions": {
+      "type": "array",
+      "maxItems": 2000,
+      "items": {
+        "type": "object",
+        "required": [
+          "text",
+          "start_s",
+          "end_s"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "start_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "words": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "text",
+                "start_s",
+                "end_s"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "start_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "end_s": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "caption_style": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "enum": [
+            "bottom",
+            "center",
+            "top"
+          ]
+        },
+        "max_words": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "highlight": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number",
+          "minimum": 0.4,
+          "maximum": 2.5
+        }
+      }
     }
   }
 }

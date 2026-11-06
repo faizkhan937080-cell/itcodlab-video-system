@@ -4,6 +4,7 @@ import {AudioTrack} from './components/AudioTrack';
 import {Banner} from './components/Banner';
 import {BarChart} from './components/BarChart';
 import {Checklist} from './components/Checklist';
+import {Captions} from './components/Captions';
 import {Counter} from './components/Counter';
 import {Grain} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
@@ -103,6 +104,9 @@ export const Main: React.FC<Plan> = (plan) => {
         from += frames;
         return el;
       })}
+      {plan.captions && plan.captions.length ? (
+        <Captions captions={plan.captions} style={plan.caption_style} colors={colors} />
+      ) : null}
       {(plan.audio ?? []).map((t, i) => (
         <AudioTrack key={`audio-${i}`} track={t} totalFrames={totalFrames(plan)} />
       ))}

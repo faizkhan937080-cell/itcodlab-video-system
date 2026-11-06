@@ -37,3 +37,19 @@ def test_every_schema_template_is_handled_in_main_tsx():
         assert f"'{tpl}'" in types, f"types.ts misses {tpl}"
     for tpl in NEW:
         assert tpl in enum
+
+
+def test_captions_validate_and_bad_style_rejected():
+    plan = _plan("title", {"text": "x"})
+    plan["captions"] = [{"text": "hello big world", "start_s": 0, "end_s": 1.5},
+                        {"text": "again", "start_s": 1.6, "end_s": 2.0,
+                         "words": [{"text": "again", "start_s": 1.6, "end_s": 2.0}]}]
+    plan["caption_style"] = {"position": "center", "max_words": 3, "highlight": "coral", "size": 1.2}
+    assert validate("scene", plan) == []
+    plan["caption_style"]["position"] = "left"
+    assert validate("scene", plan)
+
+
+def test_captions_wired_into_main():
+    main = (ROOT / "remotion/src/Main.tsx").read_text(encoding="utf-8")
+    assert "<Captions" in main and "plan.captions" in main

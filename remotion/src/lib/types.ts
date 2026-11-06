@@ -1,3 +1,5 @@
+import {CaptionDef, CaptionStyle} from './captions';
+
 export type TransitionDef = {
   type?: 'cut' | 'fade' | 'slide' | 'zoom';
   duration_s?: number;
@@ -31,6 +33,8 @@ export type Plan = {
   brand?: {colors?: Record<string, string>; font?: string};
   grain?: boolean;
   audio?: AudioDef[];
+  captions?: CaptionDef[];
+  caption_style?: CaptionStyle;
   scenes: SceneDef[];
 };
 

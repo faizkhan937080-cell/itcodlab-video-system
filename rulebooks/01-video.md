@@ -37,3 +37,6 @@
   checklist (title, items[]), split_compare (left/right {title, points[]}), quote (text, author).
 - New template = component + types.ts union + Main.tsx case + schema enum (tests/test_scene_templates.py checks all four match).
 - No blur / boxShadow / SVG filters in templates: cloud renders have no GPU.
+- Captions: `plan.captions` = [{text,start_s,end_s,words?[{text,start_s,end_s}]}], `plan.caption_style` = {position bottom|center|top, max_words 1-8 (default 4),
+  highlight brand-colour key, size}. Spoken word is highlighted (Remotion TikTok-caption pattern). No word times -> words spread evenly in the segment.
+- Reels: captions on by default for speech videos; keep max_words 3-4; position bottom (above the 220 px UI safe zone).
