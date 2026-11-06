@@ -1,6 +1,6 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 07:28 IST
+updated: 2026-11-06 13:50 IST
 ## Jobs (Drive jobs/state JSONs are the ledger; scrap packs were trashed)
 - test-render-001 DONE (outputs trashed). reel-DeoxIgMPlS FAILED, -b, -c superseded (folders trashed).
 - reel-DeoxIgMPlS-g AWAIT_GATE2 (01:04Z): analysis OK (audit pass, LUFS -17.3, transcript full, review branch push OK, collages seen = good). It is sahilverma.ai 'Edit with Claude' EP-01 (paper-cutout/collage style).
@@ -22,3 +22,4 @@ updated: 2026-11-06 07:28 IST
 - 06:17 IST: reel jobs -e (audio-only file picked), -f (no ffmpeg on runner, streams not merged) FAILED/NEEDS_INPUT; fixed (pick_source, merge_streams, ffmpeg apt). -g running on Actions. Daily cap UTC: 3 of 5 used (-e -f -g).
 - 06:40 IST: Faiz awake (sent new reel). Remotion library done: counter, bar_chart, checklist, split_compare, quote, stroke, paper_cutout + plan.captions + plan.step_fps. Batch rclone upload + whisper loop fix pushed. 88 tests green. Stop heavy work before 06:59 IST (session reset 07:00). Colab runtime deleted (Faiz via Gemini). Gemini in Chrome = how Faiz does web steps.
 - Pending (needs Faiz): Y/N Reels benchmark rule; Gemini API key (AI Studio) for text collage descriptions; scene-template library (task 4) next session; Remotion <Video>/GPU-effect/concurrency work only after first real render.
+- 13:50 IST: ./run sfx + wipe/overlap transitions done (95 tests). Waiting on Faiz: gate 2 (-g, DfWAlgTxEkL-a), benchmark rule, Openverse + Gemini keys.
