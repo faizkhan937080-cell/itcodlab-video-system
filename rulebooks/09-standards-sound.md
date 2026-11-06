@@ -29,3 +29,11 @@ Schema: `schemas/dna-sound.schema.json` (v2). Loudness follows ITU-R BS.1770 / E
 - Music name: Instagram metadata -> AcoustID fingerprint (env ACOUSTID_KEY, free). Not found = `title: null` + note, never a guess; then pick the closest licensed track.
 - Sound events: CLAP zero-shot labels (whoosh, pop, click ...) per 1 s window -> {label, t, end, score}; neighbours merged. Names map to library items by name/alias/tag.
 - Demucs music stem is bad quality: used for measuring only, never as an asset. Real music/SFX come from `assets/library` (`./run resolve <reel>`, `./run library fetch`).
+## Voice micro-level (`scripts/voice_dna.py`, worker writes `<reel>/voice.json`; summary key `voice`)
+- Praat pitch (else librosa pyin), 10 ms steps. Units: semitones around the speaker's OWN median (no gender guess), dB energy.
+- voice.json holds: global (pitch median/p10/p90 Hz, spread, expressiveness label, jitter/shimmer/HNR), every sentence (wpm, articulation wpm,
+  pitch median/range, energy, ending rising|falling|flat, pause before/after), emphasised words (pitch+energy+length agree), gap bins,
+  5 s timeline (60 s if >2 min) and per-minute rows.
+- Labels (monotone <2 st, lively <4, very expressive; slow <110 wpm, medium <160, fast <200) are fixed thresholds on numbers, NEVER emotion guesses. Hindi/Hinglish: judge by the reel's own numbers.
+- Sound/scripting DNA must quote: pitch spread, tempo (mean, min, max, CV), sentence-ending mix, gap bins, top emphasised words, hook-sentence delivery (first sentence rows).
+- Cloning: our voice-over gets the same tempo and pause bins; check with the same script (`clone-report`).

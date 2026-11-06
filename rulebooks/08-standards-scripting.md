@@ -28,3 +28,4 @@ numbers/min, second/first person per 100 words, fillers, repeated 3-word phrases
   cloned; `situational` fields follow the new topic. Under 10 videos = provisional, say so.
 - Done = `./run dna-check --type scripting --file F --summary S` PASS, then gate 3 in chat.
 - New script check: run the same metrics on the new script text; wpm, sentence length, question rate within 10% of targets.
+- Delivery numbers (pace per sentence, gaps, emphasised words, sentence endings) come from `voice.json` (see 09). Hook = first 3 s row(s) quoted with wpm and pause.

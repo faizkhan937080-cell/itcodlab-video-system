@@ -90,6 +90,7 @@ def dominant_colors(bgr, k=3):
     small = cv2.resize(bgr, (64, 64), interpolation=cv2.INTER_AREA).reshape(-1, 3).astype(np.float32)
     k = min(k, len(small))
     crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+    cv2.setRNGSeed(12345)          # same frame -> same colours on every run (k-means starts at random otherwise)
     _, labels, centers = cv2.kmeans(small, k, None, crit, 3, cv2.KMEANS_PP_CENTERS)
     counts = np.bincount(labels.flatten(), minlength=k)
     order = np.argsort(-counts)

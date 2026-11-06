@@ -12,3 +12,4 @@ faster-whisper
 pytesseract
 pytest
 pyloudnorm
+praat-parselmouth

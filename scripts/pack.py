@@ -7,7 +7,7 @@ import numpy as np
 from . import audio as audio_mod
 from . import audit as audit_mod
 from . import script_metrics
-from .analyze import analyze_video
+from .analyze import analyze_video, probe
 from .collage import build_collages, capacity, pick_layout
 from .common import limits, log, now_iso, write_json_local
 from .dedup import dedup
@@ -37,7 +37,7 @@ def _unique_text(segments):
                       for u in dedup_sentences([s["text"] for s in segments]))
 
 
-def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, transcript, lim, script_m=None):
+def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, transcript, lim, script_m=None, voice_res=None):
     durs = [s["duration_s"] for s in scenes]
     trans = {}
     for s in scenes[1:]:
@@ -78,6 +78,9 @@ def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, 
     else:
         summary["transcript"] = {"available": False}
     summary["script_metrics"] = script_m or {"available": False}
+    if voice_res is not None:
+        from .voice_dna import compact, finite
+        summary["voice"] = finite(compact(voice_res))
     # keep it small: drop per-scene rows first, then trim clusters
     cap = lim["pack"]["max_summary_kb"] * 1024
     if len(json.dumps(summary)) > cap:
@@ -87,6 +90,14 @@ def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, 
     if len(json.dumps(summary)) > cap:
         summary["clusters"] = clusters[:60]
     return summary
+
+
+def _voice(wav, transcript):
+    """Voice micro-analysis (scripts/voice_dna.py). Never fails the job."""
+    from . import voice_dna
+    v = voice_dna.finite(voice_dna.analyse(wav, transcript))
+    log(voice_dna.summary_line(v))
+    return v
 
 
 def _listen(video, wav, lim):
@@ -124,39 +135,61 @@ def _grade_look(video, out_root, lim):
     write_json_local(Path(out_root) / "grade.json", res)
 
 
-def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=True):
-    """Everything between 'video file' and 'pack ready'. Returns dict of paths."""
-    lim = limits()
-    out_root = Path(out_root)
-    out_root.mkdir(parents=True, exist_ok=True)
+def _ears(video, out_root, lim, with_transcript):
+    """Everything that listens and does not need the picture: wav, transcript, music/sound names, voice. Own thread."""
+    wav = audio_mod.extract_wav(video, out_root / "audio.wav")
+    transcript = audio_mod.transcribe(wav) if with_transcript else {"available": False}
+    write_json_local(out_root / "transcript.json", transcript)
+    (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
+    write_json_local(out_root / "listen.json", _listen(video, wav, lim))
+    voice = _voice(wav, transcript)
+    write_json_local(out_root / "voice.json", voice)
+    return wav, transcript, voice
+
+
+def _video_side(video, out_root, lim):
     info, frames, scenes, fps = analyze_video(video, out_root, lim)
     layout_key, layout = pick_layout(info["width"], info["height"], lim, len(scenes))
     clusters, rep = dedup(scenes, capacity(layout, lim), lim)
     write_json_local(out_root / "clusters.json", {"report": rep, "clusters": clusters})
-    # re-save scenes with cluster ids
     write_json_local(out_root / "scenes.json",
                      [{k: v for k, v in s.items() if not k.startswith("_")} for s in scenes])
     pack = out_root / "pack"
     idx = build_collages(video, pack, scenes, clusters, info, fps, lim)
     write_json_local(out_root / "collage_index.json", idx)
-    audio_res, transcript = {"has_audio": False}, {"available": False}
-    if info["has_audio"] and mode in ("audio", "both"):
-        wav = audio_mod.extract_wav(video, out_root / "audio.wav")
-        cut_times = [s["start_s"] for s in scenes[1:]]
-        audio_res = audio_mod.analyze_audio(wav, cut_times)
-        if with_transcript:
-            transcript = audio_mod.transcribe(wav)
-        write_json_local(out_root / "transcript.json", transcript)
-        (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
+    return info, frames, scenes, fps, clusters, rep, pack, idx
+
+
+def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=True):
+    """Everything between 'video file' and 'pack ready'. Returns dict of paths.
+    The ears (transcript, music names, voice) run in a second thread while the picture is analysed: same results, less waiting
+    (analysis.parallel false = one after the other)."""
+    from concurrent.futures import ThreadPoolExecutor
+    lim = limits()
+    out_root = Path(out_root)
+    out_root.mkdir(parents=True, exist_ok=True)
+    has_audio = probe(video)["has_audio"] and mode in ("audio", "both")
+    wav, transcript, voice, audio_res = None, {"available": False}, None, {"has_audio": False}
+    if has_audio and lim["analysis"].get("parallel", True):
+        with ThreadPoolExecutor(max_workers=1) as ex:
+            fut = ex.submit(_ears, video, out_root, lim, with_transcript)
+            side = _video_side(video, out_root, lim)
+            wav, transcript, voice = fut.result()
+    else:
+        side = _video_side(video, out_root, lim)
+        if has_audio:
+            wav, transcript, voice = _ears(video, out_root, lim, with_transcript)
+    info, frames, scenes, fps, clusters, rep, pack, idx = side
+    if wav is not None:
+        audio_res = audio_mod.analyze_audio(wav, [s["start_s"] for s in scenes[1:]])
         write_json_local(out_root / "audio.json", audio_res)
-        write_json_local(out_root / "listen.json", _listen(video, wav, lim))
     if job_id != "selfcheck":
         _grade_look(video, out_root, lim)
     audit = audit_mod.build(info, len(frames), scenes, clusters, audio_res, transcript)
     write_json_local(out_root / "audit.json", audit)
     script_m = script_metrics.compute(transcript, info["duration_s"])
     write_json_local(out_root / "script_metrics.json", script_m)
-    summary = build_summary(info, scenes, clusters, rep, idx, audio_res, transcript, lim, script_m)
+    summary = build_summary(info, scenes, clusters, rep, idx, audio_res, transcript, lim, script_m, voice)
     summary["audit"] = {k: audit[k] for k in ("frames", "scenes", "transcript_coverage", "lufs_measured", "warnings", "pass")}
     summary["audit"]["per_minute"] = audit["per_minute"][:30]
     write_json_local(pack / "metrics_summary.json", summary)

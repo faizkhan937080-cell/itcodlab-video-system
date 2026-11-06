@@ -34,7 +34,9 @@
       "medium": 1.6
     },
     "stems": true,
-    "grade_look": true
+    "grade_look": true,
+    "word_timestamps": true,
+    "parallel": true
   },
   "collage": {
     "max_collages_per_video": 10,

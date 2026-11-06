@@ -128,12 +128,19 @@ def transcribe(wav):
         import librosa
         y, sr = librosa.load(str(wav), sr=16000, mono=True)
         dur = float(len(y)) / float(sr) if sr else 0.0
+        want_words = bool(limits()["analysis"].get("word_timestamps", True))
         model = WhisperModel(limits()["analysis"]["whisper_model"], device="auto", compute_type="int8")
 
         def run(**kw):
             segs, info = model.transcribe(y, vad_filter=True, temperature=0.0, condition_on_previous_text=False,
-                                          beam_size=5, **kw)
-            out = [{"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()} for s in segs]
+                                          beam_size=5, word_timestamps=want_words, **kw)
+            out = []
+            for s in segs:
+                row = {"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip()}
+                if want_words and getattr(s, "words", None):   # per-word times: emphasis, gaps, karaoke captions
+                    row["words"] = [{"w": w.word.strip(), "start": round(w.start, 2), "end": round(w.end, 2), "p": round(float(w.probability), 2)}
+                                    for w in s.words if w.word.strip()]
+                out.append(row)
             return out, info.language
 
         def pack(out, lang):
