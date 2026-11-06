@@ -1,6 +1,6 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 05:30 IST
+updated: 2026-11-06 06:17 IST
 ## Jobs (Drive jobs/state JSONs are the ledger; scrap packs were trashed)
 - test-render-001 DONE (outputs trashed). reel-DeoxIgMPlS FAILED, -b, -c superseded (folders trashed).
 - reel-DeoxIgMPlS-d AWAIT_GATE2. Folder MOVED to analysis/creators/sahilverma.ai/reel-DeoxIgMPlS-d (worker follows). Has source.mp4, audio.wav, keyframes/, pack/, dna/ (empty: old v1 drafts trashed, schema is v2 now).
@@ -17,3 +17,6 @@ updated: 2026-11-06 05:30 IST
 - Remotion license: free up to 3 people; ask headcount. Whisper Devanagari is gist only.
 - Sheet keeps history rows of trashed jobs (harmless). GCP VM after card. Gemini key optional. Regenerate old pasted GitHub token.
 - 2026-11-05 22:48Z bulk-lite mode implemented and tested (72 tests green); pending: Faiz one-time RCLONE_TOKEN secret, Y/N re-run reel as -e after 05:30 IST, mode audio first
+- 06:17 IST: reel jobs -e (audio-only file picked), -f (no ffmpeg on runner, streams not merged) FAILED/NEEDS_INPUT; fixed (pick_source, merge_streams, ffmpeg apt). -g running on Actions. Daily cap UTC: 3 of 5 used (-e -f -g).
+- Faiz asleep from 06:04 IST; rule: stop heavy work before 06:59 IST (session reset 07:00). Colab runtime deleted (Faiz via Gemini). Gemini in Chrome = how Faiz does web steps.
+- Pending (needs Faiz): Y/N Reels benchmark rule; Gemini API key (AI Studio) for text collage descriptions; scene-template library (task 4) next session; Remotion <Video>/GPU-effect/concurrency work only after first real render.
