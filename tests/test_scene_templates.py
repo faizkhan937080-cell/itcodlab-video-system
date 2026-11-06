@@ -63,3 +63,13 @@ def test_step_fps_range():
     assert validate("scene", plan) == []
     plan["step_fps"] = 2
     assert validate("scene", plan)
+
+
+def test_texture_overlay_validates():
+    plan = _plan("title", {"text": "x"})
+    plan["texture"] = {"src": "assets/paper.jpg", "opacity": 0.4, "blend": "multiply"}
+    assert validate("scene", plan) == []
+    plan["texture"]["blend"] = "difference"
+    assert validate("scene", plan)
+    main = (ROOT / "remotion/src/Main.tsx").read_text(encoding="utf-8")
+    assert "plan.texture" in main

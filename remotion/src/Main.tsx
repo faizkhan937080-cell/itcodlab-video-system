@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Freeze, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Freeze, Img, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {AudioTrack} from './components/AudioTrack';
 import {Banner} from './components/Banner';
 import {BarChart} from './components/BarChart';
@@ -120,6 +120,11 @@ export const Main: React.FC<Plan> = (plan) => {
         from += frames;
         return el;
       })}
+      {plan.texture ? (
+        <AbsoluteFill style={{mixBlendMode: plan.texture.blend ?? 'multiply', opacity: plan.texture.opacity ?? 0.35, pointerEvents: 'none'}}>
+          <Img src={staticFile(plan.texture.src)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        </AbsoluteFill>
+      ) : null}
       {plan.captions && plan.captions.length ? (
         <Captions captions={plan.captions} style={plan.caption_style} colors={colors} />
       ) : null}

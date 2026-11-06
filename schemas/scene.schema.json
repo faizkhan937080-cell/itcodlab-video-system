@@ -261,6 +261,29 @@
       "type": "number",
       "minimum": 4,
       "maximum": 24
+    },
+    "texture": {
+      "type": "object",
+      "required": [
+        "src"
+      ],
+      "properties": {
+        "src": {
+          "type": "string"
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "blend": {
+          "enum": [
+            "multiply",
+            "overlay",
+            "soft-light"
+          ]
+        }
+      }
     }
   }
 }

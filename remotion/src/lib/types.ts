@@ -35,6 +35,7 @@ export type Plan = {
   audio?: AudioDef[];
   captions?: CaptionDef[];
   caption_style?: CaptionStyle;
+  texture?: {src: string; opacity?: number; blend?: 'multiply' | 'overlay' | 'soft-light'}; // paper / grain image over all scenes (assets/...)
   step_fps?: number; // paper-cutout / stop-motion feel: scenes (not raw video) update only this many times per second
   scenes: SceneDef[];
 };
