@@ -9,7 +9,7 @@ from . import audit as audit_mod
 from . import script_metrics
 from .analyze import analyze_video, probe
 from .collage import build_collages, capacity, pick_layout
-from .common import limits, log, now_iso, write_json_local
+from .common import json_default, limits, log, now_iso, to_native, write_json_local
 from .dedup import dedup
 
 
@@ -83,13 +83,13 @@ def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, 
         summary["voice"] = finite(compact(voice_res))
     # keep it small: drop per-scene rows first, then trim clusters
     cap = lim["pack"]["max_summary_kb"] * 1024
-    if len(json.dumps(summary)) > cap:
+    if len(json.dumps(summary, default=json_default)) > cap:
         summary["scenes"] = rows[:10] + [{"note": f"{len(rows) - 20} rows omitted (see scenes.json)"}] + rows[-10:]
-    if len(json.dumps(summary)) > cap:
+    if len(json.dumps(summary, default=json_default)) > cap:
         summary["scenes"] = "omitted: see scenes.json"
-    if len(json.dumps(summary)) > cap:
+    if len(json.dumps(summary, default=json_default)) > cap:
         summary["clusters"] = clusters[:60]
-    return summary
+    return to_native(summary)
 
 
 def _voice(wav, transcript):
@@ -187,7 +187,7 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
         _grade_look(video, out_root, lim)
     audit = audit_mod.build(info, len(frames), scenes, clusters, audio_res, transcript)
     write_json_local(out_root / "audit.json", audit)
-    script_m = script_metrics.compute(transcript, info["duration_s"])
+    script_m = to_native(script_metrics.compute(transcript, info["duration_s"]))
     write_json_local(out_root / "script_metrics.json", script_m)
     summary = build_summary(info, scenes, clusters, rep, idx, audio_res, transcript, lim, script_m, voice)
     summary["audit"] = {k: audit[k] for k in ("frames", "scenes", "transcript_coverage", "lufs_measured", "warnings", "pass")}

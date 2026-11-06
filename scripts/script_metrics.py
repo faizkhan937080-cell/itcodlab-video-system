@@ -8,6 +8,8 @@ phonetic Hinglish, word counts are still right but vocabulary is only a gist (th
 import re
 import statistics as st
 
+from .common import to_native
+
 DEVANAGARI = re.compile(r"[ऀ-ॿ]")
 LATIN = re.compile(r"[A-Za-z]")
 WORD = re.compile(r"[\wऀ-ॿ']+", re.UNICODE)
@@ -133,7 +135,7 @@ def compute(transcript, duration_s):
         "words_per_min_speaking": round(len(words) / max(speech_s / 60.0, 1e-6), 1),
         "words_per_min_overall": round(len(words) / minutes, 1),
         "speech_ratio": round(min(speech_s / max(duration_s, 1e-6), 1.0), 3),
-        "pauses": {"count_gt_0_5s": sum(g > 0.5 for g in gaps), "mean_s": round(st.mean(gaps), 2) if gaps else 0.0,
+        "pauses": {"count_gt_0_5s": sum(1 for g in gaps if g > 0.5), "mean_s": round(st.mean(gaps), 2) if gaps else 0.0,
                    "max_s": round(max(gaps), 2) if gaps else 0.0},
         "sentences": {"count": len(sentences), "words_mean": round(st.mean(s_lens), 1),
                       "words_median": _pct(s_lens, 0.5), "words_p90": _pct(s_lens, 0.9)},
@@ -157,7 +159,7 @@ def compute(transcript, duration_s):
         aw = _words(alt["text"])
         out["english_pass"] = {"coverage_ratio": alt.get("coverage_ratio"), "words": len(aw),
                                "first_12_words": " ".join(aw[:12])}
-    return out
+    return to_native(out)
 
 
 def _clock(t):

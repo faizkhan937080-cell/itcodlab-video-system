@@ -115,3 +115,11 @@ def test_librosa_fallback_when_praat_missing(tmp_path, monkeypatch):
     v = V.analyse(p, _tr([{"start": 0.0, "end": 2.5, "text": "one two three four five"}]))
     assert v["available"] and v["backend"] == "librosa_pyin"
     assert abs(v["global"]["pitch_median_hz"] - 150) < 8
+
+
+def test_finite_turns_numpy_into_plain_python():
+    """Regression: np.int64 counts in voice results crashed json.dumps of the pack summary."""
+    import json
+    v = V.finite({"n": np.int64(3), "f": np.float32(1.5), "arr": np.array([1, 2]), "bad": np.float64("nan"),
+                  "nest": [{"k": np.int64(7)}], "t": (np.int64(1), 2)})
+    assert json.loads(json.dumps(v)) == {"n": 3, "f": 1.5, "arr": [1, 2], "bad": None, "nest": [{"k": 7}], "t": [1, 2]}

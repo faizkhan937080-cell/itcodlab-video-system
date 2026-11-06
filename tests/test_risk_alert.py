@@ -29,3 +29,13 @@ def test_write_json_local_accepts_numpy(tmp_path):
     from scripts.common import write_json_local
     p = write_json_local(tmp_path / "x.json", {"a": np.int64(3), "b": np.float32(1.5), "c": np.array([1, 2]), "d": {1, 2}})
     assert json.loads(p.read_text()) == {"a": 3, "b": 1.5, "c": [1, 2], "d": [1, 2]}
+
+
+def test_to_native_is_deep_and_json_safe():
+    import json
+    import numpy as np
+    from scripts.common import to_native
+    o = {np.int64(1): {"a": np.int64(3), "b": [np.float32(1.5), np.bool_(True)], "c": {np.int64(5), np.int64(4)}}, "t": (1, np.int64(2))}
+    n = to_native(o)
+    assert json.loads(json.dumps(n)) == {"1": {"a": 3, "b": [1.5, True], "c": [4, 5]}, "t": [1, 2]}
+    assert type(n[1]["a"]) is int and type(n[1]["b"][1]) is bool

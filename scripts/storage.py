@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from .common import limits
+from .common import json_default, limits
 
 STATE_PREFIXES = tuple(limits()["storage"]["overwrite_allowed_only_under"])
 
@@ -128,13 +128,13 @@ class Storage:
         return self.put_file(tmp, rel, versioned=versioned)
 
     def put_json(self, rel, obj, versioned=True):
-        return self.put_text(rel, json.dumps(obj, ensure_ascii=False, indent=2), versioned=versioned)
+        return self.put_text(rel, json.dumps(obj, ensure_ascii=False, indent=2, default=json_default), versioned=versioned)
 
     def write_state(self, rel, obj):
         """Job status files only. Updated in place (Drive keeps revision history)."""
         if not rel.startswith(STATE_PREFIXES):
             raise StorageError(f"write_state only under {STATE_PREFIXES}: {rel}")
-        return self.put_text(rel, json.dumps(obj, ensure_ascii=False, indent=2), versioned=False)
+        return self.put_text(rel, json.dumps(obj, ensure_ascii=False, indent=2, default=json_default), versioned=False)
 
     def put_tree(self, local_dir, rel_dir):
         """Copy every file of a local folder to Drive. Existing names are kept, new ones get _vN."""

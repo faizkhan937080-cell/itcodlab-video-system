@@ -231,3 +231,20 @@ def test_stems_optional_and_measured(tmp_path, monkeypatch):
     monkeypatch.setattr(audio, "run_cmd", fake_run)
     r = audio.separate_stems(wav, tmp_path)
     assert r["voice_minus_music_lu"] == 6.0 and r["vocals_lufs"] > r["music_lufs"]
+
+
+def test_build_summary_survives_numpy_values(analysed):
+    """Regression (job reel-DfMQ7zqkuxO): np.int64 in script metrics / voice crashed json.dumps(summary) on the worker."""
+    import numpy as np
+    from scripts.common import limits
+    from scripts.pack import build_summary
+    idx = json.loads((analysed["out_root"] / "collage_index.json").read_text())
+    audio = json.loads((analysed["out_root"] / "audio.json").read_text())
+    script_m = {"available": True, "words": np.int64(40), "pauses": {"count_gt_0_5s": np.int64(3), "mean_s": np.float32(0.8)}}
+    voice = {"available": True, "backend": "x", "global": {"pitch_median_hz": np.float32(211.0)},
+             "tempo": {"wpm_mean": np.float64(230.2)}, "gaps": {"count": np.int64(1)},
+             "emphasis": [{"w": "x", "i": np.int64(2)}], "words_timed": np.int64(9)}
+    s = build_summary(analysed["info"], analysed["scenes"], analysed["clusters"], analysed["dedup_report"], idx, audio,
+                      {"available": False}, limits(), script_m, voice)
+    back = json.loads(json.dumps(s))  # plain json.dumps, no default=
+    assert back["script_metrics"]["pauses"]["count_gt_0_5s"] == 3 and back["voice"]["gaps"]["count"] == 1

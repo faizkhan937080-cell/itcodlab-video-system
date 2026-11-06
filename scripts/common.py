@@ -62,6 +62,26 @@ def json_default(o):
     raise TypeError(f"Object of type {o.__class__.__name__} is not JSON serializable")
 
 
+def to_native(o):
+    """Deep copy where numpy numbers/arrays (also as dict keys), tuples and sets become plain Python.
+    Anything that goes into json.dumps without default= must pass through this first (lessons/core.md)."""
+    if isinstance(o, dict):
+        return {(k.item() if hasattr(k, "item") and getattr(k, "shape", None) == () else k): to_native(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [to_native(x) for x in o]
+    if isinstance(o, (set, frozenset)):
+        items = [to_native(x) for x in o]
+        try:
+            return sorted(items)
+        except TypeError:
+            return items
+    if hasattr(o, "item") and getattr(o, "shape", None) == ():
+        return o.item()
+    if hasattr(o, "tolist"):
+        return to_native(o.tolist())
+    return o
+
+
 def write_json_local(path, obj):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)

@@ -255,11 +255,15 @@ def compact(v):
 
 
 def finite(o):
-    """JSON-safe: NaN / inf -> None (recursively)."""
+    """JSON-safe, recursively: NaN / inf -> None, numpy numbers/arrays -> plain Python (np.int64 is not JSON)."""
     if isinstance(o, dict):
         return {k: finite(x) for k, x in o.items()}
-    if isinstance(o, list):
+    if isinstance(o, (list, tuple)):
         return [finite(x) for x in o]
+    if hasattr(o, "item") and getattr(o, "shape", None) == ():
+        o = o.item()
+    elif hasattr(o, "tolist"):
+        return finite(o.tolist())
     if isinstance(o, float) and not math.isfinite(o):
         return None
     return o

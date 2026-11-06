@@ -24,3 +24,4 @@ M: collages had red/blue swapped (purple skin), I blamed tile size | C: PIL RGB 
 M: DNA numbers typed by hand can be wrong, transcript covered 8 of 58 s unnoticed | C: no cross-check, no coverage field | R: dna-draft pre-fills measured parts; dna-check must PASS; transcript coverage<0.9 = estimated only
 M: approval page built for a user who listens, not reads | C: assumed a UI helps | R: ask Y/N in chat, short Hinglish, always
 M: output size fixed at 4K master | C: ignored the raw source size | R: output = largest raw clip size; test with 4K portrait rotation tag
+M: numpy int64 crashed json.dumps twice on a real reel (script_metrics.json, then the pack summary); 194 green tests missed it | C: tests used plain Python numbers; sum() of np.bool_ gives np.int64 | R: pipeline results go through common.to_native() / default=json_default; tests feed numpy values; first real run of new code = read the job state at once

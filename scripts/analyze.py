@@ -13,7 +13,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from .common import limits, log, run_cmd, tail, write_json_local
+from .common import json_default, limits, log, run_cmd, tail, write_json_local
 
 
 # ---------------------------------------------------------------- basics
@@ -336,7 +336,7 @@ def analyze_video(video, outdir, lim=None, with_ocr=True):
     # persist (without private numpy fields)
     with open(outdir / "frames_metrics.jsonl", "w", encoding="utf-8") as f:
         for rec in frames:
-            f.write(json.dumps(rec) + "\n")
+            f.write(json.dumps(rec, default=json_default) + "\n")
     write_json_local(outdir / "video_info.json", info)
     clean = [{k: v for k, v in s.items() if not k.startswith("_")} for s in scenes]
     write_json_local(outdir / "scenes.json", clean)

@@ -82,3 +82,14 @@ def test_transcript_txt_two_passes_skips_loops():
     assert "[00:00.0 - 00:02.5] namaste" in t and "[01:05.2 - 01:10.0] hello world" in t
     assert "x" not in t.split("ENGLISH")[0].split("namaste")[1]
     assert "not available" in sm.transcript_txt({"available": False})
+
+
+def test_numpy_timestamps_give_plain_python_json():
+    """Regression (job reel-DfMQ7zqkuxO): numpy times made 'count_gt_0_5s' an np.int64 and plain json.dumps crashed the worker."""
+    import json
+    import numpy as np
+    segs = [{"start": np.float64(0.5), "end": np.float64(3.5), "text": "Aap bhi yeh bana sakte ho."},
+            {"start": np.float32(4.5), "end": np.float32(6.5), "text": "Comment karo aur follow karo"}]
+    m = sm.compute(tr(segs), np.float64(10.0))
+    json.dumps(m)  # no default= on purpose
+    assert type(m["pauses"]["count_gt_0_5s"]) is int and m["pauses"]["count_gt_0_5s"] == 1
