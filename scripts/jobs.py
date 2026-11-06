@@ -332,7 +332,8 @@ class Worker:
                 st["dna_saved"] = saved
                 if target.startswith("creator:"):
                     h = target.split(":", 1)[1]
-                    ptr = {"creator": h, "job": jid, "link": job.get("link", ""), "mode": job["mode"],
+                    ptr = {"layout_version": 2, "reel_id": job.get("reel_id") or jid, "creator": h, "job": jid,
+                           "link": job.get("link", ""), "mode": job["mode"],
                            "analysis": self._analysis_rel(st, job), "dna": saved, "meta": st.get("source_meta", {}),
                            "saved": now_iso()}
                     self.storage.put_json(f"{self._analysis_rel(st, job)}/reel.json", ptr)
@@ -385,7 +386,8 @@ class Worker:
             st["source_meta"] = {k: meta.get(k) for k in ("channel", "uploader_id", "uploader", "title", "duration", "webpage_url")}
         handle = re.sub(r"[^a-z0-9_.-]", "", handle.lower())[:40]
         if len(handle) < 2:
-            raise RuntimeError("could not read the creator handle from the link metadata")
+            handle = "_unassigned"  # creator unknown: still one clear folder, nothing lost (Faiz can name it later)
+            st["note_creator"] = "creator handle not readable from the link: kept in creators/_unassigned"
         st["target"] = f"creator:{handle}"
 
     @staticmethod
@@ -407,15 +409,15 @@ class Worker:
         if p:
             if not self.storage.exists(p) and is_creator:
                 h = t.split(":", 1)[1]
-                for alt in (f"creators/{h}/videos/{job['id']}", f"analysis/creators/{h}/{job['id']}"):
+                for alt in (f"creators/{h}/videos/{job.get('reel_id') or job['id']}", f"analysis/creators/{h}/{job['id']}"):
                     if self.storage.exists(alt):  # folder was moved into the creator's folder: follow it
                         st["paths"]["analysis"] = alt
                         st["paths"]["pack"] = f"{alt}/pack"
                         return alt
             return p
         if is_creator:
-            return f"creators/{t.split(':', 1)[1]}/videos/{job['id']}"
-        return f"analysis/general/{job['id']}"
+            return f"creators/{t.split(':', 1)[1]}/videos/{job.get('reel_id') or job['id']}"
+        return f"analysis/general/{job.get('reel_id') or job['id']}"
 
     def _make_creator_folders(self, st):
         t = st.get("target", "")

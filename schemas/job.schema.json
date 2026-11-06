@@ -41,6 +41,11 @@
       "type": "string",
       "pattern": "^(general|creator:auto|creator:[A-Za-z0-9_.-]{2,40})$"
     },
+    "reel_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{5,20}$",
+      "description": "Instagram shortcode: the permanent folder name of this reel"
+    },
     "gate1_approved_by_user": {
       "const": true
     },

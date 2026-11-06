@@ -25,3 +25,7 @@ Schema: `schemas/dna-sound.schema.json` (v2). Loudness follows ITU-R BS.1770 / E
 - whoosh leads the cut by 0.12 s, hit on the title frame, pop +3 frames, tick per checklist item; volume 0.35 under voice.
 - Claude never listens: checks are numbers (duration, peak, LUFS) by scripts. Earshot (github Leonxlnx/earshot, CPU, sfx/forge/match) = candidate for fallback synthesis; licence not stated -> check before adopting.
 - Run: `./run sfx --plan <plan.json> --assets-dir <dir>` (worker/network). Env OPENVERSE_TOKEN optional. Number gate: peak -35..-0.5 dB, <=4 s. Writes plan.audio + sfx_credits.json. `--dry-run` changes nothing.
+## Ears: naming what is heard (`scripts/listen.py`, worker writes `<reel>/listen.json`)
+- Music name: Instagram metadata -> AcoustID fingerprint (env ACOUSTID_KEY, free). Not found = `title: null` + note, never a guess; then pick the closest licensed track.
+- Sound events: CLAP zero-shot labels (whoosh, pop, click ...) per 1 s window -> {label, t, end, score}; neighbours merged. Names map to library items by name/alias/tag.
+- Demucs music stem is bad quality: used for measuring only, never as an asset. Real music/SFX come from `assets/library` (`./run resolve <reel>`, `./run library fetch`).

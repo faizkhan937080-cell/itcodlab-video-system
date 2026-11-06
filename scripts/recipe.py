@@ -4,8 +4,17 @@ Built from reel.json + dna paths + `<analysis>/elements.json` (judged by Claude 
 ELEMENT_KEYS = ("fonts", "music", "sfx", "motion", "textures", "tools_named", "layout", "captions", "assets_needed")
 
 
+def _with_confidence(items):
+    """Every named element says how sure it is: seen (on screen) / heard / judged (looks like) / not-analysed. Default judged."""
+    if isinstance(items, list):
+        return [({"confidence": "judged", **x} if isinstance(x, dict) else x) for x in items]
+    if isinstance(items, dict):
+        return {"confidence": "judged", **items}
+    return items
+
+
 def build(reel, elements):
-    el = {k: elements[k] for k in ELEMENT_KEYS if elements and k in elements}
+    el = {k: _with_confidence(elements[k]) for k in ELEMENT_KEYS if elements and k in elements}
     return {"schema_version": 1, "creator": reel.get("creator", ""), "reel": reel.get("job", ""), "link": reel.get("link", ""),
             "folder": reel.get("analysis", ""), "mode": reel.get("mode", ""), "saved": reel.get("saved", ""),
             "dna": {p.rsplit("__", 2)[-2] if p.count("__") >= 2 else p: p for p in reel.get("dna", [])},

@@ -54,3 +54,4 @@
 - When Faiz says "extract DNA / style / other factors from this reel", do ALL of it in one go: every DNA type, editing + content
   factors, hook, pacing, sound, extras, saved in the creator's folder. Never ask again per type or per step.
 - Ask only for something EXTRA beyond his command. Tell him only what truly needs a human (110% sure Claude cannot do it).
+- Structure, IDs, company folders, licences: `rulebooks/12-structure.md` (read it before touching creators/, clients/ or assets/).

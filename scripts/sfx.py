@@ -63,8 +63,15 @@ def pick(results, max_s=MAX_DURATION_S):
 
 def search(kind, page_size=20, token=None):
     """Openverse audio search for sound effects that allow commercial use. Needs network (worker only)."""
-    q = urllib.parse.urlencode({"q": QUERIES[kind], "category": "sound_effect", "license_type": "commercial",
-                                "duration": "short", "page_size": page_size})
+    return search_q(QUERIES[kind], "sound_effect", "short", page_size, token)
+
+
+def search_q(query, category="sound_effect", duration="short", page_size=20, token=None):
+    """Same for any text query and category (sound_effect | music)."""
+    p = {"q": query, "category": category, "license_type": "commercial", "page_size": page_size}
+    if duration:
+        p["duration"] = duration
+    q = urllib.parse.urlencode(p)
     req = urllib.request.Request(f"{OPENVERSE}?{q}", headers={"User-Agent": "itcodlab-video-system"})
     if token:
         req.add_header("Authorization", f"Bearer {token}")

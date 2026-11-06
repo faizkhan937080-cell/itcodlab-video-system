@@ -180,4 +180,18 @@ def transcript_txt(transcript):
                 continue
             out.append(f"[{_clock(x['start'])} - {_clock(x['end'])}] {x['text']}")
         out.append("")
+    hints = glossary_hints(" ".join(tr_text for _, tr in blocks for tr_text in [tr.get("text", "")]))
+    if hints:
+        out += ["NAME HINTS (heard -> likely real name, from config/glossary.json)", "-" * 20] + [f"{h} -> {r}" for h, r in hints] + [""]
     return "\n".join(out)
+
+
+def glossary_hints(text):
+    import json
+    from .common import ROOT
+    try:
+        g = json.loads((ROOT / "config" / "glossary.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return []
+    low = text.lower()
+    return [(h, r) for h, r in g.items() if not h.startswith("_") and h in low]

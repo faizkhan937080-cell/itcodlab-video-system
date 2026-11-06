@@ -89,6 +89,27 @@ def build_summary(info, scenes, clusters, dedup_report, collage_idx, audio_res, 
     return summary
 
 
+def _listen(video, wav, lim):
+    """The ears (scripts/listen.py): named music + sound events. Never fails the job: any problem = 'not found'."""
+    import json
+    import os
+    from . import listen
+    meta = {}
+    info = Path(video).parent / "source.info.json"
+    if info.exists():
+        try:
+            meta = json.loads(info.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            meta = {}
+    scorer = None
+    if lim["analysis"].get("listen_sound_events"):
+        try:
+            scorer = listen.clap_scorer()
+        except Exception:  # noqa: BLE001  (model not installed here, e.g. local test box)
+            scorer = None
+    return listen.listen(wav, meta, os.environ.get("ACOUSTID_KEY"), scorer)
+
+
 def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=True):
     """Everything between 'video file' and 'pack ready'. Returns dict of paths."""
     lim = limits()
@@ -114,6 +135,7 @@ def run_pipeline(video, out_root, job_id="local", mode="both", with_transcript=T
         write_json_local(out_root / "transcript.json", transcript)
         (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
         write_json_local(out_root / "audio.json", audio_res)
+        write_json_local(out_root / "listen.json", _listen(video, wav, lim))
     audit = audit_mod.build(info, len(frames), scenes, clusters, audio_res, transcript)
     write_json_local(out_root / "audit.json", audit)
     script_m = script_metrics.compute(transcript, info["duration_s"])

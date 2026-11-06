@@ -257,8 +257,11 @@ def test_creator_handle_is_read_from_metadata(drive, tmp_path):
     w._resolve_creator({"target": "general"}, st2, wd)
     assert st2["target"] == "general"
     (wd / "source.info.json").write_text(json.dumps({"uploader_id": "999"}))
-    with pytest.raises(RuntimeError):
-        w._resolve_creator({"target": "creator:auto"}, {"paths": {}}, wd)
+    st3 = {"paths": {}}  # handle unreadable: not a failure, the reel goes to creators/_unassigned
+    w._resolve_creator({"target": "creator:auto"}, st3, wd)
+    assert st3["target"] == "creator:_unassigned" and "_unassigned" in st3["note_creator"]
+    assert validate("job", {"id": "abc", "type": "analyze", "link": "http://x", "mode": "both",
+                            "target": "creator:_unassigned", "gate1_approved_by_user": True, "reel_id": "AbCdEf123"}) == []
     assert validate("job", {"id": "abc", "type": "analyze", "link": "http://x", "mode": "both",
                             "target": "creator:auto", "gate1_approved_by_user": True}) == []
 

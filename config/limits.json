@@ -27,6 +27,7 @@
     "min_scene_s": 0.2,
     "keyframe_jpeg_quality": 90,
     "whisper_model": "small",
+    "listen_sound_events": true,
     "motion_classes_flow_px": {
       "static": 0.15,
       "slow": 0.6,

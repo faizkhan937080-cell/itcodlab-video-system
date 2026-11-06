@@ -42,4 +42,6 @@ doctor, selftest, analyze-local, validate, render-local, worker, status, new-job
 - Asset library (Drive `assets/library/{font,music,sfx,motion,texture,brush,image}` + INDEX.json/INDEX.md): Faiz drops files in, `./run library scan`
   indexes them (licence `user-supplied`). Free items Claude fetches: `./run library add --type T --name N --licence cc0|pdm|by|ofl|mit|apache-2.0 --source URL --tags a,b`
   (non-commercial licences are refused). `./run library find <word> [--type T]`. Google fonts need no download: `@remotion/google-fonts` loads them by name.
-
+- `./run resolve <reel>` recipe names -> library found/missing. `./run library fetch <query> --type sfx|music --name N` (Openverse, cc0/pdm/by, number-checked).
+- Library dedupe is by content, never name: exact (alias only) / near (alias, best quality primary) / variant (kept, linked) / different. `scan` lists duplicates for ONE batch question.
+- `./run ext-index --company C --link <Drive folder link> [--check]` indexes a company's shared Drive (no copy; md5 dupes skipped). `./run audit-links`, `./run snapshot`.

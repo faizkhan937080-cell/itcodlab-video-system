@@ -8,7 +8,7 @@ on:
   schedule:
     - cron: '23 2 1 * *'
 permissions:
-  contents: read
+  contents: write
 jobs:
   backup:
     runs-on: ubuntu-latest
@@ -28,6 +28,13 @@ jobs:
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
           git fetch -q origin '+refs/heads/*:refs/remotes/origin/*'
           for b in $(git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin | grep -v '^HEAD$'); do git branch -q -f "$b" "origin/$b" 2>/dev/null || true; done
+          # text manifest of what is in Drive (reels, DNA sha256, client videos, library): kept in GitHub too
+          export ITCOD_RCLONE_REMOTE
+          python3 -m scripts.cli snapshot --out docs/snapshots/drive-manifest.json && {
+            git config user.name "itcod backup"; git config user.email "backup@users.noreply.github.com"
+            git add docs/snapshots/drive-manifest.json
+            git diff --cached --quiet || { git commit -q -m "drive manifest snapshot" && git push -q origin HEAD:main; }
+          } || echo "::warning::manifest snapshot skipped"
           name="itcodlab-video-system-$(date -u +%Y-%m-%d_%H%M).bundle"
           git bundle create "$RUNNER_TEMP/$name" --all
           git bundle verify "$RUNNER_TEMP/$name"

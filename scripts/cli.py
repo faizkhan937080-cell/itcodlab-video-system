@@ -156,18 +156,31 @@ def cmd_new_job(a):
     """Write a job file to Drive jobs/inbox (normally Claude does this from chat)."""
     from .dna import errors_tail, validate
     from .common import now_iso
+    from . import reelid
     job = {"id": a.id, "type": a.type, "created": now_iso(), "command_text": a.command_text or ""}
     if a.type == "analyze":
         job.update({"mode": a.mode, "target": a.target, "gate1_approved_by_user": True})
         if a.link:
-            job["link"] = a.link
+            code = reelid.shortcode(a.link)
+            job["link"] = reelid.canonical(a.link)
+            if code:  # one reel = one ID = one folder
+                where = reelid.find_reel(_storage(), code)
+                if where and not a.rerun:
+                    print(f"ALREADY ANALYSED: {where}. Use the existing folder (or --rerun to make a new run).")
+                    return 1
+                try:
+                    job["id"] = reelid.new_job_id(_storage(), code)
+                except ValueError as e:
+                    print(f"REFUSED: {e}")
+                    return 1
+                job["reel_id"] = code
         if a.file:
             job["file"] = a.file
     errs = validate("job", job)
     if errs:
         print("INVALID\n" + errors_tail(errs))
         return 1
-    print(_storage().put_json(f"jobs/inbox/{a.id}.json", job))
+    print(_storage().put_json(f"jobs/inbox/{job['id']}.json", job))
     return 0
 
 
@@ -224,12 +237,77 @@ def cmd_library(a):
     if a.action == "scan":
         res = library.scan(st)
         print(json.dumps({"new": [r["id"] for r in res]}, indent=2))
+    elif a.action == "fetch":
+        import os
+        e = library.fetch_from_openverse(st, a.word, a.type or "sfx", a.name, [t for t in (a.tags or "").split(",") if t],
+                                         token=os.environ.get("OPENVERSE_TOKEN"))
+        print(json.dumps(e, indent=2, ensure_ascii=False) if e else "NOTHING USABLE (no cc0/pdm/by match within limits)")
+        return 0 if e else 1
     elif a.action == "add":
         print(json.dumps(library.add_entry(st, a.type, a.name, a.licence, a.source, a.file, a.credit,
                                            [t for t in (a.tags or "").split(",") if t]), indent=2, ensure_ascii=False))
     else:
         items = library.find(st, a.word, a.type) if a.action == "find" else library.load(st)
         print("\n".join(f"{i['id']} | {i['licence']} | {i.get('file') or i.get('source')}" for i in items) or "empty")
+    return 0
+
+
+def cmd_resolve(a):
+    """Which named elements of this reel's recipe are in the library, which must be fetched/licensed."""
+    from . import clients, resolve
+    st = _storage()
+    reel, folder = clients.find_reel_json(st, a.reel)
+    card = st.read_json(f"{folder}/recipe.json")
+    res = resolve.resolve(st, card)
+    print(json.dumps(res, indent=2, ensure_ascii=False))
+    return 0
+
+
+def cmd_ext_index(a):
+    """Index a company's shared Drive folder (no copy). --check only lists the top level to test access."""
+    import os
+    from . import extdrive
+    st = _storage()
+    fid = extdrive.folder_id(a.link)
+    remote = st.remote or os.environ.get("ITCOD_RCLONE_REMOTE", "gdrive")
+    if a.check:
+        top = extdrive.list_folder(remote, fid, depth=1)
+        print(f"ACCESS OK: {len(top)} top-level entries: " + ", ".join(x["Path"] for x in top[:15]))
+        return 0
+    idx = extdrive.build_index(extdrive.list_folder(remote, fid), a.company, fid, a.licence_note or "")
+    base = extdrive.write_index(st, idx)
+    print(f"indexed {idx['count']} files ({idx['by_type']}) -> {base}/INDEX.json; exact duplicates skipped: {len(idx['exact_duplicates'])}")
+    return 0
+
+
+def cmd_snapshot(a):
+    from . import snapshot
+    p = snapshot.write_local(_storage(), a.out)
+    print(f"manifest written: {p} ({p.stat().st_size} bytes)")
+    return 0
+
+
+def cmd_audit_links(a):
+    from . import linkcheck
+    issues = linkcheck.run(_storage())
+    print("\n".join(issues) if issues else "OK: no broken links, duplicates or orphans")
+    return 1 if issues else 0
+
+
+def cmd_clients(a):
+    """clients init <company> | made-from <company> <video> <reel> | gate <company> <video>"""
+    from . import clients
+    st = _storage()
+    if a.action == "init":
+        print(clients.init_company(st, a.company))
+    elif a.action == "made-from":
+        base, mf = clients.write_made_from(st, a.company, a.video, a.reel)
+        print(base, "pinned", len(mf["dna_pinned"]), "DNA files")
+    else:
+        base = f"clients/{clients._slug(a.company)}/videos/{clients._slug(a.video)}"
+        bad = clients.licence_blockers(st.read_json(f"{base}/credits.json"))
+        print("BLOCKED: " + ", ".join(bad) if bad else "OK: all licences commercial-ok")
+        return 1 if bad else 0
     return 0
 
 
@@ -287,8 +365,28 @@ def build_parser():
     s.add_argument("--assets-dir", required=True, help="folder that becomes assets/sfx for the render")
     s.add_argument("--dry-run", action="store_true")
     s.set_defaults(fn=cmd_sfx)
+    s = sub.add_parser("resolve", help="clone by name: recipe elements -> library found / missing")
+    s.add_argument("reel")
+    s.set_defaults(fn=cmd_resolve)
+    s = sub.add_parser("ext-index", help="index a company's shared Drive folder (no copy)")
+    s.add_argument("--company", required=True)
+    s.add_argument("--link", required=True)
+    s.add_argument("--licence-note", default="")
+    s.add_argument("--check", action="store_true", help="only test that the folder can be read")
+    s.set_defaults(fn=cmd_ext_index)
+    s = sub.add_parser("snapshot", help="text manifest of what is in Drive (goes to GitHub)")
+    s.add_argument("--out", default="docs/snapshots/drive-manifest.json")
+    s.set_defaults(fn=cmd_snapshot)
+    s = sub.add_parser("audit-links", help="find orphans, duplicates, broken links (read-only)")
+    s.set_defaults(fn=cmd_audit_links)
+    s = sub.add_parser("clients", help="company folders: init | made-from | gate")
+    s.add_argument("action", choices=["init", "made-from", "gate"])
+    s.add_argument("company")
+    s.add_argument("video", nargs="?", default="")
+    s.add_argument("reel", nargs="?", default="")
+    s.set_defaults(fn=cmd_clients)
     s = sub.add_parser("library", help="asset library: scan | add | find | list")
-    s.add_argument("action", choices=["scan", "add", "find", "list"])
+    s.add_argument("action", choices=["scan", "add", "fetch", "find", "list"])
     s.add_argument("word", nargs="?", default="")
     s.add_argument("--type", default=None)
     s.add_argument("--name"); s.add_argument("--licence"); s.add_argument("--source", default="")
@@ -380,7 +478,8 @@ def build_parser():
     s.set_defaults(fn=cmd_status)
 
     s = sub.add_parser("new-job", help="create a job file in Drive jobs/inbox")
-    s.add_argument("--id", required=True)
+    s.add_argument("--id", default="job", help="ignored for reel links: the ID is reel-<instagram code>")
+    s.add_argument("--rerun", action="store_true", help="analyse a reel again (new run)")
     s.add_argument("--type", choices=["analyze", "render"], required=True)
     s.add_argument("--link")
     s.add_argument("--file")
