@@ -1,12 +1,13 @@
 # The worker that needs no PC. Wakes when Claude pushes trigger/wake.txt (after a job, approval or DNA candidate),
-# on a manual click, and every 6 hours as a safety net. Free GitHub minutes; Drive access via secret RCLONE_TOKEN.
+# on a manual click, and once a day as a safety net. Free GitHub minutes; Drive access via secret RCLONE_TOKEN.
 name: worker
 on:
   push:
+    branches: [main]   # not dependabot/other branches: they only burned free minutes
     paths: ['trigger/**']
   workflow_dispatch:
   schedule:
-    - cron: '17 */6 * * *'
+    - cron: '17 1 * * *'   # once a day (was every 6 h: ~20 min/day of free minutes spent on nothing)
 permissions:
   contents: write
 concurrency:
