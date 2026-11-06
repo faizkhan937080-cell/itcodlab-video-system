@@ -1,10 +1,10 @@
 # state (rewrite this file when state changes; history lives in memory/log)
 keys: state now pending next jobs
-updated: 2026-11-06 06:40 IST
+updated: 2026-11-06 07:28 IST
 ## Jobs (Drive jobs/state JSONs are the ledger; scrap packs were trashed)
 - test-render-001 DONE (outputs trashed). reel-DeoxIgMPlS FAILED, -b, -c superseded (folders trashed).
 - reel-DeoxIgMPlS-g AWAIT_GATE2 (01:04Z): analysis OK (audit pass, LUFS -17.3, transcript full, review branch push OK, collages seen = good). It is sahilverma.ai 'Edit with Claude' EP-01 (paper-cutout/collage style).
-- reel-DfWAlgTxEkL-a (Faiz 06:29 IST, mode audio, target general) queued, runs after -g; cap 4 of 5. Needs: read pack/metrics_summary.json transcript, research claims, implement what is proper.
+- reel-DfWAlgTxEkL-a AWAIT_GATE2 (01:19Z): analysed, transcript matches Faiz's SFX summary, research done, scripts/sfx.py implemented. Cap 4 of 5 used today (UTC).
 - reel-DeoxIgMPlS-d AWAIT_GATE2 (old, Colab). Folder MOVED to analysis/creators/sahilverma.ai/reel-DeoxIgMPlS-d (worker follows). Has source.mp4, audio.wav, keyframes/, pack/, dna/ (empty: old v1 drafts trashed, schema is v2 now).
 ## Gate status
 - Gate 1 Y given. Gate 2 NOT answered. Claude has NOT seen any correct collage yet (editing DNA blocked).
