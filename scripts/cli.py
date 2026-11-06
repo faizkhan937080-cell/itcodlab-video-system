@@ -199,6 +199,24 @@ def cmd_mem(a):
     return 0
 
 
+def cmd_sfx(a):
+    """Add sound effects to a scene plan: Openverse (commercial licences only) -> number check -> plan.audio."""
+    import os
+    from . import sfx
+    plan_path = Path(a.plan)
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    res = sfx.fetch_all(plan, a.assets_dir, token=os.environ.get("OPENVERSE_TOKEN"))
+    cues = sfx.plan_cues(plan)
+    if not a.dry_run:
+        plan["audio"] = [x for x in plan.get("audio", []) if not str(x.get("src", "")).startswith("assets/sfx/")]
+        plan["audio"] += sfx.audio_defs(cues, res["files"])
+        plan_path.write_text(json.dumps(plan, indent=2, ensure_ascii=False), encoding="utf-8")
+        if res["credits"]:
+            (plan_path.parent / "sfx_credits.json").write_text(json.dumps(res["credits"], indent=2, ensure_ascii=False), encoding="utf-8")
+    print(json.dumps({"cues": len(cues), "files": res["files"], "credits": len(res["credits"]), "skipped": res["skipped"]}, indent=2))
+    return 0
+
+
 def cmd_story(a):
     """'Kahani update': rebuild the memory index, check the 60-line rule, then save everything to GitHub so a lost
     sandbox never loses the story. Claude runs it when Faiz says "kahani update" and on its own after work chats."""
@@ -248,6 +266,11 @@ def build_parser():
     s.add_argument("--keys", default="")
     s.set_defaults(fn=cmd_mem)
 
+    s = sub.add_parser("sfx", help="add SFX to a scene plan (Openverse, commercial licences only, number-checked)")
+    s.add_argument("--plan", required=True)
+    s.add_argument("--assets-dir", required=True, help="folder that becomes assets/sfx for the render")
+    s.add_argument("--dry-run", action="store_true")
+    s.set_defaults(fn=cmd_sfx)
     s = sub.add_parser("story", help="kahani update: index + 60-line check + save memory/rules to GitHub")
     s.set_defaults(fn=cmd_story)
 

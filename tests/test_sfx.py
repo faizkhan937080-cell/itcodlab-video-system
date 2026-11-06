@@ -36,3 +36,28 @@ def test_audio_defs_skip_missing_kinds():
     cues = sfx.plan_cues(plan())
     out = sfx.audio_defs(cues, {"hit": "assets/sfx/hit.mp3"})
     assert len(out) == 1 and out[0]["at_s"] == 0.0 and out[0]["volume"] == sfx.SFX_VOLUME
+
+
+def test_judge_uses_numbers():
+    assert sfx.judge(1.0, -6.0) is None
+    assert "clipped" in sfx.judge(1.0, -0.1)
+    assert "quiet" in sfx.judge(1.0, -50)
+    assert "duration" in sfx.judge(9.0, -6)
+    assert "peak" in sfx.judge(1.0, None)
+
+
+def test_fetch_all_takes_first_passing_candidate_and_never_fakes(tmp_path):
+    cands = {"hit": [{"license": "cc0", "duration": 500, "url": "http://x/clip.mp3"},
+                     {"license": "by", "duration": 800, "url": "http://x/b.mp3", "title": "T", "creator": "C"}]}
+    peaks = iter([-0.1, -8.0])  # first candidate clipped, second ok
+
+    def search_fn(kind, **kw):
+        return cands.get(kind, [])
+
+    def dl(url, dest):
+        dest.write_bytes(b"x")
+
+    out = sfx.fetch_all(plan(), tmp_path, search_fn=search_fn, download_fn=dl, measure_fn=lambda p: (0.8, next(peaks)))
+    assert out["files"] == {"hit": "assets/sfx/hit.mp3"}
+    assert len(out["credits"]) == 1                      # the CC BY one needs a credit
+    assert set(out["skipped"]) == {"whoosh", "pop", "tick"}  # nothing found -> skipped, not invented
