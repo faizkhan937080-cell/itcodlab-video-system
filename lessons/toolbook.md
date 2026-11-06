@@ -19,3 +19,5 @@ T: secret pasted in chat | FIX: never repeat or store; tell him to regenerate la
 T: git fetch of a single branch leaves no origin/<branch> | FIX: fetch with explicit refspec +refs/heads/X:refs/remotes/origin/X | seen: 1
 T: tests push/write to real remote or Drive | FIX: conftest autouse env ITCOD_NO_REVIEW; review/an1, an2 on branch review are old test junk, leave | seen: 1
 T: faces purple/blue in generated images | FIX: PIL is RGB, cv2 is BGR; convert back before imwrite; tests test_collage_tile_keeps_real_colors | seen: 1
+T: pack upload of ~60 files took ~25 min (per-file rclone lsf+copyto, shared Drive client) | FIX: Storage.put_tree = 1 lsf -R + 1 rclone copy --files-from; fallback per-file; tests/test_storage_batch.py | seen: 1
+T: whisper loops one word 30x ("करेट") at end of Hindi pass, inflating coverage and repeated phrases | FIX: script_metrics.collapse_loops in audio.transcribe pack; loop segments flagged, left out of text/coverage | seen: 1
