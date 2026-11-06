@@ -10,6 +10,9 @@ import {Grain, Vignette} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
 import {AudioBars} from './components/AudioBars';
+import {MemeFx} from './components/MemeFx';
+import {MemeText} from './components/MemeText';
+import {Sticker} from './components/Sticker';
 import {LottieScene} from './components/LottieScene';
 import {LowerThird} from './components/LowerThird';
 import {PaperCutout} from './components/PaperCutout';
@@ -78,6 +81,10 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <LottieScene src={p.src ?? ''} size={p.size} x={p.x} y={p.y} loop={p.loop} speed={p.speed} />;
     case 'audio_bars':
       return <AudioBars src={p.src ?? ''} bars={p.bars} color={p.color} y={p.y} height={p.height} colors={colors} />;
+    case 'meme_text':
+      return <MemeText text={p.text ?? ''} position={p.position} color={p.color} colors={colors} />;
+    case 'sticker':
+      return <Sticker text={p.text ?? ''} x={p.x} y={p.y} size={p.size} rotateDeg={p.rotate_deg} />;
     default:
       return null;
   }
@@ -126,6 +133,7 @@ const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> =
   return (
     <AbsoluteFill style={style}>
       <AbsoluteFill style={zoomStyle}>
+       <MemeFx fx={scene.fx}>
         {step > 1 ? (
           <Freeze frame={Math.floor(frame / step) * step}>
             <SceneBody scene={scene} colors={colors} />
@@ -142,6 +150,7 @@ const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> =
             </Sequence>
           );
         })}
+       </MemeFx>
       </AbsoluteFill>
     </AbsoluteFill>
   );

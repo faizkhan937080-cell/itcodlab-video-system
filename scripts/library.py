@@ -38,17 +38,29 @@ def render(items):
     return "\n".join(out) + "\n"
 
 
-def add_entry(storage, type_, name, licence, source="", file=None, credit="", tags=()):
+def _licence_gate(licence, accept_risk):
+    """Alert, not a wall (rulebook 18): a licence outside SAFE needs Faiz's words (accept_risk) and is stored as 'risk'."""
+    if licence.lower() in SAFE:
+        return None
+    if not accept_risk:
+        raise ValueError(f"ALERT: licence '{licence}' is not cleared for commercial use (cleared: {SAFE}). "
+                         "Faiz decides: add with accept_risk='his words' to use it anyway.")
+    from .common import now_iso
+    return {"by": "faiz", "reason": accept_risk, "date": now_iso()}
+
+
+def add_entry(storage, type_, name, licence, source="", file=None, credit="", tags=(), accept_risk=None):
     if type_ not in TYPES:
         raise ValueError(f"type must be one of {TYPES}")
-    if licence.lower() not in SAFE:
-        raise ValueError(f"licence '{licence}' not allowed for commercial use (allowed: {SAFE})")
+    risk = _licence_gate(licence, accept_risk)
     items = load(storage)
     iid = f"{type_}-{_slug(name)}"
     if any(i["id"] == iid for i in items):
         return next(i for i in items if i["id"] == iid)  # same item twice = one entry (versions are new names)
     e = {"id": iid, "type": type_, "name": name, "file": file, "licence": licence.lower(), "source": source,
          "credit": credit, "tags": [t.lower() for t in tags], "added": _now()}
+    if risk:
+        e["risk_accepted"] = risk
     save(storage, items + [e])
     return e
 
@@ -102,7 +114,7 @@ def _classify_against(items, fp, type_):
     return best or (None, "different", None)
 
 
-def add_file(storage, local_path, type_, name, licence, source="", credit="", tags=(), used_by=None):
+def add_file(storage, local_path, type_, name, licence, source="", credit="", tags=(), used_by=None, accept_risk=None):
     """Add a real file. Same content under another name never makes a second copy:
     exact -> only an alias; near (same item, re-encoded) -> alias, the better quality copy becomes primary (old one kept, listed);
     variant (micro change) -> its own item, linked variant_of; different -> new item. Returns (entry, tier)."""
@@ -110,8 +122,7 @@ def add_file(storage, local_path, type_, name, licence, source="", credit="", ta
     from .fingerprint import better, fingerprint
     if type_ not in TYPES:
         raise ValueError(f"type must be one of {TYPES}")
-    if licence.lower() not in SAFE:
-        raise ValueError(f"licence '{licence}' not allowed for commercial use (allowed: {SAFE})")
+    risk = _licence_gate(licence, accept_risk)
     from .security import require_safe
     require_safe(local_path, {"music": "audio", "sfx": "audio", "font": "font", "image": "image", "texture": "image", "brush": "image"}.get(type_, "other"))
     fp = fingerprint(local_path, type_)
@@ -140,6 +151,8 @@ def add_file(storage, local_path, type_, name, licence, source="", credit="", ta
          "used_by": [used_by] if used_by else []}
     if tier == "variant":
         e["variant_of"], e["variant_distance"] = hit["id"], dist
+    if risk:
+        e["risk_accepted"] = risk
     save(storage, items + [e])
     return e, tier
 

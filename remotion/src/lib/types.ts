@@ -1,4 +1,5 @@
 import {CaptionDef, CaptionStyle} from './captions';
+import {FxDef} from './fx';
 import {FollowPoint, ZoomKey} from './zoom';
 
 export type TransitionDef = {
@@ -11,10 +12,11 @@ export type SceneDef = {
   id: string;
   duration_s: number;
   template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video'
-    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout' | 'lottie' | 'audio_bars';
+    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout' | 'lottie' | 'audio_bars' | 'meme_text' | 'sticker';
   props?: Record<string, any>;
   transition_in?: TransitionDef;
   zoom?: ZoomKey[]; // punch-in / slow push keyframes on the whole scene (footage + overlays move together)
+  fx?: FxDef[]; // meme effects on the whole scene: shake, zoom_punch, flash, rgb_split, glitch, freeze
   overlays?: OverlayDef[]; // graphics drawn over the scene, optionally following a tracked subject
 };
 

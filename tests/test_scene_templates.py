@@ -23,6 +23,8 @@ def test_new_templates_validate():
         "paper_cutout": {"src": "assets/pagoda.png", "caption": "China", "rotate_deg": -3, "size": 0.7, "seed": 5},
         "lottie": {"src": "library/motion/arrow.json", "size": 0.5, "loop": True},
         "audio_bars": {"src": "assets/music.mp3", "bars": 24, "color": "coral"},
+        "meme_text": {"text": "bro what", "position": "bottom"},
+        "sticker": {"text": "😂", "x": 0.8, "y": 0.2, "size": 0.25},
     }
     for tpl, props in samples.items():
         assert validate("scene", _plan(tpl, props)) == [], tpl
@@ -85,3 +87,11 @@ def test_wipe_and_overlap_transition():
     plan["scenes"][1]["transition_in"]["type"] = "spin"
     assert validate("scene", plan)
     assert "nx.overlap" in (ROOT / "remotion/src/Main.tsx").read_text(encoding="utf-8")
+
+
+def test_scene_fx_validate_and_bad_rejected():
+    plan = _plan("title", {"text": "x"})
+    plan["scenes"][0]["fx"] = [{"type": "shake", "start_s": 0.5}, {"type": "rgb_split", "start_s": 1, "dur_s": 0.3, "strength": 1.5}]
+    assert validate("scene", plan) == []
+    plan["scenes"][0]["fx"] = [{"type": "explode", "start_s": 0}]
+    assert validate("scene", plan)

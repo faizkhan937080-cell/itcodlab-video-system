@@ -56,7 +56,22 @@ def write_made_from(storage, company, video, ref, credits=()):
 
 def licence_blockers(credits):
     """Items whose licence is not commercial-ok (unknown, non-commercial, needs-licence). Empty list = free to deliver."""
-    return [c.get("name", c.get("id", "?")) for c in credits if str(c.get("licence", "")).lower() not in SAFE]
+    return [c.get("name", c.get("id", "?")) for c in credits
+            if str(c.get("licence", "")).lower() not in SAFE and not c.get("risk_accepted")]
+
+
+def accept_risk(credits, reason, date=None):
+    """Faiz decides (rulebook 18): mark every item that is not commercial-ok as 'risk accepted' with his words and the date.
+    Returns (new_credits, names_marked). The item stays visible in credits.json, so the alert is never lost."""
+    from .common import now_iso
+    out, marked = [], []
+    for c in credits:
+        c = dict(c)
+        if str(c.get("licence", "")).lower() not in SAFE and not c.get("risk_accepted"):
+            c["risk_accepted"] = {"by": "faiz", "reason": reason, "date": date or now_iso()}
+            marked.append(c.get("name", c.get("id", "?")))
+        out.append(c)
+    return out, marked
 
 
 def check_made_from(storage, company_dir):

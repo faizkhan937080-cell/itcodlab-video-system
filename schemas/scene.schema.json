@@ -91,7 +91,9 @@
               "stroke",
               "paper_cutout",
               "lottie",
-              "audio_bars"
+              "audio_bars",
+              "meme_text",
+              "sticker"
             ]
           },
           "props": {
@@ -189,7 +191,9 @@
                     "stroke",
                     "paper_cutout",
                     "lottie",
-                    "audio_bars"
+                    "audio_bars",
+                    "meme_text",
+                    "sticker"
                   ]
                 },
                 "props": {
@@ -246,6 +250,43 @@
                       "h"
                     ]
                   }
+                }
+              }
+            }
+          },
+          "fx": {
+            "type": "array",
+            "maxItems": 24,
+            "items": {
+              "type": "object",
+              "required": [
+                "type",
+                "start_s"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "shake",
+                    "zoom_punch",
+                    "flash",
+                    "rgb_split",
+                    "glitch",
+                    "freeze"
+                  ]
+                },
+                "start_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "dur_s": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 10
+                },
+                "strength": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 2
                 }
               }
             }

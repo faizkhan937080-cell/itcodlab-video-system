@@ -245,7 +245,7 @@ def cmd_library(a):
         return 0 if e else 1
     elif a.action == "add":
         print(json.dumps(library.add_entry(st, a.type, a.name, a.licence, a.source, a.file, a.credit,
-                                           [t for t in (a.tags or "").split(",") if t]), indent=2, ensure_ascii=False))
+                                           [t for t in (a.tags or "").split(",") if t], accept_risk=a.accept_risk), indent=2, ensure_ascii=False))
     else:
         items = library.find(st, a.word, a.type) if a.action == "find" else library.load(st)
         print("\n".join(f"{i['id']} | {i['licence']} | {i.get('file') or i.get('source')}" for i in items) or "empty")
@@ -334,8 +334,15 @@ def cmd_clients(a):
         print(base, "pinned", len(mf["dna_pinned"]), "DNA files")
     else:
         base = f"clients/{clients._slug(a.company)}/videos/{clients._slug(a.video)}"
-        bad = clients.licence_blockers(st.read_json(f"{base}/credits.json"))
-        print("BLOCKED: " + ", ".join(bad) if bad else "OK: all licences commercial-ok")
+        credits = st.read_json(f"{base}/credits.json")
+        if getattr(a, "accept_risk", None):
+            credits, marked = clients.accept_risk(credits, a.accept_risk)
+            st.put_json(f"{base}/credits.json", credits)
+            print("RISK ACCEPTED by Faiz (" + a.accept_risk + "): " + (", ".join(marked) or "nothing needed it"))
+            return 0
+        bad = clients.licence_blockers(credits)
+        print("ALERT (Faiz decides, rulebook 18): licence not cleared for commercial use: " + ", ".join(bad) if bad
+              else "OK: all licences commercial-ok or risk accepted")
         return 1 if bad else 0
     return 0
 
@@ -422,6 +429,7 @@ def build_parser():
     s.add_argument("company")
     s.add_argument("video", nargs="?", default="")
     s.add_argument("reel", nargs="?", default="")
+    s.add_argument("--accept-risk", default=None, help="gate only: Faiz's words; marks items as risk accepted and passes")
     s.set_defaults(fn=cmd_clients)
     s = sub.add_parser("library", help="asset library: scan | add | find | list")
     s.add_argument("action", choices=["scan", "add", "fetch", "find", "list"])
@@ -429,6 +437,7 @@ def build_parser():
     s.add_argument("--type", default=None)
     s.add_argument("--name"); s.add_argument("--licence"); s.add_argument("--source", default="")
     s.add_argument("--file", default=None); s.add_argument("--credit", default=""); s.add_argument("--tags", default="")
+    s.add_argument("--accept-risk", default=None, help="Faiz's words: add an item whose licence is not cleared for commercial use anyway")
     s.set_defaults(fn=cmd_library)
     s = sub.add_parser("story", help="kahani update: index + 60-line check + save memory/rules to GitHub")
     s.set_defaults(fn=cmd_story)
