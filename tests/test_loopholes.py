@@ -76,3 +76,13 @@ def test_recipe_elements_carry_confidence():
     from scripts import recipe
     c = recipe.build({"job": "j"}, {"fonts": [{"name": "A"}, {"name": "B", "confidence": "seen"}]})
     assert [f["confidence"] for f in c["elements"]["fonts"]] == ["judged", "seen"]
+
+
+def test_old_job_follows_renamed_reel_folder(drive, tmp_path):
+    from scripts.jobs import Worker
+    w = Worker(drive, work=tmp_path / "w")
+    job = {"id": "reel-OLDJOB-g", "link": "https://www.instagram.com/reel/OLDJOB1xyz/?x=1", "target": "creator:rahul"}
+    st = {"target": "creator:rahul", "paths": {"analysis": "analysis/creators/rahul/reel-OLDJOB-g", "pack": "x"}}
+    drive.put_json("creators/rahul/videos/OLDJOB1xyz/pack.json", {})  # folder was renamed to the reel code
+    assert w._analysis_rel(st, job) == "creators/rahul/videos/OLDJOB1xyz"
+    assert w._reel_code({"id": "j", "reel_id": "R123456"}) == "R123456"

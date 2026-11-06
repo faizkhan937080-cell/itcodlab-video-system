@@ -332,7 +332,7 @@ class Worker:
                 st["dna_saved"] = saved
                 if target.startswith("creator:"):
                     h = target.split(":", 1)[1]
-                    ptr = {"layout_version": 2, "reel_id": job.get("reel_id") or jid, "creator": h, "job": jid,
+                    ptr = {"layout_version": 2, "reel_id": self._reel_code(job), "creator": h, "job": jid,
                            "link": job.get("link", ""), "mode": job["mode"],
                            "analysis": self._analysis_rel(st, job), "dna": saved, "meta": st.get("source_meta", {}),
                            "saved": now_iso()}
@@ -400,6 +400,12 @@ class Worker:
         except Exception:  # noqa: BLE001
             return False
 
+    @staticmethod
+    def _reel_code(job):
+        """The reel's permanent folder name: job['reel_id'], else the Instagram code in the link, else the job id."""
+        from .reelid import shortcode
+        return job.get("reel_id") or shortcode(job.get("link", "")) or job["id"]
+
     def _analysis_rel(self, st, job):
         """Everything of a creator lives in ONE folder: creators/<h>/videos/<job>.
         Jobs started before this layout keep the path stored in their state (followed if the folder was moved)."""
@@ -409,15 +415,16 @@ class Worker:
         if p:
             if not self.storage.exists(p) and is_creator:
                 h = t.split(":", 1)[1]
-                for alt in (f"creators/{h}/videos/{job.get('reel_id') or job['id']}", f"analysis/creators/{h}/{job['id']}"):
+                for alt in (f"creators/{h}/videos/{self._reel_code(job)}", f"creators/{h}/videos/{job['id']}",
+                            f"analysis/creators/{h}/{job['id']}"):
                     if self.storage.exists(alt):  # folder was moved into the creator's folder: follow it
                         st["paths"]["analysis"] = alt
                         st["paths"]["pack"] = f"{alt}/pack"
                         return alt
             return p
         if is_creator:
-            return f"creators/{t.split(':', 1)[1]}/videos/{job.get('reel_id') or job['id']}"
-        return f"analysis/general/{job.get('reel_id') or job['id']}"
+            return f"creators/{t.split(':', 1)[1]}/videos/{self._reel_code(job)}"
+        return f"analysis/general/{self._reel_code(job)}"
 
     def _make_creator_folders(self, st):
         t = st.get("target", "")
