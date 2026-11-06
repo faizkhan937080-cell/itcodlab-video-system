@@ -33,6 +33,25 @@ def pick_source(files):
     return max(ok, key=lambda f: f.stat().st_size)
 
 
+def merge_streams(wd):
+    """yt-dlp sometimes leaves one video-only and one audio-only stream (merge skipped when ffmpeg was not found
+    at download time). If there is no merged video but exactly those two, join them losslessly into source.mp4."""
+    from .common import run_cmd
+    files = list(Path(wd).glob("source.*"))
+    if any(f.suffix.lower() in VIDEO_SUFFIXES and ".f" not in f.name[len("source"):-len(f.suffix)] for f in files):
+        return None
+    vids = [f for f in files if f.suffix.lower() in VIDEO_SUFFIXES]
+    auds = [f for f in files if f.suffix.lower() in (".m4a", ".aac", ".opus", ".mp3", ".ogg")]
+    if len(vids) != 1 or len(auds) != 1:
+        return None
+    out = Path(wd) / "source.mp4"
+    rc, _, err = run_cmd(["ffmpeg", "-loglevel", "error", "-y", "-i", str(vids[0]), "-i", str(auds[0]),
+                          "-c", "copy", "-movflags", "+faststart", str(out)], timeout=600)
+    if rc != 0 or not out.exists():
+        raise RuntimeError("could not join video and audio streams:\n" + tail(err))
+    return out
+
+
 class Worker:
     def __init__(self, storage, sheets=None, work=None):
         self.storage = storage
@@ -334,6 +353,7 @@ class Worker:
         rc, out, err = run_cmd(cmd + [job["link"]], timeout=1800)
         if rc != 0:
             raise RuntimeError("yt-dlp failed:\n" + tail(err or out))
+        merge_streams(wd)
         return pick_source(list(wd.glob("source.*")))
 
     def _resolve_creator(self, job, st, wd):

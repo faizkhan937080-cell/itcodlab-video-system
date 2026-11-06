@@ -431,3 +431,19 @@ def test_pick_source_ignores_single_stream_leftovers(tmp_path):
     (tmp_path / "source.mp4").unlink()
     with pytest.raises(RuntimeError, match="no merged video"):
         pick_source(list(tmp_path.glob("source.*")))
+
+
+def test_merge_streams_joins_leftover_video_and_audio(tmp_path, test_video):
+    import subprocess
+    from scripts.jobs import merge_streams, pick_source
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(test_video), "-an", "-c", "copy",
+                    str(tmp_path / "source.fdash-1v.mp4")], check=True)
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(test_video), "-vn", "-c", "copy",
+                    str(tmp_path / "source.fdash-2a.m4a")], check=True)
+    out = merge_streams(tmp_path)
+    assert out and out.name == "source.mp4"
+    assert pick_source(list(tmp_path.glob("source.*"))).name == "source.mp4"
+    probe = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type", "-of", "csv=p=0", str(out)],
+                           capture_output=True, text=True).stdout
+    assert "video" in probe and "audio" in probe
+    assert merge_streams(tmp_path) is None   # already merged -> untouched
