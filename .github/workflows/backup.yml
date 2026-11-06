@@ -1,0 +1,35 @@
+# Monthly backup of the whole repo (rules, scripts, memory, Remotion, all branches) into Drive `backups/`.
+# Old backups are never deleted. Restore: git clone <file>.bundle itcodlab-video-system  (see docs/HOSTING.md).
+name: backup
+on:
+  workflow_dispatch:
+  push:
+    paths: ['trigger/backup.txt']
+  schedule:
+    - cron: '23 2 1 * *'
+permissions:
+  contents: read
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
+      RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bundle and upload
+        run: |
+          [ -n "$RCLONE_TOKEN" ] || { echo "::error::RCLONE_TOKEN missing"; exit 1; }
+          sudo apt-get -qq install -y rclone > /dev/null
+          mkdir -p ~/.config/rclone
+          printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
+          git fetch -q origin '+refs/heads/*:refs/remotes/origin/*'
+          for b in $(git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin | grep -v '^HEAD$'); do git branch -q -f "$b" "origin/$b" 2>/dev/null || true; done
+          name="itcodlab-video-system-$(date -u +%Y-%m-%d_%H%M).bundle"
+          git bundle create "$RUNNER_TEMP/$name" --all
+          git bundle verify "$RUNNER_TEMP/$name"
+          rclone copyto "$RUNNER_TEMP/$name" "$ITCOD_RCLONE_REMOTE/backups/$name" --ignore-existing
+          rclone lsl "$ITCOD_RCLONE_REMOTE/backups" | tail -5
