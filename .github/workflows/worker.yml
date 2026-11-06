@@ -20,6 +20,9 @@ jobs:
       ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
       RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
       INSTAGRAM_COOKIES: ${{ secrets.INSTAGRAM_COOKIES }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      ACOUSTID_KEY: ${{ secrets.ACOUSTID_KEY }}
+      OPENVERSE_TOKEN: ${{ secrets.OPENVERSE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Check the one-time secret
