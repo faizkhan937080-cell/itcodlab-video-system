@@ -73,3 +73,13 @@ def test_texture_overlay_validates():
     assert validate("scene", plan)
     main = (ROOT / "remotion/src/Main.tsx").read_text(encoding="utf-8")
     assert "plan.texture" in main
+
+
+def test_wipe_and_overlap_transition():
+    plan = _plan("title", {"text": "x"})
+    plan["scenes"].append({"id": "s2", "duration_s": 2, "template": "quote", "props": {"text": "y"},
+                           "transition_in": {"type": "wipe", "duration_s": 0.5, "overlap": True}})
+    assert validate("scene", plan) == []
+    plan["scenes"][1]["transition_in"]["type"] = "spin"
+    assert validate("scene", plan)
+    assert "nx.overlap" in (ROOT / "remotion/src/Main.tsx").read_text(encoding="utf-8")

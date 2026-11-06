@@ -86,6 +86,7 @@ const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> =
   if (t.type === 'fade') style = {opacity: prog};
   if (t.type === 'slide') style = {opacity: prog, transform: `translateX(${(1 - prog) * width * 0.12}px)`};
   if (t.type === 'zoom') style = {opacity: prog, transform: `scale(${1.15 - 0.15 * prog})`};
+  if (t.type === 'wipe') style = {clipPath: `inset(0 ${(1 - prog) * 100}% 0 0)`};
   return (
     <AbsoluteFill style={style}>
       {step > 1 ? (
@@ -110,10 +111,13 @@ export const Main: React.FC<Plan> = (plan) => {
         fontFamily: plan.brand?.font ?? 'Inter, "Helvetica Neue", Arial, sans-serif',
       }}
     >
-      {plan.scenes.map((scene) => {
+      {plan.scenes.map((scene, i) => {
         const frames = sceneFrames(scene.duration_s, fps);
+        // overlapping transition of the NEXT scene: keep this scene on screen underneath it (timeline unchanged)
+        const nx = plan.scenes[i + 1]?.transition_in;
+        const tail = nx && nx.overlap && nx.type && nx.type !== 'cut' ? Math.max(1, Math.round((nx.duration_s ?? 0.4) * fps)) : 0;
         const el = (
-          <Sequence key={scene.id} from={from} durationInFrames={frames}>
+          <Sequence key={scene.id} from={from} durationInFrames={frames + tail}>
             <SceneWrap scene={scene} colors={colors} stepFps={plan.step_fps} />
           </Sequence>
         );

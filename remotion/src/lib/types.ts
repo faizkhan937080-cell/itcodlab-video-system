@@ -1,8 +1,9 @@
 import {CaptionDef, CaptionStyle} from './captions';
 
 export type TransitionDef = {
-  type?: 'cut' | 'fade' | 'slide' | 'zoom';
+  type?: 'cut' | 'fade' | 'slide' | 'zoom' | 'wipe';
   duration_s?: number;
+  overlap?: boolean; // true = the previous scene stays visible underneath while this one comes in (real cross-transition, total length unchanged)
 };
 
 export type SceneDef = {

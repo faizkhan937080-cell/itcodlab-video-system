@@ -103,13 +103,17 @@
                   "cut",
                   "fade",
                   "slide",
-                  "zoom"
+                  "zoom",
+                  "wipe"
                 ]
               },
               "duration_s": {
                 "type": "number",
                 "minimum": 0,
                 "maximum": 2
+              },
+              "overlap": {
+                "type": "boolean"
               }
             }
           }
