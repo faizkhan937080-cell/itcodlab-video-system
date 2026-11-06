@@ -480,3 +480,27 @@ def test_recipe_card_links_reel_dna_and_elements(drive):
     assert "Courier Prime Bold" in drive.read_text("creators/rahul/videos/an1/RECIPE.md")
     write(drive, {**reel, "job": "an2", "analysis": "creators/rahul/videos/an2"})  # no elements.json: still a card
     assert drive.exists("creators/rahul/videos/an2/recipe.json")
+
+
+def test_analyzing_job_resumes_on_a_fresh_machine(drive, tmp_path, test_video, monkeypatch):
+    """A new Actions run / new VM has no copy of the downloaded video: it is pulled back from our Drive copy.
+    Regression: job reel-DfMQ7zqkuxO-b was cut off mid-analysis and would have burned its last attempt on 'file not found'."""
+    from scripts import pack
+    ref = "input/references/test.mp4"
+    (drive.root / "input/references").mkdir(parents=True)
+    shutil.copyfile(test_video, drive.root / ref)
+    drive.put_json("jobs/inbox/rs1.json", {"id": "rs1", "type": "analyze", "file": ref, "mode": "both",
+                                          "target": "creator:rahul", "gate1_approved_by_user": True})
+    real = pack.run_pipeline
+
+    def cut_off(*a, **k):
+        raise RuntimeError("this run ended here")
+
+    monkeypatch.setattr(pack, "run_pipeline", cut_off)
+    assert Worker(drive, work=tmp_path / "work1").process_once() == [("rs1", "ANALYZING")]
+    st = drive.read_json("jobs/state/rs1.json")
+    assert st["attempts"]["analysis"] == 1 and st["paths"]["source_drive"]
+    shutil.rmtree(tmp_path / "work1")                      # the old machine is gone
+    monkeypatch.setattr(pack, "run_pipeline", real)
+    assert Worker(drive, work=tmp_path / "work2").process_once() == [("rs1", "AWAIT_GATE2")]
+    assert (tmp_path / "work2" / "rs1" / "source.mp4").is_file()

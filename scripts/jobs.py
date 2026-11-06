@@ -227,6 +227,21 @@ class Worker:
         self.set_status(st, job, "NEEDS_INPUT", f"unknown job type: {job.get('type')}")
         return False
 
+    def _ensure_local_source(self, st, wd):
+        """A new Actions run (or a new VM) has no copy of the video the last run downloaded: pull our own Drive copy back,
+        so a job that was cut off mid-analysis resumes instead of failing its last attempt on 'file not found'."""
+        p = Path(st["paths"].get("source_local") or "")
+        if p.is_file() and p.stat().st_size > 0:
+            return p
+        rel = st["paths"].get("source_drive")
+        if not rel:
+            raise FileNotFoundError("the source video is not on this machine and no Drive copy is recorded")
+        dest = Path(wd) / ("source" + (Path(rel).suffix or ".mp4"))
+        self.storage.fetch(rel, dest)
+        log(f"source video restored from Drive: {rel}")
+        st["paths"]["source_local"] = str(dest)
+        return dest
+
     # ================================================================ analyze jobs
     def step_analyze(self, job, st):
         s, jid = st["status"], job["id"]
@@ -275,7 +290,8 @@ class Worker:
         if s == "ANALYZING":
             try:
                 from .pack import run_pipeline
-                res = run_pipeline(st["paths"]["source_local"], wd / "analysis", job_id=jid, mode=job["mode"])
+                src = self._ensure_local_source(st, wd)
+                res = run_pipeline(str(src), wd / "analysis", job_id=jid, mode=job["mode"])
                 from .describe import describe_pack
                 idx = json.loads((res["out_root"] / "collage_index.json").read_text(encoding="utf-8"))
                 bulk = bool(job.get("bulk"))
