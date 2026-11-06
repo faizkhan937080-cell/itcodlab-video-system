@@ -1,0 +1,3 @@
+{"title":"selftest","fps":30,"orientation":"portrait","scenes":[
+{"id":"s1","duration_s":2,"template":"quote","props":{"text":"Speed test"}},
+{"id":"s2","duration_s":2,"template":"quote","props":{"text":"Render check"}}]}

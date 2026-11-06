@@ -89,6 +89,13 @@ jobs:
       - name: Remotion packages
         if: steps.chk.outputs.ready == 'true'
         run: cd remotion && npm install --silent --no-audit --no-fund && npx remotion browser ensure
+      - name: Render self-check (only when the wake message has [render-check]; nothing is saved to Drive)
+        if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[render-check]')
+        continue-on-error: true
+        run: |
+          start=$(date +%s)
+          ITCOD_RENDER_CONCURRENCY=$(( $(nproc) / 2 + 1 )) ./run render-local --plan config/selfcheck_plan.json --quality preview --out "$RUNNER_TEMP/rc/check.mp4" | tail -40
+          echo "RENDER CHECK SECONDS: $(( $(date +%s) - start ))"
       - name: Connect Drive and GitHub
         if: steps.chk.outputs.ready == 'true'
         run: |
