@@ -18,3 +18,9 @@ Schema: `schemas/dna-sound.schema.json` (v2). Loudness follows ITU-R BS.1770 / E
 ## Precision rules
 - Copy numbers from the pack. `./run dna-check --type sound` must PASS.
 - Our output: re-measure with the same script, `./run clone-report`; loudness within 1 LU, bpm within 3%.
+
+## SFX layer (reel 2026-11-06, `scripts/sfx.py`)
+- Flow: plan_cues(plan) from exact scene times -> Openverse search (category sound_effect, license_type commercial, <=4 s) -> pick() -> audio_defs() into plan.audio.
+- Only CC0 / PDM / CC BY (credit line saved). Never by-nc, by-sa, nd. No file for a cue kind = no sound, never invent one.
+- whoosh leads the cut by 0.12 s, hit on the title frame, pop +3 frames, tick per checklist item; volume 0.35 under voice.
+- Claude never listens: checks are numbers (duration, peak, LUFS) by scripts. Earshot (github Leonxlnx/earshot, CPU, sfx/forge/match) = candidate for fallback synthesis; licence not stated -> check before adopting.
