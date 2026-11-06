@@ -9,6 +9,8 @@ import {Counter} from './components/Counter';
 import {Grain, Vignette} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
+import {AudioBars} from './components/AudioBars';
+import {LottieScene} from './components/LottieScene';
 import {LowerThird} from './components/LowerThird';
 import {PaperCutout} from './components/PaperCutout';
 import {Quote} from './components/Quote';
@@ -72,6 +74,10 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       );
     case 'stroke':
       return <Stroke text={p.text} shape={p.shape} color={p.color} colors={colors} />;
+    case 'lottie':
+      return <LottieScene src={p.src ?? ''} size={p.size} x={p.x} y={p.y} loop={p.loop} speed={p.speed} />;
+    case 'audio_bars':
+      return <AudioBars src={p.src ?? ''} bars={p.bars} color={p.color} y={p.y} height={p.height} colors={colors} />;
     default:
       return null;
   }
@@ -99,7 +105,7 @@ const Overlay: React.FC<{ov: OverlayDef; colors: Colors}> = ({ov, colors}) => {
 /** Intro animation of a scene (the transition into it). 'cut' = none. */
 const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> = ({scene, colors, stepFps}) => {
   const frame = useCurrentFrame();
-  const {fps, width} = useVideoConfig();
+  const {fps, width, height} = useVideoConfig();
   const t = scene.transition_in ?? {type: 'cut'};
   const dur = Math.max(1, Math.round((t.duration_s ?? 0.4) * fps));
   const prog = easeOut(frame, 0, dur);
@@ -110,6 +116,10 @@ const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> =
   if (t.type === 'slide') style = {opacity: prog, transform: `translateX(${(1 - prog) * width * 0.12}px)`};
   if (t.type === 'zoom') style = {opacity: prog, transform: `scale(${1.15 - 0.15 * prog})`};
   if (t.type === 'wipe') style = {clipPath: `inset(0 ${(1 - prog) * 100}% 0 0)`};
+  if (t.type === 'slide_up') style = {opacity: prog, transform: `translateY(${(1 - prog) * height * 0.1}px)`};
+  if (t.type === 'flip') style = {opacity: prog, transform: `perspective(${width * 2}px) rotateY(${(1 - prog) * 70}deg)`};
+  if (t.type === 'iris') style = {clipPath: `circle(${prog * 75}% at 50% 50%)`};
+  if (t.type === 'clock_wipe') style = {WebkitMaskImage: `conic-gradient(#000 ${prog * 360}deg, transparent ${prog * 360}deg)`, maskImage: `conic-gradient(#000 ${prog * 360}deg, transparent ${prog * 360}deg)`};
   const z = zoomAt(scene.zoom, frame / fps);
   const zoomStyle: React.CSSProperties =
     scene.zoom && scene.zoom.length ? {transform: `scale(${z.scale})`, transformOrigin: `${z.x * 100}% ${z.y * 100}%`} : {};

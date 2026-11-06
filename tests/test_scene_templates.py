@@ -21,6 +21,8 @@ def test_new_templates_validate():
         "quote": {"text": "Hello", "author": "Faiz"},
         "stroke": {"text": "Important", "shape": "circle", "color": "coral"},
         "paper_cutout": {"src": "assets/pagoda.png", "caption": "China", "rotate_deg": -3, "size": 0.7, "seed": 5},
+        "lottie": {"src": "library/motion/arrow.json", "size": 0.5, "loop": True},
+        "audio_bars": {"src": "assets/music.mp3", "bars": 24, "color": "coral"},
     }
     for tpl, props in samples.items():
         assert validate("scene", _plan(tpl, props)) == [], tpl

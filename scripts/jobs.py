@@ -684,6 +684,19 @@ class Worker:
             tl = finish_mod.target_lufs(plan, dnas) if quality == "final" else None
             if tl is not None and chk["probe"].get("has_audio"):
                 fin["loudness"] = finish_mod.normalize_loudness(out, tl, wd)
+            from . import qa as qa_mod
+            fin["qa"] = qa_mod.run(out, plan, wd, tl, check_loudness=(quality == "final"))
+            fin["safe_zone"] = chk.get("safe_zone")
+            fin["effects"] = chk.get("effects")
+            note += f" | QA {fin['qa']['warnings']} warning(s)"
+            if quality == "final":
+                try:
+                    from .cover import make_cover
+                    cov = make_cover(out, wd / (Path(fname).stem + "_cover.jpg"))
+                    fin["cover"] = {k: cov[k] for k in ("t", "score")}
+                    self.storage.put_file(cov["file"], f"{folder}/{Path(fname).stem}_cover.jpg")
+                except Exception as e:  # noqa: BLE001
+                    fin["cover"] = {"error": f"{type(e).__name__}: {e}"[:150]}
             if chk.get("grade"):
                 from .grade_video import summary_line
                 note += " | " + summary_line(chk["grade"])

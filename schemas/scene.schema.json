@@ -89,7 +89,9 @@
               "split_compare",
               "quote",
               "stroke",
-              "paper_cutout"
+              "paper_cutout",
+              "lottie",
+              "audio_bars"
             ]
           },
           "props": {
@@ -104,7 +106,11 @@
                   "fade",
                   "slide",
                   "zoom",
-                  "wipe"
+                  "wipe",
+                  "slide_up",
+                  "flip",
+                  "iris",
+                  "clock_wipe"
                 ]
               },
               "duration_s": {
@@ -181,7 +187,9 @@
                     "split_compare",
                     "quote",
                     "stroke",
-                    "paper_cutout"
+                    "paper_cutout",
+                    "lottie",
+                    "audio_bars"
                   ]
                 },
                 "props": {

@@ -15,7 +15,7 @@ Vocabulary = film/broadcast grammar. Every section carries a confidence tag; jud
 - Motion: pan/tilt/push/pull/handheld/parallax; easing class (linear, ease-in/out, spring, overshoot); typical
   duration in frames; stagger; speed ramps.
 - Text: role (caption/title/label/kinetic), font class, weight, case, size vs frame height, position vs platform
-  safe zone (reels: keep text clear of top ~13% and bottom ~18%), in/out animation, on-screen seconds, words per caption.
+  safe zone (reels: strict top 14% / bottom 35% / sides 6%, hard top 7.8% / bottom 14.6%; see 14-effects), in/out animation, on-screen seconds, words per caption.
 - Colour: grade look, contrast, temperature, saturation; 709 vs log look. Layout, framing, screen-recording share.
 
 ## Recipe (how to rebuild in Remotion)

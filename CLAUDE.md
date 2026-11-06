@@ -16,6 +16,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
    - folders, reel IDs, clients/, assets/library, licences, audit -> `12-structure.md`
    - network, downloads, bans, virus/secret checks, workflows -> `15-security.md`
    - colour grade / look / HDR, editing effects (speed, zoom, track, voice) -> `13-grade.md`, `14-effects.md`
+   - pro-editing standards, QA gate, cover, beats, J/L cuts -> `16-pro-editing.md`
 3. Every step that saves, adds or renders needs approval: `rulebooks/04-approvals.md`.
 3a. After writing any job, approval or candidate: `./run wake` (starts the no-PC worker). Hosting: `rulebooks/11-hosting.md`.
 3b. Lanes, barriers, alerts, token economy: `rulebooks/06-fence.md` (hook `scripts/guard.py` blocks wrong-lane commands).

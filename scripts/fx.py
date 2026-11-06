@@ -129,6 +129,21 @@ def stabilize_clip(src, dst, level, work):
     return method
 
 
+# ------------------------------------------------------------------ constant frame rate + denoise
+DENOISE = {"light": "hqdn3d=1.5:1.0:2.0:2.0", "normal": "hqdn3d=3:2:4:3"}
+
+
+def cfr_denoise_clip(src, dst, fps, denoise=None):
+    """Phone footage is often variable frame rate (audio drifts later). Re-time to a constant rate; optional mild denoise
+    (grainy low-light footage). Audio is copied untouched."""
+    vf = DENOISE.get(denoise)
+    cmd = ["ffmpeg", "-y", "-v", "error", "-i", str(src)] + (["-vf", vf] if vf else []) + [
+        "-fps_mode", "cfr", "-r", str(fps), "-c:v", "libx264", "-crf", str(CRF), "-preset", "medium", "-c:a", "copy", str(dst)]
+    rc, _, err = run_cmd(cmd, timeout=60 * 60 * 2)
+    if rc != 0:
+        raise RuntimeError("frame-rate fix failed: " + tail(err, 2))
+
+
 # ------------------------------------------------------------------ zoom / punch-in keyframes
 def punch_keys(times, scale=1.12, up_s=0.08, down_s=0.35, x=0.5, y=0.5, hold_s=0.0):
     """Beat/word times (scene seconds) -> zoom keyframes: snap in fast, ease back slowly. For scene.zoom (Remotion applies them)."""
@@ -175,13 +190,16 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
     work.mkdir(parents=True, exist_ok=True)
     (pub / "fx").mkdir(parents=True, exist_ok=True)
     hooks = hooks or {}
-    new = copy.deepcopy(plan)
-    rep = {"clips": {}, "errors": {}, "audio": {}}
+    from .plan_edit import apply_jl_cuts
+    new, jl_notes = apply_jl_cuts(plan)             # before effects: needs the original trim windows
+    rep = {"clips": {}, "errors": {}, "audio": {}, "jl_cuts": jl_notes}
     done = {}
     for sc in new.get("scenes", []):
         p = sc.get("props") or {}
         src = p.get("src")
-        wants = [k for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "remove_bg", "reframe", "track_from") if p.get(k)]
+        wants = [k for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "remove_bg", "reframe", "track_from", "denoise") if p.get(k)]
+        if isinstance(src, str) and sc.get("template") == "video" and (pub / src).exists() and (hooks.get("vfr") or _is_vfr)(pub / src):
+            wants.insert(0, "cfr")
         if not wants or not isinstance(src, str):
             continue
         key = (sc["id"], src)
@@ -191,6 +209,14 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
             if not cur.exists():
                 raise FileNotFoundError(f"{src} not staged")
             is_video = cur.suffix.lower() in (".mp4", ".mov", ".m4v", ".mkv", ".webm", ".avi")
+            if is_video and ("cfr" in wants or p.get("denoise")):
+                out = pub / "fx" / f"{cur.stem}.{_sig(src, p.get('denoise'), new.get('fps'))}.cfr.mp4"
+                if not out.exists():
+                    (hooks.get("cfr") or cfr_denoise_clip)(cur, out, new.get("fps", 30), p.get("denoise"))
+                cur = out
+                p["src"] = f"fx/{out.name}"
+                src = p["src"]
+                r["cfr"] = True
             if is_video and (p.get("stabilize") or p.get("speed") or p.get("speed_ramp")):
                 tag = _sig(src, p.get("stabilize"), p.get("speed"), p.get("speed_ramp"), p.get("trim_start_s"), p.get("trim_end_s"), p.get("smooth"))
                 out = pub / "fx" / f"{cur.stem}.{tag}.mp4"
@@ -243,7 +269,7 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
             rep["errors"][sc["id"]] = f"{type(e).__name__}: {e}"[:200]
             log(f"effect failed on scene {sc['id']}: {e}")
             sc["props"] = copy.deepcopy(next(s for s in plan["scenes"] if s["id"] == sc["id"]).get("props") or {})
-            for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "remove_bg", "reframe", "track_from"):
+            for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "remove_bg", "reframe", "track_from", "denoise"):
                 sc["props"].pop(k, None)     # keep the clip as shot, drop the effect that failed
     if new.get("grain") and not new.get("grain_src"):
         grain_tile(pub / "fx" / "grain.png")
@@ -254,6 +280,11 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
     except Exception as e:  # noqa: BLE001
         rep["errors"]["audio"] = f"{type(e).__name__}: {e}"[:200]
     return new, rep
+
+
+def _is_vfr(path):
+    from .qa import vfr
+    return vfr(path)
 
 
 def summary_line(rep):

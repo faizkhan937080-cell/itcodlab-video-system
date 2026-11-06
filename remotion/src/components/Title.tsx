@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import {easeOut, popIn, unit} from '../lib/anim';
+import {fitFont} from '../lib/fit';
 import {Colors} from '../lib/types';
 
 export const Title: React.FC<{text: string; subtitle?: string; colors: Colors}> = ({text, subtitle, colors}) => {
@@ -8,12 +9,13 @@ export const Title: React.FC<{text: string; subtitle?: string; colors: Colors}> 
   const {fps, width, height} = useVideoConfig();
   const u = unit(width, height);
   const s = popIn(frame, fps);
+  const size = fitFont({text, maxSize: 120 * u, boxW: width - 160 * u, boxH: height * 0.45});
   return (
     <AbsoluteFill style={{justifyContent: 'center', alignItems: 'center', padding: 80 * u, textAlign: 'center'}}>
       <div
         style={{
           color: colors.white,
-          fontSize: 120 * u,
+          fontSize: size,
           fontWeight: 800,
           lineHeight: 1.05,
           transform: `scale(${0.8 + 0.2 * s})`,
