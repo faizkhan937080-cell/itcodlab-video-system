@@ -82,7 +82,12 @@
               "banner",
               "image",
               "lower_third",
-              "video"
+              "video",
+              "counter",
+              "bar_chart",
+              "checklist",
+              "split_compare",
+              "quote"
             ]
           },
           "props": {

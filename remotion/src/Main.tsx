@@ -2,10 +2,15 @@ import React from 'react';
 import {AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
 import {AudioTrack} from './components/AudioTrack';
 import {Banner} from './components/Banner';
+import {BarChart} from './components/BarChart';
+import {Checklist} from './components/Checklist';
+import {Counter} from './components/Counter';
 import {Grain} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
 import {LowerThird} from './components/LowerThird';
+import {Quote} from './components/Quote';
+import {SplitCompare} from './components/SplitCompare';
 import {Title} from './components/Title';
 import {VideoScene} from './components/VideoScene';
 import {easeOut} from './lib/anim';
@@ -35,6 +40,25 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           volume={p.volume}
         />
       );
+    case 'counter':
+      return (
+        <Counter
+          value={Number(p.value ?? 0)}
+          prefix={p.prefix}
+          suffix={p.suffix}
+          decimals={p.decimals}
+          label={p.label}
+          colors={colors}
+        />
+      );
+    case 'bar_chart':
+      return <BarChart title={p.title} items={Array.isArray(p.items) ? p.items : []} suffix={p.suffix} colors={colors} />;
+    case 'checklist':
+      return <Checklist title={p.title} items={Array.isArray(p.items) ? p.items : []} colors={colors} />;
+    case 'split_compare':
+      return <SplitCompare left={p.left ?? {title: ''}} right={p.right ?? {title: ''}} colors={colors} />;
+    case 'quote':
+      return <Quote text={p.text ?? ''} author={p.author} colors={colors} />;
     default:
       return null;
   }

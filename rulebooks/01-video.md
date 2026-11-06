@@ -31,3 +31,9 @@
 - Final render is loudness-normalised to target LUFS (plan.audio_target_lufs or sound DNA), -1 dBTP limiter (`scripts/finish.py`).
 - Clone check: our output is measured by the same scripts and compared to the DNA/corpus (10% / 0.5); differences go in the job note. Never skip.
 - Tune hints (`scripts/tune.py`): after the clone check each failing DNA type carries `hints` = which plan number to change (output size, fps, scene durations x factor, beat grid, audio_target_lufs). Apply them in the next plan version; max 2 rounds. No automatic re-render yet (needs a first real render to validate).
+
+## Scene templates (remotion/src/components, schema enum in schemas/scene.schema.json)
+- title, kinetic_text, banner, image, lower_third, video + counter (value/prefix/suffix/decimals/label), bar_chart (title, items[{label,value}], suffix),
+  checklist (title, items[]), split_compare (left/right {title, points[]}), quote (text, author).
+- New template = component + types.ts union + Main.tsx case + schema enum (tests/test_scene_templates.py checks all four match).
+- No blur / boxShadow / SVG filters in templates: cloud renders have no GPU.
