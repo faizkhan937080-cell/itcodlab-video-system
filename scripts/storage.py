@@ -135,11 +135,35 @@ class Storage:
     def put_tree(self, local_dir, rel_dir):
         """Copy every file of a local folder to Drive. Existing names are kept, new ones get _vN."""
         local_dir = Path(local_dir)
-        out = []
-        for p in sorted(local_dir.rglob("*")):
-            if p.is_file():
-                out.append(self.put_file(p, f"{rel_dir}/{p.relative_to(local_dir).as_posix()}"))
-        return out
+        files = sorted(p for p in local_dir.rglob("*") if p.is_file())
+        if self.root is None and len(files) > 3:  # rclone remote: one listing + one copy instead of 2-3 calls per file
+            fast = self._put_tree_rclone(local_dir, rel_dir, files)
+            if fast is not None:
+                return fast
+        return [self.put_file(p, f"{rel_dir}/{p.relative_to(local_dir).as_posix()}") for p in files]
+
+    def _put_tree_rclone(self, local_dir, rel_dir, files):
+        """New names go up with ONE `rclone copy` (never overwrites); names that already exist use put_file (_vN).
+        Returns None when the listing/copy tooling fails before anything was uploaded -> caller uses the per-file path."""
+        try:
+            ls = subprocess.run(["rclone", "lsf", "-R", "--files-only", f"{self.remote}/{rel_dir}"],
+                                capture_output=True, text=True)
+        except OSError:  # rclone cannot even start: the per-file path will report it properly
+            return None
+        existing = set(x.strip() for x in ls.stdout.splitlines()) if ls.returncode == 0 else set()
+        rels = [p.relative_to(local_dir).as_posix() for p in files]
+        new = [r for r in rels if r not in existing]
+        old = [r for r in rels if r in existing]
+        if new:
+            with tempfile.NamedTemporaryFile("w", delete=False, suffix=".txt", encoding="utf-8") as t:
+                t.write("\n".join(new) + "\n")
+            c = subprocess.run(["rclone", "copy", str(local_dir), f"{self.remote}/{rel_dir}", "--files-from", t.name,
+                                "--transfers", "8", "--checkers", "8", "--ignore-existing"],
+                               capture_output=True, text=True)
+            if c.returncode != 0:  # maybe part went up: only send what is still missing, never version a half-upload
+                return [f"{rel_dir}/{r}" if self.exists(f"{rel_dir}/{r}") else self.put_file(local_dir / r, f"{rel_dir}/{r}")
+                        for r in new] + [self.put_file(local_dir / r, f"{rel_dir}/{r}") for r in old]
+        return [f"{rel_dir}/{r}" for r in new] + [self.put_file(local_dir / r, f"{rel_dir}/{r}") for r in old]
 
     def copy_within(self, src_rel, dst_rel):
         """Copy inside Drive (used to publish an approved final). Never overwrites."""
