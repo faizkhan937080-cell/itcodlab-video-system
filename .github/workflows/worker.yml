@@ -15,7 +15,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   work:
-    runs-on: ubuntu-latest
+    # repo variable WORKER_RUNS_ON = ["self-hosted","itcod"] moves the worker to our own VM (no minute limit); unset = GitHub's free runner
+    runs-on: ${{ fromJSON(vars.WORKER_RUNS_ON || '"ubuntu-latest"') }}
     timeout-minutes: 350
     env:
       ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
