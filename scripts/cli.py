@@ -106,9 +106,10 @@ def cmd_wake(a):
     from .common import ROOT, now_iso, run_cmd
     f = ROOT / "trigger" / "wake.txt"
     f.parent.mkdir(exist_ok=True)
-    f.write_text(f"{now_iso()} {a.reason}\n", encoding="utf-8")
+    reason = a.reason + (" [turbo]" if getattr(a, "turbo", False) else "")
+    f.write_text(f"{now_iso()} {reason}\n", encoding="utf-8")
     run_cmd(["git", "-C", str(ROOT), "add", "trigger/wake.txt"])
-    rc, out, err = run_cmd(["git", "-C", str(ROOT), "commit", "-q", "-m", f"wake worker: {a.reason}"])
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "commit", "-q", "-m", f"wake worker: {reason}"])
     if rc != 0:
         print("nothing to commit: " + (err or out)[-200:])
         return 1
@@ -514,6 +515,7 @@ def build_parser():
 
     s = sub.add_parser("wake", help="start the GitHub Actions worker now (after writing a job/approval/candidate)")
     s.add_argument("--reason", default="work waiting")
+    s.add_argument("--turbo", action="store_true", help="run this on the GPU VM (only when Faiz says speed up)")
     s.set_defaults(fn=cmd_wake)
 
     s = sub.add_parser("bulk-jobs", help="queue many reels of one creator (measured only, one approval)")

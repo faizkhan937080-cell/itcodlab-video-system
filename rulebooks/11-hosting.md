@@ -17,3 +17,8 @@
 
 ## Colab stays as a backup only (needs the tab open).
 ## After every job/approval/candidate write: `./run wake --reason "<what>"`. No wake = nothing starts until the 6 h run.
+
+## TURBO (GPU VM `itcod-gpu`, label itcod-gpu): ONLY when Faiz says "speed up"
+- Default stays the free/normal worker. Turbo = `./run wake --turbo` (commit message has [turbo] -> worker.yml uses the GPU runner).
+- VM is normally STOPPED; Faiz (or Gemini) starts it: `gcloud compute instances start itcod-gpu --zone asia-south1-b`. It stops itself after 10 idle min.
+- Claude: before `wake --turbo` say in chat "VM chalu karo"; after the work say it will switch itself off. Setup: scripts/vm/gpu_startup.sh.
