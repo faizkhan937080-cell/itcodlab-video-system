@@ -15,6 +15,15 @@ Faiz does not want Claude's tokens spent on work that scripts or Colab can do. T
 - Read state (1 KB) first. Open `metrics_summary.json` (10 KB) only at gate 2/3. Never read full per-frame files.
 - Failed job: read `error_tail` once (20 lines). Fix the cause or alert Faiz. Never re-run to "see".
 - Colab does its jobs and reports; Claude does not redo them in the sandbox.
+- Session efficiency (Faiz, 2026-11-06: weekly Pro quota is ONE pool for chat, Code and Cowork; this build phase burned 37% in 2 days):
+  - Replies: answer first, 2-6 short Hinglish lines. No recap, no apology, no filler, no explaining what he did not ask.
+  - Parallel tool calls always; one shell command for chained steps; grep/head/tail before any Read; never re-read what is in context.
+  - Tests: run only the touched test files while fixing; full suite ONCE before push. Never re-run a green suite.
+  - Waiting: background watcher (run_in_background) or one check; never poll in a loop, never narrate waits.
+  - Do it myself first (shell, API, repo); ask Faiz only for human-only clicks; one prompt for one named tool.
+  - Routine work (status, state reads, wake, memory) at low effort / Haiku; Sonnet high only for bugs and design. Tell Faiz once to switch via the model picker.
+  - Memory + `./run story` once at the end of a work block, not after every step.
+  - Quota check: if Settings > Usage shows the weekly bar ahead of the calendar, stop optional builds and finish only the blocking item.
 
 ## Barriers (STOP = do nothing more, tell Faiz in 1-3 lines)
 - STOP: a human-only step is needed (popup, token permission, card) -> give ONE step, exact button names.
