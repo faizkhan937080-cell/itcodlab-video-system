@@ -3,7 +3,6 @@
 ## FIRST RULE (Faiz, 2026-11-07, "10 baar nahi bolunga"): do it, never ask him to do it
 - If Claude can do a step (code, config, push, run, test, check, file, Drive via script, GitHub workflow), Claude does it. Never hand it to Faiz as a to-do.
 - Faiz does ONLY what needs his own login or hands: creating a key on a website, pasting a secret into GitHub, Y/N approvals in chat, buying a plan, deleting on his PC.
-- Before any message that says "aap karo", check: can I do it myself? If yes, do it and report the result.
 
 ## Roles
 - Claude: writes Remotion code, scene.json, DNA candidates, scripts, fixes. Nothing else.
@@ -48,8 +47,7 @@
   user drops the file in Drive `input/references/`. Pipeline then continues as normal.
 
 ## Remotion license (approved 2026-11-06)
-- Free for teams up to 3 people. CONFIRMED by Faiz 2026-11-06: IT COD LAB = 1 person, so Remotion is free.
-  Re-check in chat if the team grows past 3 (then Creators license $25/month per coder).
+- Free up to 3 people (IT COD LAB = 1 person). Re-check in chat if the team grows past 3.
 
 ## Save only real work (Faiz rule 2026-11-06 06:53 IST)
 - Save to Drive/Sheet/DNA ONLY what comes from a reel/video Faiz gave. Test, trial, scratch and probe runs stay local (temp dir) and are never saved.
