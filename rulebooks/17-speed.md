@@ -20,4 +20,4 @@ Rule 2: final render and analysis keep full quality. Only the waiting is cut, ne
 - Hardware encoders are fine for drafts only.
 
 ## How to measure
-- Compare before/after on the same reel (workflow run time); a speed claim = seconds saved at equal output. Stage timers in the job note: not built yet.
+- Compare before/after on the same reel; a speed claim = seconds saved at equal output. Stage timers + cost rows are built: `./run cost report` (see 19-costs.md).

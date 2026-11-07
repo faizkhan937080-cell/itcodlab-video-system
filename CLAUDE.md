@@ -31,6 +31,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
 - Claude deletes only approved dev scrap, via Drive trash (see 00-core). Versions are added (dna-v1, dna-v2), never overwritten.
 - No Meta Ads work. No numerology. No auto-publishing anywhere.
 - Max 2 Claude calls per stage. After 2 failed retries: status FAILED and stop.
+- Every job step is measured (`stage()` + cost row). New step or new service = add its measurement + `config/pricing.json` rate. Quote time/cost from `./run cost estimate`, never guess (`19-costs.md`).
 - Error logs: read only the last 20 lines.
 - Outputs go to Drive via scripts. Rules and lessons go to GitHub only.
 - Lessons: Claude saves them itself (compact). Decisions/findings: `./run mem add <shard> <text>` at once, long form, never summarised.

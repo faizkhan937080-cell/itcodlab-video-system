@@ -12,6 +12,7 @@ import time
 from .common import ROOT, CONFIG, load_json, log, now_iso, to_native
 
 _USE, _LOCK = {}, threading.Lock()
+PROC_START = time.time()
 LOCAL = ROOT / "costs" / "local"
 
 
@@ -32,6 +33,42 @@ def usage(reset=False):
         if reset:
             _USE.clear()
     return out
+
+
+def mark():
+    """Start of a measured step: wall clock + CPU seconds so far (this process + children such as ffmpeg/node)."""
+    t = os.times()
+    return {"wall": time.time(), "cpu": t[0] + t[1] + t[2] + t[3]}
+
+
+def resources_since(m):
+    """CPU seconds, CPU utilisation and peak memory of the step (industry: utilisation shows if a bigger machine would help)."""
+    t = os.times()
+    wall = max(time.time() - m["wall"], 0.001)
+    cpu = max(t[0] + t[1] + t[2] + t[3] - m["cpu"], 0.0)
+    n = os.cpu_count() or 1
+    peak = None
+    try:
+        import resource
+        peak = round((resource.getrusage(resource.RUSAGE_SELF).ru_maxrss + resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss) / 1024, 0)
+    except Exception:  # noqa: BLE001
+        pass
+    return {"wall_s": round(wall, 1), "cpu_s": round(cpu, 1), "cpu_util_pct": round(100 * cpu / (wall * n), 1), "peak_rss_mb": peak,
+            "worker_age_s": round(time.time() - PROC_START, 1)}
+
+
+def queue_s(created_iso):
+    """Seconds the job waited in the inbox before this step started (queue time)."""
+    try:
+        t = time.mktime(time.strptime(created_iso, "%Y-%m-%dT%H:%M:%SZ")) - time.timezone
+        return round(max(time.time() - t, 0), 1)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _pct(vals, q):
+    v = sorted(vals)
+    return round(v[min(len(v) - 1, int(math.ceil(q * len(v))) - 1)], 1) if v else None
 
 
 def pricing():
@@ -83,6 +120,9 @@ def build_row(job_id, kind, media=None, stages=None, extra=None):
            "basis": "seconds measured on machine.name; other plans priced with the SAME seconds until measured there"}
     if extra:
         row.update(extra)
+    d = (row["media"] or {}).get("duration_s") or 0
+    if d:  # real-time factor: processing seconds per second of video (lower = faster; <1 = faster than real time)
+        row["rtf"] = round(row["total_s"] / d, 3)
     try:
         row["usd_equivalent"] = equivalents(row)
     except Exception as e:  # noqa: BLE001
@@ -167,7 +207,17 @@ def report(rows, pr=None):
     kinds = {}
     for k, rs in by.items():
         per = _per_media_s(rs)
-        kinds[k] = {"rows": len(rs), "median_total_s": round(st.median(r["total_s"] for r in rs), 1),
+        tot = [r["total_s"] for r in rs]
+        mins = [r["media"]["duration_s"] / 60 for r in rs if (r.get("media") or {}).get("duration_s")]
+        gross = [r["usd_equivalent"]["github_actions_free_gross"] for r in rs if "github_actions_free_gross" in r.get("usd_equivalent", {})]
+        kinds[k] = {"rows": len(rs), "median_total_s": round(st.median(tot), 1), "p95_total_s": _pct(tot, 0.95),
+                    "median_rtf": round(st.median([r["rtf"] for r in rs if "rtf" in r]), 3) if any("rtf" in r for r in rs) else None,
+                    "usd_github_per_media_min": round(sum(gross) / sum(mins), 4) if gross and mins else None,
+                    "cache_hits": sum(1 for r in rs if r.get("usage", {}).get("flags", {}).get("ears_cache_hit")),
+                    "failed_rows": sum(1 for r in rs if r.get("failed")),
+                    "median_queue_s": round(st.median([r["queue_s"] for r in rs if r.get("queue_s") is not None]), 1) if any(r.get("queue_s") is not None for r in rs) else None,
+                    "median_cpu_util_pct": round(st.median([r["resources"]["cpu_util_pct"] for r in rs if r.get("resources")]), 1) if any(r.get("resources") for r in rs) else None,
+                    "max_peak_rss_mb": max([r["resources"]["peak_rss_mb"] or 0 for r in rs if r.get("resources")], default=None),
                     "stage_s_per_media_min": {s: round(st.median(v) * 60, 1) for s, v in per.items()}}
     return {"rows": len(rows), "month": month,
             "github_actions": {"minutes_counted_this_month": gh_min, "usd_gross": round(gh_min * pr["github_actions"]["linux_2core_usd_per_min"], 2),

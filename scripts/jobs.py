@@ -119,6 +119,13 @@ class Worker:
         st["attempts"][stage] = n
         st["error_tail"] = tail(f"{exc}\n{traceback.format_exc()[-1200:]}")
         log(f"{job['id']} {stage} failed (attempt {n})")
+        try:  # a failed step still cost time: record it so retries show up in the price
+            from . import costs
+            from .common import stage_times
+            costs.record(self.storage, job["id"], f"{stage}_failed", stages=stage_times(reset=True),
+                         extra={"failed": True, "attempt": n, "error": st["error_tail"][-160:]})
+        except Exception:  # noqa: BLE001
+            pass
         if n > self.lim["jobs"]["max_retries"]:
             self.set_status(st, job, terminal, terminal_note or f"{stage} failed {n} times. See error_tail.")
         else:
@@ -293,7 +300,8 @@ class Worker:
                 from .pack import run_pipeline
                 src = self._ensure_local_source(st, wd)
                 from .common import stage, stage_times
-                _t0 = time.time()
+                from . import costs as _costs
+                _t0, _m0 = time.time(), _costs.mark()
                 res = run_pipeline(str(src), wd / "analysis", job_id=jid, mode=job["mode"])
                 from .describe import describe_pack
                 idx = json.loads((res["out_root"] / "collage_index.json").read_text(encoding="utf-8"))
@@ -313,6 +321,8 @@ class Worker:
                     inf = res.get("info", {})
                     costs.record(self.storage, jid, "analysis", stages=stg, extra={
                         "wall_s": round(time.time() - _t0, 1), "mode": job["mode"], "bulk": bulk,
+                        "resources": _costs.resources_since(_m0), "queue_s": _costs.queue_s(job.get("created", "")),
+                        "attempt": st["attempts"].get("analyze", 0) + 1,
                         "source_bytes": Path(src).stat().st_size if Path(src).exists() else None},
                         media={k: inf.get(k) for k in ("duration_s", "width", "height", "fps", "codec")})
                 except Exception:  # noqa: BLE001

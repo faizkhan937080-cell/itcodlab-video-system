@@ -168,6 +168,11 @@ def _ears(video, out_root, lim, with_transcript):
                     transcript = got[0]
                     (out_root / "transcript.txt").write_text(script_metrics.transcript_txt(transcript), encoding="utf-8")
                     log(f"ears from cache {cache.name} (same file, same settings): whisper/listen/voice skipped")
+                    try:
+                        from . import costs
+                        costs.add("flags", ears_cache_hit=1)
+                    except Exception:  # noqa: BLE001
+                        pass
                     return wav, transcript, got[2]
         except Exception as e:  # noqa: BLE001
             log(f"ears cache read skipped: {type(e).__name__}")

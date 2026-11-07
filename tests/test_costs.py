@@ -63,3 +63,19 @@ def test_pricing_file_has_source_and_date_everywhere():
     for k in ("github_actions", "kaggle", "colab", "gemini", "claude"):
         assert "source" in pr[k], k
     assert pr["checked"] and pr["usd_inr"]["value"] > 0
+
+
+def test_resources_rtf_queue_and_report_fields():
+    m = costs.mark()
+    sum(i * i for i in range(200000))
+    r = costs.resources_since(m)
+    assert r["cpu_s"] >= 0 and 0 <= r["cpu_util_pct"] <= 400 and r["peak_rss_mb"] and r["wall_s"] >= 0
+    assert costs.queue_s("2020-01-01T00:00:00Z") > 1000 and costs.queue_s("bad") is None
+    row = _row("rtf", total=30.0, media=60.0)
+    assert row["rtf"] == 0.5
+    row["failed"] = True
+    row["queue_s"] = 12.0
+    row["resources"] = r
+    rep = costs.report([row, _row("b", total=90.0, media=60.0)])["kinds"]["analysis"]
+    assert rep["failed_rows"] == 1 and rep["median_queue_s"] == 12.0 and rep["p95_total_s"] == 90.0
+    assert rep["usd_github_per_media_min"] is not None and rep["median_rtf"] == 1.0
