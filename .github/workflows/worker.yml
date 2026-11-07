@@ -115,6 +115,14 @@ jobs:
           rclone lsf "$ITCOD_RCLONE_REMOTE" --max-depth 1 | head -20
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           if [ -n "$INSTAGRAM_COOKIES" ]; then printf '%s' "$INSTAGRAM_COOKIES" > "$RUNNER_TEMP/cookies.txt"; echo "ITCOD_COOKIES=$RUNNER_TEMP/cookies.txt" >> "$GITHUB_ENV"; fi
+      - name: Kaggle GPU compare (only when the wake message has [kaggle-compare:<job>]; report goes to Drive costs/compare/)
+        if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[kaggle-compare:')
+        continue-on-error: true
+        timeout-minutes: 40
+        run: |
+          JOB=$(git log -1 --format=%B | sed -n 's/.*\[kaggle-compare:\([A-Za-z0-9_.-]*\)\].*/\1/p' | head -1)
+          [ -n "$JOB" ] || { echo "no job id in the wake message"; exit 1; }
+          ./run kaggle-compare --job "$JOB" | tail -5
       - name: Work until nothing is left to do
         if: steps.chk.outputs.ready == 'true'
         run: ./run worker --until-idle --no-sheet --grace 180 --max-minutes 320

@@ -291,23 +291,46 @@ def cmd_snapshot(a):
 
 
 def cmd_kaggle_compare(a):
-    """Same wav on CPU and on the free Kaggle GPU: prints equality + seconds. The GPU path stays OFF until identical=true."""
+    """Same wav on CPU and on the free Kaggle GPU: prints equality + seconds. The GPU path stays OFF until identical=true.
+    `--job <id>` (worker): pulls the job's own Drive copy of the reel, extracts the audio and saves the report to Drive costs/compare/."""
     import os
+    import tempfile
     import time
     from . import audio, kaggle_gpu
     os.environ.pop("ITCOD_KAGGLE_GPU", None)
+    stg, wav, tmp = None, a.wav, None
+    if a.job:
+        stg = _storage()
+        st = stg.read_json(f"jobs/state/{a.job}.json")
+        rel = (st.get("paths") or {}).get("source_drive")
+        if not rel:
+            print(json.dumps({"ok": False, "why": "job has no source_drive"}))
+            return 1
+        tmp = tempfile.mkdtemp(prefix="itcod-kc-")
+        src = stg.fetch(rel, Path(tmp) / ("source" + (Path(rel).suffix or ".mp4")))
+        wav = str(audio.extract_wav(src, Path(tmp) / "ears.wav"))
+    if not wav:
+        print(json.dumps({"ok": False, "why": "give a wav or --job"}))
+        return 1
     t = time.time()
-    cpu = audio.transcribe(a.wav)
+    cpu = audio.transcribe(wav)
     cpu_s = round(time.time() - t, 1)
     t = time.time()
-    gpu = kaggle_gpu.transcribe(a.wav)
+    gpu = kaggle_gpu.transcribe(wav)
     gpu_s = round(time.time() - t, 1)
     if not gpu:
-        print(json.dumps({"ok": False, "why": "gpu path returned nothing (see log lines above)", "cpu_s": cpu_s}))
-        return 1
-    rep = {"ok": True, "cpu_s": cpu_s, "gpu_s": gpu_s, **kaggle_gpu.compare(cpu, gpu)}
+        rep = {"ok": False, "why": "gpu path returned nothing (see log lines above)", "cpu_s": cpu_s}
+        code = 1
+    else:
+        rep = {"ok": True, "cpu_s": cpu_s, "gpu_s": gpu_s, **kaggle_gpu.compare(cpu, gpu)}
+        code = 0 if rep["identical"] else 2
     print(json.dumps(rep, ensure_ascii=False))
-    return 0 if rep["identical"] else 2
+    if stg is not None:
+        try:
+            stg.put_json(f"costs/compare/{a.job}__kaggle__{time.strftime('%Y%m%dT%H%M%S')}.json", {"job": a.job, **rep})
+        except Exception as e:  # noqa: BLE001
+            print("report not saved: " + type(e).__name__)
+    return code
 
 
 def cmd_cost(a):
@@ -459,7 +482,8 @@ def build_parser():
     s.add_argument("--out", default="docs/snapshots/drive-manifest.json")
     s.set_defaults(fn=cmd_snapshot)
     s = sub.add_parser("kaggle-compare", help="prove the Kaggle GPU transcript equals the CPU one on the same wav")
-    s.add_argument("wav")
+    s.add_argument("wav", nargs="?", default="")
+    s.add_argument("--job", default="", help="worker mode: use this job's Drive copy and save the report to Drive costs/compare/")
     s.set_defaults(fn=cmd_kaggle_compare)
 
     s = sub.add_parser("cost", help="time + cost data: report | estimate --seconds N | claude --job J --model M --tin N --tout N")
