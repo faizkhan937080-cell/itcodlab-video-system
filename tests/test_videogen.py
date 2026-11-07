@@ -49,3 +49,11 @@ def test_modal_app_compiles_and_routes():
     src = (Path(vg.ROOT) / "scripts" / "modal_app.py").read_text()
     ast.parse(src)
     assert "gen_ltx" in src and "list_minimax" in src and 'gpu="L40S"' in src
+
+
+def test_gguf_mode_selects_gguf_kernel(tmp_path):
+    from scripts import videogen
+    spec = videogen.build_spec({"engine": "ltx", "probe": True, "mode": "gguf", "gguf_file": "x.gguf"})
+    assert spec["mode"] == "gguf" and spec["gguf_file"] == "x.gguf"
+    ds, kn = videogen.prepare(spec, None, tmp_path, "u")
+    assert "load_dit_gguf" in (kn / "vgen_kernel.py").read_text(encoding="utf-8")

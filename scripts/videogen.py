@@ -95,6 +95,11 @@ def build_spec(raw, image=None):
             "width": int(raw.get("width", 768)), "height": int(raw.get("height", 512)), "fps": int(raw.get("fps", 24)),
             "seed": int(raw.get("seed", 1)), "seconds": seconds, "num_frames": frames_for(seconds, int(raw.get("fps", 24)))}
     spec["has_image"] = bool(image)
+    if raw.get("mode") == "gguf":
+        spec["mode"] = "gguf"
+        for k in ("gguf_repo", "gguf_file"):
+            if raw.get(k):
+                spec[k] = raw[k]
     return spec
 
 
@@ -106,7 +111,11 @@ def prepare(spec, image, work, owner):
         shutil.copy(image, ds / "in.png")
     (ds / "dataset-metadata.json").write_text(json.dumps(
         {"title": "itcod vgen input", "id": f"{owner}/{DATASET}", "licenses": [{"name": "CC0-1.0"}]}), encoding="utf-8")
-    (kn / "vgen_kernel.py").write_text(KERNEL_SRC, encoding="utf-8")
+    if spec.get("mode") == "gguf":
+        from .videogen_gguf import KERNEL_SRC_GGUF
+        (kn / "vgen_kernel.py").write_text(KERNEL_SRC_GGUF, encoding="utf-8")
+    else:
+        (kn / "vgen_kernel.py").write_text(KERNEL_SRC, encoding="utf-8")
     (kn / "kernel-metadata.json").write_text(json.dumps({
         "id": f"{owner}/{KERNEL}", "title": "itcod vgen", "code_file": "vgen_kernel.py", "language": "python",
         "kernel_type": "script", "is_private": True, "enable_gpu": True, "enable_internet": True,
