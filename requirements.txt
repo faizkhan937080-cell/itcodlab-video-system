@@ -14,3 +14,4 @@ pytest
 pyloudnorm
 praat-parselmouth
 kaggle>=1.8.0
+six  # the kaggle CLI imports it but does not declare it
