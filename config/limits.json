@@ -37,7 +37,9 @@
     "grade_look": true,
     "word_timestamps": true,
     "parallel": true,
-  "ears_cache": true
+  "ears_cache": true,
+  "kaggle_gpu": false,
+  "kaggle_timeout_s": 900
   },
   "collage": {
     "max_collages_per_video": 10,

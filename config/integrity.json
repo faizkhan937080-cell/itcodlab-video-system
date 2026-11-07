@@ -2,7 +2,7 @@
   ".claude/settings.json": "185a19d43f41ab8591eebe3f4fa89a5dd56572c0954c78709a8a8f75bc95b024",
   ".github/workflows/backup.yml": "f3b7eef12cd0a2ae204a8e0cb7eed9cbbc000c7420211f7fef1de9d958ae2c6b",
   ".github/workflows/security.yml": "05b7530c22c1f8a106bca8f50520259711f21d2d50575dff84d890481412b2a4",
-  ".github/workflows/worker.yml": "80fb29cb21f71900027dd690ea93f66e67525873020eb1281f008b8e996c4fcb",
+  ".github/workflows/worker.yml": "f11dcb5a8443761730d714b47bf689ebd3a1653ddb7bbfc2142127d8736e08db",
   "config/network.json": "740019d3e05ac0eef815f2ffb2f9e70f81a9d87aec60b0aff485f613b36a6dac",
   "scripts/guard.py": "00509d72b4d4630b7af7d0abdaaecdfdc3f2ab1204d993a40c11cfcf495265c1",
   "scripts/mem.py": "4469b8ed48efbc8ab0b2dcdbbff7fe59770a8e43b9ff0efddf4a1cbb9b33a84a",
