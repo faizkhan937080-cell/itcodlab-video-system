@@ -166,6 +166,8 @@ if dit is not None:
         q = PipelineQuantizationConfig(quant_backend="bitsandbytes_4bit",
                                        quant_kwargs={"load_in_4bit": True, "bnb_4bit_compute_dtype": torch.bfloat16, "bnb_4bit_quant_type": "nf4"},
                                        components_to_quantize=["text_encoder"])
+        info["model_index"] = {k: v for k, v in idx.items() if isinstance(v, list)}
+        info["tree"] = sorted(os.path.relpath(os.path.join(r, f), local) for r, _, fs in os.walk(local) for f in fs)[:60]
         pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, torch_dtype=torch.bfloat16, quantization_config=q, **missing)
         pipe.enable_model_cpu_offload()
         if hasattr(pipe, "enable_vae_tiling"):
