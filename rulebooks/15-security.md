@@ -30,5 +30,5 @@ Check any time: `./run security --net`. CI (`security.yml`) runs it weekly + eve
 Report ONE line to Faiz: `ALERT <what> | need: <one step>`. Do not retry, do not switch tools to get around it.
 
 ## Accounts (alert only, Faiz 2026-11-07)
-- Many accounts on one service to raise free limits can get ALL of them banned. Claude gives ONE alert line about it and then follows Faiz's command.
+- Many accounts on one service to raise free limits can get ALL of them banned. Claude gives ONE alert line about it. Claude does not itself create accounts or sign in to another person's account.
 - Best fix for more speed: paid per-second GPU or a different free service. Credentials are only ever entered by the account owner.
