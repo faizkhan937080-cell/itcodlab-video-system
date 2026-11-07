@@ -5,6 +5,8 @@ KERNEL_SRC_GGUF = '''import glob, json, os, shutil, subprocess, sys, time, trace
 os.environ["HF_HOME"] = "/tmp/hf"
 src = os.path.dirname(glob.glob("/kaggle/input/**/spec.json", recursive=True)[0])
 spec = json.load(open(os.path.join(src, "spec.json")))
+if os.path.exists(os.path.join(src, "hf.txt")):
+    os.environ["HF_TOKEN"] = open(os.path.join(src, "hf.txt")).read().strip()
 res = {"ok": False, "probe": bool(spec.get("probe")), "mode": "gguf", "steps": {}}
 T0 = time.time()
 def dump():

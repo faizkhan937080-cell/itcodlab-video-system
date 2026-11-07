@@ -109,6 +109,8 @@ def prepare(spec, image, work, owner):
     (ds / "spec.json").write_text(json.dumps(spec), encoding="utf-8")
     if image:
         shutil.copy(image, ds / "in.png")
+    if os.environ.get("HF_TOKEN"):  # private Kaggle dataset only; lets the kernel read gated Hugging Face repos
+        (ds / "hf.txt").write_text(os.environ["HF_TOKEN"], encoding="utf-8")
     (ds / "dataset-metadata.json").write_text(json.dumps(
         {"title": "itcod vgen input", "id": f"{owner}/{DATASET}", "licenses": [{"name": "CC0-1.0"}]}), encoding="utf-8")
     if spec.get("mode") == "gguf":
