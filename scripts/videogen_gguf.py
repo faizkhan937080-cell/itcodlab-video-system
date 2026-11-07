@@ -92,9 +92,11 @@ if gg:
                         break
             return _orig(checkpoint, **kw)
         _u.convert_ltx2_transformer_to_diffusers = _patched
-        for _v in _u.SINGLE_FILE_LOADABLE_CLASSES.values():
-            if _v.get("checkpoint_mapping_fn") is _orig:
-                _v["checkpoint_mapping_fn"] = _patched
+        import diffusers.loaders.single_file_model as _sm
+        for _mod in (_u, _sm):
+            for _v in getattr(_mod, "SINGLE_FILE_LOADABLE_CLASSES", {}).values():
+                if _v.get("checkpoint_mapping_fn") is _orig:
+                    _v["checkpoint_mapping_fn"] = _patched
         try:
             dit = cls.from_single_file(gg, quantization_config=qc, config=LTX_REPO, subfolder="transformer",
                                        torch_dtype=torch.bfloat16)
@@ -130,15 +132,18 @@ if gg:
             raise RuntimeError("keys differ, see key_diag")
     step("load_dit_gguf", _l)
 def h3_try():
-    from diffusers import GGUFQuantizationConfig
-    f = hf_hub_download("Abiray/MiniMax-H3-Pruned-GGUF", "MiniMax-H3-FL2VA-Pruned-Q4_K_M.gguf")
-    res["h3_gguf"] = f
-    tree = [e.path for e in api.list_repo_tree("MiniMaxAI/MiniMax-H3", path_in_repo="FL2VA")]
+    import gc
+    from diffusers import BitsAndBytesConfig
     cls = diffusers.MiniMaxH3Transformer3DModel
-    m = cls.from_single_file(f, quantization_config=GGUFQuantizationConfig(compute_dtype=torch.bfloat16),
-                             config="MiniMaxAI/MiniMax-H3", subfolder="FL2VA/transformer", torch_dtype=torch.bfloat16)
-    return {"tree": tree, "params_b": round(sum(q.numel() for q in m.parameters()) / 1e9, 1)}
-step("h3_load_gguf", h3_try)
+    q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
+    m = cls.from_pretrained("MiniMaxAI/MiniMax-H3", subfolder="FL2VA/transformer", quantization_config=q,
+                            torch_dtype=torch.bfloat16, device_map="balanced", max_memory={0: "13GiB", 1: "13GiB"})
+    info = {"params_b": round(sum(x.numel() for x in m.parameters()) / 1e9, 1),
+            "alloc_gb": [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(torch.cuda.device_count())]}
+    del m
+    gc.collect(); torch.cuda.empty_cache()
+    return info
+step("h3_load_nf4", h3_try)
 pipe = None
 if dit is not None:
     def _p():
