@@ -1,0 +1,65 @@
+{
+ "lang": "en-us",
+ "gender": "male",
+ "speed": 1.0,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "segments": [
+  {
+   "id": "hook",
+   "text": "What if your kidney stone could be removed... without a single cut on your body?",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "intro",
+   "text": "Doctor Bikramjit Singh Sodhi, Consultant Urologist, explains R.I.R.S. Retrograde Intrarenal Surgery.",
+   "pause_after_s": 0.4
+  },
+  {
+   "id": "scope",
+   "text": "A thin, flexible camera travels through the natural urinary passage, all the way up into the kidney. No cut outside.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "laser",
+   "text": "Then, a laser breaks the stone into tiny fragments, and fine dust.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "clear",
+   "text": "Some fragments are removed during surgery. The finer dust passes out with urine, over the following days or weeks.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "stent",
+   "text": "A D.J. stent may be placed, to help drainage and healing. It is usually removed after a few weeks.",
+   "pause_after_s": 0.5
+  },
+  {
+   "id": "twist",
+   "text": "But here is what many patients don't know. A large stone may not clear in one sitting.",
+   "pause_after_s": 0.3
+  },
+  {
+   "id": "factors",
+   "text": "Depending on its size, location, hardness, and your kidney's anatomy, some patients need two, or even three sittings.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "staged",
+   "text": "This is called staged R.I.R.S. An accepted approach in selected patients. Your urologist may also plan a second-look procedure, to remove any remaining fragments.",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "goal",
+   "text": "The goal is safe, effective stone clearance.",
+   "pause_after_s": 0.3
+  },
+  {
+   "id": "cta",
+   "text": "For the right treatment of your kidney stones, consult your urologist.",
+   "pause_after_s": 0.8
+  }
+ ]
+}
