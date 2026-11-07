@@ -310,6 +310,27 @@ def cmd_kaggle_compare(a):
     return 0 if rep["identical"] else 2
 
 
+def cmd_cost(a):
+    """Time + money data. report = totals and free quota left; estimate = predict a reel; claude = log Claude tokens for a job."""
+    from . import costs
+    try:
+        stg = _storage()
+    except Exception:  # noqa: BLE001
+        stg = None
+    if a.what == "claude":
+        costs.add("claude", model=a.model, in_tok=a.tin, out_tok=a.tout, calls=1, estimated=True)
+        p = costs.record(stg, a.job, "claude", stages={}, extra={"note": a.note or "tokens are Claude's own estimate"})
+        print("saved: " + str(p))
+        return 0
+    rows = costs.load_rows(stg)
+    if a.what == "report":
+        print(json.dumps(costs.report(rows), ensure_ascii=False, indent=1))
+        return 0
+    out = costs.estimate(rows, a.seconds, kind=a.kind, machine_name=a.machine)
+    print(json.dumps(out, ensure_ascii=False, indent=1))
+    return 0 if out["ok"] else 1
+
+
 def cmd_security(a):
     from . import security
     if a.baseline:
@@ -440,6 +461,18 @@ def build_parser():
     s = sub.add_parser("kaggle-compare", help="prove the Kaggle GPU transcript equals the CPU one on the same wav")
     s.add_argument("wav")
     s.set_defaults(fn=cmd_kaggle_compare)
+
+    s = sub.add_parser("cost", help="time + cost data: report | estimate --seconds N | claude --job J --model M --tin N --tout N")
+    s.add_argument("what", choices=["report", "estimate", "claude"])
+    s.add_argument("--seconds", type=float, default=60.0, help="reel length for estimate")
+    s.add_argument("--kind", default="analysis", help="analysis | render_preview | render_final")
+    s.add_argument("--machine", default=None, help="github-ubuntu-2core | gcp-gpu-vm | local")
+    s.add_argument("--job", default="session")
+    s.add_argument("--model", default="sonnet-5.5")
+    s.add_argument("--tin", type=int, default=0)
+    s.add_argument("--tout", type=int, default=0)
+    s.add_argument("--note", default="")
+    s.set_defaults(fn=cmd_cost)
 
     s = sub.add_parser("security", help="secrets, workflows, guard-file integrity (+ --net: per-host counters and cooldowns)")
     s.add_argument("--baseline", action="store_true", help="renew the integrity baseline AFTER checking the change")

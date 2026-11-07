@@ -14,3 +14,4 @@ out/
 *.pem
 *.key
 cookies.txt
+costs/local/
