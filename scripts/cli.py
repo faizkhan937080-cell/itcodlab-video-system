@@ -114,6 +114,25 @@ def cmd_guard_install(a):
     return 0
 
 
+def cmd_voice(a):
+    from . import voice_providers as vp
+    try:
+        if a.what == "list":
+            for k, v in vp.registry().items():
+                ok = (v.get("consent") or {}).get("verified") if v.get("kind") == "clone" else "stock"
+                print(f"{k}: {v['provider']} {v.get('kind')} {v.get('person')} consent={ok}")
+        elif a.what == "register":
+            vp.register(a.id, a.provider, a.person, a.kind, a.voice, a.remote_id, a.ref_audio, a.consent_doc, expires=a.expires)
+            print(f"registered {a.id} (clone stays locked until: ./run voice verify {a.id})")
+        elif a.what == "verify":
+            vp.verify(a.id)
+            print(f"{a.id}: consent verified")
+    except vp.ConsentError as e:
+        print("CONSENT: " + str(e))
+        return 1
+    return 0
+
+
 def cmd_worker(a):
     from .jobs import Worker
     from .sheets import SheetsClient
@@ -378,7 +397,7 @@ def cmd_tts(a):
     from .common import stage
     with stage("tts"):
         res = tts.synth(script, a.out_wav, a.out_json)
-    costs.add("tts", calls=len(script["segments"]), audio_s=res["duration_s"], words=res["words"])
+    costs.add("tts", calls=len(script["segments"]), audio_s=res["duration_s"], words=res["words"], chars=res.get("chars", 0), engine=res["engine"])
     print(json.dumps(to_native({k: v for k, v in res.items() if k != "segments"}), ensure_ascii=False))
     return 0
 
@@ -657,6 +676,18 @@ def build_parser():
     s.set_defaults(fn=cmd_test)
     s = sub.add_parser("guard-install", help="make the guard + survey hooks active from any folder (~/.claude/settings.json)")
     s.set_defaults(fn=cmd_guard_install)
+    s = sub.add_parser("voice", help="voice registry: list | register | verify (clone needs signed consent, verified by Faiz in chat)")
+    s.add_argument("what", choices=["list", "register", "verify"])
+    s.add_argument("id", nargs="?")
+    s.add_argument("--provider", default="elevenlabs")
+    s.add_argument("--person", default="")
+    s.add_argument("--kind", default="stock", choices=["stock", "clone"])
+    s.add_argument("--voice")
+    s.add_argument("--remote-id")
+    s.add_argument("--ref-audio")
+    s.add_argument("--consent-doc")
+    s.add_argument("--expires")
+    s.set_defaults(fn=cmd_voice)
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")
     s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")

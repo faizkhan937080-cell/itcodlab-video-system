@@ -85,21 +85,25 @@ def _with_lexicon(k, text, lang, lex):
 
 
 def synth(script, out_wav, out_json):
-    from kokoro_onnx import Kokoro
+    """Any engine from voice_providers (script 'provider' or registry 'voice_id'); same pauses, timings and loudness for all."""
+    from math import gcd
     from scipy.signal import resample_poly
     import soundfile as sf
     from .common import to_native
+    from . import voice_providers as vp
     t0 = time.time()
-    model, voices = ensure_model()
-    k = Kokoro(str(model), str(voices))
-    voice, speed, lang = script.get("voice", "am_michael"), float(script.get("speed", 1.0)), script.get("lang", "en-us")
+    engine, vs = vp.open_engine(script)
+    voice, speed, lang = vs.get("voice") or script.get("voice", "am_michael"), float(script.get("speed", 1.0)), script.get("lang", "en-us")
     lead = float(script.get("lead_in_s", 0.15))
     parts = [np.zeros(int(lead * MODEL_SR), dtype=np.float32)]
-    t, rows = lead, []
+    t, rows, chars = lead, [], 0
     for seg in script["segments"]:
-        ph = _with_lexicon(k, seg["text"], lang, script.get("lexicon") or {})
-        y, sr = k.create(ph or seg["text"], voice=seg.get("voice", voice), speed=float(seg.get("speed", speed)),
-                         lang=lang, is_phonemes=bool(ph))
+        y, sr = engine.speak(seg["text"], seg, script, vs)
+        chars += len(seg["text"])
+        if sr != MODEL_SR:   # bring every engine to one rate before joining
+            g = gcd(int(sr), MODEL_SR)
+            y = resample_poly(np.asarray(y, dtype=np.float64), MODEL_SR // g, int(sr) // g).astype(np.float32)
+            sr = MODEL_SR
         y = _trim(np.asarray(y, dtype=np.float32), sr)
         d = len(y) / sr
         rows.append({"id": seg["id"], "text": seg["text"], "start_s": round(t, 3), "end_s": round(t + d, 3)})
@@ -140,7 +144,9 @@ def synth(script, out_wav, out_json):
     words = sum(len(s["text"].split()) for s in script["segments"])
     speech = sum(r["end_s"] - r["start_s"] for r in rows)
     res_lufs = round(got, 1)
-    res = {"engine": "kokoro-82M onnx v1.0 (Apache-2.0)", "voice": voice, "speed": speed, "lang": lang,
+    left = vp.note_usage(engine.name, chars) if engine.name in ("google", "elevenlabs") else None
+    res = {"engine": engine.name if engine.name != "kokoro" else "kokoro-82M onnx v1.0 (Apache-2.0)", "chars": chars,
+           "free_chars_left_this_month": left, "voice": voice, "speed": speed, "lang": lang,
            "duration_s": round(len(y) / OUT_SR, 3), "segments": rows, "words": words,
            "wpm_speaking": round(words / (speech / 60.0), 1) if speech else 0.0,
            "input_lufs": round(lufs, 1) if lufs is not None else None, "target_lufs": target, "output_lufs": res_lufs,
