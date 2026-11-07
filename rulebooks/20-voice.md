@@ -26,3 +26,4 @@ Code: scripts/voice_providers.py, `./run tts` (local), `./run voice-run` (worker
 - Plan: A/B on the RIRS Hindi script: Google (done) vs Sarvam playground (Faiz listens) vs IndicF5/Parler on Kaggle. Pick by Faiz's ear.
 - 2026-11-07 Faiz OK: test IndicF5/Indic Parler (free, commercial OK), keep all free models. Built: scripts/indic_tts_kaggle.py, `./run indic-tts-ab`, workflow hindi-ab.yml (Kaggle GPU, output Drive output/voice-ab/<name>/). Parler needs no reference clip; IndicF5 needs a clip + transcript (next step).
 - 2026-11-08 Faiz: Chatterbox removed from the system (code, config, workflow, tests, rules).
+- 2026-11-08 Faiz rule (Sarvam): Rs100 free credit = trial, allowed by Faiz. Top-up (about Rs100, Rs1 per 1,000 chars) ONLY after his explicit allow, per time. Without his allow only free engines run (google, IndicF5/Parler on Kaggle). Engine name sarvam, needs allow_paid in the script. Key SARVAM_API_KEY only in GitHub Secrets.
