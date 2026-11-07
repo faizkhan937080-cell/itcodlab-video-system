@@ -57,6 +57,27 @@ def resources_since(m):
             "worker_age_s": round(time.time() - PROC_START, 1)}
 
 
+def setup_info():
+    """Runner boot + installs before the worker started (GitHub: ITCOD_RUN_STARTED) and per-step seconds (work/setup_times.txt)."""
+    out = {}
+    try:
+        started = os.environ.get("ITCOD_RUN_STARTED")
+        if started:
+            t = time.mktime(time.strptime(started, "%Y-%m-%dT%H:%M:%SZ")) - time.timezone
+            out["run_to_worker_s"] = round(max(PROC_START - t, 0), 1)
+        f = ROOT / "work" / "setup_times.txt"
+        if f.exists():
+            steps = {}
+            for line in f.read_text(encoding="utf-8").splitlines():
+                k, _, v = line.partition(" ")
+                if v.strip().isdigit():
+                    steps[k] = int(v)
+            out["setup_steps_s"] = steps
+    except Exception:  # noqa: BLE001
+        pass
+    return out
+
+
 def queue_s(created_iso):
     """Seconds the job waited in the inbox before this step started (queue time)."""
     try:
@@ -120,6 +141,7 @@ def build_row(job_id, kind, media=None, stages=None, extra=None):
            "basis": "seconds measured on machine.name; other plans priced with the SAME seconds until measured there"}
     if extra:
         row.update(extra)
+    row.update(setup_info())
     d = (row["media"] or {}).get("duration_s") or 0
     if d:  # real-time factor: processing seconds per second of video (lower = faster; <1 = faster than real time)
         row["rtf"] = round(row["total_s"] / d, 3)

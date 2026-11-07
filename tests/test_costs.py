@@ -79,3 +79,15 @@ def test_resources_rtf_queue_and_report_fields():
     rep = costs.report([row, _row("b", total=90.0, media=60.0)])["kinds"]["analysis"]
     assert rep["failed_rows"] == 1 and rep["median_queue_s"] == 12.0 and rep["p95_total_s"] == 90.0
     assert rep["usd_github_per_media_min"] is not None and rep["median_rtf"] == 1.0
+
+
+def test_setup_info_reads_run_start_and_step_times(tmp_path, monkeypatch):
+    import time
+    now = time.time()
+    monkeypatch.setattr(costs, "PROC_START", now)
+    monkeypatch.setattr(costs, "ROOT", tmp_path)
+    (tmp_path / "work").mkdir()
+    (tmp_path / "work" / "setup_times.txt").write_text("system_tools 40\nvirus_scanner 75\nbad line\n")
+    monkeypatch.setenv("ITCOD_RUN_STARTED", time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now - 200)))
+    info = costs.setup_info()
+    assert 195 <= info["run_to_worker_s"] <= 205 and info["setup_steps_s"] == {"system_tools": 40, "virus_scanner": 75}

@@ -29,6 +29,7 @@ jobs:
       PIXABAY_KEY: ${{ secrets.PIXABAY_KEY }}
       KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
       KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      ITCOD_RUN_STARTED: ${{ github.run_started_at }}
     steps:
       - uses: actions/checkout@v4
       - name: Check the one-time secret
@@ -49,6 +50,7 @@ jobs:
         run: |
           # apt sometimes hangs on a slow mirror. Install first WITHOUT an update (the runner image has package lists),
           # update only if that fails; rclone falls back to its official installer. Missing tools = the step FAILS (never a silent pass).
+          _t=$(date +%s); trap 'mkdir -p work; echo "system_tools $(( $(date +%s) - _t ))" >> work/setup_times.txt' EXIT
           APT="-o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20"
           PKGS="ffmpeg tesseract-ocr rclone libnss3 libatk-bridge2.0-0 libcups2 libgbm1 libxkbcommon0 libasound2t64 libchromaprint-tools"
           for i in 1 2 3; do
@@ -67,12 +69,16 @@ jobs:
         continue-on-error: true
         timeout-minutes: 8
         run: |
+          _t=$(date +%s); trap 'mkdir -p work; echo "virus_scanner $(( $(date +%s) - _t ))" >> work/setup_times.txt' EXIT
           sudo apt-get -qq install -y clamav > /dev/null
           sudo systemctl stop clamav-freshclam || true
           sudo freshclam --quiet || echo "::warning::virus database not updated; scans use the packaged one"
       - name: Python packages
         if: steps.chk.outputs.ready == 'true'
-        run: pip install -q --prefer-binary -r requirements.txt && pip install -q -U yt-dlp && pip install -q -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
+        run: |
+          _t=$(date +%s)
+          pip install -q --prefer-binary -r requirements.txt && pip install -q -U yt-dlp && pip install -q -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
+          mkdir -p work; echo "python_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
       - uses: actions/cache@v4
         if: steps.chk.outputs.ready == 'true'
         with:
@@ -90,7 +96,10 @@ jobs:
           key: remotion-${{ hashFiles('remotion/package.json') }}
       - name: Remotion packages
         if: steps.chk.outputs.ready == 'true'
-        run: cd remotion && npm install --silent --no-audit --no-fund && npx remotion browser ensure
+        run: |
+          _t=$(date +%s)
+          cd remotion && npm install --silent --no-audit --no-fund && npx remotion browser ensure
+          cd .. && mkdir -p work && echo "remotion_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
       - name: Render self-check (only when the wake message has [render-check]; nothing is saved to Drive)
         if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[render-check]')
         continue-on-error: true
