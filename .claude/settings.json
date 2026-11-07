@@ -30,16 +30,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./run story >/dev/null 2>&1; true"
-          }
-        ]
-      }
     ]
   }
 }
