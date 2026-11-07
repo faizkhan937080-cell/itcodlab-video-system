@@ -26,3 +26,4 @@ Code: scripts/voice_providers.py, `./run tts` (local), `./run voice-run` (worker
 - Free open (needs GPU, Kaggle): IndicF5 (MIT, clone from short clip + exact transcript; skips words in long text, spell out numbers), Indic Parler-TTS (Apache-2.0, 69 named voices by text description). Licence/dataset question on Parler audio open.
 - Not usable commercially: XTTS-v2, MMS-TTS Hindi. Kokoro Hindi voices graded C. No independent open-model benchmark exists: test 2-3 on OUR sentences.
 - Plan: A/B on the RIRS Hindi script: Google (done) vs Sarvam playground (Faiz listens) vs IndicF5/Parler on Kaggle. Pick by Faiz's ear.
+- 2026-11-07 Faiz OK: test IndicF5/Indic Parler (free, commercial OK), keep all free models. Built: scripts/indic_tts_kaggle.py, `./run indic-tts-ab`, workflow hindi-ab.yml (Kaggle GPU, output Drive output/voice-ab/<name>/). Parler needs no reference clip; IndicF5 needs a clip + transcript (next step).

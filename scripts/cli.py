@@ -209,6 +209,28 @@ def cmd_videogen_run(a):
     return 0 if res.get("ok") else 1
 
 
+def cmd_indic_tts_ab(a):
+    """Free Hindi A/B on Kaggle GPU (AI4Bharat Indic Parler-TTS). Uploads one wav per voice to Drive output/voice-ab/<name>/."""
+    import tempfile
+    from . import costs, indic_tts_kaggle as itk
+    from .common import stage, to_native
+    script = json.loads(Path(a.script).read_text(encoding="utf-8"))
+    name = a.name or Path(a.script).stem
+    with tempfile.TemporaryDirectory(prefix="itcod-hab-") as wd:
+        with stage("indic_tts"):
+            res = itk.run(script, wd)
+        costs.add("indic_tts", calls=1, engine="indic-parler", ok=bool(res.get("ok")), kaggle_s=res.get("kaggle_wall_s", 0))
+        print(json.dumps(to_native(res), ensure_ascii=False)[:1200])
+        if res.get("ok") and not a.no_upload:
+            stg = _storage()
+            rel = f"output/voice-ab/{name}"
+            stg.ensure_dir(rel)
+            for wv in Path(wd).glob("*.wav"):
+                stg.put_file(wv, f"{rel}/{wv.name}")
+            print(f"uploaded to Drive {rel}")
+    return 0 if res.get("ok") else 1
+
+
 def cmd_worker(a):
     from .jobs import Worker
     from .sheets import SheetsClient
@@ -784,6 +806,12 @@ def build_parser():
     s.add_argument("--state", help="evaluator state json (needed for gated engines)")
     s.add_argument("--no-upload", action="store_true")
     s.set_defaults(fn=cmd_videogen_run)
+
+    s = sub.add_parser("indic-tts-ab", help="Hindi A/B on a free Kaggle GPU (Indic Parler-TTS) -> Drive output/voice-ab/")
+    s.add_argument("script")
+    s.add_argument("--name")
+    s.add_argument("--no-upload", action="store_true")
+    s.set_defaults(fn=cmd_indic_tts_ab)
 
     s = sub.add_parser("voice-run", help="worker: synth a voice script file (needs engine secrets in env) and upload to Drive output/voice/")
     s.add_argument("script")

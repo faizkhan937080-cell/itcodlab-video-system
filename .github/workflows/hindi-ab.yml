@@ -1,0 +1,45 @@
+# Hindi A/B jobs: Claude pushes a script JSON to trigger/hindi-ab/<name>.json; this runs it with the engine secrets and puts the wav in Drive output/voice/<name>/.
+# Free engines by default (Google Chirp 3 HD, Chatterbox). Paid ones only when the script carries "allow_paid": true.
+name: hindi-ab
+on:
+  push:
+    branches: [main]
+    paths: ['trigger/hindi-ab/**']
+  workflow_dispatch:
+    inputs:
+      script:
+        description: 'script path, e.g. trigger/hindi-ab/demo.json'
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: hindi-ab
+  cancel-in-progress: false
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
+      RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      SCRIPT_IN: ${{ github.event.inputs.script }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Tools and packages
+        run: |
+          sudo apt-get -qq install -y ffmpeg rclone > /dev/null
+          pip install -q --prefer-binary -r requirements.txt
+          mkdir -p ~/.config/rclone
+          printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
+      - name: Make the voice
+        run: |
+          if [ -n "$SCRIPT_IN" ]; then FILES="$SCRIPT_IN"; else FILES=$(git diff --name-only HEAD~1 HEAD -- 'trigger/hindi-ab/*.json'); fi
+          for f in $FILES; do [ -f "$f" ] && ./run indic-tts-ab "$f" | tail -3; done
