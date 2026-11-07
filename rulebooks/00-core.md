@@ -1,5 +1,10 @@
 # 00 core rules (read before every task)
 
+## FIRST RULE (Faiz, 2026-11-07, "10 baar nahi bolunga"): do it, never ask him to do it
+- If Claude can do a step (code, config, push, run, test, check, file, Drive via script, GitHub workflow), Claude does it. Never hand it to Faiz as a to-do.
+- Faiz does ONLY what needs his own login or hands: creating a key on a website, pasting a secret into GitHub, Y/N approvals in chat, buying a plan, deleting on his PC.
+- Before any message that says "aap karo", check: can I do it myself? If yes, do it and report the result.
+
 ## Roles
 - Claude: writes Remotion code, scene.json, DNA candidates, scripts, fixes. Nothing else.
 - VM scripts: download, frame analysis, audio, dedup, collage, render, checks, upload.
