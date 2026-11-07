@@ -197,7 +197,7 @@ def cmd_videogen_run(a):
     with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
         with stage("videogen"):
             res = videogen.run(spec, image, wd)
-        costs.add("videogen", calls=1, engine="ltx", probe=spec["probe"], gen_s=res.get("gen_s", 0), load_s=res.get("load_s", 0), ok=bool(res.get("ok")))
+        costs.add("videogen", calls=1, engine=spec["engine"], probe=spec["probe"], gen_s=res.get("gen_s", 0), load_s=res.get("load_s", 0), ok=bool(res.get("ok")))
         print(json.dumps(to_native(res), ensure_ascii=False)[:1500])
         vid = Path(wd) / "video.mp4"
         if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"]:

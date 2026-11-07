@@ -10,7 +10,7 @@ def test_frames_are_8k_plus_1():
 
 
 def test_gate_ltx_free_others_blocked():
-    assert vg.gate({"engine": "ltx"}) == "ltx" and vg.gate({}) == "ltx"
+    assert vg.gate({"engine": "ltx"}) == "ltx" and vg.gate({"engine": "wan"}) == "wan" and vg.gate({}) == "wan"
     with pytest.raises(vg.EngineBlocked, match="Faiz's Y"):
         vg.gate({"engine": "minimax"}, {"minimax_approved": False})
     with pytest.raises(vg.EngineBlocked, match="not built"):
@@ -26,7 +26,7 @@ def test_prepare_writes_dataset_and_kernel(tmp_path):
     img.write_bytes(b"png")
     spec = vg.build_spec({"prompt": "p", "seconds": 4}, img)
     ds, kn = vg.prepare(spec, img, tmp_path / "w", "owner")
-    assert json.loads((ds / "spec.json").read_text())["num_frames"] == 97 and (ds / "in.png").exists()
+    assert json.loads((ds / "spec.json").read_text())["num_frames"] == 97 and "Wan" in json.loads((ds / "spec.json").read_text())["model"] and (ds / "in.png").exists()
     meta = json.loads((kn / "kernel-metadata.json").read_text())
     assert meta["enable_gpu"] and meta["id"] == "owner/itcod-vgen" and meta["dataset_sources"] == ["owner/itcod-vgen-in"]
     compile((kn / "vgen_kernel.py").read_text(), "kernel", "exec")

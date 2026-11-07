@@ -14,7 +14,7 @@ from . import kaggle_gpu as kg
 from .common import ROOT, limits, log, tail
 
 DATASET, KERNEL = "itcod-vgen-in", "itcod-vgen"
-MODEL = "Lightricks/LTX-2.5-Diffusers"   # full diffusers pipeline (38 GB bf16); FP8 unsloth file alone has no pipeline (probe 2026-11-07)
+MODEL = {"wan": "Wan-AI/Wan2.2-TI2V-5B-Diffusers", "ltx": "Lightricks/LTX-2.5-Diffusers"}   # wan first: 5B fits a free Kaggle T4; ltx 22B (38 GB) likely too big for Kaggle disk
 
 
 class EngineBlocked(RuntimeError):
@@ -22,8 +22,8 @@ class EngineBlocked(RuntimeError):
 
 
 def gate(spec, eval_state=None):
-    eng = spec.get("engine", "ltx")
-    if eng == "ltx":
+    eng = spec.get("engine", "wan")
+    if eng in ("wan", "ltx"):
         return eng
     if eng == "minimax":
         if not (eval_state or {}).get("minimax_approved"):
@@ -90,7 +90,8 @@ print("done", res["ok"])
 
 def build_spec(raw, image=None):
     seconds = float(raw.get("seconds", 4))
-    spec = {"engine": "ltx", "model": MODEL, "probe": bool(raw.get("probe")), "prompt": raw.get("prompt", ""),
+    eng = raw.get("engine", "wan")
+    spec = {"engine": eng, "model": MODEL.get(eng, MODEL["wan"]), "probe": bool(raw.get("probe")), "prompt": raw.get("prompt", ""),
             "width": int(raw.get("width", 768)), "height": int(raw.get("height", 512)), "fps": int(raw.get("fps", 24)),
             "seed": int(raw.get("seed", 1)), "seconds": seconds, "num_frames": frames_for(seconds, int(raw.get("fps", 24)))}
     spec["has_image"] = bool(image)
