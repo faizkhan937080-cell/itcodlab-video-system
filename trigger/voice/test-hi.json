@@ -1,0 +1,13 @@
+{
+ "lang": "hi-IN",
+ "gender": "female",
+ "speed": 1.0,
+ "target_lufs": -16,
+ "segments": [
+  {
+   "id": "hi1",
+   "text": "किडनी स्टोन का इलाज, आसान भाषा में समझिए।",
+   "pause_after_s": 0.3
+  }
+ ]
+}
