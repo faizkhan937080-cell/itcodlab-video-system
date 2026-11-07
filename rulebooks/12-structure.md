@@ -8,3 +8,4 @@
 - Reference reels: learn the STYLE; never put its footage/music in the output. A 100% clone uses the same NAMED elements from licensed sources.
 - Tests/trials are never saved in Drive (names test-/tmp-/scratch- are flagged by `./run audit-links`). Run `./run audit-links` after each job.
 - Storage clean-up for space: only on Faiz's command (he decides when).
+- Drive `costs/jobs/`: one JSON row per job step (time, machine, tokens, USD per plan). GitHub `costs/`: README + research papers. See 19-costs.md.
