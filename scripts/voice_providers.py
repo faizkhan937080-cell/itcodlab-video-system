@@ -1,4 +1,4 @@
-"""Voice engines behind one switch: kokoro (free, CPU), google (Cloud TTS Chirp 3 HD), elevenlabs, chatterbox (open, MIT, clone).
+"""Voice engines behind one switch: kokoro (free, CPU), google (Cloud TTS Chirp 3 HD), elevenlabs.
 Every engine returns (float32 mono samples, sample_rate). Keys come from the environment (GitHub secrets), never from files.
 Cloned voices are consent-gated: config/voices.json entry with a verified consent record, else ConsentError (rulebook 20-voice.md)."""
 import base64
@@ -25,7 +25,7 @@ class PaidOnCommand(RuntimeError):
 
 
 PAID = {"elevenlabs"}                       # always paid: only when the script says allow_paid (Faiz's command)
-FREE_ORDER = ("google", "chatterbox")       # default engines, free; Kokoro is NOT in the default path any more
+FREE_ORDER = ("google",)       # default engines, free; Kokoro is NOT in the default path any more
 FREE_CAPS = {"google": 1_000_000}           # free characters per month (Chirp 3 HD)
 DEFAULT_VOICE = {("en", "male"): "en-IN-Chirp3-HD-Charon", ("en", "female"): "en-IN-Chirp3-HD-Aoede",
                  ("hi", "male"): "hi-IN-Chirp3-HD-Charon", ("hi", "female"): "hi-IN-Chirp3-HD-Aoede"}
@@ -206,37 +206,9 @@ class ElevenLabs:
         return np.frombuffer(out, dtype="<i2").astype(np.float32) / 32768.0, 24000
 
 
-class Chatterbox:
-    """Open (MIT) zero-shot clone from a short reference clip. Needs the chatterbox-tts package; a GPU is strongly advised."""
-    name = "chatterbox"
-
-    def __init__(self, script):
-        self.hi = lang_of(script) == "hi"
-        try:
-            import torch
-            if self.hi:
-                from chatterbox.mtl_tts import ChatterboxMultilingualTTS as CB
-            else:
-                from chatterbox.tts import ChatterboxTTS as CB
-        except Exception as e:  # noqa: BLE001
-            raise VoiceUnavailable(f"chatterbox-tts not installed here ({type(e).__name__}); run it on the worker (pip install chatterbox-tts)")
-        dev = "cuda" if torch.cuda.is_available() else "cpu"
-        log(f"voice: chatterbox{' multilingual (hi)' if self.hi else ''} on {dev}")
-        self.m = CB.from_pretrained(device=dev)
-
-    def speak(self, text, seg, script, vs):
-        ref = vs.get("ref_audio")
-        if vs.get("kind") == "clone" and not (ref and os.path.exists(ref)):
-            raise VoiceUnavailable("chatterbox clone needs ref_audio (clean 10-30 s clip of the consenting speaker)")
-        kw = {"audio_prompt_path": ref, "exaggeration": float(vs.get("exaggeration", 0.5)),
-              "cfg_weight": float(vs.get("cfg_weight", 0.0 if (self.hi and ref) else 0.5))}   # cfg 0 = less accent carry-over from the clip
-        if self.hi:
-            kw["language_id"] = "hi"
-        wav = self.m.generate(text, **kw)
-        return wav.squeeze().detach().cpu().numpy().astype(np.float32), int(self.m.sr)
 
 
-ENGINES = {"kokoro": Kokoro, "google": Google, "elevenlabs": ElevenLabs, "chatterbox": Chatterbox}
+ENGINES = {"kokoro": Kokoro, "google": Google, "elevenlabs": ElevenLabs}
 
 
 def _month_used(provider):
@@ -247,7 +219,7 @@ def _month_used(provider):
 
 
 def open_engine(script, chars=0):
-    """-> (engine, voice settings). Default = free realistic engines (google Chirp 3 HD, then chatterbox).
+    """-> (engine, voice settings). Default = free realistic engines (google Chirp 3 HD).
     Paid engines, and anything past a free quota, need "allow_paid": true in the script (Faiz's command)."""
     prov, vs = resolve(script)
     allow = bool(script.get("allow_paid"))

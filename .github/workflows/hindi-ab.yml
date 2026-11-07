@@ -1,5 +1,5 @@
 # Hindi A/B jobs: Claude pushes a script JSON to trigger/hindi-ab/<name>.json; this runs it with the engine secrets and puts the wav in Drive output/voice/<name>/.
-# Free engines by default (Google Chirp 3 HD, Chatterbox). Paid ones only when the script carries "allow_paid": true.
+# Free engines by default (Google Chirp 3 HD). Paid ones only when the script carries "allow_paid": true.
 name: hindi-ab
 on:
   push:

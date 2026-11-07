@@ -150,11 +150,6 @@
     "checked": "2026-11-07",
     "source": "https://www.costbench.com/software/ai-voice-tools/elevenlabs/ (secondary; confirm on elevenlabs.io)"
   },
-  "chatterbox": {
-    "license": "MIT (Resemble AI), zero-shot clone, runs on our GPU worker",
-    "usd": 0,
-    "note": "compute only; measure on first GPU run"
-  },
   "ltx_2_5": {
     "price_usd": 0,
     "licence": "LTX-2.x Community License: free under $10M yearly revenue, paid above",

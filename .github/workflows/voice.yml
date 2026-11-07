@@ -1,5 +1,5 @@
 # Voice jobs: Claude pushes a script JSON to trigger/voice/<name>.json; this runs it with the engine secrets and puts the wav in Drive output/voice/<name>/.
-# Free engines by default (Google Chirp 3 HD, Chatterbox). Paid ones only when the script carries "allow_paid": true.
+# Free engines by default (Google Chirp 3 HD). Paid ones only when the script carries "allow_paid": true.
 name: voice
 on:
   push:
@@ -39,9 +39,6 @@ jobs:
           pip install -q --prefer-binary -r requirements.txt
           mkdir -p ~/.config/rclone
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
-      - name: Chatterbox (only when the script asks for it or no Google key is set)
-        if: env.GOOGLE_TTS_KEY == '' || contains(github.event.head_commit.message, '[chatterbox]')
-        run: pip install -q chatterbox-tts --extra-index-url https://download.pytorch.org/whl/cpu
       - name: Make the voice
         run: |
           if [ -n "$SCRIPT_IN" ]; then FILES="$SCRIPT_IN"; else FILES=$(git diff --name-only HEAD~1 HEAD -- 'trigger/voice/*.json'); fi

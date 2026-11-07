@@ -27,7 +27,7 @@ def test_clone_locked_until_verified(reg):
 
 def test_clone_without_consent_doc_refused(reg):
     with pytest.raises(vp.ConsentError):
-        vp.register("c2", "chatterbox", "Y", kind="clone", ref_audio="a.wav")
+        vp.register("c2", "elevenlabs", "Y", kind="clone", ref_audio="a.wav")
 
 
 def test_scope_and_expiry_enforced(reg):
@@ -90,17 +90,9 @@ def test_auto_falls_back_then_explains(reg, monkeypatch):
         def __init__(self, s):
             raise vp.VoiceUnavailable("no key")
     monkeypatch.setitem(vp.ENGINES, "google", Boom)
-    monkeypatch.setitem(vp.ENGINES, "chatterbox", Boom)
     with pytest.raises(vp.VoiceUnavailable) as e:
         vp.open_engine({})
-    assert "google: no key" in str(e.value) and "chatterbox: no key" in str(e.value)
-
-    class Ok:
-        name = "chatterbox"
-        def __init__(self, s):
-            pass
-    monkeypatch.setitem(vp.ENGINES, "chatterbox", Ok)
-    assert vp.open_engine({})[0].name == "chatterbox"
+    assert "google: no key" in str(e.value)
 
 
 def test_free_quota_blocks_unless_allowed(reg, monkeypatch):
@@ -110,7 +102,6 @@ def test_free_quota_blocks_unless_allowed(reg, monkeypatch):
         def __init__(self, s):
             pass
     monkeypatch.setitem(vp.ENGINES, "google", Ok)
-    monkeypatch.setitem(vp.ENGINES, "chatterbox", lambda s: (_ for _ in ()).throw(vp.VoiceUnavailable("gpu")))
     with pytest.raises(vp.VoiceUnavailable) as e:
         vp.open_engine({}, chars=100)
     assert "quota" in str(e.value)
