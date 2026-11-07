@@ -45,4 +45,4 @@ jobs:
       - name: Make the voice
         run: |
           if [ -n "$SCRIPT_IN" ]; then FILES="$SCRIPT_IN"; else FILES=$(git diff --name-only HEAD~1 HEAD -- 'trigger/voice/*.json'); fi
-          for f in $FILES; do [ -f "$f" ] && ./run voice-run "$f" | tail -3; done
+          for f in $FILES; do [ -f "$f" ] && ./run voice-run "$f" $([ "${{ contains(github.event.head_commit.message, '[voice-test]') }}" = "true" ] && echo --no-upload) | tail -3; done

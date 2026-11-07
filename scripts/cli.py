@@ -145,6 +145,10 @@ def cmd_voice_run(a):
         with stage("tts"):
             res = tts.synth(script, wav, js)
         costs.add("tts", calls=len(script["segments"]), audio_s=res["duration_s"], words=res["words"], chars=res.get("chars", 0), engine=res["engine"])
+        if a.no_upload:   # test runs: nothing goes to Drive (rule: tests never save)
+            print(json.dumps(to_native({k: v for k, v in res.items() if k != "segments"}), ensure_ascii=False))
+            print("test run: not uploaded")
+            return 0
         stg = _storage()
         rel = f"output/voice/{name}"
         stg.ensure_dir(rel)
@@ -713,6 +717,7 @@ def build_parser():
     s = sub.add_parser("voice-run", help="worker: synth a voice script file (needs engine secrets in env) and upload to Drive output/voice/")
     s.add_argument("script")
     s.add_argument("--name")
+    s.add_argument("--no-upload", action="store_true")
     s.set_defaults(fn=cmd_voice_run)
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")

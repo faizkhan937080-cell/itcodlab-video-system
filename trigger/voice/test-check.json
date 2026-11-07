@@ -1,0 +1,13 @@
+{
+ "lang": "en-us",
+ "gender": "male",
+ "speed": 1.0,
+ "target_lufs": -16,
+ "segments": [
+  {
+   "id": "en1",
+   "text": "Kidney stone treatment, explained simply.",
+   "pause_after_s": 0.3
+  }
+ ]
+}
