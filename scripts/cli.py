@@ -198,7 +198,7 @@ def cmd_videogen_run(a):
         with stage("videogen"):
             res = videogen.run_modal(spec, image, wd) if spec["engine"] in ("ltx", "minimax") and spec.get("mode") != "gguf" else videogen.run(spec, image, wd)
         costs.add("videogen", calls=1, engine=spec["engine"], probe=spec["probe"], gen_s=res.get("gen_s", 0), load_s=res.get("load_s", 0), ok=bool(res.get("ok")))
-        print(json.dumps(to_native(res), ensure_ascii=False)[:1500])
+        print(json.dumps(to_native(res), ensure_ascii=False)[:7000])
         vid = Path(wd) / "video.mp4"
         if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"]:
             stg = _storage()
