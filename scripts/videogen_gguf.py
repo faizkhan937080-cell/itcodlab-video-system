@@ -3,6 +3,7 @@ so one run shows exactly where it breaks. mode "gguf" in the spec selects this k
 
 KERNEL_SRC_GGUF = '''import glob, json, os, shutil, subprocess, sys, time, traceback
 os.environ["HF_HOME"] = "/tmp/hf"
+os.environ["HF_HUB_DISABLE_SHARED_BLOBS"] = "1"   # shared blob store hits a read-only path on Kaggle
 src = os.path.dirname(glob.glob("/kaggle/input/**/spec.json", recursive=True)[0])
 spec = json.load(open(os.path.join(src, "spec.json")))
 if os.path.exists(os.path.join(src, "hf.txt")):
@@ -132,18 +133,15 @@ if gg:
             raise RuntimeError("keys differ, see key_diag")
     step("load_dit_gguf", _l)
 def h3_try():
-    import gc
-    from diffusers import BitsAndBytesConfig
-    cls = diffusers.MiniMaxH3Transformer3DModel
-    q = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
-    m = cls.from_pretrained("MiniMaxAI/MiniMax-H3", subfolder="FL2VA/transformer", quantization_config=q,
-                            torch_dtype=torch.bfloat16, device_map="balanced", max_memory={0: "13GiB", 1: "13GiB"})
-    info = {"params_b": round(sum(x.numel() for x in m.parameters()) / 1e9, 1),
-            "alloc_gb": [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(torch.cuda.device_count())]}
-    del m
-    gc.collect(); torch.cuda.empty_cache()
-    return info
-step("h3_load_nf4", h3_try)
+    out = {}
+    for sub in ("FL2VA", "FL2VA/transformer", "FL2VA/vae"):
+        try:
+            out[sub] = {e.path.split("/")[-1]: round(getattr(e, "size", 0) / 2**30, 1) for e in api.list_repo_tree("MiniMaxAI/MiniMax-H3", path_in_repo=sub)}
+        except Exception as ex:
+            out[sub] = "ERR " + str(ex)[-100:]
+    out["root"] = [e.path for e in api.list_repo_tree("MiniMaxAI/MiniMax-H3")][:30]
+    return out
+step("h3_listing", h3_try)
 pipe = None
 if dit is not None:
     def _p():
