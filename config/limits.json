@@ -248,5 +248,8 @@
       "right": 0.083
     },
     "landscape_margin": 0.05
+  },
+  "videogen": {
+    "timeout_s": 2400
   }
 }

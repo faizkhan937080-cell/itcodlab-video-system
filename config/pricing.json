@@ -154,5 +154,41 @@
     "license": "MIT (Resemble AI), zero-shot clone, runs on our GPU worker",
     "usd": 0,
     "note": "compute only; measure on first GPU run"
+  },
+  "ltx_2_5": {
+    "price_usd": 0,
+    "licence": "LTX-2.x Community License: free under $10M yearly revenue, paid above",
+    "params": "22B",
+    "checked": "2026-11-07",
+    "machine": "free Kaggle T4/P100 via videogen (unproven, first probe pending)",
+    "source": "https://huggingface.co/unsloth/LTX-2.5-FP8"
+  },
+  "minimax_h3": {
+    "price_usd": 0,
+    "licence": "MiniMax H3 Community License: UI must show 'MiniMax H3'; US/EU/UK/Korea excluded; over $20M needs written OK (reported, verify on the model card)",
+    "needs": "~42 GB GPU memory for the smallest working setup (reported); 2K regenerate stage is API-only",
+    "per_min_hosted_usd_artificial_analysis": 4.8,
+    "checked": "2026-11-07",
+    "only_on": "Faiz Y per job",
+    "source": "https://dev.to/routeai_official/minimax-h3-is-open-weight-now-heres-whats-actually-downloadable-vs-api-only-441k"
+  },
+  "veo_3_1": {
+    "currency": "USD",
+    "per_s_standard_720_1080": 0.4,
+    "per_s_standard_4k": 0.6,
+    "per_s_fast_720": 0.1,
+    "per_s_fast_1080": 0.12,
+    "per_s_fast_4k": 0.3,
+    "per_s_lite_720": 0.05,
+    "per_s_lite_1080": 0.08,
+    "clip_s": [
+      4,
+      6,
+      8
+    ],
+    "note": "1080p and 4K clips must be 8 s; audio included; no free tier; billed on success; Vertex AI has indemnity, Gemini API does not",
+    "checked": "2026-11-07",
+    "only_on": "Faiz command + allow_paid",
+    "source": "https://www.layer3labs.io/guides/veo-3-pricing (third party, verify on Google's page)"
   }
 }

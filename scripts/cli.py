@@ -64,6 +64,27 @@ def cmd_clone_report(a):
     return 0 if r["pass"] else 1
 
 
+def cmd_evaluate(a):
+    """After EVERY generation: compare output with the reference DNA, print the next step (rulebooks/21-evaluator.md)."""
+    from . import evaluator as ev
+    rd = lambda f: json.loads(Path(f).read_text(encoding="utf-8")) if f else None  # noqa: E731
+    state = ev.load_state(a.state)
+    r = ev.evaluate(a.type, rd(a.target), rd(a.summary) or {}, rd(a.qa) or [], rd(a.needs) or [], state)
+    ev.save_state(a.state, r["state"])
+    r.pop("state")
+    print(json.dumps(r, indent=1, ensure_ascii=False))
+    return 0 if r["verdict"] == "PASS" else 1
+
+
+def cmd_approve_engine(a):
+    """Only after Faiz's Y in chat: allow MiniMax H3 for this job's evaluator state."""
+    from . import evaluator as ev
+    st = ev.approve_minimax(ev.load_state(a.state))
+    ev.save_state(a.state, st)
+    print("minimax approved for", a.state)
+    return 0
+
+
 def cmd_corpus(a):
     from .dna import errors_tail, validate
     from .dna_corpus import aggregate
@@ -157,6 +178,35 @@ def cmd_voice_run(a):
     print(json.dumps(to_native({k: v for k, v in res.items() if k != "segments"}), ensure_ascii=False))
     print(f"uploaded to Drive {rel}")
     return 0
+
+
+def cmd_videogen_run(a):
+    """Worker side of a footage job: gate the engine, run it on a Kaggle GPU, upload the clip to Drive output/footage/<name>/."""
+    import tempfile
+    from . import costs, evaluator as ev, videogen
+    from .common import ROOT, stage, to_native
+    raw = json.loads(Path(a.spec).read_text(encoding="utf-8"))
+    name = a.name or Path(a.spec).stem
+    try:
+        videogen.gate(raw, ev.load_state(a.state) if a.state else None)
+    except videogen.EngineBlocked as e:
+        print("BLOCKED:", e)
+        return 2
+    image = (ROOT / raw["image"]) if raw.get("image") else None
+    spec = videogen.build_spec(raw, image)
+    with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
+        with stage("videogen"):
+            res = videogen.run(spec, image, wd)
+        costs.add("videogen", calls=1, engine="ltx", probe=spec["probe"], gen_s=res.get("gen_s", 0), load_s=res.get("load_s", 0), ok=bool(res.get("ok")))
+        print(json.dumps(to_native(res), ensure_ascii=False)[:1500])
+        vid = Path(wd) / "video.mp4"
+        if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"]:
+            stg = _storage()
+            rel = f"output/footage/{name}"
+            stg.ensure_dir(rel)
+            stg.put_file(vid, f"{rel}/{name}.mp4")
+            print(f"uploaded to Drive {rel}")
+    return 0 if res.get("ok") else 1
 
 
 def cmd_worker(a):
@@ -681,6 +731,20 @@ def build_parser():
     s.add_argument("--summary", required=True, help="metrics_summary.json of OUR output video")
     s.set_defaults(fn=cmd_clone_report)
 
+    s = sub.add_parser("evaluate", help="after a generation: compare with reference DNA, say PASS / FIX (plan|ltx|minimax) / ASK / FAILED")
+    s.add_argument("--type", required=True, choices=["editing", "scripting", "sound"])
+    s.add_argument("--target", help="DNA or corpus json (omit = only QA/footage checks)")
+    s.add_argument("--summary", help="metrics_summary.json of OUR output video")
+    s.add_argument("--qa", help="json list of qa findings")
+    s.add_argument("--needs", help="json list of shots code cannot make (Claude's judgement from the collage)")
+    s.add_argument("--state", required=True, help="per-job evaluator state json (created if missing)")
+    s.set_defaults(fn=cmd_evaluate)
+
+    s = sub.add_parser("approve-engine", help="Faiz said Y in chat: allow MiniMax H3 for this job")
+    s.add_argument("engine", choices=["minimax"])
+    s.add_argument("--state", required=True)
+    s.set_defaults(fn=cmd_approve_engine)
+
     s = sub.add_parser("corpus", help="aggregate many v2 DNA files of one creator into corpus DNA")
     s.add_argument("--type", required=True, choices=["editing", "scripting", "sound"])
     s.add_argument("--creator", required=True)
@@ -714,6 +778,13 @@ def build_parser():
     s.add_argument("--consent-doc")
     s.add_argument("--expires")
     s.set_defaults(fn=cmd_voice)
+    s = sub.add_parser("videogen-run", help="worker: make a footage clip with LTX on a free Kaggle GPU (spec json), upload to Drive output/footage/")
+    s.add_argument("spec")
+    s.add_argument("--name")
+    s.add_argument("--state", help="evaluator state json (needed for gated engines)")
+    s.add_argument("--no-upload", action="store_true")
+    s.set_defaults(fn=cmd_videogen_run)
+
     s = sub.add_parser("voice-run", help="worker: synth a voice script file (needs engine secrets in env) and upload to Drive output/voice/")
     s.add_argument("script")
     s.add_argument("--name")

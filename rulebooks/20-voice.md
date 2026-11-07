@@ -20,3 +20,9 @@ Code: scripts/voice_providers.py, `./run tts` (local), `./run voice-run` (worker
 - Speed 1.0-1.05, pauses 0.25-0.4 s, -14 LUFS after mixing (finish.normalize_loudness). Spell hard names phonetically for Google/Chatterbox.
 ## Status 2026-11-07
 - Built + unit-tested with fake HTTP. NOT run live yet: needs GOOGLE_TTS_KEY secret; chatterbox first run on the worker. Hindi quality unjudged.
+## Hindi naturalness research 2026-11-07 (Faiz: Google Hindi lacks ElevenLabs-style pauses/prosody)
+- Sarvam Bulbul (sarvam.ai): best Hindi in a vendor test (MOS 4.5 vs ElevenLabs 4.2, Google 3.9; publisher's own 12-listener test). Page says output free for commercial use.
+  Playground free, no signup: Faiz can judge by ear. API: Rs100 free credit on signup (a trial of a PAID tool -> only on Faiz's command), then ~Rs20/10k chars (V4 Flash). Cloning enterprise-only.
+- Free open (needs GPU, Kaggle): IndicF5 (MIT, clone from short clip + exact transcript; skips words in long text, spell out numbers), Indic Parler-TTS (Apache-2.0, 69 named voices by text description). Licence/dataset question on Parler audio open.
+- Not usable commercially: XTTS-v2, MMS-TTS Hindi. Kokoro Hindi voices graded C. No independent open-model benchmark exists: test 2-3 on OUR sentences.
+- Plan: A/B on the RIRS Hindi script: Google (done) vs Sarvam playground (Faiz listens) vs IndicF5/Parler on Kaggle. Pick by Faiz's ear.
