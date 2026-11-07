@@ -149,14 +149,29 @@ if dit is not None:
         import json as j
         from diffusers import DiffusionPipeline
         from diffusers.quantizers import PipelineQuantizationConfig
+        from huggingface_hub import snapshot_download
+        du = lambda: round(shutil.disk_usage("/tmp").used / 2**30, 1)
+        info = {"disk_used_gb_start": du()}
+        try:   # the quantised DiT now lives in RAM: free its 13 GB file, Kaggle scratch disk is ~57 GB
+            os.remove(os.path.realpath(gg)); os.remove(gg)
+        except OSError:
+            pass
+        local = snapshot_download(LTX_REPO, local_dir="/tmp/ltx_local", ignore_patterns=[
+            "transformer/*", "transformer_full/*", "prompt_enhancer/*", "temporal_latent_upsampler/*", "*lora*", ".cache/*"])
+        info["disk_used_gb_after_dl"] = du()
+        idx = j.load(open(os.path.join(local, "model_index.json")))
+        missing = {k: None for k, v in idx.items() if isinstance(v, list) and k != "transformer"
+                   and not os.path.isdir(os.path.join(local, k))}
+        info["skipped"] = sorted(missing)
         q = PipelineQuantizationConfig(quant_backend="bitsandbytes_4bit",
                                        quant_kwargs={"load_in_4bit": True, "bnb_4bit_compute_dtype": torch.bfloat16, "bnb_4bit_quant_type": "nf4"},
                                        components_to_quantize=["text_encoder"])
-        pipe = DiffusionPipeline.from_pretrained(LTX_REPO, transformer=dit, torch_dtype=torch.bfloat16, quantization_config=q)
+        pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, torch_dtype=torch.bfloat16, quantization_config=q, **missing)
         pipe.enable_model_cpu_offload()
         if hasattr(pipe, "enable_vae_tiling"):
             pipe.enable_vae_tiling()
-        return {"pipeline": type(pipe).__name__}
+        info["pipeline"] = type(pipe).__name__
+        return info
     step("build_pipeline", _p)
 if pipe is not None and not spec.get("probe"):
     def _g():
