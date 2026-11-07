@@ -326,8 +326,8 @@ const Scope: React.FC<{id: string; segs: Seg[]; prog: number; start?: number}> =
 
 /** DJ stent: pigtail in the kidney pelvis, straight down the ureter, pigtail in the bladder. Drawn on with `prog`. */
 const Stent: React.FC<{prog: number}> = ({prog}) => {
-  const top = 'M 470 600 C 520 560 560 610 530 640 C 500 670 450 640 470 600';
-  const bottom = 'M 556 1420 C 600 1450 590 1500 550 1500 C 510 1500 505 1450 556 1420';
+  const top = 'M470,600 C520,560 560,610 530,640 C500,670 450,640 470,600';
+  const bottom = 'M556,1420 C600,1450 590,1500 550,1500 C510,1500 505,1450 556,1420';
   const L = 1;
   return (
     <g>

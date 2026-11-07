@@ -81,8 +81,15 @@ def cmd_render_local(a):
     from .render import render_plan
     plan = json.loads(Path(a.plan).read_text(encoding="utf-8"))
     res = render_plan(plan, a.quality, a.out)
-    print(json.dumps(res, indent=2))
-    return 0 if res["ok"] else 1
+    if res.get("ok"):
+        # Loophole fix (2026-11-07): the mix came out at -20.7 LUFS because render-local skipped the loudness step
+        # that jobs.py runs. Every final render gets the same -14 LUFS pass here.
+        import tempfile
+        from . import finish as finish_mod
+        with tempfile.TemporaryDirectory(prefix="itcod-norm-") as wd:
+            res["loudness"] = finish_mod.normalize_loudness(a.out, -14.0, Path(wd))
+    print(json.dumps(res, indent=2, default=str))
+    return 0 if res.get("ok") else 1
 
 
 def cmd_worker(a):
