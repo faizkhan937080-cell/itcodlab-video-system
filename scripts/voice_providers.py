@@ -177,6 +177,8 @@ class Google:
         import soundfile as sf
         voice = seg.get("voice") or vs.get("voice") or "en-IN-Chirp3-HD-Aoede"
         lang = "-".join(voice.split("-")[:2])
+        from .numwords import spell
+        text = spell(text, lang)
         audio = {"audioEncoding": "LINEAR16", "sampleRateHertz": 24000}
         rate = float(seg.get("speed", script.get("speed", 1.0)))
         if abs(rate - 1.0) > 1e-6:
