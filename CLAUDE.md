@@ -20,6 +20,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
    - pro-editing standards, QA gate, cover, beats, J/L cuts -> `16-pro-editing.md`
    - making analysis/render faster (and proving no quality loss) -> `17-speed.md`
    - time, cost, price per video, free quotas, plan comparison -> `19-costs.md`, `costs/README.md` (`./run cost ...`)
+   - voice (realistic, cloning, consent) -> `20-voice.md`
    - copyright / licence alerts, YouTube + Reels policies, memes, trending audio -> `18-platform-copyright.md`
 3. Every step that saves, adds or renders needs approval: `rulebooks/04-approvals.md`.
 3a. After writing any job, approval or candidate: `./run wake` (starts the no-PC worker). Hosting: `rulebooks/11-hosting.md`.

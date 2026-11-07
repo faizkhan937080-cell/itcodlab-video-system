@@ -3,7 +3,7 @@
   ".github/workflows/backup.yml": "f3b7eef12cd0a2ae204a8e0cb7eed9cbbc000c7420211f7fef1de9d958ae2c6b",
   ".github/workflows/security.yml": "05b7530c22c1f8a106bca8f50520259711f21d2d50575dff84d890481412b2a4",
   ".github/workflows/worker.yml": "869183878e3eb0dd7adfd29a5b5a0bed5855d1a0832a8cca5454bf1606651b15",
-  "config/network.json": "740019d3e05ac0eef815f2ffb2f9e70f81a9d87aec60b0aff485f613b36a6dac",
+  "config/network.json": "90513739e4b2d05a9550edd6e1c8cce6262d41e5a85b7684fbe99ea55910f65c",
   "scripts/guard.py": "b876fdb4315f0aeb23cdc46b7196e94507f21bcff66c09c71d4bf1a1ccf96f94",
   "scripts/mem.py": "4469b8ed48efbc8ab0b2dcdbbff7fe59770a8e43b9ff0efddf4a1cbb9b33a84a",
   "scripts/netguard.py": "0dda5eb0b7c6ac40d23ab049d94e2fdc807af88fb907f244a4d6952c6bc56801",
