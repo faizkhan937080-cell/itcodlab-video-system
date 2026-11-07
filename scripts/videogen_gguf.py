@@ -82,10 +82,24 @@ if gg:
         from diffusers import GGUFQuantizationConfig
         cls = getattr(diffusers, cfg["_class_name"])
         qc = GGUFQuantizationConfig(compute_dtype=torch.bfloat16)
+        import diffusers.loaders.single_file_utils as _u
+        _orig = _u.convert_ltx2_transformer_to_diffusers
+        def _patched(checkpoint, **kw):   # LTX-2.5 keys the 2.0 converter does not know
+            for k in list(checkpoint.keys()):
+                for a, b in (("audio_prompt_adaln_single.", "audio_prompt_adaln."), ("prompt_adaln_single.", "prompt_adaln.")):
+                    if k.startswith(a):
+                        checkpoint[b + k[len(a):]] = checkpoint.pop(k)
+                        break
+            return _orig(checkpoint, **kw)
+        _u.convert_ltx2_transformer_to_diffusers = _patched
+        for _v in _u.SINGLE_FILE_LOADABLE_CLASSES.values():
+            if _v.get("checkpoint_mapping_fn") is _orig:
+                _v["checkpoint_mapping_fn"] = _patched
         try:
             dit = cls.from_single_file(gg, quantization_config=qc, config=LTX_REPO, subfolder="transformer",
                                        torch_dtype=torch.bfloat16)
-            return {"class": cfg["_class_name"], "how": "default"}
+            meta = [n for n, q in dit.named_parameters() if q.device.type == "meta"][:8]
+            return {"class": cfg["_class_name"], "how": "patched", "meta_params": meta}
         except Exception as e1:
             res["steps"]["load_dit_gguf_first_error"] = str(e1)[-200:]
             import gguf
@@ -94,6 +108,10 @@ if gg:
             with init_empty_weights():
                 m = cls.from_config(cls.load_config(LTX_REPO, subfolder="transformer"))
             keys = set(m.state_dict().keys())
+            try:
+                names = set(_patched({n: 0 for n in names}).keys())
+            except Exception as _e:
+                res["steps"]["conv_sim_err"] = str(_e)[-150:]
             import re as _re
             pat = lambda xs: sorted({_re.sub(r"\\.\\d+\\.", ".N.", n) for n in xs})
             res["steps"]["key_diag"] = {"gguf_n": len(names), "model_n": len(keys),
@@ -111,6 +129,16 @@ if gg:
             dump()
             raise RuntimeError("keys differ, see key_diag")
     step("load_dit_gguf", _l)
+def h3_try():
+    from diffusers import GGUFQuantizationConfig
+    f = hf_hub_download("Abiray/MiniMax-H3-Pruned-GGUF", "MiniMax-H3-FL2VA-Pruned-Q4_K_M.gguf")
+    res["h3_gguf"] = f
+    tree = [e.path for e in api.list_repo_tree("MiniMaxAI/MiniMax-H3", path_in_repo="FL2VA")]
+    cls = diffusers.MiniMaxH3Transformer3DModel
+    m = cls.from_single_file(f, quantization_config=GGUFQuantizationConfig(compute_dtype=torch.bfloat16),
+                             config="MiniMaxAI/MiniMax-H3", subfolder="FL2VA/transformer", torch_dtype=torch.bfloat16)
+    return {"tree": tree, "params_b": round(sum(q.numel() for q in m.parameters()) / 1e9, 1)}
+step("h3_load_gguf", h3_try)
 pipe = None
 if dit is not None:
     def _p():
