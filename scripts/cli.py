@@ -92,6 +92,28 @@ def cmd_render_local(a):
     return 0 if res.get("ok") else 1
 
 
+def cmd_check(a):
+    from .habits import survey
+    rows = survey()
+    for r in rows:
+        print("CHECK " + r)
+    if not rows and not a.quiet:
+        print("check: OK")
+    return 0
+
+
+def cmd_test(a):
+    from .habits import run_tests
+    return run_tests(a.files)
+
+
+def cmd_guard_install(a):
+    from .habits import install_global_hook
+    ch = install_global_hook()
+    print("guard hooks installed globally: " + (", ".join(ch) if ch else "already present"))
+    return 0
+
+
 def cmd_worker(a):
     from .jobs import Worker
     from .sheets import SheetsClient
@@ -627,6 +649,14 @@ def build_parser():
     s.add_argument("--out", required=True)
     s.set_defaults(fn=cmd_render_local)
 
+    s = sub.add_parser("check", help="tiny survey of my own mistakes + token habits (silent when clean)")
+    s.add_argument("--quiet", action="store_true")
+    s.set_defaults(fn=cmd_check)
+    s = sub.add_parser("test", help="run tests; full suite is skipped when already green for this exact tree")
+    s.add_argument("files", nargs="*")
+    s.set_defaults(fn=cmd_test)
+    s = sub.add_parser("guard-install", help="make the guard + survey hooks active from any folder (~/.claude/settings.json)")
+    s.set_defaults(fn=cmd_guard_install)
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")
     s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")

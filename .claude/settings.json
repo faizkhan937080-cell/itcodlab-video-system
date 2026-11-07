@@ -1,11 +1,35 @@
 {
   "hooks": {
     "SessionStart": [
-      { "hooks": [ { "type": "command", "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./run mem brief" } ] }
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./run mem brief"
+          }
+        ]
+      }
     ],
     "PreToolUse": [
-      { "matcher": "Bash|Write|Edit",
-        "hooks": [ { "type": "command", "command": "cd \"$CLAUDE_PROJECT_DIR\" && python3 -m scripts.guard" } ] }
+      {
+        "matcher": "Bash|Write|Edit|Read|SendUserFile",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && python3 -m scripts.guard"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && ./run check --quiet"
+          }
+        ]
+      }
     ]
   }
 }

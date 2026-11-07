@@ -2,10 +2,18 @@
 Fence: heavy work (download, ffmpeg, whisper, rclone, render, network) belongs to the worker, never to Claude.
 Also blocks deletes and secrets. Pure text checks, no side effects."""
 import json
+import os
 import re
 import sys
+import time
+from pathlib import Path
 
 from .mem import has_secret
+
+LOG = Path.home() / ".cache" / "itcod" / "guard.log"
+TEXT_EXT = {".py", ".md", ".json", ".jsonl", ".log", ".txt", ".csv", ".tsx", ".ts", ".js", ".yml", ".yaml", ".sh", ".html"}
+CHAT_MAX_MB, READ_MAX_KB = 8, 40          # defaults; config/limits.json "claude" overrides
+ALLOW_SEND = Path.home() / ".cache" / "itcod" / "allow_send.txt"   # path of ONE big file Faiz OK'd in chat
 
 HEAVY = r"(ffmpeg|ffprobe|yt-dlp|youtube-dl|whisper|faster-whisper|rclone|remotion|tesseract|gsutil|curl|wget)"
 DELETE = r"(rm|rmdir|unlink|shred|trash)"
@@ -19,6 +27,8 @@ RULES = [
      "BARRIER: destructive git/file command. Ask Faiz."),
     (re.compile(r"git\s+push\b.*(--delete|\s:\S+)"),
      "BARRIER: deleting a remote branch needs Faiz's OK (only `--delete review` is allowed)."),
+    (re.compile(SEG.pattern + r"(?:python3?\s+-m\s+)?pytest\b(?![^;&|]*(?:tests/\S+\.py|\s-k\s))"),
+     "TOKENS: never run the whole suite raw. `./run test <file>` while fixing, `./run test` once before push (skips if already green)."),
 ]
 ALLOWED_PUSH_DELETE = re.compile(r"git\s+push\s+origin\s+--delete\s+review\s*$")
 
@@ -53,6 +63,58 @@ def check_bash(cmd):
     return None
 
 
+def _claude_limits():
+    try:
+        from .common import ROOT
+        c = json.loads((ROOT / "config" / "limits.json").read_text(encoding="utf-8")).get("claude", {})
+        return float(c.get("chat_file_max_mb", CHAT_MAX_MB)), float(c.get("read_max_kb", READ_MAX_KB))
+    except Exception:  # noqa: BLE001
+        return CHAT_MAX_MB, READ_MAX_KB
+
+
+def check_send(files):
+    """Big files (4K video etc.) never go into the chat: Drive via script. One-off OK from Faiz = path in allow_send.txt."""
+    mb, _ = _claude_limits()
+    try:
+        ok = ALLOW_SEND.read_text().strip()
+    except OSError:
+        ok = ""
+    for f in files or []:
+        try:
+            size = os.path.getsize(f)
+        except OSError:
+            continue
+        if size > mb * 1024 * 1024 and os.path.abspath(f) != ok:
+            return (f"TOKENS/CHAT: {os.path.basename(f)} is {size // (1 << 20)} MB (> {mb:g} MB). Big files go to Drive by script, "
+                    "not the chat. Only if Faiz says so in chat: write the file path into ~/.cache/itcod/allow_send.txt.")
+    return None
+
+
+def check_read(path, has_range):
+    """A big text file read whole burns tokens: grep/head/tail or Read with offset+limit."""
+    _, kb = _claude_limits()
+    if has_range or Path(path or "").suffix.lower() not in TEXT_EXT:
+        return None
+    try:
+        size = os.path.getsize(path)
+    except OSError:
+        return None
+    if size > kb * 1024:
+        return f"TOKENS: {os.path.basename(path)} is {size // 1024} KB. Use grep/head/tail, or Read with offset+limit."
+    return None
+
+
+def _log(tag):
+    if os.environ.get("ITCOD_NO_GUARD_LOG"):
+        return
+    try:
+        LOG.parent.mkdir(parents=True, exist_ok=True)
+        with open(LOG, "a", encoding="utf-8") as f:
+            f.write(f"{time.time():.0f} {tag}\n")
+    except OSError:
+        pass
+
+
 def check_write(text):
     return ("BARRIER: a secret (token/key/card number) is in this file content. Never store secrets."
             if has_secret(text or "") else None)
@@ -69,9 +131,15 @@ def main():
         reason = check_bash(inp.get("command", ""))
     elif tool in ("Write", "Edit"):
         reason = check_write(inp.get("content") or inp.get("new_string") or "")
+    elif tool == "Read":
+        reason = check_read(inp.get("file_path", ""), inp.get("offset") is not None or inp.get("limit") is not None)
+    elif tool == "SendUserFile":
+        reason = check_send(inp.get("files") or [])
     if reason:
+        _log(reason.split(":")[0].split()[0].lower())
         print(reason, file=sys.stderr)
         return 2
+    _log("call")
     return 0
 
 
