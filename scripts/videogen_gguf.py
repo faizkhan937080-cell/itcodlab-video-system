@@ -62,6 +62,16 @@ def sizes():
             tot[top] = round(tot.get(top, 0) + sz / 2**30, 2)
     return tot
 step("repo_sizes", sizes)
+def h3_survey():
+    out = {"h3_classes": sorted(n for n in dir(diffusers) if "H3" in n or "MiniMax" in n)}
+    for repo in ("Abiray/MiniMax-H3-Pruned-GGUF", "Comfy-Org/MiniMax-H3", "MiniMaxAI/MiniMax-H3"):
+        try:
+            out[repo] = {e.path: round(getattr(e, "size", 0) / 2**30, 1) for e in api.list_repo_tree(repo, recursive=True)
+                         if getattr(e, "size", 0) and getattr(e, "size", 0) > 2**27}
+        except Exception as ex:
+            out[repo] = "ERR " + str(ex)[-120:]
+    return out
+step("h3_survey", h3_survey)
 gg = step("download_gguf", lambda: hf_hub_download(GGUF_REPO, GGUF_FILE))
 dit = None
 if gg:
@@ -70,10 +80,26 @@ if gg:
         import json as j
         cfg = j.load(open(hf_hub_download(LTX_REPO, "transformer/config.json")))
         from diffusers import GGUFQuantizationConfig
-        dit = getattr(diffusers, cfg["_class_name"]).from_single_file(
-            gg, quantization_config=GGUFQuantizationConfig(compute_dtype=torch.bfloat16),
-            config=LTX_REPO, subfolder="transformer", torch_dtype=torch.bfloat16)
-        return {"class": cfg["_class_name"]}
+        cls = getattr(diffusers, cfg["_class_name"])
+        qc = GGUFQuantizationConfig(compute_dtype=torch.bfloat16)
+        try:
+            dit = cls.from_single_file(gg, quantization_config=qc, config=LTX_REPO, subfolder="transformer",
+                                       torch_dtype=torch.bfloat16)
+            return {"class": cfg["_class_name"], "how": "default"}
+        except Exception as e1:
+            res["steps"]["load_dit_gguf_first_error"] = str(e1)[-200:]
+            import gguf
+            from accelerate import init_empty_weights
+            names = {t.name for t in gguf.GGUFReader(gg).tensors}
+            with init_empty_weights():
+                m = cls.from_config(cls.load_config(LTX_REPO, subfolder="transformer"))
+            keys = set(m.state_dict().keys())
+            res["steps"]["key_diag"] = {"gguf_n": len(names), "model_n": len(keys),
+                                        "gguf_only": sorted(names - keys)[:12], "model_only": sorted(keys - names)[:12]}
+            dump()
+            dit = cls.from_single_file(gg, quantization_config=qc, config=LTX_REPO, subfolder="transformer",
+                                       torch_dtype=torch.bfloat16, low_cpu_mem_usage=False)
+            return {"class": cfg["_class_name"], "how": "low_cpu_mem_usage=False"}
     step("load_dit_gguf", _l)
 pipe = None
 if dit is not None:
