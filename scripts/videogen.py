@@ -14,7 +14,7 @@ from . import kaggle_gpu as kg
 from .common import ROOT, limits, log, tail
 
 DATASET, KERNEL = "itcod-vgen-in", "itcod-vgen"
-MODEL = "unsloth/LTX-2.5-FP8"   # FP8 transformer + stock diffusers parts (model card 2026-11-07)
+MODEL = "Lightricks/LTX-2.5-Diffusers"   # full diffusers pipeline (38 GB bf16); FP8 unsloth file alone has no pipeline (probe 2026-11-07)
 
 
 class EngineBlocked(RuntimeError):
@@ -50,7 +50,7 @@ res = {"ok": False, "probe": bool(spec.get("probe"))}
 t0 = time.time()
 try:
     subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-U", "diffusers", "transformers", "accelerate",
-                    "sentencepiece", "imageio", "imageio-ffmpeg"], check=False)
+                    "sentencepiece", "imageio", "imageio-ffmpeg", "-U", "protobuf"], check=False)
     import torch
     res["gpu"] = [torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())]
     res["vram_gb"] = [round(torch.cuda.get_device_properties(i).total_memory / 2**30, 1) for i in range(torch.cuda.device_count())]

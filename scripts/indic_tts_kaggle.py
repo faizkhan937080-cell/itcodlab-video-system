@@ -25,7 +25,7 @@ script = json.load(open(os.path.join(src, "script.json")))
 out = {"ok": False, "voices": {}}
 t0 = time.time()
 try:
-    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "git+https://github.com/huggingface/parler-tts.git", "soundfile"], check=False)
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "git+https://github.com/huggingface/parler-tts.git", "soundfile", "-U", "protobuf"], check=False)
     import torch, soundfile as sf
     from parler_tts import ParlerTTSForConditionalGeneration
     from transformers import AutoTokenizer
