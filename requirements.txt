@@ -13,3 +13,4 @@ pytesseract
 pytest
 pyloudnorm
 praat-parselmouth
+kaggle>=1.8.0

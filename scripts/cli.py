@@ -290,6 +290,26 @@ def cmd_snapshot(a):
     return 0
 
 
+def cmd_kaggle_compare(a):
+    """Same wav on CPU and on the free Kaggle GPU: prints equality + seconds. The GPU path stays OFF until identical=true."""
+    import os
+    import time
+    from . import audio, kaggle_gpu
+    os.environ.pop("ITCOD_KAGGLE_GPU", None)
+    t = time.time()
+    cpu = audio.transcribe(a.wav)
+    cpu_s = round(time.time() - t, 1)
+    t = time.time()
+    gpu = kaggle_gpu.transcribe(a.wav)
+    gpu_s = round(time.time() - t, 1)
+    if not gpu:
+        print(json.dumps({"ok": False, "why": "gpu path returned nothing (see log lines above)", "cpu_s": cpu_s}))
+        return 1
+    rep = {"ok": True, "cpu_s": cpu_s, "gpu_s": gpu_s, **kaggle_gpu.compare(cpu, gpu)}
+    print(json.dumps(rep, ensure_ascii=False))
+    return 0 if rep["identical"] else 2
+
+
 def cmd_security(a):
     from . import security
     if a.baseline:
@@ -417,6 +437,10 @@ def build_parser():
     s = sub.add_parser("snapshot", help="text manifest of what is in Drive (goes to GitHub)")
     s.add_argument("--out", default="docs/snapshots/drive-manifest.json")
     s.set_defaults(fn=cmd_snapshot)
+    s = sub.add_parser("kaggle-compare", help="prove the Kaggle GPU transcript equals the CPU one on the same wav")
+    s.add_argument("wav")
+    s.set_defaults(fn=cmd_kaggle_compare)
+
     s = sub.add_parser("security", help="secrets, workflows, guard-file integrity (+ --net: per-host counters and cooldowns)")
     s.add_argument("--baseline", action="store_true", help="renew the integrity baseline AFTER checking the change")
     s.add_argument("--net", action="store_true")

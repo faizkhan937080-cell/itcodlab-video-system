@@ -119,6 +119,15 @@ def transcribe(wav):
     full text once and only the first 8 s another time. Hinglish: pass A = auto language (often Devanagari with
     English words spelled phonetically); pass B = English + romanised-Hindi prompt (English terms come out right).
     Both are kept. `coverage_ratio` = last segment end / audio length, so a short transcript is visible."""
+    import os
+    if os.environ.get("ITCOD_KAGGLE_GPU") == "1":  # opt-in free GPU; same function runs there; None = fall back to CPU below
+        try:
+            from . import kaggle_gpu
+            remote = kaggle_gpu.transcribe(wav) if kaggle_gpu.enabled() else None
+        except Exception:  # noqa: BLE001
+            remote = None
+        if remote:
+            return remote
     try:
         from faster_whisper import WhisperModel
     except Exception:
