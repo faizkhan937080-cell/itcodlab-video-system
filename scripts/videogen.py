@@ -28,7 +28,7 @@ def gate(spec, eval_state=None):
     if eng == "minimax":
         if not (eval_state or {}).get("minimax_approved"):
             raise EngineBlocked("minimax needs Faiz's Y in chat, then `./run approve-engine minimax --state <eval.json>`")
-        raise EngineBlocked("minimax approved, but its runner (big paid GPU) is not built yet")
+        return eng
     if eng == "veo":
         if not spec.get("allow_paid"):
             raise EngineBlocked("veo is paid: only on Faiz's command, script must carry allow_paid")
@@ -165,3 +165,27 @@ def run(spec, image, out_dir, poll_s=20, timeout_s=None):
             return res
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "error_hint": f"{type(e).__name__}"}
+
+
+def run_modal(spec, image, out_dir, timeout_s=3300):
+    """ltx / minimax on Modal (free Starter credit). Returns the result dict; the clip lands in out_dir/video.mp4 when made."""
+    import subprocess
+    if not (os.environ.get("MODAL_TOKEN_ID") and os.environ.get("MODAL_TOKEN_SECRET")) or not shutil.which("modal"):
+        return {"ok": False, "error_hint": "Modal tokens or CLI missing (secrets MODAL_TOKEN_ID, MODAL_TOKEN_SECRET)"}
+    t0 = time.time()
+    try:
+        with tempfile.TemporaryDirectory(prefix="itcod-modal-") as work:
+            sp = Path(work) / "spec.json"
+            sp.write_text(json.dumps(spec), encoding="utf-8")
+            cmd = ["modal", "run", str(ROOT / "scripts" / "modal_app.py"), "--spec-path", str(sp), "--out-dir", str(out_dir)]
+            if image:
+                cmd += ["--image", str(image)]
+            p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_s)
+            rf = Path(out_dir) / "result.json"
+            if not rf.exists():
+                return {"ok": False, "error_hint": "modal gave no result: " + tail((p.stderr or p.stdout or ""), 3)}
+            res = json.loads(rf.read_text(encoding="utf-8"))
+            res["modal_wall_s"] = round(time.time() - t0)
+            return res
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "error_hint": type(e).__name__}

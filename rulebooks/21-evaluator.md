@@ -14,8 +14,9 @@ Code: scripts/evaluator.py, scripts/videogen.py. Commands: `./run evaluate`, `./
    - ASK: LTX failed. Ask Faiz in chat, very short, easy Hinglish: "MiniMax H3 use karun? Y/N". Only his Y runs `./run approve-engine minimax --state ...`.
    - FAILED: retries used up. Status FAILED, one line to Faiz, stop.
 ## Engines (config/pricing.json has rates)
-- ltx: LTX-2.5 (22B, LTX-2.x Community Licence: free under $10M yearly revenue). Free Kaggle T4/P100 via `videogen`. Default, no approval.
-- minimax: MiniMax H3. Needs a big GPU (paid) and its licence (UI credit "MiniMax H3", US/EU/UK/Korea excluded, over $20M needs written OK). Only after Faiz's Y per job.
+- ltx: LTX-2.5 (22B, Community Licence: free under $10M yearly revenue). Runs on Modal L40S (free $30/month credit; Kaggle T4 14.6 GB and 38 GB model did not fit). No approval.
+- wan: Wan 2.2 TI2V-5B (Apache-2.0) on free Kaggle GPU. Light shots, no approval.
+- minimax: MiniMax H3 on Modal A100-80GB (credit) after its repo is probed. Needs the licence (UI credit "MiniMax H3", US/EU/UK/Korea excluded, over $20M needs written OK). Only after Faiz's Y per job.
 - veo: Google Veo 3.1 (Vertex AI, paid, credit). Only when Faiz commands, script carries "allow_paid": true.
 - Never use a paid engine or a free trial of one on my own. Quote cost from `./run cost estimate`.
 ## Rules
@@ -24,4 +25,4 @@ Code: scripts/evaluator.py, scripts/videogen.py. Commands: `./run evaluate`, `./
 - Every engine call is measured (stage + cost row) and logged in the job's eval.json.
 - Max 2 Claude calls per stage; 2 failed retries = FAILED.
 ## Status 2026-11-07
-- Evaluator built and unit-tested. LTX path built; first live Kaggle probe still to run (22B model on a 16 GB T4 is unproven).
+- Evaluator built and tested. Kaggle probe: LTX 22B did not load on 2x T4 (14.6 GB). Modal runner scripts/modal_app.py built; needs Faiz's MODAL_TOKEN_ID + MODAL_TOKEN_SECRET secrets, then probe specs go in trigger/videogen/.

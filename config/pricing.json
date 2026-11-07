@@ -185,5 +185,24 @@
     "checked": "2026-11-07",
     "only_on": "Faiz command + allow_paid",
     "source": "https://www.layer3labs.io/guides/veo-3-pricing (third party, verify on Google's page)"
+  },
+  "modal": {
+    "currency": "USD",
+    "free_credit_per_month": 30,
+    "plan": "Starter ($0 + compute), no rollover, 10 GPU concurrency",
+    "per_s": {
+      "L4": 0.000222,
+      "L40S": 0.000542,
+      "A100_40GB": 0.000583,
+      "A100_80GB": 0.000694,
+      "H100": 0.001097
+    },
+    "per_hour_usd": {
+      "L40S": 1.95,
+      "A100_80GB": 2.5
+    },
+    "checked": "2026-11-07",
+    "note": "No card = hard stop at the free credit (do not add a card). LTX runs on L40S, MiniMax H3 would need A100-80GB.",
+    "source": "https://modal.com/pricing"
   }
 }

@@ -196,7 +196,7 @@ def cmd_videogen_run(a):
     spec = videogen.build_spec(raw, image)
     with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
         with stage("videogen"):
-            res = videogen.run(spec, image, wd)
+            res = videogen.run_modal(spec, image, wd) if spec["engine"] in ("ltx", "minimax") else videogen.run(spec, image, wd)
         costs.add("videogen", calls=1, engine=spec["engine"], probe=spec["probe"], gen_s=res.get("gen_s", 0), load_s=res.get("load_s", 0), ok=bool(res.get("ok")))
         print(json.dumps(to_native(res), ensure_ascii=False)[:1500])
         vid = Path(wd) / "video.mp4"

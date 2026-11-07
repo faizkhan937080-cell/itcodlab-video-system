@@ -13,8 +13,6 @@ def test_gate_ltx_free_others_blocked():
     assert vg.gate({"engine": "ltx"}) == "ltx" and vg.gate({"engine": "wan"}) == "wan" and vg.gate({}) == "wan"
     with pytest.raises(vg.EngineBlocked, match="Faiz's Y"):
         vg.gate({"engine": "minimax"}, {"minimax_approved": False})
-    with pytest.raises(vg.EngineBlocked, match="not built"):
-        vg.gate({"engine": "minimax"}, {"minimax_approved": True})
     with pytest.raises(vg.EngineBlocked, match="allow_paid"):
         vg.gate({"engine": "veo"})
     with pytest.raises(vg.EngineBlocked, match="unknown"):
@@ -36,3 +34,18 @@ def test_run_without_credentials_is_a_clear_no(monkeypatch, tmp_path):
     monkeypatch.delenv("KAGGLE_USERNAME", raising=False)
     r = vg.run(vg.build_spec({}, None), None, tmp_path)
     assert r["ok"] is False and "Kaggle" in r["error_hint"]
+
+
+def test_minimax_gate_and_modal_missing_tokens(monkeypatch, tmp_path):
+    assert vg.gate({"engine": "minimax"}, {"minimax_approved": True}) == "minimax"
+    monkeypatch.delenv("MODAL_TOKEN_ID", raising=False)
+    r = vg.run_modal(vg.build_spec({"engine": "ltx"}, None), None, tmp_path)
+    assert r["ok"] is False and "Modal" in r["error_hint"]
+
+
+def test_modal_app_compiles_and_routes():
+    import ast
+    from pathlib import Path
+    src = (Path(vg.ROOT) / "scripts" / "modal_app.py").read_text()
+    ast.parse(src)
+    assert "gen_ltx" in src and "list_minimax" in src and 'gpu="L40S"' in src
