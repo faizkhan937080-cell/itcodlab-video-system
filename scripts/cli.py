@@ -133,6 +133,28 @@ def cmd_voice(a):
     return 0
 
 
+def cmd_voice_run(a):
+    """Worker side of a voice job: synth a script file (secrets from env), upload wav + timings to Drive output/voice/<name>/."""
+    import tempfile
+    from . import costs, tts
+    from .common import stage, to_native
+    script = json.loads(Path(a.script).read_text(encoding="utf-8"))
+    name = a.name or Path(a.script).stem
+    with tempfile.TemporaryDirectory(prefix="itcod-voice-") as wd:
+        wav, js = Path(wd) / f"{name}.wav", Path(wd) / f"{name}.json"
+        with stage("tts"):
+            res = tts.synth(script, wav, js)
+        costs.add("tts", calls=len(script["segments"]), audio_s=res["duration_s"], words=res["words"], chars=res.get("chars", 0), engine=res["engine"])
+        stg = _storage()
+        rel = f"output/voice/{name}"
+        stg.ensure_dir(rel)
+        stg.put_file(wav, f"{rel}/{name}.wav")
+        stg.put_file(js, f"{rel}/{name}.json")
+    print(json.dumps(to_native({k: v for k, v in res.items() if k != "segments"}), ensure_ascii=False))
+    print(f"uploaded to Drive {rel}")
+    return 0
+
+
 def cmd_worker(a):
     from .jobs import Worker
     from .sheets import SheetsClient
@@ -688,6 +710,10 @@ def build_parser():
     s.add_argument("--consent-doc")
     s.add_argument("--expires")
     s.set_defaults(fn=cmd_voice)
+    s = sub.add_parser("voice-run", help="worker: synth a voice script file (needs engine secrets in env) and upload to Drive output/voice/")
+    s.add_argument("script")
+    s.add_argument("--name")
+    s.set_defaults(fn=cmd_voice_run)
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")
     s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")

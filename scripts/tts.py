@@ -92,7 +92,7 @@ def synth(script, out_wav, out_json):
     from .common import to_native
     from . import voice_providers as vp
     t0 = time.time()
-    engine, vs = vp.open_engine(script)
+    engine, vs = vp.open_engine(script, sum(len(x['text']) for x in script['segments']))
     voice, speed, lang = vs.get("voice") or script.get("voice", "am_michael"), float(script.get("speed", 1.0)), script.get("lang", "en-us")
     lead = float(script.get("lead_in_s", 0.15))
     parts = [np.zeros(int(lead * MODEL_SR), dtype=np.float32)]

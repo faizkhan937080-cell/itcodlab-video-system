@@ -72,3 +72,46 @@ def test_quota_counter(reg):
     assert vp.note_usage("elevenlabs", 4000) == 6000
     assert vp.note_usage("elevenlabs", 1000) == 5000
     assert vp.note_usage("kokoro", 10) is None
+
+
+def test_default_is_free_engines_and_hindi_voice(reg):
+    prov, vs = vp.resolve({"lang": "hi-IN", "gender": "female"})
+    assert prov == "auto" and vs["voice"] == "hi-IN-Chirp3-HD-Aoede"
+    assert vp.resolve({"lang": "en-us"})[1]["voice"] == "en-IN-Chirp3-HD-Charon"
+
+
+def test_paid_engine_only_on_command(reg):
+    with pytest.raises(vp.PaidOnCommand):
+        vp.open_engine({"provider": "elevenlabs"})
+
+
+def test_auto_falls_back_then_explains(reg, monkeypatch):
+    class Boom:
+        def __init__(self, s):
+            raise vp.VoiceUnavailable("no key")
+    monkeypatch.setitem(vp.ENGINES, "google", Boom)
+    monkeypatch.setitem(vp.ENGINES, "chatterbox", Boom)
+    with pytest.raises(vp.VoiceUnavailable) as e:
+        vp.open_engine({})
+    assert "google: no key" in str(e.value) and "chatterbox: no key" in str(e.value)
+
+    class Ok:
+        name = "chatterbox"
+        def __init__(self, s):
+            pass
+    monkeypatch.setitem(vp.ENGINES, "chatterbox", Ok)
+    assert vp.open_engine({})[0].name == "chatterbox"
+
+
+def test_free_quota_blocks_unless_allowed(reg, monkeypatch):
+    vp.note_usage("google", 999_990, caps={"google": 1_000_000})
+    class Ok:
+        name = "google"
+        def __init__(self, s):
+            pass
+    monkeypatch.setitem(vp.ENGINES, "google", Ok)
+    monkeypatch.setitem(vp.ENGINES, "chatterbox", lambda s: (_ for _ in ()).throw(vp.VoiceUnavailable("gpu")))
+    with pytest.raises(vp.VoiceUnavailable) as e:
+        vp.open_engine({}, chars=100)
+    assert "quota" in str(e.value)
+    assert vp.open_engine({"allow_paid": True}, chars=100)[0].name == "google"

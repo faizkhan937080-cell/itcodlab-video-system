@@ -20,6 +20,21 @@ class VoiceUnavailable(RuntimeError):
     """Engine cannot run here (missing key / package / GPU). Message says exactly what is missing."""
 
 
+class PaidOnCommand(RuntimeError):
+    """A paid engine (or going past a free quota) was asked for without "allow_paid": true in the script (Faiz's command)."""
+
+
+PAID = {"elevenlabs"}                       # always paid: only when the script says allow_paid (Faiz's command)
+FREE_ORDER = ("google", "chatterbox")       # default engines, free; Kokoro is NOT in the default path any more
+FREE_CAPS = {"google": 1_000_000}           # free characters per month (Chirp 3 HD)
+DEFAULT_VOICE = {("en", "male"): "en-IN-Chirp3-HD-Charon", ("en", "female"): "en-IN-Chirp3-HD-Aoede",
+                 ("hi", "male"): "hi-IN-Chirp3-HD-Charon", ("hi", "female"): "hi-IN-Chirp3-HD-Aoede"}
+
+
+def lang_of(script):
+    return "hi" if str(script.get("lang", "en-us")).lower().startswith("hi") else "en"
+
+
 class ConsentError(RuntimeError):
     """A cloned voice was asked for without a verified, in-scope, unexpired consent record."""
 
@@ -57,7 +72,8 @@ def resolve(script):
             raise ConsentError(f"voice_id '{vid}' is not in config/voices.json")
         check_consent(e)
         return e["provider"], {**e, "voice": e.get("voice") or e.get("voice_id_remote")}
-    return script.get("provider", "kokoro"), {"voice": script.get("voice"), "kind": "stock"}
+    voice = script.get("voice") or DEFAULT_VOICE[(lang_of(script), script.get("gender", "male"))]
+    return script.get("provider") or "auto", {"voice": voice, "kind": "stock"}
 
 
 def _save(reg):
@@ -195,29 +211,59 @@ class Chatterbox:
     name = "chatterbox"
 
     def __init__(self, script):
+        self.hi = lang_of(script) == "hi"
         try:
             import torch
-            from chatterbox.tts import ChatterboxTTS
+            if self.hi:
+                from chatterbox.mtl_tts import ChatterboxMultilingualTTS as CB
+            else:
+                from chatterbox.tts import ChatterboxTTS as CB
         except Exception as e:  # noqa: BLE001
-            raise VoiceUnavailable(f"chatterbox-tts not installed here ({type(e).__name__}); run it on the worker GPU")
+            raise VoiceUnavailable(f"chatterbox-tts not installed here ({type(e).__name__}); run it on the worker (pip install chatterbox-tts)")
         dev = "cuda" if torch.cuda.is_available() else "cpu"
-        log(f"voice: chatterbox on {dev}")
-        self.m = ChatterboxTTS.from_pretrained(device=dev)
+        log(f"voice: chatterbox{' multilingual (hi)' if self.hi else ''} on {dev}")
+        self.m = CB.from_pretrained(device=dev)
 
     def speak(self, text, seg, script, vs):
         ref = vs.get("ref_audio")
         if vs.get("kind") == "clone" and not (ref and os.path.exists(ref)):
             raise VoiceUnavailable("chatterbox clone needs ref_audio (clean 10-30 s clip of the consenting speaker)")
-        wav = self.m.generate(text, audio_prompt_path=ref, exaggeration=float(vs.get("exaggeration", 0.5)), cfg_weight=float(vs.get("cfg_weight", 0.5)))
+        kw = {"audio_prompt_path": ref, "exaggeration": float(vs.get("exaggeration", 0.5)),
+              "cfg_weight": float(vs.get("cfg_weight", 0.0 if (self.hi and ref) else 0.5))}   # cfg 0 = less accent carry-over from the clip
+        if self.hi:
+            kw["language_id"] = "hi"
+        wav = self.m.generate(text, **kw)
         return wav.squeeze().detach().cpu().numpy().astype(np.float32), int(self.m.sr)
 
 
 ENGINES = {"kokoro": Kokoro, "google": Google, "elevenlabs": ElevenLabs, "chatterbox": Chatterbox}
 
 
-def open_engine(script):
-    """-> (engine, voice settings). Raises ConsentError / VoiceUnavailable with a plain reason."""
+def _month_used(provider):
+    try:
+        return json.loads(USAGE.read_text()).get(date.today().strftime("%Y-%m"), {}).get(provider, 0)
+    except (OSError, ValueError):
+        return 0
+
+
+def open_engine(script, chars=0):
+    """-> (engine, voice settings). Default = free realistic engines (google Chirp 3 HD, then chatterbox).
+    Paid engines, and anything past a free quota, need "allow_paid": true in the script (Faiz's command)."""
     prov, vs = resolve(script)
-    if prov not in ENGINES:
-        raise VoiceUnavailable(f"unknown voice provider '{prov}' (have: {', '.join(ENGINES)})")
-    return ENGINES[prov](script), vs
+    allow = bool(script.get("allow_paid"))
+    if prov in PAID and not allow:
+        raise PaidOnCommand(f"{prov} is a paid engine: use only when Faiz commands it (set allow_paid in the script)")
+    order = list(FREE_ORDER) if prov == "auto" else [prov]
+    errs = []
+    for name in order:
+        if name not in ENGINES:
+            raise VoiceUnavailable(f"unknown voice provider '{name}' (have: {', '.join(ENGINES)})")
+        cap = FREE_CAPS.get(name)
+        if cap is not None and not allow and _month_used(name) + chars > cap:
+            errs.append(f"{name}: free monthly quota would be exceeded")
+            continue
+        try:
+            return ENGINES[name](script), vs
+        except VoiceUnavailable as e:
+            errs.append(f"{name}: {e}")
+    raise VoiceUnavailable("no free voice engine could start -> " + " | ".join(errs))
