@@ -32,3 +32,9 @@ Report ONE line to Faiz: `ALERT <what> | need: <one step>`. Do not retry, do not
 ## Accounts (alert only, Faiz 2026-11-07)
 - Many accounts on one service to raise free limits can get ALL of them banned. Claude gives ONE alert line about it. Claude does not itself create accounts or sign in to another person's account.
 - Best fix for more speed: paid per-second GPU or a different free service. Credentials are only ever entered by the account owner.
+
+## Gemini delegation (Faiz 2026-11-07)
+- Claude may hand any browser/console task to Gemini (Chrome) by writing ONE full prompt, start to end, with no questions for Faiz.
+- Claude may name which secret NAME a step needs (e.g. KAGGLE_KEY), and check it is in the list. Claude never writes a secret VALUE into a prompt, a file, a rulebook, a commit or a chat.
+- Faiz pastes every key, password, OTP, phone or card himself. Each prompt stops there and waits for "done".
+- Non-secret values (usernames, project names, URLs) may go in the prompt.
