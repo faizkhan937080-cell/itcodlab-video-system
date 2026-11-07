@@ -40,10 +40,12 @@
   lottie (src = assets/library/motion/*.json, size 0.1-1, x, y, loop, speed), audio_bars (src audio, bars 8-64, color, y, height: music-reactive bars).
   Title / kinetic_text size themselves to fit (lib/fit.ts, real text measurement): long text shrinks, never overflows.
 - New template = component + types.ts union + Main.tsx case + schema enum (tests/test_scene_templates.py checks all four match).
-- No blur / boxShadow / SVG filters in templates: cloud renders have no GPU.
+- No blur / boxShadow / SVG filters in templates: cloud renders have no GPU. Exception: `med` (depth blur is its look; 65 s preview 540x960 = 4.8 min on 2 vCPU).
+- `med` template (MedScene.tsx): drawn medical explainer shots (kidney, tract, scope, laser, stent, stones, factors, staged, end card) in the warm 3D-anatomy look of ref reel-DZR1CyRvYh1.
+- Voiceover: `./run tts <script.json>` (Kokoro, free); segment times drive cuts + text (cut = middle of the pause). `lexicon` {word: IPA} fixes names. QA: `./run qa-sheet`.
 - Captions: `plan.captions` = [{text,start_s,end_s,words?[{text,start_s,end_s}]}], `plan.caption_style` = {position bottom|center|top, max_words 1-8 (default 4),
   highlight brand-colour key, size}. Spoken word is highlighted (Remotion TikTok-caption pattern). No word times -> words spread evenly in the segment.
 - Reels: captions on by default for speech videos; keep max_words 3-4; position bottom (above the 220 px UI safe zone).
 - Paper-cutout / stop-motion look: `plan.step_fps` 4-24 (8-12 typical) freezes scene content on every Nth frame; raw `video` scenes stay smooth.
 - Texture: `plan.texture` {src (assets/ image), opacity 0-1 (0.35), blend multiply|overlay|soft-light} over all scenes. Check the texture licence before commercial use.
-- Transitions (`transition_in`): cut|fade|slide|slide_up|zoom|wipe|flip|iris|clock_wipe + duration_s (<=2). `overlap: true` keeps the previous scene underneath (real cross-transition, total length and audio sync unchanged). Preferred over TransitionSeries (that shortens the timeline).
+- Transitions (`transition_in`): cut|fade|slide|slide_up|zoom|wipe|flip|iris|clock_wipe|whip + duration_s (<=2). `overlap: true` keeps the previous scene underneath (real cross-transition, total length and audio sync unchanged). Preferred over TransitionSeries (that shortens the timeline).

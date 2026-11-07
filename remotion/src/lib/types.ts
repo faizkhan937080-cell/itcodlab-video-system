@@ -3,7 +3,7 @@ import {FxDef} from './fx';
 import {FollowPoint, ZoomKey} from './zoom';
 
 export type TransitionDef = {
-  type?: 'cut' | 'fade' | 'slide' | 'zoom' | 'wipe' | 'slide_up' | 'flip' | 'iris' | 'clock_wipe';
+  type?: 'cut' | 'fade' | 'slide' | 'zoom' | 'wipe' | 'slide_up' | 'flip' | 'iris' | 'clock_wipe' | 'whip';
   duration_s?: number;
   overlap?: boolean; // true = the previous scene stays visible underneath while this one comes in (real cross-transition, total length unchanged)
 };
@@ -12,7 +12,7 @@ export type SceneDef = {
   id: string;
   duration_s: number;
   template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video'
-    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout' | 'lottie' | 'audio_bars' | 'meme_text' | 'sticker';
+    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout' | 'lottie' | 'audio_bars' | 'meme_text' | 'sticker' | 'med';
   props?: Record<string, any>;
   transition_in?: TransitionDef;
   zoom?: ZoomKey[]; // punch-in / slow push keyframes on the whole scene (footage + overlays move together)

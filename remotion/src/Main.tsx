@@ -10,6 +10,7 @@ import {Grain, Vignette} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
 import {AudioBars} from './components/AudioBars';
+import {MedScene} from './components/MedScene';
 import {MemeFx} from './components/MemeFx';
 import {MemeText} from './components/MemeText';
 import {Sticker} from './components/Sticker';
@@ -85,6 +86,8 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <MemeText text={p.text ?? ''} position={p.position} color={p.color} colors={colors} />;
     case 'sticker':
       return <Sticker text={p.text ?? ''} x={p.x} y={p.y} size={p.size} rotateDeg={p.rotate_deg} />;
+    case 'med':
+      return <MedScene {...(p as any)} />;
     default:
       return null;
   }
@@ -125,6 +128,7 @@ const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> =
   if (t.type === 'wipe') style = {clipPath: `inset(0 ${(1 - prog) * 100}% 0 0)`};
   if (t.type === 'slide_up') style = {opacity: prog, transform: `translateY(${(1 - prog) * height * 0.1}px)`};
   if (t.type === 'flip') style = {opacity: prog, transform: `perspective(${width * 2}px) rotateY(${(1 - prog) * 70}deg)`};
+  if (t.type === 'whip') style = {transform: `translateX(${(1 - prog) * width}px)`, filter: `blur(${(1 - prog) * 28}px)`};
   if (t.type === 'iris') style = {clipPath: `circle(${prog * 75}% at 50% 50%)`};
   if (t.type === 'clock_wipe') style = {WebkitMaskImage: `conic-gradient(#000 ${prog * 360}deg, transparent ${prog * 360}deg)`, maskImage: `conic-gradient(#000 ${prog * 360}deg, transparent ${prog * 360}deg)`};
   const z = zoomAt(scene.zoom, frame / fps);

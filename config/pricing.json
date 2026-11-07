@@ -50,5 +50,6 @@
     "note": "API-equivalent only: on the Pro plan Faiz does not pay per token, he spends limit. Use it to compare plans.",
     "source": "https://platform.claude.com/docs/en/models/sonnet-5/ ; https://www.aipricing.guru/models/claude-haiku-5-5/ (Haiku verified 2026-11-06)"
   },
-  "remotion": {"license": "free up to 3 people (Faiz = 1)", "usd": 0}
+  "remotion": {"license": "free up to 3 people (Faiz = 1)", "usd": 0},
+  "kokoro_tts": {"license": "Apache-2.0 model (Kokoro-82M), runs on our CPU", "usd": 0, "measured_2026_11_07": "65 s of voice in ~47 s on 2 vCPU (RTF ~0.7)", "source": "https://github.com/thewh1teagle/kokoro-onnx"}
 }

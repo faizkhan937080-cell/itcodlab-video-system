@@ -93,7 +93,8 @@
               "lottie",
               "audio_bars",
               "meme_text",
-              "sticker"
+              "sticker",
+              "med"
             ]
           },
           "props": {
@@ -112,7 +113,8 @@
                   "slide_up",
                   "flip",
                   "iris",
-                  "clock_wipe"
+                  "clock_wipe",
+                  "whip"
                 ]
               },
               "duration_s": {

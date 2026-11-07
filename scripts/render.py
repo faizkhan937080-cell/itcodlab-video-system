@@ -154,3 +154,31 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
     from .safezone import lint
     res["safe_zone"] = lint(plan, (w, h), lim)
     return res
+
+
+def contact_sheet(video, times, out_path, cols=4, tile_w=360):
+    """QA of OUR render: frames at the given times in one labelled image (Claude looks at this, never at raw frames)."""
+    import cv2
+    import numpy as np
+    cap = cv2.VideoCapture(str(video))
+    tiles = []
+    for t in times:
+        cap.set(cv2.CAP_PROP_POS_MSEC, float(t) * 1000)
+        ok, fr = cap.read()
+        if not ok:
+            continue
+        h = int(fr.shape[0] * tile_w / fr.shape[1])
+        fr = cv2.resize(fr, (tile_w, h), interpolation=cv2.INTER_AREA)
+        cv2.rectangle(fr, (0, 0), (110, 30), (0, 0, 0), -1)
+        cv2.putText(fr, f"{t:.1f}s", (6, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        tiles.append(fr)
+    cap.release()
+    if not tiles:
+        raise RuntimeError("no frames read")
+    while len(tiles) % cols:
+        tiles.append(np.zeros_like(tiles[0]))
+    rows = [np.hstack(tiles[i:i + cols]) for i in range(0, len(tiles), cols)]
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    cv2.imwrite(str(out_path), np.vstack(rows), [cv2.IMWRITE_JPEG_QUALITY, 85])
+    return out_path

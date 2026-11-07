@@ -333,6 +333,27 @@ def cmd_kaggle_compare(a):
     return code
 
 
+def cmd_qa_sheet(a):
+    """Frames of our own render at given times, in one image (QA)."""
+    from .render import contact_sheet
+    times = [float(x) for x in a.times.split(",") if x.strip()]
+    print(contact_sheet(a.video, times, a.out, cols=a.cols))
+    return 0
+
+
+def cmd_tts(a):
+    """Voiceover from a script JSON (Kokoro, free). Writes the wav + timings JSON; measured like every step."""
+    from . import costs, tts
+    from .common import to_native
+    script = json.loads(Path(a.script).read_text(encoding="utf-8"))
+    from .common import stage
+    with stage("tts"):
+        res = tts.synth(script, a.out_wav, a.out_json)
+    costs.add("tts", calls=len(script["segments"]), audio_s=res["duration_s"], words=res["words"])
+    print(json.dumps(to_native({k: v for k, v in res.items() if k != "segments"}), ensure_ascii=False))
+    return 0
+
+
 def cmd_cost(a):
     """Time + money data. report = totals and free quota left; estimate = predict a reel; claude = log Claude tokens for a job."""
     from . import costs
@@ -485,6 +506,19 @@ def build_parser():
     s.add_argument("wav", nargs="?", default="")
     s.add_argument("--job", default="", help="worker mode: use this job's Drive copy and save the report to Drive costs/compare/")
     s.set_defaults(fn=cmd_kaggle_compare)
+
+    s = sub.add_parser("qa-sheet", help="frames of our own render at given times in one image (QA)")
+    s.add_argument("video")
+    s.add_argument("--times", required=True, help="comma-separated seconds")
+    s.add_argument("--out", required=True)
+    s.add_argument("--cols", type=int, default=4)
+    s.set_defaults(fn=cmd_qa_sheet)
+
+    s = sub.add_parser("tts", help="voiceover from a script JSON (Kokoro, free, CPU): wav + segment timings")
+    s.add_argument("script")
+    s.add_argument("--out-wav", required=True)
+    s.add_argument("--out-json", required=True)
+    s.set_defaults(fn=cmd_tts)
 
     s = sub.add_parser("cost", help="time + cost data: report | estimate --seconds N | claude --job J --model M --tin N --tout N")
     s.add_argument("what", choices=["report", "estimate", "claude"])
