@@ -155,7 +155,7 @@ def transcribe(wav, timeout_s=None, poll_s=15):
                 return None
             res = data.get("transcript") or {}
             if not res.get("available"):
-                log("kaggle gpu: transcript not available on the GPU side")
+                log("kaggle gpu: transcript not available on the GPU side: " + tail(str(res.get("error") or res)[:400], 2))
                 return None
             log(f"kaggle gpu transcript ok in {round(time.time() - t0)} s")
             return res
