@@ -6,7 +6,9 @@
     "default_model": "sonnet",
     "daily_job_cap": 5,
     "fresh_session_per_job": true,
-    "bulk_daily_cap": 40
+    "bulk_daily_cap": 40,
+    "chat_file_max_mb": 8,
+    "read_max_kb": 40
   },
   "jobs": {
     "max_retries": 2,
@@ -37,9 +39,9 @@
     "grade_look": true,
     "word_timestamps": true,
     "parallel": true,
-  "ears_cache": true,
-  "kaggle_gpu": false,
-  "kaggle_timeout_s": 900
+    "ears_cache": true,
+    "kaggle_gpu": false,
+    "kaggle_timeout_s": 900
   },
   "collage": {
     "max_collages_per_video": 10,

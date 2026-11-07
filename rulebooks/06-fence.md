@@ -38,6 +38,14 @@ Faiz does not want Claude's tokens spent on work that scripts or Colab can do. T
 - INFO (no alert): retries, self-update, review retry, cap not yet reached.
 - Worker raises alerts by writing state notes (`NEEDS_INPUT`, `FAILED`, `_worker_alert`). Claude relays one line.
 
+## Hard stops added 2026-11-07 (Faiz: "ye dobara na ho"; guard.py enforces, `./run check` watches)
+- Claude never runs ffmpeg/ffprobe itself, even to "just check". Use `./run qa-sheet`, finish.py, `./run render-local` (prints loudness).
+- Big files (video, >8 MB) never go into the chat. Drive via script/worker; chat gets the Drive link. Exception: Faiz says so in chat -> path into ~/.cache/itcod/allow_send.txt.
+- Big text file: grep/head/tail or Read with offset+limit. Tests: `./run test <file>` while fixing, `./run test` once before push (skips if tree already green). Never raw pytest.
+- Commit/push, lessons, rule edits = Claude's own technical decision; no asking Faiz. Folder access outside the task = ask Faiz first, never request the whole home.
+- Hooks must fire whatever folder Claude starts in: first thing in a new container `./run guard-install`. `./run check` runs on every Faiz message (silent when clean, 1-5 lines when not).
+- Work inside our system: scripts/worker do the work, Claude's tokens go only to code, plans and decisions. Cloud Code session only when a long coding block would be cheaper there.
+
 ## Loopholes already closed (do not reopen)
 - Bad code push: worker import-checks after pull and rolls back (`_self_update`).
 - Review branch holds only the newest job (force push); retries back off (2,4,8,16 min, then every 30 min) and never give up while at gate 2.
