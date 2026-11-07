@@ -38,3 +38,4 @@ Report ONE line to Faiz: `ALERT <what> | need: <one step>`. Do not retry, do not
 - Claude may name which secret NAME a step needs (e.g. KAGGLE_KEY), and check it is in the list. Claude never writes a secret VALUE into a prompt, a file, a rulebook, a commit or a chat.
 - Faiz pastes every key, password, OTP, phone or card himself. Each prompt stops there and waits for "done".
 - Non-secret values (usernames, project names, URLs) may go in the prompt.
+- When a key is needed, the prompt opens the page where it is kept and the Faiz copies it himself. Then it opens the field where it is pasted and waits. Gemini never reads, prints or stores the value.
