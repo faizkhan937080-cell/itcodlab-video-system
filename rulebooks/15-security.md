@@ -28,3 +28,8 @@ Check any time: `./run security --net`. CI (`security.yml`) runs it weekly + eve
 
 ## When something trips
 Report ONE line to Faiz: `ALERT <what> | need: <one step>`. Do not retry, do not switch tools to get around it.
+
+## Accounts (hard rule, Faiz 2026-11-07)
+- One person = one account per service. Claude never creates extra accounts (mail IDs, friends' IDs) to raise free limits.
+- Claude never uses a friend's or another person's account, even if Faiz asks. This is not up for approval.
+- Faiz's own second account for the same service is also refused. Ask for a paid plan or a different free service instead.
