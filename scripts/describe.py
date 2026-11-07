@@ -52,6 +52,13 @@ def _ask(models, key, jpg_bytes, retries=2):
         for attempt in range(retries + 1):
             try:
                 res = _post(model, key, body)
+                try:
+                    from . import costs
+                    um = res.get("usageMetadata", {})
+                    costs.add("gemini", calls=1, in_tok=um.get("promptTokenCount", 0),
+                              out_tok=um.get("candidatesTokenCount", 0) + um.get("thoughtsTokenCount", 0), model=model)
+                except Exception:  # noqa: BLE001
+                    pass
                 txt = res["candidates"][0]["content"]["parts"][0]["text"]
                 return model, json.loads(txt)
             except urllib.error.HTTPError as e:

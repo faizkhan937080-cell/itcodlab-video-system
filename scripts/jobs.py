@@ -292,15 +292,31 @@ class Worker:
             try:
                 from .pack import run_pipeline
                 src = self._ensure_local_source(st, wd)
+                from .common import stage, stage_times
+                _t0 = time.time()
                 res = run_pipeline(str(src), wd / "analysis", job_id=jid, mode=job["mode"])
                 from .describe import describe_pack
                 idx = json.loads((res["out_root"] / "collage_index.json").read_text(encoding="utf-8"))
                 bulk = bool(job.get("bulk"))
                 if not bulk:
-                    st["describe"] = describe_pack(res["pack"], idx)
-                    from .review import publish
-                    st["review"] = publish(res["pack"], jid, idx)
+                    with stage("describe"):
+                        st["describe"] = describe_pack(res["pack"], idx)
+                    with stage("review_publish"):
+                        from .review import publish
+                        st["review"] = publish(res["pack"], jid, idx)
                     st["review"]["tried"] = now_iso()
+                try:  # cost/time ledger (never blocks the job)
+                    from . import costs
+                    stg = json.loads((res["out_root"] / "timings.json").read_text(encoding="utf-8"))
+                    for k, v in stage_times(reset=True).items():
+                        stg[k] = round(stg.get(k, 0) + v, 1)
+                    inf = res.get("info", {})
+                    costs.record(self.storage, jid, "analysis", stages=stg, extra={
+                        "wall_s": round(time.time() - _t0, 1), "mode": job["mode"], "bulk": bulk,
+                        "source_bytes": Path(src).stat().st_size if Path(src).exists() else None},
+                        media={k: inf.get(k) for k in ("duration_s", "width", "height", "fps", "codec")})
+                except Exception:  # noqa: BLE001
+                    pass
                 self._write_measured_drafts(res, job, st)
                 base = self._analysis_rel(st, job)
                 self.storage.put_tree(res["out_root"], base)
@@ -705,7 +721,9 @@ class Worker:
         try:
             plan = self.storage.read_json(st["paths"]["plan"])
             out = wd / fname
-            chk = render_mod.render_plan(plan, quality, out, storage=self.storage)
+            from .common import stage as _stage, stage_times as _stage_times
+            with _stage(f"render_{quality}"):
+                chk = render_mod.render_plan(plan, quality, out, storage=self.storage)
             if not chk["ok"]:
                 raise RuntimeError("output check failed: " + "; ".join(chk["problems"]))
             dnas = self._plan_dnas(plan)
@@ -736,6 +754,15 @@ class Worker:
                 st["clone_report"] = rel_report
             if dnas:
                 st["clone_ok"] = all(v.get("pass") for k, v in fin["clone_check"].items() if isinstance(v, dict) and "pass" in v)
+            try:  # cost/time ledger (never blocks the job)
+                from . import costs
+                pr_ = chk.get("probe", {})
+                costs.record(self.storage, job["id"], f"render_{quality}", stages=_stage_times(reset=True),
+                             media={"duration_s": pr_.get("duration_s") or pr_.get("duration"), "width": pr_.get("width"),
+                                    "height": pr_.get("height"), "fps": pr_.get("fps")},
+                             extra={"output_bytes": out.stat().st_size if out.exists() else None, "quality": quality})
+            except Exception:  # noqa: BLE001
+                pass
             rel = self.storage.put_file(out, f"{folder}/{fname}")
             key = "preview" if quality == "preview" else "final_candidate"
             st["paths"][key] = rel
