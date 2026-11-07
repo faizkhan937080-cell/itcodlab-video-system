@@ -201,7 +201,7 @@ def cmd_videogen_run(a):
         if res.get("steps"):   # gguf probe: one short line per step so nothing gets cut off
             for k, v in res["steps"].items():
                 body = v if not isinstance(v, dict) else {a: b for a, b in v.items() if a != "info" or k not in ("survey", "repo_sizes")}
-                print("STEP", k, json.dumps(to_native(body), ensure_ascii=False)[:1400])
+                print("STEP", k, json.dumps(to_native(body), ensure_ascii=False)[:4000])
             print("RESULT", json.dumps(to_native({k: v for k, v in res.items() if k != "steps"}), ensure_ascii=False)[:400])
         else:
             print(json.dumps(to_native(res), ensure_ascii=False)[:7000])

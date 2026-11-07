@@ -45,4 +45,4 @@ jobs:
       - name: Make the footage
         run: |
           if [ -n "$SPEC_IN" ]; then FILES="$SPEC_IN"; else FILES=$(git diff --name-only HEAD~1 HEAD -- 'trigger/videogen/*.json'); fi
-          for f in $FILES; do [ -f "$f" ] && ./run videogen-run "$f" | tail -5; done
+          for f in $FILES; do [ -f "$f" ] && ./run videogen-run "$f" | tail -40; done

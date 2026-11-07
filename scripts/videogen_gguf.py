@@ -94,12 +94,22 @@ if gg:
             with init_empty_weights():
                 m = cls.from_config(cls.load_config(LTX_REPO, subfolder="transformer"))
             keys = set(m.state_dict().keys())
+            import re as _re
+            pat = lambda xs: sorted({_re.sub(r"\\.\\d+\\.", ".N.", n) for n in xs})
             res["steps"]["key_diag"] = {"gguf_n": len(names), "model_n": len(keys),
-                                        "gguf_only": sorted(names - keys)[:12], "model_only": sorted(keys - names)[:12]}
+                                        "gguf_only": pat(names - keys)[:40], "model_only": pat(keys - names)[:40]}
+            try:
+                import inspect
+                import diffusers.loaders.single_file_utils as _u
+                fns = [n for n in dir(_u) if "ltx" in n.lower()]
+                res["steps"]["converter_fns"] = fns
+                tf = [n for n in fns if "transformer" in n.lower()]
+                if tf:
+                    res["steps"]["converter_src"] = inspect.getsource(getattr(_u, tf[0]))[:2600]
+            except Exception as _e:
+                res["steps"]["converter_src"] = "ERR " + str(_e)[-100:]
             dump()
-            dit = cls.from_single_file(gg, quantization_config=qc, config=LTX_REPO, subfolder="transformer",
-                                       torch_dtype=torch.bfloat16, low_cpu_mem_usage=False)
-            return {"class": cfg["_class_name"], "how": "low_cpu_mem_usage=False"}
+            raise RuntimeError("keys differ, see key_diag")
     step("load_dit_gguf", _l)
 pipe = None
 if dit is not None:
