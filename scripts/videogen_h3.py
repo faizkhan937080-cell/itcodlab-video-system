@@ -110,6 +110,15 @@ def load_small():
     return dict(mem(), loaded=names)
 if pipe is not None:
     step("load_vae_scheduler_etc", load_small)
+def free_cache():   # run 6: the writable disk is ~60-70 GB; the 62 GB text encoder is already in GPU/RAM, so its cached copy goes
+    import shutil as _sh
+    hub = os.path.join(HF_DIR, "hub")
+    before = _sh.disk_usage(HF_BASE).free / 2**30
+    _sh.rmtree(hub, ignore_errors=True)
+    os.makedirs(hub, exist_ok=True)
+    return {"free_gb_before": round(before, 1), "free_gb_after": round(_sh.disk_usage(HF_BASE).free / 2**30, 1)}
+if pipe is not None and getattr(pipe, "text_encoder", None) is not None:
+    step("free_hf_cache", free_cache)
 def sig():
     return {"call_params": list(inspect.signature(pipe.__call__).parameters)[:40]}
 if pipe is not None:
