@@ -26,7 +26,7 @@ def test_prepare_writes_dataset_and_kernel(tmp_path):
     ds, kn = vg.prepare(spec, img, tmp_path / "w", "owner")
     assert json.loads((ds / "spec.json").read_text())["num_frames"] == 97 and "Wan" in json.loads((ds / "spec.json").read_text())["model"] and (ds / "in.png").exists()
     meta = json.loads((kn / "kernel-metadata.json").read_text())
-    assert meta["enable_gpu"] and meta["id"] == "owner/itcod-vgen2" and meta["dataset_sources"] == ["owner/itcod-vgen-in2"]
+    assert meta["enable_gpu"] and meta["id"] == "owner/itcod-vgen3" and meta["dataset_sources"] == ["owner/itcod-vgen-in2"]
     compile((kn / "vgen_kernel.py").read_text(), "kernel", "exec")
 
 

@@ -13,7 +13,7 @@ from pathlib import Path
 from . import kaggle_gpu as kg
 from .common import ROOT, limits, log, tail
 
-DATASET, KERNEL = "itcod-vgen-in2", "itcod-vgen2"
+DATASET, KERNEL = "itcod-vgen-in2", "itcod-vgen3"
 MODEL = {"wan": "Wan-AI/Wan2.2-TI2V-5B-Diffusers", "ltx": "Lightricks/LTX-2.5-Diffusers"}   # wan first: 5B fits a free Kaggle T4; ltx 22B (38 GB) likely too big for Kaggle disk
 
 
