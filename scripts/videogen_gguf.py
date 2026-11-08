@@ -247,9 +247,11 @@ if pipe is not None and not spec.get("probe"):
             res["steps"]["split_phase"] = {"before_encode_vram_gb": [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(2)],
                                           "devices": _devs()}
             dump()
-            pe, pm, _n1, _n2 = pipe.encode_prompt(prompt=spec["prompt"], do_classifier_free_guidance=False, device=d0,
-                                                  max_sequence_length=int(spec.get("max_seq", 256)))
-            pe, pm = pe.to("cpu"), pm.to("cpu")
+            with torch.no_grad():   # run 31: without this the result keeps the whole graph (all 4-bit weights + activations) on cuda:0
+                pe, pm, _n1, _n2 = pipe.encode_prompt(prompt=spec["prompt"], do_classifier_free_guidance=False, device=d0,
+                                                      max_sequence_length=int(spec.get("max_seq", 256)))
+            pe, pm = pe.detach().to("cpu"), pm.detach().to("cpu")
+            del _n1, _n2
             _old = pipe.text_encoder
             pipe.text_encoder = None   # frees the 7.7 GB of the text encoder before the DiT arrives
             # run 29: .to("cpu") did nothing on the 4-bit weights (9.1 GB stayed). Empty the module itself, whoever else holds it.
