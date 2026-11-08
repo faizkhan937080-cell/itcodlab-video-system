@@ -14,6 +14,18 @@ T0 = time.time()
 def dump():
     res["total_s"] = round(time.time() - T0, 1)
     json.dump(res, open("/kaggle/working/result.json", "w"), default=str)
+def _watchdog():   # a kernel killed by our timeout returns nothing: dump where every thread is, then end cleanly so the result comes back
+    time.sleep(float(spec.get("watchdog_s", 1800)))
+    import threading as _t
+    st = {}
+    for tid, fr in sys._current_frames().items():
+        st[str(tid)] = "".join(traceback.format_stack(fr)[-7:])[-1400:]
+    res["steps"]["watchdog_stack"] = st
+    res["steps"]["watchdog_fired"] = {"ok": False, "s": round(time.time() - T0, 1), "err": "watchdog"}
+    dump()
+    os._exit(0)
+import threading
+threading.Thread(target=_watchdog, daemon=True).start()
 def step(name, fn):
     t = time.time()
     try:
