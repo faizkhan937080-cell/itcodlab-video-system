@@ -261,6 +261,20 @@ if pipe is not None and not spec.get("probe"):
             del _old
             gc.collect(); torch.cuda.empty_cache()
             res["steps"]["after_free_vram_gb"] = [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(2)]
+            try:   # who still holds GPU memory? (grouped by shape/dtype, biggest first)
+                _g_ = {}
+                for _o in gc.get_objects():
+                    try:
+                        if torch.is_tensor(_o) and _o.is_cuda:
+                            _key = (tuple(_o.shape), str(_o.dtype), str(_o.device))
+                            _a = _g_.setdefault(_key, [0, 0])
+                            _a[0] += 1
+                            _a[1] += _o.element_size() * _o.nelement()
+                    except Exception:
+                        pass
+                res["steps"]["gpu_holders"] = [[str(k), v[0], round(v[1] / 2**30, 2)] for k, v in sorted(_g_.items(), key=lambda kv: -kv[1][1])[:8]]
+            except Exception as _e:
+                res["steps"]["gpu_holders"] = "ERR " + str(_e)[-120:]
             dump()
             def _mv(x, d):
                 if torch.is_tensor(x):
