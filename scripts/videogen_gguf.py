@@ -163,6 +163,11 @@ if dit is not None:
         missing = {k: None for k, v in idx.items() if isinstance(v, list) and k != "transformer"
                    and not os.path.isdir(os.path.join(local, k))}
         info["skipped"] = sorted(missing)
+        # diffusers loads every model_index entry that has no folder from the ROOT (-> "no model.safetensors in /tmp/ltx_local").
+        # prompt_enhancer=None as kwarg does NOT stop it (optional init args are not in passed_class_obj). Null it in the index.
+        for k in missing:
+            idx[k] = [None, None]
+        j.dump(idx, open(os.path.join(local, "model_index.json"), "w"))
         q = PipelineQuantizationConfig(quant_backend="bitsandbytes_4bit",
                                        quant_kwargs={"load_in_4bit": True, "bnb_4bit_compute_dtype": torch.bfloat16, "bnb_4bit_quant_type": "nf4"},
                                        components_to_quantize=["text_encoder"])
@@ -172,13 +177,18 @@ if dit is not None:
                            if not x.startswith(".cache"))[:120],
             "skipped": sorted(missing)}
         dump()
+        import transformers
         from transformers import AutoModel, BitsAndBytesConfig as BNB
-        te = AutoModel.from_pretrained(os.path.join(local, "text_encoder"), torch_dtype=torch.bfloat16,
-                                       quantization_config=BNB(load_in_4bit=True, bnb_4bit_quant_type="nf4",
-                                                               bnb_4bit_compute_dtype=torch.bfloat16))
+        bnb = BNB(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
+        te_cls = getattr(transformers, idx["text_encoder"][1], None) or AutoModel   # class the pipeline expects (hidden_states)
+        try:
+            te = te_cls.from_pretrained(os.path.join(local, "text_encoder"), torch_dtype=torch.bfloat16, quantization_config=bnb)
+        except Exception as e_te:
+            res["steps"]["text_encoder_first_error"] = str(e_te)[-200:]
+            te = AutoModel.from_pretrained(os.path.join(local, "text_encoder"), torch_dtype=torch.bfloat16, quantization_config=bnb)
         res["steps"]["text_encoder_loaded"] = type(te).__name__
         dump()
-        pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, text_encoder=te, torch_dtype=torch.bfloat16, **missing)
+        pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, text_encoder=te, torch_dtype=torch.bfloat16)
         pipe.enable_model_cpu_offload()
         if hasattr(pipe, "enable_vae_tiling"):
             pipe.enable_vae_tiling()
