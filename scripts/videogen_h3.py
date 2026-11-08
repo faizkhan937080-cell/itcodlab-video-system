@@ -3,7 +3,20 @@ Route: diffusers ModularPipeline, text encoder (Qwen3-VL-32B) and transformer ea
 2x14.6 GB VRAM / 31 GB RAM. Probe (spec.probe=true) loads and reports memory only. spec.workflow: "fl2va" (default) or "ref2va"."""
 
 KERNEL_SRC_H3 = '''import gc, glob, inspect, json, os, shutil, subprocess, sys, time, traceback
-os.environ["HF_HOME"] = "/tmp/hf"   # /tmp has ~966 GB free (run 3 filled the 19 GB /kaggle/working and died: no space left)
+def _pick_hf_home():   # run 5: /tmp/hf became read-only mid-download (Errno 30). Use the first dir that takes a write and has room for the 62 GB DiT.
+    import shutil as _sh
+    for d in ["/kaggle/temp", "/var/tmp", "/root", "/tmp", "/home/kaggle", "/dev/shm"]:
+        try:
+            os.makedirs(os.path.join(d, "hf"), exist_ok=True)
+            tp = os.path.join(d, "hf", ".w")
+            open(tp, "wb").write(b"x" * (1 << 20)); os.remove(tp)
+            if _sh.disk_usage(d).free / 2**30 >= 80:
+                return os.path.join(d, "hf"), d
+        except Exception:
+            continue
+    return "/tmp/hf", "/tmp"
+HF_DIR, HF_BASE = _pick_hf_home()
+os.environ["HF_HOME"] = HF_DIR
 os.environ["HF_HUB_DISABLE_SHARED_BLOBS"] = "1"
 os.environ["HF_HUB_DISABLE_FILE_LOCKS"] = "1"   # run 2: lock files in /tmp/hf/.locks failed as read-only
 src = os.path.dirname(glob.glob("/kaggle/input/**/spec.json", recursive=True)[0])
@@ -12,7 +25,7 @@ if os.path.exists(os.path.join(src, "hf.txt")):
     os.environ["HF_TOKEN"] = open(os.path.join(src, "hf.txt")).read().strip()
 REPO = spec.get("model", "MiniMaxAI/MiniMax-H3")
 WF = spec.get("workflow", "fl2va")
-res = {"ok": False, "probe": bool(spec.get("probe")), "mode": "h3", "workflow": WF, "steps": {}}
+res = {"ok": False, "probe": bool(spec.get("probe")), "mode": "h3", "workflow": WF, "steps": {"hf_home": HF_DIR}}
 T0 = time.time()
 def dump():
     res["total_s"] = round(time.time() - T0, 1)
