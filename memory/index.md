@@ -10,8 +10,8 @@ decisions/memory-rules.md | 1 | 7 | memory forget summary long form toolbook rec
 decisions/roadmap-gaps.md | 1 | 4 | gaps roadmap demucs clone-report loudnorm cap bulk collage
 decisions/tools-licenses.md | 1 | 3 | remotion license pricing colab headcount
 decisions/working-style.md | 1 | 11 | working style hinglish short steps who decides secrets
-decisions.md | 1 | 42 | decisions
-lessons.md | 1 | 8 | lessons
+decisions.md | 1 | 43 | decisions
+lessons.md | 1 | 12 | lessons
 log/2026-11-05-build.md | 1 | 16 | log build commits jobs colab worker analysis failures
 log/2026-11-06-cleanup.md | 1 | 5 | 2026 11 06 cleanup
 log/2026-11-06-standards.md | 1 | 3 | build standards schema v2 loudness corpus clone render
