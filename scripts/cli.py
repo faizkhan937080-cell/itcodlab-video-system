@@ -270,6 +270,45 @@ def cmd_wake(a):
     return 0 if rc == 0 else 1
 
 
+def cmd_vm(a):
+    """Claude's power switch for our Google Cloud VMs: pushes trigger/vm.txt, workflow vm-power does start/stop/status (no key, no PC)."""
+    import time
+    from .common import ROOT, now_iso, run_cmd
+    name = a.name or ("" if a.action == "status" else "itcod-gpu")
+    f = ROOT / "trigger" / "vm.txt"
+    f.parent.mkdir(exist_ok=True)
+    f.write_text(f"{now_iso()} {a.action} {name}\n", encoding="utf-8")
+    run_cmd(["git", "-C", str(ROOT), "add", "trigger/vm.txt"])
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "commit", "-q", "-m", f"vm {a.action} {name}"])
+    if rc != 0:
+        print("nothing to commit: " + (err or out)[-200:])
+        return 1
+    rc, out, err = run_cmd(["git", "-C", str(ROOT), "push", "-q", "origin", "HEAD:main"], timeout=120)
+    if rc != 0:
+        print("push failed: " + err[-300:])
+        return 1
+    print(f"sent: {a.action} {name}")
+    if not a.wait:
+        return 0
+    time.sleep(20)
+    for _ in range(30):   # gh may be missing: then just stop waiting
+        rc, out, err = run_cmd(["gh", "run", "list", "--workflow=vm-power.yml", "--limit", "1", "--json", "status,conclusion,databaseId", "-q",
+                                '.[0] | "\\(.status) \\(.conclusion) \\(.databaseId)"'])
+        if rc != 0:
+            print("cannot read the run (gh): " + err[-150:])
+            return 0
+        st = out.split()
+        if st and st[0] == "completed":
+            rc, log, _ = run_cmd(["gh", "run", "view", st[2], "--log"])
+            lines = [x.split("\t")[-1][29:] for x in log.splitlines() if "ACTION" in x or "before:" in x or "after:" in x or "NOT FOUND" in x
+                     or "itcod-" in x or "ERROR" in x]
+            print("\n".join(lines[-12:]) or f"run {st[2]}: {st[1]}")
+            return 0 if st[1] == "success" else 1
+        time.sleep(10)
+    print("still running; check later")
+    return 0
+
+
 def cmd_bulk_jobs(a):
     """Many reels of one creator: one job file per link, measured only. Needs ONE Y from Faiz for the whole batch."""
     from .common import now_iso
@@ -836,6 +875,12 @@ def build_parser():
     s.add_argument("--reason", default="work waiting")
     s.add_argument("--turbo", action="store_true", help="run this on the GPU VM (only when Faiz says speed up)")
     s.set_defaults(fn=cmd_wake)
+
+    s = sub.add_parser("vm", help="power switch for our Google Cloud VMs: start / stop / status / describe (workflow vm-power)")
+    s.add_argument("action", choices=["start", "stop", "status", "describe"])
+    s.add_argument("name", nargs="?", help="VM name, default itcod-gpu (status: all)")
+    s.add_argument("--wait", action="store_true", help="wait for the workflow and print the result")
+    s.set_defaults(fn=cmd_vm)
 
     s = sub.add_parser("bulk-jobs", help="queue many reels of one creator (measured only, one approval)")
     s.add_argument("--creator", required=True)

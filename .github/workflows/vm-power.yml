@@ -1,0 +1,38 @@
+# Claude's power switch for our Google Cloud VMs (itcod-gpu, itcod-worker). No key and no secret: GitHub proves to Google
+# "I am repo faizkhan937080-cell/itcodlab-video-system" (Workload Identity Federation) and may only act as service account vm-power.
+# Start/stop: `./run vm start|stop|status [name]` (pushes trigger/vm.txt). Hourly: safety stop of itcod-gpu after the max uptime.
+name: vm-power
+on:
+  push:
+    branches: [main]
+    paths: ['trigger/vm.txt']
+  workflow_dispatch:
+    inputs:
+      line:
+        description: 'action name, e.g. "status" or "start itcod-gpu"'
+        required: true
+  schedule:
+    - cron: '23 * * * *'
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: vm-power
+  cancel-in-progress: false
+env:
+  GCP_PROJECT: itcodlab-video
+jobs:
+  power:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/11609431528/locations/global/workloadIdentityPools/github-pool/providers/github
+          service_account: vm-power@itcodlab-video.iam.gserviceaccount.com
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Run the power action
+        env:
+          LINE: ${{ github.event.inputs.line }}
+        run: bash scripts/vm/power.sh "$LINE"
