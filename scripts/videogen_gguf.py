@@ -168,7 +168,8 @@ if dit is not None:
                                        components_to_quantize=["text_encoder"])
         res["steps"]["pipe_diag"] = {
             "model_index": {k: v for k, v in idx.items() if isinstance(v, list)},
-            "tree": sorted(os.path.relpath(os.path.join(r, f), local) for r, _, fs in os.walk(local) for f in fs)[:80],
+            "tree": sorted(x for x in (os.path.relpath(os.path.join(r, f), local) for r, _, fs in os.walk(local) for f in fs)
+                           if not x.startswith(".cache"))[:120],
             "skipped": sorted(missing)}
         dump()
         pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, torch_dtype=torch.bfloat16, quantization_config=q, **missing)
