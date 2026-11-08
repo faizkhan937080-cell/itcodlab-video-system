@@ -237,9 +237,18 @@ if pipe is not None and not spec.get("probe"):
         params = list(inspect.signature(pipe.__call__).parameters)
         if spec.get("offload", "split") == "split":
             d0, d1 = torch.device("cuda:0"), torch.device("cuda:1")
-            res["steps"]["split_phase"] = "encode prompt on cuda:0"
+            def _devs():
+                out = {}
+                for _n, _c in pipe.components.items():
+                    if isinstance(_c, torch.nn.Module):
+                        _p = next(_c.parameters(), None)
+                        out[_n] = str(_p.device) if _p is not None else "none"
+                return out
+            res["steps"]["split_phase"] = {"before_encode_vram_gb": [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(2)],
+                                          "devices": _devs()}
             dump()
-            pe, pm, _n1, _n2 = pipe.encode_prompt(prompt=spec["prompt"], do_classifier_free_guidance=False, device=d0)
+            pe, pm, _n1, _n2 = pipe.encode_prompt(prompt=spec["prompt"], do_classifier_free_guidance=False, device=d0,
+                                                  max_sequence_length=int(spec.get("max_seq", 256)))
             pe, pm = pe.to("cpu"), pm.to("cpu")
             pipe.text_encoder = None   # frees the 7.7 GB of the text encoder before the DiT arrives
             gc.collect(); torch.cuda.empty_cache()
@@ -265,7 +274,7 @@ if pipe is not None and not spec.get("probe"):
             for n, c in pipe.components.items():
                 if isinstance(c, torch.nn.Module) and c is not dit_m:
                     c.to(d0)
-            res["steps"]["split_phase"] = {"blocks": len(blocks), "half": half,
+            res["steps"]["split_done"] = {"blocks": len(blocks), "half": half,
                                           "vram_gb": [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(2)]}
             dump()
             kw0 = {"prompt_embeds": pe.to(d0), "prompt_attention_mask": pm.to(d0)}
