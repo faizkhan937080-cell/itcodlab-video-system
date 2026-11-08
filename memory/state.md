@@ -26,3 +26,5 @@ updated: 2026-11-07 00:50 IST
 - OWN SERVER: Faiz pastes Cloud Shell block (VM itcod-worker, e2-standard-4, asia-south1-b, scripts/vm/startup.sh; runner token expires ~23:33 IST). Then runner 'itcod-vm' must show Idle; then repo var WORKER_RUNS_ON=["self-hosted","itcod"] (Faiz/Gemini only), wake, test run; add GCP budget alert + auto-stop.
 - Rules: rulebooks/12-structure.md. Storage clean-up only on Faiz's command.
 - 2026-11-07: layout simplified (reel-<code>/ flat, 7e12622). Gate 3 for -b still pending (Faiz Y/N). Trash batch pending Y/N: 9 junk files, _stale-INDEX-delete.md, empty dna/videos folders. Gemini key 401 -> Faiz must update GEMINI_API_KEY secret.
+- 2026-11-08 LTX: pipeline error FIXED (prompt_enhancer null in local model_index; run 22 built LTX2Pipeline). Generate still fails on T4 memory (see lessons). Test spec: trigger/videogen/probe-ltx-gguf.json ("test":true = never saved to Drive).
+- 2026-11-08 MiniMax H3: plan in memory/decisions.md. Kernel scripts/videogen_h3.py exists locally, NOT pushed/wired: needs Faiz Y (rulebook 21 gate). After Y: ./run approve-engine, wire mode h3 (diff saved by Claude), run probe.

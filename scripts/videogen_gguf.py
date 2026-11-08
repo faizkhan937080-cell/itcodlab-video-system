@@ -205,7 +205,7 @@ if dit is not None:
         # The 13 GB GGUF DiT cannot sit on one 14.5 GB T4 (run 24: CUDA OOM in model_cpu_offload). Keep everything else on cuda:0
         # and stream the DiT block by block (group offload); fall back to sequential offload if that fails.
         dev = torch.device("cuda:0")
-        strat = spec.get("offload", "group")
+        strat = spec.get("offload", "model")   # group + sequential both failed on GGUF (run 26)
         info["offload"] = strat
         if strat == "group":
             try:
