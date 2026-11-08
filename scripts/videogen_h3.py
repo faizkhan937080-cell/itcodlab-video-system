@@ -81,7 +81,7 @@ def load_te():
 if pipe is not None:
     step("load_text_encoder_nf4", load_te)
 def load_small():
-    names = [n for n in pipe._component_specs if n not in ("transformer", "text_encoder", "guider")
+    names = [n for n in pipe._component_specs if n not in ("transformer", "transformer_ref", "text_encoder", "guider")
              and pipe._component_specs[n].default_creation_method == "from_pretrained"
              and pipe._component_specs[n].pretrained_model_name_or_path is not None]
     pipe.load_components(names=names, dtype=torch.bfloat16)
@@ -99,10 +99,21 @@ if pipe is not None and getattr(pipe, "text_encoder", None) is not None and spec
         return mem()
     step("free_text_encoder", free_te)
 def load_dit():
-    from diffusers import BitsAndBytesConfig as DBNB
-    pipe.load_components(names="transformer", dtype=torch.bfloat16, device_map="auto", max_memory=MAXMEM,
-                         quantization_config=DBNB(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16))
-    return dict(mem(), dit=type(pipe.transformer).__name__,
+    from diffusers import BitsAndBytesConfig as DBNB, MiniMaxH3Transformer3DModel
+    q = DBNB(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
+    sp = pipe._component_specs.get("transformer")
+    info = {"spec": str(sp)[:400]}
+    try:
+        pipe.load_components(names="transformer", dtype=torch.bfloat16, device_map="auto", max_memory=MAXMEM, quantization_config=q)
+    except Exception as e:
+        info["load_components_error"] = str(e)[-300:]
+    if getattr(pipe, "transformer", None) is None:   # run 35 probe: load_components returned in 0.3 s and left it None -> load directly, then plug in
+        info["direct_load"] = True
+        sub = "transformer_ref" if WF == "ref2va" else "transformer"
+        dit = MiniMaxH3Transformer3DModel.from_pretrained(REPO, subfolder=sub, torch_dtype=torch.bfloat16, device_map="auto",
+                                                          max_memory=MAXMEM, quantization_config=q)
+        pipe.update_components(**{"transformer": dit})
+    return dict(mem(), dit=type(pipe.transformer).__name__, info=info,
                 params_b=round(sum(p.numel() for p in pipe.transformer.parameters()) / 1e9, 1))
 if pipe is not None:
     step("load_transformer_nf4", load_dit)
