@@ -208,6 +208,20 @@ if pipe is not None and not spec.get("probe"):
             kw["num_inference_steps"] = 8
         if "guidance_scale" in params:
             kw["guidance_scale"] = 1.0
+        tg = time.time()
+        tm = res["steps"].setdefault("gen_timing", {"first_step_after_s": None, "step_s": []})
+        budget = float(spec.get("gen_budget_s", 1500))
+        def _cb(p, i, t, ck):   # per-step timing + hard time budget so a slow run still reports where the time went
+            now = round(time.time() - tg, 1)
+            if tm["first_step_after_s"] is None:
+                tm["first_step_after_s"] = now
+            tm["step_s"].append(now)
+            dump()
+            if now > budget:
+                raise TimeoutError("gen budget %ss used, stopped at step %s" % (budget, i))
+            return ck
+        if "callback_on_step_end" in params:
+            kw["callback_on_step_end"] = _cb
         out = pipe(**kw)
         export_to_video(out.frames[0], "/kaggle/working/video.mp4", fps=int(spec.get("fps", 24)))
         return {"peak_vram_gb": [round(torch.cuda.max_memory_allocated(i) / 2**30, 1) for i in range(torch.cuda.device_count())]}
