@@ -15,6 +15,10 @@ jobs:
       KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
       KAGGLE2_USERNAME: ${{ secrets.KAGGLE2_USERNAME }}
       KAGGLE2_KEY: ${{ secrets.KAGGLE2_KEY }}
+      KGAT_NAME: ${{ secrets.KGAT_NAME }}
+      KGAT_KEY: ${{ secrets.KGAT_KEY }}
+      GGLE_USERNAME: ${{ secrets.GGLE_USERNAME }}
+      GGLE_KEY: ${{ secrets.GGLE_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
