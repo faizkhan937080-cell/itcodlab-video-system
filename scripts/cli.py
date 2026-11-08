@@ -187,6 +187,13 @@ def cmd_videogen_run(a):
     from .common import ROOT, stage, to_native
     raw = json.loads(Path(a.spec).read_text(encoding="utf-8"))
     name = a.name or Path(a.spec).stem
+    if int(raw.get("account", 1)) == 2:   # second Kaggle account (secrets KAGGLE2_*): its own free GPU hours
+        import os
+        if os.environ.get("KAGGLE2_USERNAME") and os.environ.get("KAGGLE2_KEY"):
+            os.environ["KAGGLE_USERNAME"], os.environ["KAGGLE_KEY"] = os.environ["KAGGLE2_USERNAME"], os.environ["KAGGLE2_KEY"]
+        else:
+            print("BLOCKED: spec says account 2 but secrets KAGGLE2_USERNAME / KAGGLE2_KEY are missing")
+            return 2
     try:
         st_path = a.state or raw.get("approved_state")   # file made by `./run approve-engine` after Faiz's Y
         videogen.gate(raw, ev.load_state(st_path) if st_path else None)
@@ -214,6 +221,29 @@ def cmd_videogen_run(a):
             stg.put_file(vid, f"{rel}/{name}.mp4")
             print(f"uploaded to Drive {rel}")
     return 0 if res.get("ok") else 1
+
+
+def cmd_kaggle_check(a):
+    """Prove each Kaggle account logs in (no secret printed). Accounts: 1 = KAGGLE_*, 2 = KAGGLE2_*."""
+    import os
+    from . import kaggle_gpu as kg
+    bad = 0
+    for n, (u, k) in {1: ("KAGGLE_USERNAME", "KAGGLE_KEY"), 2: ("KAGGLE2_USERNAME", "KAGGLE2_KEY")}.items():
+        saved = {x: os.environ.get(x) for x in ("KAGGLE_USERNAME", "KAGGLE_KEY")}
+        if not os.environ.get(u) or not os.environ.get(k):
+            print(f"account {n}: secrets missing")
+            bad += 1
+            continue
+        os.environ["KAGGLE_USERNAME"], os.environ["KAGGLE_KEY"] = os.environ[u], os.environ[k]
+        rc, out, err = kg._cli(["kernels", "list", "--mine", "--page-size", "1"], 120)
+        print(f"account {n} ({os.environ[u]}): {'LOGIN OK' if rc == 0 else 'LOGIN FAILED ' + (err or out)[-160:]}")
+        bad += rc != 0
+        for x, v in saved.items():
+            if v is None:
+                os.environ.pop(x, None)
+            else:
+                os.environ[x] = v
+    return 1 if bad else 0
 
 
 def cmd_indic_tts_ab(a):
@@ -872,6 +902,8 @@ def build_parser():
     s.add_argument("--no-sheet", action="store_true")
     s.set_defaults(fn=cmd_worker)
 
+    s = sub.add_parser("kaggle-check", help="test that both Kaggle accounts log in")
+    s.set_defaults(fn=cmd_kaggle_check)
     s = sub.add_parser("wake", help="start the GitHub Actions worker now (after writing a job/approval/candidate)")
     s.add_argument("--reason", default="work waiting")
     s.add_argument("--turbo", action="store_true", help="run this on the GPU VM (only when Faiz says speed up)")
