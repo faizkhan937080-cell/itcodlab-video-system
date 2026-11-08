@@ -206,7 +206,7 @@ def cmd_videogen_run(a):
         else:
             print(json.dumps(to_native(res), ensure_ascii=False)[:7000])
         vid = Path(wd) / "video.mp4"
-        if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"]:
+        if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"] and not raw.get("test"):   # "test": true = never saved to Drive
             stg = _storage()
             rel = f"output/footage/{name}"
             stg.ensure_dir(rel)

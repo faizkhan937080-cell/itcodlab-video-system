@@ -216,7 +216,7 @@ elif pipe is not None:
     def _m():
         return {"peak_vram_gb": [round(torch.cuda.max_memory_allocated(i) / 2**30, 1) for i in range(torch.cuda.device_count())]}
     step("mem_after_build", _m)
-res["ok"] = all(s.get("ok") for s in res["steps"].values())
+res["ok"] = all(s.get("ok") for s in res["steps"].values() if isinstance(s, dict) and "ok" in s)
 dump()
 print("done", res["ok"])
 '''
