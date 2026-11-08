@@ -288,14 +288,28 @@ if pipe is not None and not spec.get("probe"):
                 return x
             dit_m = pipe.transformer
             blocks = dit_m.transformer_blocks
-            half = len(blocks) // 2
+            def _bytes(m):
+                return sum(q.nelement() * q.element_size() for q in list(m.parameters()) + list(m.buffers()))
+            others = {n: _bytes(c) for n, c in pipe.components.items() if isinstance(c, torch.nn.Module) and c is not dit_m}
+            nonblock = {n: _bytes(c) for n, c in dit_m.named_children() if n != "transformer_blocks"}
+            bb = [_bytes(x) for x in blocks]
+            fixed = sum(others.values()) + sum(nonblock.values())
+            target = (fixed + sum(bb)) / 2   # run 32: cuda:0 held 14.2 GB, cuda:1 5.4 GB; balance by real bytes instead of block count
+            acc, half = fixed, 0
+            while half < len(blocks) and acc + bb[half] <= target:
+                acc += bb[half]
+                half += 1
+            res["steps"]["split_sizes_gb"] = {"others": {k: round(v / 2**30, 2) for k, v in others.items()},
+                                              "nonblock": {k: round(v / 2**30, 2) for k, v in nonblock.items()},
+                                              "blocks_total": round(sum(bb) / 2**30, 2), "blocks_on_d0": half}
+            dump()
             for n, c in dit_m.named_children():
                 if n != "transformer_blocks":
                     c.to(d0)
-            for i, b in enumerate(blocks):
+            for i, bl in enumerate(blocks):
                 dv = d0 if i < half else d1
-                b.to(dv)
-                b.register_forward_pre_hook(lambda m, a, k, dv=dv: (_mv(a, dv), _mv(k, dv)), with_kwargs=True)
+                bl.to(dv)
+                bl.register_forward_pre_hook(lambda m, a, k, dv=dv: (_mv(a, dv), _mv(k, dv)), with_kwargs=True)
             blocks[-1].register_forward_hook(lambda m, a, o: _mv(o, d0))
             for n, c in pipe.components.items():
                 if isinstance(c, torch.nn.Module) and c is not dit_m:
