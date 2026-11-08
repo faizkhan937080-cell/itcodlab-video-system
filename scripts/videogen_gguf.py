@@ -306,6 +306,12 @@ if pipe is not None and not spec.get("probe"):
             for n, c in dit_m.named_children():
                 if n != "transformer_blocks":
                     c.to(d0)
+            for _k, _pp in list(dit_m._parameters.items()):   # run 33: the DiT's own tables (scale_shift_table...) were left on the CPU
+                if _pp is not None:
+                    _pp.data = _pp.data.to(d0)
+            for _k, _bf in list(dit_m._buffers.items()):
+                if _bf is not None:
+                    dit_m._buffers[_k] = _bf.to(d0)
             for i, bl in enumerate(blocks):
                 dv = d0 if i < half else d1
                 bl.to(dv)
