@@ -228,8 +228,7 @@ def cmd_kaggle_check(a):
     import os
     from . import kaggle_gpu as kg
     bad = 0
-    for n, (u, k) in {1: ("KAGGLE_USERNAME", "KAGGLE_KEY"), 2: ("KAGGLE2_USERNAME", "KAGGLE2_KEY"),
-                         "old-A": ("KGAT_NAME", "KGAT_KEY"), "old-B": ("GGLE_USERNAME", "GGLE_KEY")}.items():
+    for n, (u, k) in {1: ("KAGGLE_USERNAME", "KAGGLE_KEY"), 2: ("KAGGLE2_USERNAME", "KAGGLE2_KEY")}.items():
         saved = {x: os.environ.get(x) for x in ("KAGGLE_USERNAME", "KAGGLE_KEY")}
         if not os.environ.get(u) or not os.environ.get(k):
             print(f"account {n}: secrets missing")
