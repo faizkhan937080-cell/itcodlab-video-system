@@ -22,3 +22,9 @@
 - Default stays the free/normal worker. Turbo = `./run wake --turbo` (commit message has [turbo] -> worker.yml uses the GPU runner).
 - VM is normally STOPPED; Faiz (or Gemini) starts it: `gcloud compute instances start itcod-gpu --zone asia-south1-b`. It stops itself after 10 idle min.
 - Claude: before `wake --turbo` say in chat "VM chalu karo"; after the work say it will switch itself off. Setup: scripts/vm/gpu_startup.sh.
+
+## VM POWER SWITCH (2026-11-08): Claude starts/stops Google Cloud VMs itself
+- `./run vm start|stop|status|describe [name] [--wait]` -> pushes trigger/vm.txt -> workflow vm-power (scripts/vm/power.sh). Default name itcod-gpu. Hourly watchdog stops itcod-gpu after 3 h.
+- Login = Workload Identity Federation, NO key/secret: pool github-pool, provider github (only repo faizkhan937080-cell/itcodlab-video-system), acts as vm-power@itcodlab-video.iam.gserviceaccount.com. Project number 11609431528.
+- Flow for turbo: `./run vm start itcod-gpu --wait` -> `./run wake --turbo` -> work -> `./run vm stop itcod-gpu` (VM also stops itself after 10 idle min). Tell Faiz in one line at each on/off.
+- Pending (needs Faiz or quota): role "Compute Instance Admin (v1)" for vm-power on the project (IAM, I was blocked), L4 GPU quota asia-south1 = 0, itcod-gpu VM not created.
