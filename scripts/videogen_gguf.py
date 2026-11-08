@@ -172,7 +172,13 @@ if dit is not None:
                            if not x.startswith(".cache"))[:120],
             "skipped": sorted(missing)}
         dump()
-        pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, torch_dtype=torch.bfloat16, quantization_config=q, **missing)
+        from transformers import AutoModel, BitsAndBytesConfig as BNB
+        te = AutoModel.from_pretrained(os.path.join(local, "text_encoder"), torch_dtype=torch.bfloat16,
+                                       quantization_config=BNB(load_in_4bit=True, bnb_4bit_quant_type="nf4",
+                                                               bnb_4bit_compute_dtype=torch.bfloat16))
+        res["steps"]["text_encoder_loaded"] = type(te).__name__
+        dump()
+        pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, text_encoder=te, torch_dtype=torch.bfloat16, **missing)
         pipe.enable_model_cpu_offload()
         if hasattr(pipe, "enable_vae_tiling"):
             pipe.enable_vae_tiling()
