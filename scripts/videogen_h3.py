@@ -3,9 +3,9 @@ Route: diffusers ModularPipeline, text encoder (Qwen3-VL-32B) and transformer ea
 2x14.6 GB VRAM / 31 GB RAM. Probe (spec.probe=true) loads and reports memory only. spec.workflow: "fl2va" (default) or "ref2va"."""
 
 KERNEL_SRC_H3 = '''import gc, glob, inspect, json, os, shutil, subprocess, sys, time, traceback
-os.environ["HF_HOME"] = "/kaggle/working/hf"   # run 36: /tmp is read-only for the lock files; /kaggle/working is writable
+os.environ["HF_HOME"] = "/tmp/hf"   # /tmp has ~966 GB free (run 3 filled the 19 GB /kaggle/working and died: no space left)
 os.environ["HF_HUB_DISABLE_SHARED_BLOBS"] = "1"
-os.environ["HF_HUB_DISABLE_FILE_LOCKS"] = "1"
+os.environ["HF_HUB_DISABLE_FILE_LOCKS"] = "1"   # run 2: lock files in /tmp/hf/.locks failed as read-only
 src = os.path.dirname(glob.glob("/kaggle/input/**/spec.json", recursive=True)[0])
 spec = json.load(open(os.path.join(src, "spec.json")))
 if os.path.exists(os.path.join(src, "hf.txt")):
