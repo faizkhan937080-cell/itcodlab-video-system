@@ -119,7 +119,7 @@ def prepare(spec, image, work, owner):
     else:
         (kn / "vgen_kernel.py").write_text(KERNEL_SRC, encoding="utf-8")
     (kn / "kernel-metadata.json").write_text(json.dumps({
-        "id": f"{owner}/{KERNEL}", "title": "itcod vgen", "code_file": "vgen_kernel.py", "language": "python",
+        "id": f"{owner}/{KERNEL}", "title": KERNEL.replace("-", " "), "code_file": "vgen_kernel.py", "language": "python",
         "kernel_type": "script", "is_private": True, "enable_gpu": True, "enable_internet": True,
         "dataset_sources": [f"{owner}/{DATASET}"], "competition_sources": [], "kernel_sources": []}), encoding="utf-8")
     return ds, kn
