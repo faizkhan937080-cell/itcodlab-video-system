@@ -3,6 +3,7 @@ so one run shows exactly where it breaks. mode "gguf" in the spec selects this k
 
 KERNEL_SRC_GGUF = '''import glob, json, os, shutil, subprocess, sys, time, traceback
 os.environ["HF_HOME"] = "/tmp/hf"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 os.environ["HF_HUB_DISABLE_SHARED_BLOBS"] = "1"   # shared blob store hits a read-only path on Kaggle
 src = os.path.dirname(glob.glob("/kaggle/input/**/spec.json", recursive=True)[0])
 spec = json.load(open(os.path.join(src, "spec.json")))
@@ -189,7 +190,26 @@ if dit is not None:
         res["steps"]["text_encoder_loaded"] = type(te).__name__
         dump()
         pipe = DiffusionPipeline.from_pretrained(local, transformer=dit, text_encoder=te, torch_dtype=torch.bfloat16)
-        pipe.enable_model_cpu_offload()
+        # The 13 GB GGUF DiT cannot sit on one 14.5 GB T4 (run 24: CUDA OOM in model_cpu_offload). Keep everything else on cuda:0
+        # and stream the DiT block by block (group offload); fall back to sequential offload if that fails.
+        dev = torch.device("cuda:0")
+        strat = spec.get("offload", "group")
+        info["offload"] = strat
+        if strat == "group":
+            try:
+                for _n, _c in pipe.components.items():
+                    if isinstance(_c, torch.nn.Module) and _c is not pipe.transformer and next(_c.parameters(), None) is not None \
+                            and next(_c.parameters()).device.type != "cuda":
+                        _c.to(dev)
+                pipe.transformer.enable_group_offload(onload_device=dev, offload_device=torch.device("cpu"),
+                                                      offload_type="block_level", num_blocks_per_group=1)
+            except Exception as _eg:
+                info["group_offload_error"] = str(_eg)[-300:]
+                strat = "sequential"
+        if strat == "sequential":
+            pipe.enable_sequential_cpu_offload()
+        elif strat == "model":
+            pipe.enable_model_cpu_offload()
         if hasattr(pipe, "enable_vae_tiling"):
             pipe.enable_vae_tiling()
         info["pipeline"] = type(pipe).__name__

@@ -97,7 +97,7 @@ def build_spec(raw, image=None):
     spec["has_image"] = bool(image)
     if raw.get("mode") == "gguf":
         spec["mode"] = "gguf"
-        for k in ("gguf_repo", "gguf_file", "gen_budget_s"):
+        for k in ("gguf_repo", "gguf_file", "gen_budget_s", "offload"):
             if raw.get(k):
                 spec[k] = raw[k]
     return spec
