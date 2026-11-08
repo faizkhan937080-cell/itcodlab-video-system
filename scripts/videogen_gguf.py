@@ -252,10 +252,12 @@ if pipe is not None and not spec.get("probe"):
             pe, pm = pe.to("cpu"), pm.to("cpu")
             _old = pipe.text_encoder
             pipe.text_encoder = None   # frees the 7.7 GB of the text encoder before the DiT arrives
-            try:
-                _old.to("cpu")   # run 28: the 7.6 GB stayed on cuda:0 after the prompt step, so push it off explicitly
-            except Exception as _e:
-                res["steps"]["te_cpu_error"] = str(_e)[-160:]
+            # run 29: .to("cpu") did nothing on the 4-bit weights (9.1 GB stayed). Empty the module itself, whoever else holds it.
+            for _m in _old.modules():
+                for _k in list(_m._parameters):
+                    _m._parameters[_k] = None
+                for _k in list(_m._buffers):
+                    _m._buffers[_k] = None
             del _old
             gc.collect(); torch.cuda.empty_cache()
             res["steps"]["after_free_vram_gb"] = [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(2)]
