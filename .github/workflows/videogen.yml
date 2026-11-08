@@ -26,6 +26,8 @@ jobs:
       KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
       KAGGLE2_USERNAME: ${{ secrets.KAGGLE2_USERNAME }}
       KAGGLE2_KEY: ${{ secrets.KAGGLE2_KEY }}
+      KAGGLE3_USERNAME: ${{ secrets.KAGGLE3_USERNAME }}
+      KAGGLE3_KEY: ${{ secrets.KAGGLE3_KEY }}
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}

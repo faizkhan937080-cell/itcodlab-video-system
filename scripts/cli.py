@@ -187,13 +187,14 @@ def cmd_videogen_run(a):
     from .common import ROOT, stage, to_native
     raw = json.loads(Path(a.spec).read_text(encoding="utf-8"))
     name = a.name or Path(a.spec).stem
-    if int(raw.get("account", 1)) == 2:   # second Kaggle account (secrets KAGGLE2_*): its own free GPU hours
+    acct = int(raw.get("account", 1))
+    if acct in (2, 3):   # extra Kaggle accounts (secrets KAGGLE2_* / KAGGLE3_*): each has its own free GPU hours
         import os
-        if os.environ.get("KAGGLE2_USERNAME") and os.environ.get("KAGGLE2_KEY"):
-            os.environ["KAGGLE_USERNAME"], os.environ["KAGGLE_KEY"] = os.environ["KAGGLE2_USERNAME"], os.environ["KAGGLE2_KEY"]
-        else:
-            print("BLOCKED: spec says account 2 but secrets KAGGLE2_USERNAME / KAGGLE2_KEY are missing")
+        u, k = os.environ.get(f"KAGGLE{acct}_USERNAME"), os.environ.get(f"KAGGLE{acct}_KEY")
+        if not (u and k):
+            print(f"BLOCKED: spec says account {acct} but secrets KAGGLE{acct}_USERNAME / KAGGLE{acct}_KEY are missing")
             return 2
+        os.environ["KAGGLE_USERNAME"], os.environ["KAGGLE_KEY"] = u, k
     try:
         st_path = a.state or raw.get("approved_state")   # file made by `./run approve-engine` after Faiz's Y
         videogen.gate(raw, ev.load_state(st_path) if st_path else None)
@@ -224,11 +225,12 @@ def cmd_videogen_run(a):
 
 
 def cmd_kaggle_check(a):
-    """Prove each Kaggle account logs in (no secret printed). Accounts: 1 = KAGGLE_*, 2 = KAGGLE2_*."""
+    """Prove each Kaggle account logs in (no secret printed). Accounts: 1 = KAGGLE_*, 2 = KAGGLE2_*, 3 = KAGGLE3_*."""
     import os
     from . import kaggle_gpu as kg
     bad = 0
-    for n, (u, k) in {1: ("KAGGLE_USERNAME", "KAGGLE_KEY"), 2: ("KAGGLE2_USERNAME", "KAGGLE2_KEY")}.items():
+    for n, (u, k) in {1: ("KAGGLE_USERNAME", "KAGGLE_KEY"), 2: ("KAGGLE2_USERNAME", "KAGGLE2_KEY"),
+                         3: ("KAGGLE3_USERNAME", "KAGGLE3_KEY")}.items():
         saved = {x: os.environ.get(x) for x in ("KAGGLE_USERNAME", "KAGGLE_KEY")}
         if not os.environ.get(u) or not os.environ.get(k):
             print(f"account {n}: secrets missing")
