@@ -100,6 +100,11 @@ def build_spec(raw, image=None):
         for k in ("gguf_repo", "gguf_file", "gen_budget_s", "offload", "watchdog_s"):
             if raw.get(k):
                 spec[k] = raw[k]
+    if raw.get("mode") == "h3":   # MiniMax-H3 full model, 4-bit, one component at a time (scripts/videogen_h3.py)
+        spec.update(mode="h3", model="MiniMaxAI/MiniMax-H3", workflow=raw.get("workflow", "fl2va"))
+        for k in ("watchdog_s", "gen_budget_s", "timeout_s"):
+            if raw.get(k):
+                spec[k] = raw[k]
     return spec
 
 
@@ -116,6 +121,9 @@ def prepare(spec, image, work, owner):
     if spec.get("mode") == "gguf":
         from .videogen_gguf import KERNEL_SRC_GGUF
         (kn / "vgen_kernel.py").write_text(KERNEL_SRC_GGUF, encoding="utf-8")
+    elif spec.get("mode") == "h3":
+        from .videogen_h3 import KERNEL_SRC_H3
+        (kn / "vgen_kernel.py").write_text(KERNEL_SRC_H3, encoding="utf-8")
     else:
         (kn / "vgen_kernel.py").write_text(KERNEL_SRC, encoding="utf-8")
     (kn / "kernel-metadata.json").write_text(json.dumps({
@@ -127,7 +135,7 @@ def prepare(spec, image, work, owner):
 
 def run(spec, image, out_dir, poll_s=20, timeout_s=None):
     """Run the spec on a Kaggle GPU. Returns result dict (always has ok + error_hint) and writes video.mp4 into out_dir when made."""
-    timeout_s = timeout_s or int(limits().get("videogen", {}).get("timeout_s", 2400))
+    timeout_s = timeout_s or spec.get("timeout_s") or int(limits().get("videogen", {}).get("timeout_s", 2400))
     owner = os.environ.get("KAGGLE_USERNAME", "")
     if not owner or not os.environ.get("KAGGLE_KEY") or not shutil.which("kaggle"):
         return {"ok": False, "error_hint": "Kaggle credentials or CLI missing (secrets KAGGLE_USERNAME, KAGGLE_KEY)"}

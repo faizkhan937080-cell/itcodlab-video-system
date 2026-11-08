@@ -188,7 +188,8 @@ def cmd_videogen_run(a):
     raw = json.loads(Path(a.spec).read_text(encoding="utf-8"))
     name = a.name or Path(a.spec).stem
     try:
-        videogen.gate(raw, ev.load_state(a.state) if a.state else None)
+        st_path = a.state or raw.get("approved_state")   # file made by `./run approve-engine` after Faiz's Y
+        videogen.gate(raw, ev.load_state(st_path) if st_path else None)
     except videogen.EngineBlocked as e:
         print("BLOCKED:", e)
         return 2
@@ -196,7 +197,7 @@ def cmd_videogen_run(a):
     spec = videogen.build_spec(raw, image)
     with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
         with stage("videogen"):
-            res = videogen.run_modal(spec, image, wd) if spec["engine"] in ("ltx", "minimax") and spec.get("mode") != "gguf" else videogen.run(spec, image, wd)
+            res = videogen.run_modal(spec, image, wd) if spec["engine"] in ("ltx", "minimax") and spec.get("mode") not in ("gguf", "h3") else videogen.run(spec, image, wd)
         costs.add("videogen", calls=1, engine=spec["engine"], probe=spec["probe"], gen_s=res.get("gen_s", 0), load_s=res.get("load_s", 0), ok=bool(res.get("ok")))
         if res.get("steps"):   # gguf probe: one short line per step so nothing gets cut off
             for k, v in res["steps"].items():
