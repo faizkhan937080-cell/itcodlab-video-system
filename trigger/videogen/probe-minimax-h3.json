@@ -1,4 +1,4 @@
 {"engine": "minimax", "mode": "h3", "workflow": "fl2va", "probe": true, "test": true,
  "approved_state": "trigger/videogen-state/minimax-h3.json",
  "prompt": "a glass of water on a wooden table, soft window light, slow camera push in",
- "width": 384, "height": 256, "seconds": 1, "watchdog_s": 5400, "timeout_s": 6000, "run": 4, "account": 3}
+ "width": 384, "height": 256, "seconds": 1, "watchdog_s": 5400, "timeout_s": 6000, "run": 5, "account": 3}

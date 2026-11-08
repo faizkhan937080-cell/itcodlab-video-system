@@ -48,6 +48,14 @@ def mem():
 step("pip", lambda: pipi("-U", "git+https://github.com/huggingface/diffusers", "transformers", "accelerate", "bitsandbytes",
                          "huggingface_hub", "hf_transfer", "sentencepiece", "protobuf", "imageio", "imageio-ffmpeg", "psutil", "qwen-vl-utils"))
 os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"   # free speed-up: parallel chunk download
+import filelock as _fl   # run 4: lock files still failed in diffusers/hub; Kaggle runs one job at a time, so no-op locks are safe
+class _NoLock:
+    def __init__(self, *a, **k): self.is_locked = False
+    def __enter__(self): return self
+    def __exit__(self, *a): return False
+    def acquire(self, *a, **k): return self
+    def release(self, *a, **k): pass
+_fl.FileLock = _NoLock; _fl.WeakFileLock = _NoLock
 import torch
 import diffusers, transformers
 from huggingface_hub import HfApi
