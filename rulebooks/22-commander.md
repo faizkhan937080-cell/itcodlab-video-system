@@ -10,3 +10,6 @@
 - Never tell him a company's rules, terms or regulations (Google, Kaggle, GitHub etc.). He does not want to know them. Claude follows them silently; if one blocks the work, say only "ye nahi ho sakta" + what Claude does instead.
 - When explaining anything: like to a 9-10 year old. Easy Hinglish, a cartoon/character/object picture (e.g. "GPU = ek bada engine wala truck", "VM = kiraye ka ghar jo bina kaam ke band"). No jargon words.
 - Result first, tiny. Exact button names only when he must click.
+
+## Waiting = reminder (Faiz, 2026-11-09, "always remember")
+Every time Claude waits to check something later (job, test, deploy): set a reminder with send_later sized to the task (cheap check ~3-5 min, Kaggle probe ~20-25 min, long run ~45 min). Never just say "I'll tell you" without one.
