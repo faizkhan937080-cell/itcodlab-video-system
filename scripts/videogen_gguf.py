@@ -1,7 +1,7 @@
 """Kaggle kernel for the FREE GGUF route (LTX-2.5 Q4 + MiniMax H3 survey) on 2x T4. Every step is timed and logged to result.json
 so one run shows exactly where it breaks. mode "gguf" in the spec selects this kernel (videogen.prepare)."""
 
-KERNEL_SRC_GGUF = '''import glob, json, os, shutil, subprocess, sys, time, traceback
+KERNEL_SRC_GGUF = '''import gc, glob, json, os, shutil, subprocess, sys, time, traceback
 os.environ["HF_HOME"] = "/tmp/hf"
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 os.environ["HF_HUB_DISABLE_SHARED_BLOBS"] = "1"   # shared blob store hits a read-only path on Kaggle
@@ -49,7 +49,8 @@ def env():
             "vram_gb": [round(torch.cuda.get_device_properties(i).total_memory / 2**30, 1) for i in range(torch.cuda.device_count())],
             "ram_gb": round(psutil.virtual_memory().total / 2**30, 1), **d}
 step("pip", lambda: sh("-U", "git+https://github.com/huggingface/diffusers", "transformers", "accelerate", "gguf",
-                       "huggingface_hub", "bitsandbytes", "sentencepiece", "protobuf", "imageio", "imageio-ffmpeg", "psutil"))
+                       "huggingface_hub", "hf_transfer", "bitsandbytes", "sentencepiece", "protobuf", "imageio", "imageio-ffmpeg", "psutil"))
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"   # free speed-up: parallel chunk download of the big model files
 step("env", env)
 import torch
 import diffusers
@@ -205,7 +206,7 @@ if dit is not None:
         # The 13 GB GGUF DiT cannot sit on one 14.5 GB T4 (run 24: CUDA OOM in model_cpu_offload). Keep everything else on cuda:0
         # and stream the DiT block by block (group offload); fall back to sequential offload if that fails.
         dev = torch.device("cuda:0")
-        strat = spec.get("offload", "model")   # group + sequential both failed on GGUF (run 26)
+        strat = spec.get("offload", "split")   # split = DiT halves on cuda:0/cuda:1 (see _g); group + sequential failed on GGUF (run 26)
         info["offload"] = strat
         if strat == "group":
             try:
@@ -218,7 +219,9 @@ if dit is not None:
             except Exception as _eg:
                 info["group_offload_error"] = str(_eg)[-300:]
                 strat = "sequential"
-        if strat == "sequential":
+        if strat == "split":
+            pass   # no offload hooks: _g encodes the prompt, frees the text encoder, then spreads the DiT over both GPUs
+        elif strat == "sequential":
             pipe.enable_sequential_cpu_offload()
         elif strat == "model":
             pipe.enable_model_cpu_offload()
@@ -232,7 +235,43 @@ if pipe is not None and not spec.get("probe"):
         import inspect
         from diffusers.utils import export_to_video
         params = list(inspect.signature(pipe.__call__).parameters)
-        kw = {"prompt": spec["prompt"], "width": spec["width"], "height": spec["height"],
+        if spec.get("offload", "split") == "split":
+            d0, d1 = torch.device("cuda:0"), torch.device("cuda:1")
+            res["steps"]["split_phase"] = "encode prompt on cuda:0"
+            dump()
+            pe, pm, _n1, _n2 = pipe.encode_prompt(prompt=spec["prompt"], do_classifier_free_guidance=False, device=d0)
+            pe, pm = pe.to("cpu"), pm.to("cpu")
+            pipe.text_encoder = None   # frees the 7.7 GB of the text encoder before the DiT arrives
+            gc.collect(); torch.cuda.empty_cache()
+            def _mv(x, d):
+                if torch.is_tensor(x):
+                    return x.to(d)
+                if isinstance(x, (list, tuple)):
+                    return type(x)(_mv(i, d) for i in x)
+                if isinstance(x, dict):
+                    return {k: _mv(v, d) for k, v in x.items()}
+                return x
+            dit_m = pipe.transformer
+            blocks = dit_m.transformer_blocks
+            half = len(blocks) // 2
+            for n, c in dit_m.named_children():
+                if n != "transformer_blocks":
+                    c.to(d0)
+            for i, b in enumerate(blocks):
+                dv = d0 if i < half else d1
+                b.to(dv)
+                b.register_forward_pre_hook(lambda m, a, k, dv=dv: (_mv(a, dv), _mv(k, dv)), with_kwargs=True)
+            blocks[-1].register_forward_hook(lambda m, a, o: _mv(o, d0))
+            for n, c in pipe.components.items():
+                if isinstance(c, torch.nn.Module) and c is not dit_m:
+                    c.to(d0)
+            res["steps"]["split_phase"] = {"blocks": len(blocks), "half": half,
+                                          "vram_gb": [round(torch.cuda.memory_allocated(i) / 2**30, 1) for i in range(2)]}
+            dump()
+            kw0 = {"prompt_embeds": pe.to(d0), "prompt_attention_mask": pm.to(d0)}
+        else:
+            kw0 = {"prompt": spec["prompt"]}
+        kw = {**kw0, "width": spec["width"], "height": spec["height"],
               "generator": torch.Generator("cpu").manual_seed(int(spec.get("seed", 1)))}
         if "num_frames" in params:
             kw["num_frames"] = int(spec["num_frames"])
@@ -240,6 +279,9 @@ if pipe is not None and not spec.get("probe"):
             kw["num_inference_steps"] = 8
         if "guidance_scale" in params:
             kw["guidance_scale"] = 1.0
+        for _k, _v in (("audio_guidance_scale", 1.0), ("stg_scale", 0.0), ("audio_stg_scale", 0.0)):   # distilled model: one pass per step
+            if _k in params:
+                kw[_k] = _v
         tg = time.time()
         tm = res["steps"].setdefault("gen_timing", {"first_step_after_s": None, "step_s": []})
         budget = float(spec.get("gen_budget_s", 1500))
