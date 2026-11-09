@@ -208,3 +208,45 @@ def run_modal(spec, image, out_dir, timeout_s=3300):
             return res
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "error_hint": type(e).__name__}
+
+
+def reel_frames(link, wd, frame_s=0.3):
+    """Test input from a reel link (nothing saved to Drive): download it (polite, guarded), take the first-frame
+    png for the model and a 3x2 collage for Claude to look at. Returns dict with paths + basic metadata."""
+    from .common import run_cmd
+    from .jobs import merge_streams, pick_source
+    from .netguard import config as net_config, guard, host_key
+    from .security import require_safe
+    wd = Path(wd)
+    wd.mkdir(parents=True, exist_ok=True)
+    cfg = net_config()
+    cmd = ["yt-dlp", "-f", "bv*+ba/b", "--merge-output-format", "mp4", "--no-playlist", "--write-info-json",
+           "-o", str(wd / "source.%(ext)s"), *cfg["yt_dlp_polite"]]
+    ck = os.environ.get("ITCOD_COOKIES")
+    if ck and Path(ck).exists():
+        cmd += ["--cookies", ck]
+    key = host_key(link, cfg)
+    g = guard()
+    g.before(key)
+    rc, out, err = run_cmd(cmd + [link], timeout=900)
+    if rc != 0:
+        g.after(key, None, err or out)
+        raise RuntimeError("reel download failed: " + tail(err or out, 3))
+    merge_streams(wd)
+    src = pick_source(list(wd.glob("source.*")))
+    require_safe(src, "video")
+    rc, out, err = run_cmd(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+                            "stream=width,height:format=duration", "-of", "json", str(src)], timeout=60)
+    info = json.loads(out or "{}")
+    st = (info.get("streams") or [{}])[0]
+    dur = float((info.get("format") or {}).get("duration") or 1.0)
+    first = wd / "first.png"
+    run_cmd(["ffmpeg", "-y", "-v", "error", "-ss", str(frame_s), "-i", str(src), "-frames:v", "1", str(first)], timeout=120)
+    pack = wd / "pack"
+    pack.mkdir(exist_ok=True)
+    run_cmd(["ffmpeg", "-y", "-v", "error", "-i", str(src), "-vf", f"fps=6/{max(dur, 0.5):.3f},scale=360:-2,tile=3x2",
+             "-frames:v", "1", "-q:v", "4", str(pack / "collage_01.jpg")], timeout=180)
+    if not first.exists():
+        raise RuntimeError("could not take the first frame")
+    return {"first": str(first), "pack": str(pack), "duration_s": round(dur, 2),
+            "width": st.get("width"), "height": st.get("height")}

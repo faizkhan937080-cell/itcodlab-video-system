@@ -202,6 +202,16 @@ def cmd_videogen_run(a):
         print("BLOCKED:", e)
         return 2
     image = (ROOT / raw["image"]) if raw.get("image") else None
+    if raw.get("reel_url"):   # test from Faiz's reel: first frame -> model, collage -> review branch (Claude looks), no Drive
+        from . import review
+        from .common import workdir
+        rw = workdir() / f"reel_{name}"
+        fr = videogen.reel_frames(raw["reel_url"], rw, float(raw.get("frame_s", 0.3)))
+        print("REEL", json.dumps({k: fr[k] for k in ("duration_s", "width", "height")}))
+        print("REVIEW", json.dumps(review.publish(fr["pack"], f"test-{name}")))
+        if raw.get("peek"):
+            return 0
+        image = Path(fr["first"])
     spec = videogen.build_spec(raw, image)
     with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
         with stage("videogen"):

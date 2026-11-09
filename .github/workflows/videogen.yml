@@ -11,7 +11,7 @@ on:
         description: 'spec path, e.g. trigger/videogen/demo.json'
         required: true
 permissions:
-  contents: read
+  contents: write   # reel test: collage goes to branch review (newest only)
 concurrency:
   group: videogen
   cancel-in-progress: false
@@ -42,8 +42,8 @@ jobs:
           cache: pip
       - name: Tools and packages
         run: |
-          sudo apt-get -qq install -y rclone > /dev/null
-          pip install -q --prefer-binary -r requirements.txt modal
+          sudo apt-get -qq install -y rclone ffmpeg > /dev/null
+          pip install -q --prefer-binary -r requirements.txt modal && pip install -q -U yt-dlp
           mkdir -p ~/.config/rclone
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
       - name: Make the footage
