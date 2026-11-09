@@ -15,3 +15,9 @@ out/
 *.key
 cookies.txt
 costs/local/
+
+# private half (rules, lessons, memory, router): lives in the private brain repo, loaded with ./run brain load
+rulebooks/
+lessons/
+memory/
+CLAUDE.local.md
