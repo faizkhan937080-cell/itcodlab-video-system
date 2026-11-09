@@ -102,7 +102,7 @@ def build_spec(raw, image=None):
                 spec[k] = raw[k]
     if raw.get("mode") == "h3":   # MiniMax-H3 full model, 4-bit, one component at a time (scripts/videogen_h3.py)
         spec.update(mode="h3", model="MiniMaxAI/MiniMax-H3", workflow=raw.get("workflow", "fl2va"))
-        for k in ("watchdog_s", "gen_budget_s", "timeout_s"):
+        for k in ("watchdog_s", "gen_budget_s", "timeout_s", "num_frames", "height", "width", "seed", "steps", "dit_gpu0_gib", "dit_gpu1_gib"):
             if raw.get(k):
                 spec[k] = raw[k]
     return spec

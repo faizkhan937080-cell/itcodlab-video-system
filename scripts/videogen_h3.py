@@ -123,12 +123,74 @@ def sig():
     return {"call_params": list(inspect.signature(pipe.__call__).parameters)[:40]}
 if pipe is not None:
     step("call_signature", sig)
-if pipe is not None and getattr(pipe, "text_encoder", None) is not None and spec.get("probe"):
-    def free_te():   # probe: show the text encoder can be dropped before the 33B DiT is loaded
-        pipe.text_encoder = None
+IMG = os.path.join(src, "in.png")
+COND = {}
+TE_BLOCK = None
+def _tree(b, depth=0):
+    out = {}
+    for n, sb in (getattr(b, "sub_blocks", None) or {}).items():
+        comps = [c.name for c in (getattr(sb, "expected_components", None) or [])]
+        ins = [getattr(i, "name", str(i)) for i in (getattr(sb, "inputs", None) or [])][:25]
+        outs = [getattr(o, "name", str(o)) for o in (getattr(sb, "intermediate_outputs", None) or [])][:25]
+        out[n] = {"type": type(sb).__name__, "components": comps, "inputs": ins, "outputs": outs}
+        if depth < 1 and getattr(sb, "sub_blocks", None):
+            out[n]["sub"] = _tree(sb, depth + 1)
+    return out
+def _gen_kw():
+    kw = {"prompt": spec["prompt"], "num_frames": int(spec.get("num_frames", 124)),
+          "height": int(spec.get("height", 672)), "width": int(spec.get("width", 384)),
+          "generator": torch.Generator().manual_seed(int(spec.get("seed", 42)))}
+    if spec.get("steps"):
+        kw["num_inference_steps"] = int(spec["steps"])
+    if os.path.exists(IMG) and WF == "fl2va":
+        from PIL import Image
+        kw["image"] = Image.open(IMG).convert("RGB")
+    return kw
+def encode():   # text (+ first frame) conditioning with the text encoder alone on the GPUs; result kept on CPU
+    global TE_BLOCK
+    tree = _tree(pipe.blocks)
+    info = {"blocks": tree}
+    res["steps"]["block_tree"] = tree
+    dump()
+    name = next((n for n, b in pipe.blocks.sub_blocks.items()
+                 if "text_encoder" in [c.name for c in (getattr(b, "expected_components", None) or [])]), None)
+    if name is None:
+        raise RuntimeError("no top-level block uses text_encoder: " + json.dumps(list(tree))[:300])
+    TE_BLOCK = name
+    blk = pipe.blocks.sub_blocks[name]
+    tp = blk.init_pipeline()
+    comps = {c.name: getattr(pipe, c.name) for c in blk.expected_components if getattr(pipe, c.name, None) is not None}
+    tp.update_components(**comps)
+    want = {getattr(i, "name", None) for i in (getattr(blk, "inputs", None) or [])}
+    kw = {k: v for k, v in _gen_kw().items() if k in want}
+    outs = [o.name for o in blk.intermediate_outputs]
+    with torch.no_grad():
+        st = tp(**kw, output=outs)
+    if not isinstance(st, dict):
+        st = {o: st.get(o) for o in outs}
+    for k, v in st.items():
+        COND[k] = v.detach().to("cpu") if torch.is_tensor(v) else v
+    info.update(te_block=name, used_inputs=sorted(kw), outputs={k: (list(v.shape) if torch.is_tensor(v) else type(v).__name__) for k, v in COND.items()})
+    return dict(mem(), **info)
+if pipe is not None and getattr(pipe, "text_encoder", None) is not None and not spec.get("probe"):
+    step("encode_prompt", encode)
+if pipe is not None and getattr(pipe, "text_encoder", None) is not None:
+    def free_te():   # drop the 4-bit text encoder for real (lesson LTX run 29/30: .to(cpu) keeps the 4-bit weights on GPU)
+        old = pipe.text_encoder
+        for m in old.modules():
+            for k in list(m._parameters):
+                m._parameters[k] = None
+            for k in list(m._buffers):
+                m._buffers[k] = None
+        try:
+            pipe.text_encoder = None
+        except Exception:
+            pass
+        del old
         gc.collect(); torch.cuda.empty_cache()
         return mem()
     step("free_text_encoder", free_te)
+MAXMEM = {0: str(spec.get("dit_gpu0_gib", 9)) + "GiB", 1: str(spec.get("dit_gpu1_gib", 12)) + "GiB", "cpu": "20GiB"}
 def load_dit():
     from diffusers import BitsAndBytesConfig as DBNB, MiniMaxH3Transformer3DModel
     q = DBNB(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16)
@@ -148,6 +210,34 @@ def load_dit():
                 params_b=round(sum(p.numel() for p in pipe.transformer.parameters()) / 1e9, 1))
 if pipe is not None:
     step("load_transformer_nf4", load_dit)
+def generate():
+    from diffusers.utils.export_utils import encode_video
+    if TE_BLOCK and TE_BLOCK in pipe.blocks.sub_blocks:
+        pipe.blocks.sub_blocks.pop(TE_BLOCK)   # conditioning already made; the rest of the blocks get it as inputs
+    for n in ("vae", "audio_vae"):
+        c = getattr(pipe, n, None)
+        if c is not None:
+            c.to("cuda:0")
+            for f in ("enable_tiling", "enable_slicing"):
+                if hasattr(c, f):
+                    try:
+                        getattr(c, f)()
+                    except Exception:
+                        pass
+    kw = _gen_kw()
+    dev = torch.device("cuda:0")
+    cond = {k: (v.to(dev) if torch.is_tensor(v) else v) for k, v in COND.items()}
+    t = time.time()
+    with torch.no_grad():
+        r = pipe(**kw, **cond, output=["videos", "audio", "sampling_rate"])
+    gen_s = round(time.time() - t, 1)
+    encode_video(r["videos"][0], fps=24, output_path="/kaggle/working/video.mp4",
+                 audio=r["audio"][0], audio_sample_rate=r["sampling_rate"])
+    res["gen_s"] = gen_s
+    return dict(mem(), gen_s=gen_s, frames=len(r["videos"][0]), size_mb=round(os.path.getsize("/kaggle/working/video.mp4") / 2**20, 2),
+                peak_vram_gb=[round(torch.cuda.max_memory_allocated(i) / 2**30, 1) for i in range(torch.cuda.device_count())])
+if pipe is not None and not spec.get("probe") and getattr(pipe, "transformer", None) is not None and COND:
+    step("generate", generate)
 res["ok"] = all(s.get("ok") for s in res["steps"].values() if isinstance(s, dict) and "ok" in s)
 dump()
 print("done", res["ok"])
