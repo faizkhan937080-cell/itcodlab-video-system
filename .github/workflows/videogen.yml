@@ -46,6 +46,8 @@ jobs:
           pip install -q --prefer-binary -r requirements.txt modal && pip install -q -U yt-dlp
           mkdir -p ~/.config/rclone
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
+      - name: Give git push rights for the review branch
+        run: git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
       - name: Make the footage
         run: |
           if [ -n "$SPEC_IN" ]; then FILES="$SPEC_IN"; else FILES=$(git diff --name-only HEAD~1 HEAD -- 'trigger/videogen/*.json'); fi
