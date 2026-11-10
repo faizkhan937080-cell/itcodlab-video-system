@@ -97,7 +97,7 @@ def build_spec(raw, image=None):
     spec["has_image"] = bool(image)
     if raw.get("mode") == "gguf":
         spec["mode"] = "gguf"
-        for k in ("gguf_repo", "gguf_file", "gen_budget_s", "offload", "watchdog_s"):
+        for k in ("gguf_repo", "gguf_file", "gen_budget_s", "offload", "watchdog_s", "upscale", "out_width", "out_height"):
             if raw.get(k):
                 spec[k] = raw[k]
     if raw.get("mode") == "faceswap":   # face swap test (scripts/faceswap_kaggle.py)

@@ -207,6 +207,16 @@ def cmd_videogen_run(a):
         print("BLOCKED:", e)
         return 2
     image = (ROOT / raw["image"]) if raw.get("image") else None
+    if raw.get("image_drive"):   # start picture from Drive (e.g. input/test-face-1.png), cropped, fitted to the clip size
+        import subprocess
+        from .common import workdir
+        iw = workdir() / f"img_{name}"
+        iw.mkdir(parents=True, exist_ok=True)
+        _storage().fetch(raw["image_drive"], iw / "raw.png")
+        w, h = int(raw.get("width", 768)), int(raw.get("height", 512))
+        vf = (f"crop={raw['image_crop']}," if raw.get("image_crop") else "") + f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h}"
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(iw / "raw.png"), "-vf", vf, str(iw / "start.png")], check=True)
+        image = iw / "start.png"
     if raw.get("reel_url"):   # test from Faiz's reel: first frame -> model, collage -> review branch (Claude looks), no Drive
         from . import review
         from .common import workdir
@@ -258,6 +268,9 @@ def cmd_videogen_run(a):
         else:
             print(json.dumps(to_native(res), ensure_ascii=False)[:7000])
         vid = Path(wd) / "video.mp4"
+        if raw.get("test") and res.get("ok") and vid.exists():   # test clip: Faiz sees it via the review branch, never Drive
+            from . import review
+            print("REVIEW", json.dumps(review.publish(wd, f"clip-{name}")))
         if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"] and not raw.get("test"):   # "test": true = never saved to Drive
             stg = _storage()
             rel = f"output/footage/{name}"

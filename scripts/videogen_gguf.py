@@ -232,8 +232,16 @@ if dit is not None:
     step("build_pipeline", _p)
 if pipe is not None and not spec.get("probe"):
     def _g():
+        global pipe
         import inspect
         from diffusers.utils import export_to_video
+        _img_path = os.path.join(src, "in.png")
+        _img = None
+        if spec.get("has_image") and os.path.exists(_img_path):   # image-to-video: same components, start frame = our picture (a face we own)
+            from diffusers import LTX2ImageToVideoPipeline
+            from PIL import Image
+            pipe = LTX2ImageToVideoPipeline(**pipe.components)
+            _img = Image.open(_img_path).convert("RGB").resize((int(spec["width"]), int(spec["height"])))
         params = list(inspect.signature(pipe.__call__).parameters)
         if spec.get("offload", "split") == "split":
             d0, d1 = torch.device("cuda:0"), torch.device("cuda:1")
@@ -330,6 +338,8 @@ if pipe is not None and not spec.get("probe"):
               "generator": torch.Generator("cpu").manual_seed(int(spec.get("seed", 1)))}
         if "num_frames" in params:
             kw["num_frames"] = int(spec["num_frames"])
+        if _img is not None and "image" in params:
+            kw["image"] = _img
         if "num_inference_steps" in params:
             kw["num_inference_steps"] = 8
         if "guidance_scale" in params:
@@ -359,6 +369,33 @@ elif pipe is not None:
     def _m():
         return {"peak_vram_gb": [round(torch.cuda.max_memory_allocated(i) / 2**30, 1) for i in range(torch.cuda.device_count())]}
     step("mem_after_build", _m)
+if spec.get("upscale") and os.path.exists("/kaggle/working/video.mp4"):   # Real-ESRGAN x4 on the same GPU, frame by frame
+    def _u():
+        global pipe
+        import gc, urllib.request
+        pipe = None
+        gc.collect(); torch.cuda.empty_cache()
+        sh("spandrel")
+        import imageio.v3 as iio, numpy as np
+        from spandrel import ModelLoader
+        w = "/kaggle/working/RealESRGAN_x4plus.pth"
+        urllib.request.urlretrieve("https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth", w)
+        m = ModelLoader().load_from_file(w).model.eval().half().to("cuda:0")
+        frames = iio.imread("/kaggle/working/video.mp4", plugin="pyav")
+        outs = []
+        with torch.no_grad():
+            for f in frames:
+                x = torch.from_numpy(f).permute(2, 0, 1)[None].half().div(255).to("cuda:0")
+                y = m(x).clamp(0, 1)[0].permute(1, 2, 0).float().cpu().numpy()
+                outs.append((y * 255).round().astype(np.uint8))
+        os.rename("/kaggle/working/video.mp4", "/kaggle/working/video_small.mp4")
+        tw, th = int(spec.get("out_width", 1080)), int(spec.get("out_height", 1920))
+        tmp = "/kaggle/working/up_raw.mp4"
+        iio.imwrite(tmp, np.stack(outs), plugin="pyav", fps=int(spec.get("fps", 24)), codec="libx264")
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", tmp, "-vf", f"scale={tw}:{th}:flags=lanczos", "-c:v", "libx264",
+                        "-crf", "16", "-preset", "slow", "-pix_fmt", "yuv420p", "/kaggle/working/video.mp4"], check=True)
+        return {"frames": len(outs), "out": [tw, th]}
+    step("upscale", _u)
 res["ok"] = all(s.get("ok") for s in res["steps"].values() if isinstance(s, dict) and "ok" in s)
 dump()
 print("done", res["ok"])
