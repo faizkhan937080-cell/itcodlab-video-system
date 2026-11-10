@@ -218,6 +218,17 @@ def cmd_videogen_run(a):
             return 0
         image = Path(fr["first"])
     spec = videogen.build_spec(raw, image)
+    if spec.get("mode") == "faceswap":   # test: reel video + a face from Drive (input/faces/...), result only to the review branch
+        import subprocess
+        rw = Path(fr["src"]).parent
+        face = rw / "face_raw.png"
+        _storage().fetch(raw["face"], face)
+        crop = raw.get("face_crop")   # e.g. "iw/3:ih:0:0" = left third (front view of a 3-panel sheet)
+        if crop:
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(face), "-vf", f"crop={crop}", str(rw / "face.png")], check=True)
+        else:
+            face.rename(rw / "face.png")
+        spec["_video"], spec["_face"] = fr["src"], str(rw / "face.png")
     with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
         with stage("videogen"):
             res = videogen.run_modal(spec, image, wd) if spec["engine"] in ("ltx", "minimax") and spec.get("mode") not in ("gguf", "h3") else videogen.run(spec, image, wd)
@@ -230,6 +241,9 @@ def cmd_videogen_run(a):
         else:
             print(json.dumps(to_native(res), ensure_ascii=False)[:7000])
         vid = Path(wd) / "video.mp4"
+        if spec.get("mode") == "faceswap" and res.get("ok") and vid.exists():   # show Faiz the result: review branch only
+            from . import review
+            print("REVIEW", json.dumps(review.publish(wd, f"faceswap-{name}")))
         if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"] and not raw.get("test"):   # "test": true = never saved to Drive
             stg = _storage()
             rel = f"output/footage/{name}"

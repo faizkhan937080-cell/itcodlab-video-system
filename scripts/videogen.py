@@ -100,6 +100,11 @@ def build_spec(raw, image=None):
         for k in ("gguf_repo", "gguf_file", "gen_budget_s", "offload", "watchdog_s"):
             if raw.get(k):
                 spec[k] = raw[k]
+    if raw.get("mode") == "faceswap":   # face swap test (scripts/faceswap_kaggle.py)
+        spec.update(mode="faceswap", test=True)
+        for k in ("quality", "reference_frame", "reference_position", "reference_distance", "swap_budget_s", "timeout_s"):
+            if raw.get(k) is not None:
+                spec[k] = raw[k]
     if raw.get("mode") == "h3":   # MiniMax-H3 full model, 4-bit, one component at a time (scripts/videogen_h3.py)
         spec.update(mode="h3", model="MiniMaxAI/MiniMax-H3", workflow=raw.get("workflow", "fl2va"))
         for k in ("watchdog_s", "gen_budget_s", "timeout_s", "num_frames", "height", "width", "seed", "steps", "dit_gpu0_gib", "dit_gpu1_gib"):
@@ -112,7 +117,11 @@ def prepare(spec, image, work, owner):
     ds, kn = Path(work) / "ds", Path(work) / "kn"
     ds.mkdir(parents=True), kn.mkdir(parents=True)
     (ds / "spec.json").write_text(json.dumps(spec), encoding="utf-8")
-    if image:
+    if spec.get("mode") == "faceswap":
+        shutil.copy(spec.pop("_video"), ds / "in.mp4")
+        shutil.copy(spec.pop("_face"), ds / "face.png")
+        (ds / "spec.json").write_text(json.dumps(spec), encoding="utf-8")
+    elif image:
         shutil.copy(image, ds / "in.png")
     if os.environ.get("HF_TOKEN"):  # private Kaggle dataset only; lets the kernel read gated Hugging Face repos
         (ds / "hf.txt").write_text(os.environ["HF_TOKEN"], encoding="utf-8")
@@ -121,6 +130,9 @@ def prepare(spec, image, work, owner):
     if spec.get("mode") == "gguf":
         from .videogen_gguf import KERNEL_SRC_GGUF
         (kn / "vgen_kernel.py").write_text(KERNEL_SRC_GGUF, encoding="utf-8")
+    elif spec.get("mode") == "faceswap":
+        from .faceswap_kaggle import KERNEL_SRC_FACESWAP
+        (kn / "vgen_kernel.py").write_text(KERNEL_SRC_FACESWAP, encoding="utf-8")
     elif spec.get("mode") == "h3":
         from .videogen_h3 import KERNEL_SRC_H3
         (kn / "vgen_kernel.py").write_text(KERNEL_SRC_H3, encoding="utf-8")
@@ -249,5 +261,5 @@ def reel_frames(link, wd, frame_s=0.3):
              "-frames:v", "1", "-q:v", "4", str(pack / "collage_01.jpg")], timeout=180)
     if not first.exists():
         raise RuntimeError("could not take the first frame")
-    return {"first": str(first), "pack": str(pack), "duration_s": round(dur, 2),
+    return {"first": str(first), "pack": str(pack), "src": str(src), "duration_s": round(dur, 2),
             "width": st.get("width"), "height": st.get("height")}
