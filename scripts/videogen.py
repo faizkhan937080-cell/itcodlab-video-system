@@ -187,7 +187,10 @@ def run(spec, image, out_dir, poll_s=20, timeout_s=None):
             rc, out, err = kg._cli(["kernels", "output", f"{owner}/{KERNEL}", "-p", str(outdir)], 900)
             rf = outdir / "result.json"
             if not rf.exists():
-                return {"ok": False, "error_hint": "no result.json from the kernel: " + tail(err or out, 2)}
+                logs = sorted(outdir.glob("*.log"))   # the kernel's own log says why it stopped (cancel, crash, OOM)
+                lt = tail(logs[-1].read_text(encoding="utf-8", errors="replace"), 15) if logs else ""
+                return {"ok": False, "error_hint": f"no result.json from the kernel (status {w or 'unknown'}): " + tail(err or out, 2),
+                        "kernel_log_tail": kg._clean(lt)[-2500:]}
             res = json.loads(rf.read_text(encoding="utf-8"))
             res["kaggle_wall_s"] = round(time.time() - t0)
             vid = outdir / "video.mp4"
