@@ -1,0 +1,1 @@
+{"engine": "ltx", "mode": "gguf", "probe": false, "test": true, "prompt": "a glass of water on a wooden table, soft window light, slow camera push in", "width": 384, "height": 256, "seconds": 1, "gen_budget_s": 1500, "run": 43, "watchdog_s": 1700, "account": 3}

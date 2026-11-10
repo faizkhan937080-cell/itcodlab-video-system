@@ -17,6 +17,8 @@ jobs:
       KAGGLE2_KEY: ${{ secrets.KAGGLE2_KEY }}
       KAGGLE3_USERNAME: ${{ secrets.KAGGLE3_USERNAME }}
       KAGGLE3_KEY: ${{ secrets.KAGGLE3_KEY }}
+      KAGGLE_THECRUSHKING_NAME: ${{ secrets.KAGGLE_THECRUSHKING_NAME }}
+      KAGGLE_THECRUSHKING_KEY: ${{ secrets.KAGGLE_THECRUSHKING_KEY }}
       KGAT_NAME: ${{ secrets.KGAT_NAME }}
       KGAT_KEY: ${{ secrets.KGAT_KEY }}
       GGLE_USERNAME: ${{ secrets.GGLE_USERNAME }}

@@ -13,7 +13,7 @@ on:
 permissions:
   contents: write   # reel test: collage goes to branch review (newest only)
 concurrency:
-  group: videogen
+  group: videogen-${{ github.event.inputs.spec || github.sha }}
   cancel-in-progress: false
 jobs:
   videogen:
@@ -28,6 +28,8 @@ jobs:
       KAGGLE2_KEY: ${{ secrets.KAGGLE2_KEY }}
       KAGGLE3_USERNAME: ${{ secrets.KAGGLE3_USERNAME }}
       KAGGLE3_KEY: ${{ secrets.KAGGLE3_KEY }}
+      KAGGLE_THECRUSHKING_NAME: ${{ secrets.KAGGLE_THECRUSHKING_NAME }}
+      KAGGLE_THECRUSHKING_KEY: ${{ secrets.KAGGLE_THECRUSHKING_KEY }}
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}

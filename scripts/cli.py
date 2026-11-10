@@ -10,6 +10,10 @@ def _storage():
     return Storage()
 
 
+# Kaggle accounts (GitHub secret names). Each account = its own free GPU hours. 4 = thecrushking (2026-11-10).
+KAGGLE_ACCOUNTS = {1: ("KAGGLE_USERNAME", "KAGGLE_KEY"), 2: ("KAGGLE2_USERNAME", "KAGGLE2_KEY"),
+                   3: ("KAGGLE3_USERNAME", "KAGGLE3_KEY"), 4: ("KAGGLE_THECRUSHKING_NAME", "KAGGLE_THECRUSHKING_KEY")}
+
 def cmd_doctor(a):
     from .doctor import run
     return run()
@@ -188,11 +192,12 @@ def cmd_videogen_run(a):
     raw = json.loads(Path(a.spec).read_text(encoding="utf-8"))
     name = a.name or Path(a.spec).stem
     acct = int(raw.get("account", 1))
-    if acct in (2, 3):   # extra Kaggle accounts (secrets KAGGLE2_* / KAGGLE3_*): each has its own free GPU hours
+    if acct in KAGGLE_ACCOUNTS and acct != 1:   # extra Kaggle accounts: each has its own free GPU hours
         import os
-        u, k = os.environ.get(f"KAGGLE{acct}_USERNAME"), os.environ.get(f"KAGGLE{acct}_KEY")
+        un, kn = KAGGLE_ACCOUNTS[acct]
+        u, k = os.environ.get(un), os.environ.get(kn)
         if not (u and k):
-            print(f"BLOCKED: spec says account {acct} but secrets KAGGLE{acct}_USERNAME / KAGGLE{acct}_KEY are missing")
+            print(f"BLOCKED: spec says account {acct} but secrets {un} / {kn} are missing")
             return 2
         os.environ["KAGGLE_USERNAME"], os.environ["KAGGLE_KEY"] = u, k
     try:
@@ -239,8 +244,7 @@ def cmd_kaggle_check(a):
     import os
     from . import kaggle_gpu as kg
     bad = 0
-    for n, (u, k) in {1: ("KAGGLE_USERNAME", "KAGGLE_KEY"), 2: ("KAGGLE2_USERNAME", "KAGGLE2_KEY"),
-                         3: ("KAGGLE3_USERNAME", "KAGGLE3_KEY")}.items():
+    for n, (u, k) in KAGGLE_ACCOUNTS.items():
         saved = {x: os.environ.get(x) for x in ("KAGGLE_USERNAME", "KAGGLE_KEY")}
         if not os.environ.get(u) or not os.environ.get(k):
             print(f"account {n}: secrets missing")
