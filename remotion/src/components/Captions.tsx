@@ -4,6 +4,7 @@ import {easeOut, unit} from '../lib/anim';
 import {buildPages, CaptionDef, CaptionPage, CaptionStyle} from '../lib/captions';
 import {insets} from '../lib/safe';
 import {Colors} from '../lib/types';
+import {CLEAN_FONT} from './Clean';
 
 const Page: React.FC<{page: CaptionPage; style: CaptionStyle; colors: Colors}> = ({page, style, colors}) => {
   const frame = useCurrentFrame();
@@ -14,6 +15,32 @@ const Page: React.FC<{page: CaptionPage; style: CaptionStyle; colors: Colors}> =
   const pos = style.position ?? 'bottom';
   const hi = colors[style.highlight ?? 'coral'] ?? colors.coral;
   const justify = pos === 'top' ? 'flex-start' : pos === 'center' ? 'center' : 'flex-end';
+  if (style.look === 'clean') {
+    const k = easeOut(frame, 0, 5);
+    return (
+      <AbsoluteFill>
+        <div
+          style={{
+            position: 'absolute',
+            left: 60 * u,
+            right: 60 * u,
+            top: (style.y ?? 0.66) * height,
+            transform: `translateY(-50%) translateY(${(1 - k) * 18 * u}px) scale(${0.96 + 0.04 * k})`,
+            opacity: k,
+            textAlign: 'center',
+            fontFamily: CLEAN_FONT,
+            fontWeight: 800,
+            letterSpacing: -0.5 * u,
+            fontSize: 76 * (style.size ?? 1) * u,
+            lineHeight: 1.15,
+            color: '#2A2E2C',
+          }}
+        >
+          {page.words.map((w) => w.text).join(' ')}
+        </div>
+      </AbsoluteFill>
+    );
+  }
   return (
     <AbsoluteFill
       style={{

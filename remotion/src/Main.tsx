@@ -4,6 +4,7 @@ import {AudioTrack} from './components/AudioTrack';
 import {Banner} from './components/Banner';
 import {BarChart} from './components/BarChart';
 import {Checklist} from './components/Checklist';
+import {CleanBg, CleanCard} from './components/Clean';
 import {Captions} from './components/Captions';
 import {Counter} from './components/Counter';
 import {Grain, Vignette} from './components/Grain';
@@ -51,8 +52,14 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           transparent={p.transparent}
           reframePath={p.reframe_path}
           srcAspect={p.src_aspect}
+          scale={p.scale}
+          offsetY={p.offset_y}
         />
       );
+    case 'clean_bg':
+      return <CleanBg brand={p.brand} footer={p.footer} />;
+    case 'clean_card':
+      return <CleanCard {...p} />;
     case 'counter':
       return (
         <Counter

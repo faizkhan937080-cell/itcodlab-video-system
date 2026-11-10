@@ -94,7 +94,9 @@
               "audio_bars",
               "meme_text",
               "sticker",
-              "med"
+              "med",
+              "clean_bg",
+              "clean_card"
             ]
           },
           "props": {
@@ -195,7 +197,9 @@
                     "lottie",
                     "audio_bars",
                     "meme_text",
-                    "sticker"
+                    "sticker",
+                    "clean_bg",
+                    "clean_card"
                   ]
                 },
                 "props": {
@@ -298,7 +302,7 @@
           },
           "underlays": {
             "type": "array",
-            "maxItems": 12,
+            "maxItems": 24,
             "items": {
               "type": "object",
               "required": [
@@ -323,7 +327,9 @@
                     "lottie",
                     "audio_bars",
                     "meme_text",
-                    "sticker"
+                    "sticker",
+                    "clean_bg",
+                    "clean_card"
                   ]
                 },
                 "props": {
@@ -558,6 +564,19 @@
           "type": "number",
           "minimum": 0.4,
           "maximum": 2.5
+        },
+        "look": {
+          "enum": [
+            "tiktok",
+            "clean"
+          ],
+          "description": "clean = dark bold word on light page, no stroke (ref reel-Dfj6PH9tIBB)"
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "clean look: centre of the caption line, fraction of height"
         }
       }
     },

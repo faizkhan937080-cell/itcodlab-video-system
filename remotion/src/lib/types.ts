@@ -12,7 +12,7 @@ export type SceneDef = {
   id: string;
   duration_s: number;
   template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video'
-    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout' | 'lottie' | 'audio_bars' | 'meme_text' | 'sticker' | 'med';
+    | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout' | 'lottie' | 'audio_bars' | 'meme_text' | 'sticker' | 'med' | 'clean_bg' | 'clean_card';
   props?: Record<string, any>;
   transition_in?: TransitionDef;
   zoom?: ZoomKey[]; // punch-in / slow push keyframes on the whole scene (footage + overlays move together)

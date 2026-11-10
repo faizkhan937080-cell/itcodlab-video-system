@@ -8,6 +8,8 @@ export type CaptionStyle = {
   max_words?: number;
   highlight?: string; // key of brand colors, default 'coral'
   size?: number; // 1 = default (72 px at 1080 short side)
+  look?: 'tiktok' | 'clean'; // clean = dark bold word on a light page, no stroke
+  y?: number; // clean look: centre of the line, fraction of height
 };
 export type CaptionPage = {start_s: number; end_s: number; words: CaptionWord[]};
 
