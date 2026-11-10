@@ -1,5 +1,1 @@
-{"engine": "wan", "mode": "faceswap", "test": true, "reel_url": "https://www.instagram.com/reel/Dfhr1AEKCcs/", "frame_s": 0.3,
- "face": "input/test-face-1.png", "face_crop": "iw/3:ih:0:0",
- "reference_frame": 322, "reference_position": 0, "reference_distance": 0.5,
- "quality": {"swapper": "hyperswap_1b_256", "pixel_boost": "1024x1024", "enhancer": "gpen_bfr_1024", "enhancer_blend": 70, "preset": "slow", "crf_quality": 69},
- "swap_budget_s": 5000, "timeout_s": 5600, "account": 1, "run": 3}
+{"engine": "wan", "mode": "faceswap", "test": true, "reel_url": "https://www.instagram.com/reel/Dfhr1AEKCcs/", "frame_s": 0.3, "face": "input/test-face-1.png", "face_crop": "iw/3:ih:0:0", "reference_frame": 322, "reference_position": 0, "reference_distance": 0.5, "quality": {"swapper": "hyperswap_1b_256", "pixel_boost": "512x512", "enhancer": "gpen_bfr_1024", "enhancer_blend": 70, "preset": "slow", "crf_quality": 69}, "swap_budget_s": 1800, "timeout_s": 2400, "account": 2, "run": 4, "chunk_s": 9}

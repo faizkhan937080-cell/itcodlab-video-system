@@ -229,6 +229,23 @@ def cmd_videogen_run(a):
         else:
             face.rename(rw / "face.png")
         spec["_video"], spec["_face"] = fr["src"], str(rw / "face.png")
+        # resumable: finished pieces live in work/faceswap-cache/<name>-<settings> (kept by the workflow's cache step)
+        import hashlib
+        from .faceswap_kaggle import run_chunks
+        sig = hashlib.sha1(json.dumps([raw.get("reel_url"), raw.get("face"), raw.get("quality"), raw.get("chunk_s", 9)],
+                                      sort_keys=True).encode()).hexdigest()[:10]
+        with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
+            with stage("videogen"):
+                r = run_chunks(spec, fr["src"], spec.pop("_face"), ROOT / "work" / "faceswap-cache" / f"{name}-{sig}",
+                               Path(wd) / "video.mp4", lambda s, d: videogen.run(s, None, d),
+                               chunk_s=float(raw.get("chunk_s", 9)), log=print)
+            spec.pop("_video", None)
+            costs.add("videogen", calls=1, engine="faceswap", probe=False, ok=bool(r.get("ok")))
+            print("RESULT", json.dumps(to_native({k: v for k, v in r.items() if k != "last_piece"}), ensure_ascii=False)[:3000])
+            if r.get("ok"):
+                from . import review
+                print("REVIEW", json.dumps(review.publish(wd, f"faceswap-{name}")))
+        return 0 if r.get("ok") else 1
     with tempfile.TemporaryDirectory(prefix="itcod-footage-") as wd:
         with stage("videogen"):
             res = videogen.run_modal(spec, image, wd) if spec["engine"] in ("ltx", "minimax") and spec.get("mode") not in ("gguf", "h3") else videogen.run(spec, image, wd)
@@ -241,9 +258,6 @@ def cmd_videogen_run(a):
         else:
             print(json.dumps(to_native(res), ensure_ascii=False)[:7000])
         vid = Path(wd) / "video.mp4"
-        if spec.get("mode") == "faceswap" and res.get("ok") and vid.exists():   # show Faiz the result: review branch only
-            from . import review
-            print("REVIEW", json.dumps(review.publish(wd, f"faceswap-{name}")))
         if res.get("ok") and vid.exists() and not a.no_upload and not spec["probe"] and not raw.get("test"):   # "test": true = never saved to Drive
             stg = _storage()
             rel = f"output/footage/{name}"

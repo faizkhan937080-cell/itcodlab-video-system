@@ -118,6 +118,7 @@ def prepare(spec, image, work, owner):
     ds.mkdir(parents=True), kn.mkdir(parents=True)
     (ds / "spec.json").write_text(json.dumps(spec), encoding="utf-8")
     if spec.get("mode") == "faceswap":
+        spec = dict(spec)
         shutil.copy(spec.pop("_video"), ds / "in.mp4")
         shutil.copy(spec.pop("_face"), ds / "face.png")
         (ds / "spec.json").write_text(json.dumps(spec), encoding="utf-8")

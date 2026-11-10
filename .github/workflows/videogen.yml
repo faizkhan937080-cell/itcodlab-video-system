@@ -50,7 +50,20 @@ jobs:
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
       - name: Give git push rights for the review branch
         run: git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+      - name: Restore finished face-swap pieces (resume, never start from 0)
+        uses: actions/cache/restore@v4
+        with:
+          path: work/faceswap-cache
+          key: faceswap-cache-${{ github.run_id }}
+          restore-keys: faceswap-cache-
       - name: Make the footage
         run: |
+          mkdir -p work/faceswap-cache
           if [ -n "$SPEC_IN" ]; then FILES="$SPEC_IN"; else FILES=$(git diff --name-only HEAD~1 HEAD -- 'trigger/videogen/*.json'); fi
           for f in $FILES; do [ -f "$f" ] && ./run videogen-run "$f" | tail -40; done
+      - name: Keep finished face-swap pieces for the next run
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: work/faceswap-cache
+          key: faceswap-cache-${{ github.run_id }}
