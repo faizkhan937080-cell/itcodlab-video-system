@@ -2,4 +2,4 @@
  "image_drive": "input/test-face-1.png", "image_crop": "iw/3:ih:0:0",
  "prompt": "A young man with curly dark hair and a beard, wearing a black hoodie, looks into the camera and talks with energy, small natural head movements and hand gestures, soft daylight, shallow depth of field, sharp face, cinematic vertical video",
  "width": 288, "height": 512, "seconds": 4, "upscale": true, "out_width": 1080, "out_height": 1920,
- "gen_budget_s": 2400, "watchdog_s": 2700, "timeout_s": 3600, "run": 1}
+ "gen_budget_s": 2400, "watchdog_s": 2700, "timeout_s": 3600, "run": 2}

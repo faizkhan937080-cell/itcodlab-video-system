@@ -49,7 +49,7 @@ def env():
             "vram_gb": [round(torch.cuda.get_device_properties(i).total_memory / 2**30, 1) for i in range(torch.cuda.device_count())],
             "ram_gb": round(psutil.virtual_memory().total / 2**30, 1), **d}
 step("pip", lambda: sh("-U", "git+https://github.com/huggingface/diffusers", "transformers", "accelerate", "gguf",
-                       "huggingface_hub", "hf_transfer", "bitsandbytes", "sentencepiece", "protobuf", "imageio", "imageio-ffmpeg", "psutil"))
+                       "huggingface_hub", "hf_transfer", "bitsandbytes", "sentencepiece", "protobuf", "imageio", "imageio-ffmpeg", "psutil", "av"))
 os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"   # free speed-up: parallel chunk download of the big model files
 step("env", env)
 import torch
@@ -243,6 +243,9 @@ if pipe is not None and not spec.get("probe"):
             pipe = LTX2ImageToVideoPipeline(**pipe.components)
             _img = Image.open(_img_path).convert("RGB").resize((int(spec["width"]), int(spec["height"])))
         params = list(inspect.signature(pipe.__call__).parameters)
+        for _fn in ("enable_tiling", "enable_slicing"):   # run 2026-11-10: 288x512x97 OOM in VAE decode (5.8 GB conv3d); tiles fix it
+            if hasattr(pipe.vae, _fn):
+                getattr(pipe.vae, _fn)()
         if spec.get("offload", "split") == "split":
             d0, d1 = torch.device("cuda:0"), torch.device("cuda:1")
             def _devs():
