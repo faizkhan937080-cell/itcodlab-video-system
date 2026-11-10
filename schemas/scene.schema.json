@@ -295,6 +295,95 @@
                 }
               }
             }
+          },
+          "underlays": {
+            "type": "array",
+            "maxItems": 12,
+            "items": {
+              "type": "object",
+              "required": [
+                "template"
+              ],
+              "properties": {
+                "template": {
+                  "enum": [
+                    "title",
+                    "kinetic_text",
+                    "banner",
+                    "image",
+                    "lower_third",
+                    "video",
+                    "counter",
+                    "bar_chart",
+                    "checklist",
+                    "split_compare",
+                    "quote",
+                    "stroke",
+                    "paper_cutout",
+                    "lottie",
+                    "audio_bars",
+                    "meme_text",
+                    "sticker"
+                  ]
+                },
+                "props": {
+                  "type": "object"
+                },
+                "start_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "end_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "box": {
+                  "type": "object",
+                  "required": [
+                    "x",
+                    "y",
+                    "w",
+                    "h"
+                  ],
+                  "properties": {
+                    "x": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "y": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "w": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "h": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  }
+                },
+                "follow": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "t",
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "graphics drawn UNDER the scene body (e.g. behind a green-screen keyed person)"
           }
         }
       }

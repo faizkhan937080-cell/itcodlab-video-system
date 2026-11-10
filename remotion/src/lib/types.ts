@@ -18,6 +18,7 @@ export type SceneDef = {
   zoom?: ZoomKey[]; // punch-in / slow push keyframes on the whole scene (footage + overlays move together)
   fx?: FxDef[]; // meme effects on the whole scene: shake, zoom_punch, flash, rgb_split, glitch, freeze
   overlays?: OverlayDef[]; // graphics drawn over the scene, optionally following a tracked subject
+  underlays?: OverlayDef[]; // graphics drawn under the scene body (behind a keyed person)
 };
 
 export type OverlayDef = {

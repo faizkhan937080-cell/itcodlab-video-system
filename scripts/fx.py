@@ -197,7 +197,7 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
     for sc in new.get("scenes", []):
         p = sc.get("props") or {}
         src = p.get("src")
-        wants = [k for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "remove_bg", "reframe", "track_from", "denoise") if p.get(k)]
+        wants = [k for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "chroma_key", "remove_bg", "reframe", "track_from", "denoise") if p.get(k)]
         if isinstance(src, str) and sc.get("template") == "video" and (pub / src).exists() and (hooks.get("vfr") or _is_vfr)(pub / src):
             wants.insert(0, "cfr")
         if not wants or not isinstance(src, str):
@@ -243,6 +243,13 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
                     voice.clean_video_audio(pub / p["src"], out)
                 p["src"] = f"fx/{out.name}"
                 r["clean_voice"] = True
+            if p.get("chroma_key") and is_video:
+                from . import matte
+                out, col = (hooks.get("chroma") or matte.chroma_key)(pub / p["src"], pub / "fx", p.get("chroma_key"))
+                p["src"] = f"fx/{out.name}"
+                p["transparent"] = True
+                p.pop("chroma_key", None)
+                r["chroma_key"] = {"file": out.name, "color": col}
             if p.get("remove_bg"):
                 from . import matte
                 out = matte.process(pub / p["src"], pub / "fx", remover=hooks.get("matte"))
@@ -269,7 +276,7 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
             rep["errors"][sc["id"]] = f"{type(e).__name__}: {e}"[:200]
             log(f"effect failed on scene {sc['id']}: {e}")
             sc["props"] = copy.deepcopy(next(s for s in plan["scenes"] if s["id"] == sc["id"]).get("props") or {})
-            for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "remove_bg", "reframe", "track_from", "denoise"):
+            for k in ("stabilize", "speed", "speed_ramp", "clean_voice", "chroma_key", "remove_bg", "reframe", "track_from", "denoise"):
                 sc["props"].pop(k, None)     # keep the clip as shot, drop the effect that failed
     if new.get("grain") and not new.get("grain_src"):
         grain_tile(pub / "fx" / "grain.png")

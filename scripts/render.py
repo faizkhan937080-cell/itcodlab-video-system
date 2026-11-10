@@ -70,7 +70,7 @@ def _asset_paths(node, found):
     elif isinstance(node, list):
         for v in node:
             _asset_paths(v, found)
-    elif isinstance(node, str) and node.startswith(("assets/", "input/")):
+    elif isinstance(node, str) and node.startswith(("assets/", "input/", "creators/")):
         found.add(node)
 
 

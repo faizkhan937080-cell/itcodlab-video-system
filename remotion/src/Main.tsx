@@ -138,6 +138,15 @@ const SceneWrap: React.FC<{scene: SceneDef; colors: Colors; stepFps?: number}> =
     <AbsoluteFill style={style}>
       <AbsoluteFill style={zoomStyle}>
        <MemeFx fx={scene.fx}>
+        {(scene.underlays ?? []).map((ov, i) => {
+          const from = Math.round((ov.start_s ?? 0) * fps);
+          const to = ov.end_s !== undefined ? Math.round(ov.end_s * fps) : Math.round(scene.duration_s * fps);
+          return (
+            <Sequence key={`un-${i}`} from={from} durationInFrames={Math.max(1, to - from)}>
+              <Overlay ov={ov} colors={colors} />
+            </Sequence>
+          );
+        })}
         {step > 1 ? (
           <Freeze frame={Math.floor(frame / step) * step}>
             <SceneBody scene={scene} colors={colors} />

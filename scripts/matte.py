@@ -77,3 +77,56 @@ def process(src, out_dir, remover=None, lim=None):
     if is_img:
         return remove_image(src, dst, remover)
     return remove_video(src, dst, remover, int(lim.get("matte", {}).get("max_frames", 360)))
+
+
+# ---- green screen (chroma key): far faster and cleaner than rembg for studio footage ----
+def key_color(src, samples=6):
+    """Median colour of the frame border over a few frames -> 'RRGGBB'. The screen fills the edges in green-screen shots."""
+    cap = cv2.VideoCapture(str(src))
+    n = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+    px = []
+    for k in range(samples):
+        if n:
+            cap.set(cv2.CAP_PROP_POS_FRAMES, int(n * (k + 0.5) / samples))
+        ok, fr = cap.read()
+        if not ok:
+            continue
+        h, w = fr.shape[:2]
+        b = max(4, min(h, w) // 25)
+        edge = np.concatenate([fr[:b].reshape(-1, 3), fr[:, :b].reshape(-1, 3), fr[:, -b:].reshape(-1, 3)])
+        px.append(edge)
+    cap.release()
+    if not px:
+        raise RuntimeError("could not read frames for the key colour")
+    allp = np.concatenate(px)
+    g = allp[(allp[:, 1].astype(int) - np.maximum(allp[:, 0], allp[:, 2]).astype(int)) > 25]   # green-dominant pixels only
+    bgr = np.median(g if len(g) > 100 else allp, axis=0).astype(int)
+    return f"{bgr[2]:02X}{bgr[1]:02X}{bgr[0]:02X}"
+
+
+def chroma_filter(color, similarity=0.13, blend=0.06, despill=0.6):
+    """ffmpeg filter chain: key -> despill (removes green fringe on hair/skin) -> alpha format."""
+    return (f"format=yuv444p,chromakey=0x{color}:{similarity}:{blend},format=gbrap,"
+            f"despill=type=green:mix={despill}:expand=0:alpha=0,format=yuva420p")
+
+
+def chroma_key(src, out_dir, opts=None, lim=None):
+    """Green-screen clip -> VP9 WebM with alpha at FULL source size, voice kept (opus). Cached."""
+    lim = lim or limits()
+    opts = opts if isinstance(opts, dict) else {}
+    src, out_dir = Path(src), Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    color = (opts.get("color") or key_color(src)).lstrip("#").upper()
+    sim, bl, ds = float(opts.get("similarity", 0.13)), float(opts.get("blend", 0.06)), float(opts.get("despill", 0.6))
+    dst = out_dir / f"{src.stem}.key.{_key(src, f'{color}{sim}{bl}{ds}')}.webm"
+    if dst.exists():
+        return dst, color
+    m = lim.get("matte", {})
+    cmd = ["ffmpeg", "-y", "-v", "error", "-i", str(src), "-c:a", "libopus", "-b:a", "192k", "-vf", chroma_filter(color, sim, bl, ds),
+           "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "0", "-crf", str(m.get("key_crf", 18)),
+           "-row-mt", "1", "-deadline", "good", "-cpu-used", str(m.get("key_cpu_used", 5)), "-auto-alt-ref", "0", str(dst)]
+    rc, _, err = run_cmd(cmd, timeout=int(m.get("key_timeout_s", 3 * 3600)))
+    if rc != 0:
+        dst.unlink(missing_ok=True)
+        raise RuntimeError("chroma key failed: " + tail(err, 3))
+    return dst, color

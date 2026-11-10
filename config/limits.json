@@ -232,7 +232,11 @@
   },
   "matte": {
     "max_frames": 360,
-    "_note": "background removal on video: at most this many frames per clip (CPU time)"
+    "_note": "background removal on video: at most this many frames per clip (CPU time)",
+    "key_crf": 18,
+    "key_cpu_used": 5,
+    "key_timeout_s": 10800,
+    "_note_key": "green screen: VP9 alpha at source size; crf 18 near-lossless edges"
   },
   "safezone": {
     "_note": "Instagram Reels / 9:16. strict = recommended text-free zone (Meta ad guidance), hard = never put text here.",
