@@ -159,17 +159,18 @@ def run(spec, image, out_dir, poll_s=20, timeout_s=None):
             rc, out, err = kg._cli(["kernels", "push", "-p", str(kn)], 300)
             if rc != 0:
                 return {"ok": False, "error_hint": "kernel push failed: " + tail(err or out, 2)}
+            w = ""
             while time.time() - t0 < timeout_s:
                 time.sleep(poll_s)
                 rc, out, err = kg._cli(["kernels", "status", f"{owner}/{KERNEL}"], 120)
-                w = kg._status_word(out + err)
+                w = kg._status_word(out + err) or w
                 if w == "COMPLETE":
                     break
                 if w in ("ERROR", "CANCEL"):
                     log(f"videogen: kernel {w.lower()}")
                     break
-            else:
-                return {"ok": False, "error_hint": "timeout"}
+            else:   # say WHERE it was stuck (QUEUED = no free GPU / GPU not enabled on account; RUNNING = too slow)
+                return {"ok": False, "error_hint": f"timeout (last kaggle status: {w or 'unknown'})"}
             outdir = Path(work) / "out"
             rc, out, err = kg._cli(["kernels", "output", f"{owner}/{KERNEL}", "-p", str(outdir)], 900)
             rf = outdir / "result.json"
