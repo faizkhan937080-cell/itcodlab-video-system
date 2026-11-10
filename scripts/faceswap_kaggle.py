@@ -17,8 +17,10 @@ def sh(cmd, timeout=3600):
 try:
     rc, o, e = sh("git clone -q --depth 1 --branch 3.3.2 https://github.com/facefusion/facefusion.git /kaggle/ff")
     res["steps"]["clone"] = rc
-    reqs = [l.strip() for l in open("/kaggle/ff/requirements.txt") if l.strip() and not l.startswith("onnxruntime")]
-    rc, o, e = sh([sys.executable, "-m", "pip", "install", "-q", *reqs, "onnxruntime-gpu==1.22.0"], 1800)
+    # pins dropped: Kaggle's newer Python has no wheel for onnx==1.17 (run 1 failed building it); numpy stays Kaggle's own
+    reqs = [l.split("==")[0].strip() for l in open("/kaggle/ff/requirements.txt")
+            if l.strip() and not l.startswith(("onnxruntime", "numpy"))]
+    rc, o, e = sh([sys.executable, "-m", "pip", "install", "-q", "--only-binary=onnx", *reqs, "onnxruntime-gpu"], 1800)
     res["steps"]["pip"] = {"rc": rc, "err": e[-400:]}
     # onnxruntime-gpu needs the CUDA/cuDNN libs that pip's nvidia-* wheels ship
     libs = [d for d in glob.glob(sys.prefix + "/lib/python3*/*-packages/nvidia/*/lib")]
