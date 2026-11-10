@@ -364,6 +364,16 @@ if pipe is not None and not spec.get("probe"):
             return ck
         if "callback_on_step_end" in params:
             kw["callback_on_step_end"] = _cb
+        _orig_dec = pipe.vae.decode
+        def _dec(*a, **k):   # denoise done: move the DiT off the GPUs so the VAE decode has room (OOM 2026-11-10 even with tiling)
+            try:
+                pipe.transformer.to("cpu")
+            except Exception:
+                pass
+            import gc
+            gc.collect(); torch.cuda.empty_cache()
+            return _orig_dec(*a, **k)
+        pipe.vae.decode = _dec
         out = pipe(**kw)
         export_to_video(out.frames[0], "/kaggle/working/video.mp4", fps=int(spec.get("fps", 24)))
         return {"peak_vram_gb": [round(torch.cuda.max_memory_allocated(i) / 2**30, 1) for i in range(torch.cuda.device_count())]}
