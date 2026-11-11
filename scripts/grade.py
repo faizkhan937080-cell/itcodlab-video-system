@@ -177,7 +177,10 @@ def _median_after(pix, p):
     return float(np.median(luma(apply_params(pix, {**p, "strength": 1.0}))))
 
 
-def solve(stats, pixels, mode="auto", ref=None, lim=None, strength=None):
+SKIN_LUMA = (0.48, 0.68)   # a face is exposed right between these (sRGB luma); outside -> exposure moves it to the nearest edge
+
+
+def solve(stats, pixels, mode="auto", ref=None, lim=None, strength=None, face_pixels=None):
     """stats = measure(...) of the footage, pixels = a pooled sample (N,1,3) for the closed loop, ref = stats of the reference
     (same shape) or None. Returns (params, notes). `off` -> identity. `natural` -> fix only. `auto` -> fix + reference look."""
     c = cfg(lim)
@@ -202,14 +205,20 @@ def solve(stats, pixels, mode="auto", ref=None, lim=None, strength=None):
     if use_ref and stats["contrast"] > 0.05:
         p["contrast"] = float(_clamp(ref["contrast"] / stats["contrast"], *c["contrast_limit"]))
     target = float(_clamp(ref["p50"], 0.25, 0.65)) if use_ref else c["median_luma"]
-    base = _median_after(pixels, p)
+    expo = pixels
+    if face_pixels is not None and len(face_pixels) >= 500:
+        # talking head: the FACE sets the exposure (a navy shirt and dark hair must not push the skin into white)
+        expo = face_pixels
+        target = float(_clamp(_median_after(expo, p), *SKIN_LUMA))
+        notes.append(f"exposure judged on the face (median luma {_median_after(expo, p):.2f}, wanted {SKIN_LUMA[0]}..{SKIN_LUMA[1]})")
+    base = _median_after(expo, p)
     for _ in range(3):
-        if abs(_median_after(pixels, p) - target) > c["median_deadband"]:
+        if abs(_median_after(expo, p) - target) > c["median_deadband"]:
             lo, hi = -c["exposure_limit_stops"], c["exposure_limit_stops"]
             for _i in range(14):
                 mid = (lo + hi) / 2
                 p["exposure"] = float(2 ** mid)
-                lo, hi = (mid, hi) if _median_after(pixels, p) < target else (lo, mid)
+                lo, hi = (mid, hi) if _median_after(expo, p) < target else (lo, mid)
         probe = {**p, "black_in": 0.0, "white_in": 1.0, "black_out": 0.0, "white_out": 1.0, "contrast": 1.0, "saturation": 1.0}
         y = luma(apply_params(pixels, {**probe, "strength": 1.0}))
         p1e, p99e = (float(v) for v in np.percentile(y, [1, 99]))

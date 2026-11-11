@@ -142,7 +142,27 @@ def chroma_filter(color, similarity=0.13, blend=0.06, despill=0.6, cube=None, so
     return (f"[0:v]{base},split=2[c][m];[m]{curve}[al];{pic};[g][al]alphamerge,format=yuva420p[v]")
 
 
+FG_D = 0.12   # colour distance from the screen colour above which a pixel is the PERSON. 0.22 rejected the whole face (skin sits ~0.19 away)
+
 PAGE = (250, 250, 249)   # the clean page colour behind the person (remotion Clean.tsx)
+
+
+def face_pixels(frames):
+    """Skin-locus pixels of the person (N,1,3), or None when there is not enough skin to judge a face by."""
+    from . import grade as G
+    out = []
+    for f in frames:
+        u8 = f.reshape(-1, 3) * 255.0
+        y = 0.299 * u8[:, 0] + 0.587 * u8[:, 1] + 0.114 * u8[:, 2]
+        cb = 128 - 0.168736 * u8[:, 0] - 0.331264 * u8[:, 1] + 0.5 * u8[:, 2]
+        cr = 128 + 0.5 * u8[:, 0] - 0.418688 * u8[:, 1] - 0.081312 * u8[:, 2]
+        m = (cb >= G.SKIN_CB[0]) & (cb <= G.SKIN_CB[1]) & (cr >= G.SKIN_CR[0]) & (cr <= G.SKIN_CR[1]) & (y > 50) & (y < 235)
+        if m.any():
+            out.append(f.reshape(-1, 3)[m])
+    if not out:
+        return None
+    px = np.concatenate(out)
+    return px.reshape(-1, 1, 3) if len(px) >= 500 else None
 
 
 def person_frames(src, color, start_s, end_s, n=6):
@@ -155,7 +175,7 @@ def person_frames(src, color, start_s, end_s, n=6):
         ycc = cv2.cvtColor(bgr, cv2.COLOR_BGR2YCrCb).astype(float)
         d = np.hypot(ycc[..., 1] - kc[1], ycc[..., 2] - kc[2]) / 255.0
         b_, g_, r_ = [bgr[..., i].astype(int) for i in range(3)]
-        m = (d > 0.22) & (g_ - np.maximum(r_, b_) < 10)
+        m = (d > FG_D) & (g_ - np.maximum(r_, b_) < 10)
         if m.sum() > 2000:
             px = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)[m].astype(np.float32) / 255.0
             out.append(px.reshape(-1, 1, 3)[:: max(1, len(px) // 20000)])
@@ -172,10 +192,11 @@ def person_grade(src, color, start_s, end_s, mode, ref, strength, lim, work):
         return None, {"mode": mode, "skipped": "no person pixels found to measure"}
     stats = G.measure(frames, lim)
     pooled = np.concatenate(frames)
-    params, notes = G.solve(stats, pooled, mode, ref, lim, strength)
+    face = face_pixels(frames)
+    params, notes = G.solve(stats, pooled, mode, ref, lim, strength, face_pixels=face)
     rep = {"mode": mode, "stats": {k: stats[k] for k in ("p1", "p50", "p99", "colourfulness", "skin_hue", "spread")},
            "params": {k: (round(v, 4) if isinstance(v, float) else [round(x, 4) for x in v] if isinstance(v, list) else v) for k, v in params.items()},
-           "verify": G.verify(pooled, params, stats, ref, lim), "notes": notes + stats["warnings"]}
+           "face_pixels": 0 if face is None else int(len(face)), "verify": G.verify(pooled, params, stats, ref, lim), "notes": notes + stats["warnings"]}
     if G.is_identity(params, lim):
         rep["changed"] = False
         return None, rep
@@ -236,7 +257,7 @@ def key_quality(bgr, rgba, color, lim=None):
     kc = cv2.cvtColor(key, cv2.COLOR_BGR2YCrCb).astype(float)[0, 0]
     d = np.hypot(ycc[..., 1] - kc[1], ycc[..., 2] - kc[2]) / 255.0
     b_, g_, r_ = [bgr[..., i].astype(int) for i in range(3)]
-    fg = (d > 0.22) & (g_ - np.maximum(r_, b_) < 10)
+    fg = (d > FG_D) & (g_ - np.maximum(r_, b_) < 10)
     bg = d < 0.05
     out = {"fg_share": round(float(fg.mean()), 3), "bg_share": round(float(bg.mean()), 3)}
     out["fg_alpha"] = round(float(alpha[fg].mean()), 4) if fg.sum() > 0.01 * fg.size else None
@@ -270,6 +291,8 @@ def tune_key(src, color, start_s, end_s, lim, n=6):
         per = []
         for t, bgr in srcs:
             rgba = _png_frame(["-ss", str(t), "-i", str(src), "-vf", chroma_chain(color, sim, bl, ds) + ",format=rgba"])
+            lo, hi = SOLID                                   # judge the matte as the final one will be (solid-core step applied)
+            rgba[..., 3] = np.clip((rgba[..., 3].astype(np.float32) - lo) * 255.0 / (hi - lo), 0, 255).astype(np.uint8)
             per.append(key_quality(bgr, rgba, color, lim))
         a = _agg(per)
         tried.append({"similarity": sim, "blend": bl, "despill": ds, **a})

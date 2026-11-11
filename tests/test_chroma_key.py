@@ -134,3 +134,17 @@ def test_solid_core_fills_see_through_skin(tmp_path):
     assert fixed[face].mean() > plain[face].mean() + 40               # and is fixed
     assert fixed[5:60, 5:60].mean() < 5                               # green wall stays gone
     assert fixed[200:250, 90:130].mean() > 250                        # shirt stays solid
+
+
+def test_face_is_measured_and_sets_the_exposure(tmp_path):
+    """Real shoot: the person mask threw the whole face away (skin is close to the screen colour), so a dark shirt made the grade
+    brighten everything by a full stop and the face went white. The face must be in the measurement and decide the exposure."""
+    src = tmp_path / "gs.mp4"
+    _clip(src)                                         # bright skin face, big dark navy shirt, dark hair
+    col = matte.key_color(src)
+    frames = matte.person_frames(src, col, None, None)
+    face = matte.face_pixels(frames)
+    assert face is not None and len(face) > 500
+    cube, rep = matte.person_grade(src, col, None, None, "auto", None, None, matte.limits(), tmp_path)
+    assert rep["face_pixels"] > 500
+    assert abs(rep["params"]["exposure"] - 1.0) < 0.12   # face already well exposed: no brightening
