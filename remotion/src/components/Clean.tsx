@@ -70,8 +70,11 @@ export const CleanBg: React.FC<{brand?: string; footer?: string[]}> = ({brand, f
         </div>
       ) : null}
       {footer && footer.length ? (
-        <div style={{position: 'absolute', bottom: 0.17 * height, width: '100%', textAlign: 'center', fontSize: 30 * u, fontWeight: 500, color: C.ink}}>
-          {footer.join('    ')}
+        // reference: handles in one centred row at about 82% of the height, small, medium weight, dark grey
+        <div style={{position: 'absolute', top: 0.82 * height, transform: 'translateY(-50%)', width: '100%', textAlign: 'center', fontSize: 34 * u, fontWeight: 600, color: C.ink, letterSpacing: -0.2 * u}}>
+          {footer.map((f, i) => (
+            <span key={i} style={{display: 'inline-block', marginLeft: i ? 44 * u : 0}}>{f}</span>
+          ))}
         </div>
       ) : null}
     </AbsoluteFill>
