@@ -113,8 +113,9 @@ export const NtCard: React.FC<Record<string, any>> = (p) => {
                   borderRadius: 22 * u,
                   background: r.hi ? 'rgba(14,107,80,0.10)' : 'rgba(255,255,255,0.55)',
                   border: `${(r.hi ? 2.6 : 1.4) * u}px solid ${r.hi ? C.green : NT.line}`,
-                  opacity: Math.min(1, s * 1.5),
-                  transform: `translateY(${(1 - s) * 22 * u}px)`,
+                  // rows are on the card from the start (dim), each lights up when it is spoken: the card is never empty
+                  opacity: 0.38 + 0.62 * Math.min(1, s * 1.5),
+                  transform: `scale(${0.985 + 0.015 * Math.min(1, s)})`,
                 }}
               >
                 <Icon name={r.icon ?? 'check'} size={(full ? 76 : 62) * u} />
@@ -122,9 +123,11 @@ export const NtCard: React.FC<Record<string, any>> = (p) => {
                   <div style={{fontSize: (full ? 60 : 48) * u, fontWeight: 800, lineHeight: 1.12}}>{r.text}</div>
                   {r.sub ? <div style={{fontSize: (full ? 38 : 30) * u, fontWeight: 500, color: NT.sub, marginTop: 4 * u}}>{r.sub}</div> : null}
                 </div>
-                <div style={{width: 44 * u, height: 44 * u, borderRadius: 10 * u, border: `${2.4 * u}px solid ${done ? C.green : NT.line}`, background: done ? C.green : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 30 * u, fontWeight: 900, flex: 'none'}}>
-                  {done ? '✓' : ''}
-                </div>
+                {r.icon === 'cross' ? null : (
+                  <div style={{width: 44 * u, height: 44 * u, borderRadius: 10 * u, border: `${2.4 * u}px solid ${done ? C.green : NT.line}`, background: done ? C.green : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 30 * u, fontWeight: 900, flex: 'none'}}>
+                    {done ? '✓' : ''}
+                  </div>
+                )}
               </div>
             );
           })}
