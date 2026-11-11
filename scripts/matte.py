@@ -123,16 +123,23 @@ def chroma_chain(color, similarity=0.13, blend=0.06, despill=0.6):
             f"despill=type=green:mix={despill}:expand=0:alpha=0,format=yuva420p")
 
 
-def chroma_filter(color, similarity=0.13, blend=0.06, despill=0.6, cube=None):
-    """ffmpeg filter graph [0:v] -> [v]: key -> despill (removes green fringe on hair/skin) -> colour grade (3D LUT, picture
+SOLID = (30, 120)   # alpha 0-255: below LO = background (gone), above HI = fully solid. Real keyed faces came out grey (see-through skin)
+
+
+def chroma_filter(color, similarity=0.13, blend=0.06, despill=0.6, cube=None, solid=SOLID):
+    """ffmpeg filter graph [0:v] -> [v]: key -> despill (removes green fringe on hair/skin) -> solid core (the matte is steepened so
+    skin/beard that the key made half see-through becomes solid, green-wall leftovers stay gone) -> colour grade (3D LUT, picture
     only: alpha is split off and put back) -> alpha format. The grade comes AFTER the key so the green wall never steers it."""
     base = (f"format=yuv444p,chromakey=0x{color}:{similarity}:{blend},format=gbrap,"
             f"despill=type=green:mix={despill}:expand=0:alpha=0")
+    lo, hi = solid if solid else (0, 255)
+    curve = f"alphaextract,format=gray,lut=y='clip((val-{lo})*255/{max(1, hi - lo)},0,255)',gblur=sigma=0.8"
     if not cube:
-        return f"[0:v]{base},format=yuva420p[v]"
-    c = str(cube).replace("\\", "/").replace(":", r"\:")
-    return (f"[0:v]{base},split=2[c][m];[m]alphaextract[al];[c]format=gbrp,lut3d=file='{c}':interp=tetrahedral[g];"
-            f"[g][al]alphamerge,format=yuva420p[v]")
+        pic = "[c]format=gbrp[g]"
+    else:
+        c = str(cube).replace("\\", "/").replace(":", r"\:")
+        pic = f"[c]format=gbrp,lut3d=file='{c}':interp=tetrahedral[g]"
+    return (f"[0:v]{base},split=2[c][m];[m]{curve}[al];{pic};[g][al]alphamerge,format=yuva420p[v]")
 
 
 PAGE = (250, 250, 249)   # the clean page colour behind the person (remotion Clean.tsx)
@@ -305,7 +312,7 @@ def chroma_key(src, out_dir, opts=None, lim=None):
     color = (opts.get("color") or key_color(src, start_s=start_s, end_s=end_s)).lstrip("#").upper()
     manual = all(k in opts for k in ("similarity", "blend", "despill"))
     g_mode = opts.get("grade_mode", "auto")
-    tag = f"{color}{opts.get('similarity')}{opts.get('blend')}{opts.get('despill')}{start_s}{end_s}g{g_mode}{opts.get('grade_strength')}"
+    tag = f"{color}{opts.get('similarity')}{opts.get('blend')}{opts.get('despill')}{start_s}{end_s}g{g_mode}{opts.get("grade_strength")}s{SOLID}"
     dst = out_dir / f"{src.stem}.key.{_key(src, tag)}.webm"
     side = dst.with_suffix(".quality.json")
     if dst.exists() and side.exists():

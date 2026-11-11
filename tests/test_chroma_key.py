@@ -116,3 +116,21 @@ def test_check_image_shows_raw_alpha_result(tmp_path):
     out, _, q = matte.chroma_key(src, tmp_path / "fx")
     img = cv2.imread(str(out.parent / q["check_image"]))
     assert img is not None and img.shape[0] == 3 * 360 and img.shape[1] > 3 * 150
+
+
+def test_solid_core_fills_see_through_skin(tmp_path):
+    """Real shoot: the key made face/beard grey (see-through) = whiteness. The solid-core step must make that skin much more opaque
+    while the green wall stays gone."""
+    src = tmp_path / "gs.mp4"
+    _clip(src, spill=True)
+    col = matte.key_color(src)
+
+    def alpha(solid):
+        return matte._png_frame(["-i", str(src), "-filter_complex", matte.chroma_filter(col, 0.13, 0.06, 0.6, solid=solid),
+                                 "-map", "[v]", "-pix_fmt", "rgba"])[..., 3]
+    plain, fixed = alpha(None), alpha(matte.SOLID)
+    face = (slice(120, 140), slice(100, 120))
+    assert plain[face].mean() < 200                                   # the problem is real in this clip
+    assert fixed[face].mean() > plain[face].mean() + 40               # and is fixed
+    assert fixed[5:60, 5:60].mean() < 5                               # green wall stays gone
+    assert fixed[200:250, 90:130].mean() > 250                        # shirt stays solid
