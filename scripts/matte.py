@@ -312,7 +312,7 @@ def chroma_key(src, out_dir, opts=None, lim=None):
     color = (opts.get("color") or key_color(src, start_s=start_s, end_s=end_s)).lstrip("#").upper()
     manual = all(k in opts for k in ("similarity", "blend", "despill"))
     g_mode = opts.get("grade_mode", "auto")
-    tag = f"{color}{opts.get('similarity')}{opts.get('blend')}{opts.get('despill')}{start_s}{end_s}g{g_mode}{opts.get("grade_strength")}s{SOLID}"
+    tag = f"{color}{opts.get('similarity')}{opts.get('blend')}{opts.get('despill')}{start_s}{end_s}g{g_mode}{opts.get('grade_strength')}s{SOLID}"
     dst = out_dir / f"{src.stem}.key.{_key(src, tag)}.webm"
     side = dst.with_suffix(".quality.json")
     if dst.exists() and side.exists():
