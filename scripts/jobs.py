@@ -6,6 +6,7 @@ says so). State lives in Drive jobs/state/<id>.json. Nothing is deleted; inbox f
 """
 import re
 import json
+import shutil
 import time
 import traceback
 from datetime import datetime, timezone
@@ -18,7 +19,7 @@ from .common import limits, log, now_iso, tail, workdir
 from .dna import REQUIRED_TYPES, errors_tail, save_dna, validate
 from .dna_check import check as check_dna
 
-TERMINAL = {"DONE", "FAILED", "NEEDS_INPUT", "MEASURED"}
+TERMINAL = {"DONE", "FAILED", "NEEDS_INPUT", "MEASURED", "SAMPLE_OK"}
 
 
 VIDEO_SUFFIXES = (".mp4", ".mkv", ".webm", ".mov")
@@ -232,6 +233,8 @@ class Worker:
             return self.step_analyze(job, st)
         if job.get("type") == "render":
             return self.step_render(job, st)
+        if job.get("type") == "style":
+            return self.step_style(job, st)
         self.set_status(st, job, "NEEDS_INPUT", f"unknown job type: {job.get('type')}")
         return False
 
@@ -303,6 +306,16 @@ class Worker:
                 from . import costs as _costs
                 _t0, _m0 = time.time(), _costs.mark()
                 res = run_pipeline(str(src), wd / "analysis", job_id=jid, mode=job["mode"])
+                if not job.get("bulk") and job["mode"] != "audio":     # rulebooks/23 rule 2: what MOVES, not only what cuts
+                    try:
+                        with stage("style_record"):
+                            from . import style_record
+                            rec = style_record.build(src, res["out_root"], self.lim)
+                            if rec.get("event_collage"):
+                                shutil.copy2(Path(res["out_root"]) / rec["event_collage"], Path(res["pack"]) / "collage_events.jpg")
+                            st["style_record"] = {"complete": rec["complete"], "events": rec["event_count"], "problems": rec["problems"]}
+                    except Exception as e:  # noqa: BLE001
+                        st["style_record"] = {"complete": False, "error": f"{type(e).__name__}: {e}"[:160]}
                 from .describe import describe_pack
                 idx = json.loads((res["out_root"] / "collage_index.json").read_text(encoding="utf-8"))
                 bulk = bool(job.get("bulk"))
@@ -638,6 +651,36 @@ class Worker:
             return True
         return False
 
+    # ================================================================ style record of an already stored reference
+    def step_style(self, job, st):
+        """job: {type: style, file: <Drive path of the reference video>, out: <Drive folder for the record>}"""
+        if st["status"] != "QUEUED":
+            return False
+        src_rel, out_rel = job.get("file"), job.get("out")
+        if not src_rel or not out_rel:
+            self.set_status(st, job, "NEEDS_INPUT", "style job needs 'file' (reference video) and 'out' (folder)")
+            return False
+        try:
+            from . import style_record
+            from .common import stage
+            wd = self.work / job["id"]
+            wd.mkdir(parents=True, exist_ok=True)
+            local = wd / ("source" + (Path(src_rel).suffix or ".mp4"))
+            self.storage.fetch(src_rel, local)
+            with stage("style_record"):
+                rec = style_record.build(local, wd / "style", self.lim)
+            self.storage.put_file(wd / "style" / "style_record.json", f"{out_rel}/style_record.json")
+            if rec.get("event_collage"):
+                self.storage.put_file(wd / "style" / rec["event_collage"], f"{out_rel}/{rec['event_collage']}")
+                shutil.copy2(wd / "style" / rec["event_collage"], wd / "style" / "collage_events.jpg") if rec["event_collage"] != "collage_events.jpg" else None
+            from .review import publish
+            st["review"] = publish(wd / "style", job["id"], None)
+            st["style_record"] = {"complete": rec["complete"], "events": rec["event_count"], "problems": rec["problems"], "path": f"{out_rel}/style_record.json"}
+            self.set_status(st, job, "DONE", f"style record: {rec['event_count']} events, complete={rec['complete']} {rec['problems']}")
+        except Exception as e:  # noqa: BLE001
+            return self.failed(st, job, "style", e)
+        return False
+
     # ================================================================ render jobs
     def _plan_rel(self, job, st):
         return f"jobs/plans/{job['id']}-v{st['plan_ver']}.json"
@@ -659,9 +702,16 @@ class Worker:
                 plan = self.storage.read_json(rel)
             except Exception:
                 return False
+            try:                       # a plan sent right after a code push must meet the NEW rules, not the old ones in memory
+                self._self_update()
+            except Exception as e:  # noqa: BLE001
+                log(f"self-update before plan check skipped: {e}")
             errs = validate("scene", plan)
+            if not errs:
+                from . import protocol
+                errs = protocol.check_plan(plan, self.storage, self.lim)
             if errs:
-                st["validation_errors"] = errors_tail(errs)
+                st["validation_errors"] = errors_tail(errs) if not isinstance(errs, list) or not errs or not isinstance(errs[0], str) else "\n".join(errs)[:1500]
                 st["plan_ver"] += 1
                 self.set_status(st, job, "AWAIT_PLAN",
                                 f"Plan v{st['plan_ver'] - 1} invalid (see validation_errors). Send v{st['plan_ver']}.")
@@ -682,9 +732,25 @@ class Worker:
             return self._render_stage(job, st, wd, "preview", "output/previews",
                                       f"{jid}_preview_v{st['plan_ver']}.mp4", "AWAIT_GATE5",
                                       "Preview uploaded. Watch it and approve gate 5.")
+        if s == "AWAIT_LOOK":
+            from . import protocol
+            fc = st.get("frame_check") or {}
+            dec, fb = self.approval(st, job, protocol.LOOK_GATE, st.get("look_rev", st["plan_ver"]))
+            if dec == "Y" and f"sha={fc.get('sha')}" in fb:
+                self.set_status(st, job, st.get("after_look", "AWAIT_GATE5"), "Claude looked at the frames: " + fb.split("saw:", 1)[-1].strip()[:160])
+                return True
+            return False
         if s == "AWAIT_GATE5":
             dec, fb = self.approval(st, job, 5, st["plan_ver"])
             if dec == "Y":
+                try:
+                    kind = (self.storage.read_json(st["paths"]["plan"]).get("protocol") or {}).get("kind")
+                except Exception:  # noqa: BLE001
+                    kind = None
+                if kind == "sample":
+                    st["sample_ok"] = True
+                    self.set_status(st, job, "SAMPLE_OK", "Sample approved. Send the FULL plan as a new job with protocol.sample_job = " + jid)
+                    return False
                 self.set_status(st, job, "RENDERING_FINAL", "rendering 4K master")
                 return True
             if dec == "N":
@@ -774,13 +840,41 @@ class Worker:
             except Exception:  # noqa: BLE001
                 pass
             rel = self.storage.put_file(out, f"{folder}/{fname}")
+            fcheck = self._frame_check(job, st, wd, out, quality, folder, fname)
             key = "preview" if quality == "preview" else "final_candidate"
             st["paths"][key] = rel
             st["output_link"] = rel
             st[f"{quality}_check"] = chk["probe"]
             if "clone_ok" in st and dnas:
                 note += " | clone check " + ("OK" if st["clone_ok"] else "DIFFERS, see " + st["clone_report"])
+            if fcheck is not None and not fcheck["ok"]:     # automatic frame problems: back to the plan, nothing goes to Faiz
+                st["validation_errors"] = "frame check failed: " + "; ".join(fcheck["problems"])
+                st["plan_ver"] += 1
+                self.set_status(st, job, "AWAIT_PLAN", f"Frame check failed ({'; '.join(fcheck['problems'][:2])}). Fix and send plan v{st['plan_ver']}.")
+                return True
+            if fcheck is not None:
+                st["frame_check"] = {k: fcheck[k] for k in ("sha", "collage", "times", "duration_s")}
+                st["look_rev"] = st["plan_ver"] * 10 + (1 if quality == "preview" else 2)
+                st["after_look"] = next_status
+                self.set_status(st, job, "AWAIT_LOOK", note + " | frames ready: Claude must look (./run look-ok)")
+                return True
             self.set_status(st, job, next_status, note)
             return True
         except Exception as e:  # noqa: BLE001
             return self.failed(st, job, f"render_{quality}", e)
+
+    def _frame_check(self, job, st, wd, out, quality, folder, fname):
+        """rulebooks/23 rule 1: frames every ~6 s -> collage in Drive + review branch. Never silently skipped."""
+        from . import protocol
+        fc = protocol.frame_check(out, Path(wd) / "framecheck", self.lim)
+        stem = Path(fname).stem
+        try:
+            self.storage.put_file(Path(wd) / "framecheck" / fc["collage"], f"{folder}/{stem}_frames.jpg")
+        except Exception as e:  # noqa: BLE001
+            log(f"frame collage upload to Drive failed: {e}")
+        try:
+            from .review import publish
+            st["review"] = publish(Path(wd) / "framecheck", job["id"], None)
+        except Exception as e:  # noqa: BLE001
+            st["review"] = {"status": "failed", "error": str(e)[:150]}
+        return fc

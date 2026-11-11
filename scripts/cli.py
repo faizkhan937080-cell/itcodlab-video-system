@@ -102,6 +102,49 @@ def cmd_corpus(a):
     return 0 if not errs else 1
 
 
+def cmd_plan_stamp(a):
+    """Prints rulebooks/23-protocol.md, then stamps the plan with its digest. A plan without the stamp is refused by the worker."""
+    from . import protocol
+    print(protocol.protocol_text())
+    print("-" * 60)
+    plan = json.loads(Path(a.plan).read_text(encoding="utf-8"))
+    out = protocol.stamp(plan, a.kind, a.reference, a.reason or "", a.sample_job)
+    errs = []
+    if a.kind == "sample" and protocol.plan_total_s(out) > 8.01:
+        errs.append(f"a sample is at most 8 s; this plan is {protocol.plan_total_s(out):.1f} s")
+    if a.kind == "full" and not a.sample_job:
+        errs.append("a full plan needs --sample-job <approved sample job id>")
+    if a.reference == "none" and len(a.reason or "") < 8:
+        errs.append("--reference none needs --reason (why there is no reference)")
+    Path(a.out or a.plan).write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"stamped {a.out or a.plan} (digest {protocol.digest()}, kind {a.kind})")
+    for e in errs:
+        print("PROBLEM:", e)
+    return 1 if errs else 0
+
+
+def cmd_look_ok(a):
+    """After LOOKING at the frame collage (fetched with review-fetch): writes the marker the worker waits for."""
+    import hashlib
+    from . import protocol
+    f = Path(a.collage)
+    if not f.is_file() or f.stat().st_size < 5000:
+        print("collage file not found: run `./run review-fetch <job> --out <dir>` first, LOOK at collage_frames.jpg, then pass it with --collage")
+        return 1
+    if len(a.saw.split()) < 6:
+        print("--saw must say in a sentence what you saw (is the person solid, background gone, text readable, nothing empty or overlapping)")
+        return 1
+    sha = hashlib.sha256(f.read_bytes()).hexdigest()[:12]
+    rev = a.plan_ver * 10 + (1 if a.stage == "preview" else 2)
+    name, body = protocol.look_marker(a.job, rev, sha, a.saw)
+    body["rev"] = rev
+    name = f"{a.job}__gate{protocol.LOOK_GATE}__r{rev}.json"
+    out = Path(a.out or ".") / name
+    out.write_text(json.dumps(body, ensure_ascii=False), encoding="utf-8")
+    print(f"upload {out} to Drive jobs/approvals/ ; then ./run wake")
+    return 0
+
+
 def cmd_render_local(a):
     from .render import render_plan
     plan = json.loads(Path(a.plan).read_text(encoding="utf-8"))
@@ -906,6 +949,24 @@ def build_parser():
     s.add_argument("--files", nargs="+", required=True)
     s.add_argument("--out", required=True)
     s.set_defaults(fn=cmd_corpus)
+
+    s = sub.add_parser("plan-stamp", help="stamp a scene plan with the protocol digest (prints rulebooks/23 first)")
+    s.add_argument("--plan", required=True)
+    s.add_argument("--out")
+    s.add_argument("--kind", choices=["sample", "full"], required=True)
+    s.add_argument("--reference", required=True, help="Drive path of style_record.json, or 'none'")
+    s.add_argument("--reason", default="")
+    s.add_argument("--sample-job")
+    s.set_defaults(fn=cmd_plan_stamp)
+
+    s = sub.add_parser("look-ok", help="record that I LOOKED at the frame collage of a preview/final")
+    s.add_argument("--job", required=True)
+    s.add_argument("--plan-ver", type=int, required=True)
+    s.add_argument("--stage", choices=["preview", "final"], required=True)
+    s.add_argument("--collage", required=True, help="local path of the fetched collage_frames.jpg")
+    s.add_argument("--saw", required=True)
+    s.add_argument("--out")
+    s.set_defaults(fn=cmd_look_ok)
 
     s = sub.add_parser("render-local", help="render a scene plan locally")
     s.add_argument("--plan", required=True)

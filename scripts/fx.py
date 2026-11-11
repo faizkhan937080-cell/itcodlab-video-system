@@ -180,6 +180,10 @@ def _sig(*a):
     return hashlib.sha1(json.dumps(a, sort_keys=True, default=str).encode()).hexdigest()[:10]
 
 
+class FatalFx(RuntimeError):
+    """An effect whose failure must stop the render (a missing key would show the green wall)."""
+
+
 def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
     """-> (plan_copy, report). `hooks` lets tests replace heavy parts: {"matte": fn(src,dst), "face": fn, ...}."""
     from .analyze import probe
@@ -245,11 +249,20 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
                 r["clean_voice"] = True
             if p.get("chroma_key") and is_video:
                 from . import matte
-                out, col = (hooks.get("chroma") or matte.chroma_key)(pub / p["src"], pub / "fx", p.get("chroma_key"))
+                ck = dict(p["chroma_key"]) if isinstance(p.get("chroma_key"), dict) else {}
+                ck.setdefault("start_s", p.get("trim_start_s"))
+                ck.setdefault("end_s", p.get("trim_end_s"))
+                try:
+                    out, col, q = (hooks.get("chroma") or matte.chroma_key)(pub / p["src"], pub / "fx", ck)
+                except Exception as e:  # noqa: BLE001
+                    raise FatalFx(f"chroma key: {e}") from e     # never fall back to showing the green wall
                 p["src"] = f"fx/{out.name}"
                 p["transparent"] = True
+                if ck.get("start_s") or ck.get("end_s"):
+                    p.pop("trim_start_s", None)
+                    p.pop("trim_end_s", None)                 # the keyed file already starts at the window
                 p.pop("chroma_key", None)
-                r["chroma_key"] = {"file": out.name, "color": col}
+                r["chroma_key"] = {"file": out.name, "color": col, "params": (q or {}).get("params"), "quality": (q or {}).get("verified") or (q or {}).get("frames")}
             if p.get("remove_bg"):
                 from . import matte
                 out = matte.process(pub / p["src"], pub / "fx", remover=hooks.get("matte"))
@@ -272,6 +285,8 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
                     tf = p["track_from"]
                     p["follow"] = track.follow_path(pub / p["src"], tf.get("box") or "face", tf.get("start_s", t_start), tf.get("end_s", t_end), t0=t_start, face=hooks.get("face"))
                     r["follow_points"] = len(p["follow"])
+        except FatalFx:
+            raise
         except Exception as e:  # noqa: BLE001
             rep["errors"][sc["id"]] = f"{type(e).__name__}: {e}"[:200]
             log(f"effect failed on scene {sc['id']}: {e}")

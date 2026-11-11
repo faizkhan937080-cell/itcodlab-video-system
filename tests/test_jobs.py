@@ -166,6 +166,42 @@ def test_gate2_rejection_stops_the_job(drive, tmp_path, test_video):
 
 
 # ---------------------------------------------------------------- render job + gates
+def _moving_video(path, seconds=3, fps=10):
+    """A real small video with moving content (the frame check opens it)."""
+    import cv2
+    import numpy as np
+    w = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), fps, (108, 192))
+    for i in range(seconds * fps):
+        fr = np.full((192, 108, 3), 235, np.uint8)
+        cv2.rectangle(fr, (5 + i * 3 % 60, 20), (45 + i * 3 % 60, 120), (30, 60, 200), -1)
+        cv2.putText(fr, str(i), (10, 170), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
+        w.write(fr)
+    w.release()
+
+
+def stamped(plan, drive=None, kind="full"):
+    """Protocol block as `./run plan-stamp` writes it. A full plan needs an approved sample job: make one in Drive."""
+    from scripts import protocol
+    sj = None
+    if kind == "full":
+        sj = "smp1"
+        drive.put_json("jobs/plans/smp1-v1.json", plan)
+        drive.write_state("jobs/state/smp1.json", {"id": "smp1", "sample_ok": True, "paths": {"plan": "jobs/plans/smp1-v1.json"}})
+    return protocol.stamp(plan, kind, reference="none", reference_reason="unit test, no reference", sample_job=sj)
+
+
+def look(drive, w, jid, expect_next):
+    """What Claude does after looking at the frame collage: upload the gate-7 marker, then the worker moves on."""
+    from scripts import protocol
+    st = drive.read_json(f"jobs/state/{jid}.json")
+    assert st["status"] == "AWAIT_LOOK", st["status"]
+    w.process_once()                                   # no marker yet -> it must keep waiting
+    assert drive.read_json(f"jobs/state/{jid}.json")["status"] == "AWAIT_LOOK"
+    name, body = protocol.look_marker(jid, st["look_rev"], st["frame_check"]["sha"], "test frames fine")
+    drive.put_json(f"jobs/approvals/{name}", body)
+    assert w.process_once() == [(jid, expect_next)]
+
+
 @pytest.fixture()
 def fake_render(monkeypatch):
     calls = []
@@ -173,7 +209,7 @@ def fake_render(monkeypatch):
     def fake(plan, quality, out_path, storage=None, concurrency=None):
         calls.append(quality)
         Path(out_path).parent.mkdir(parents=True, exist_ok=True)
-        Path(out_path).write_bytes(b"fake-mp4-" + quality.encode())
+        _moving_video(out_path)
         return {"ok": True, "problems": [], "probe": {"width": 1, "height": 1, "duration_s": 5.0}}
 
     monkeypatch.setattr(render_mod, "render_plan", fake)
@@ -181,7 +217,7 @@ def fake_render(monkeypatch):
 
 
 def test_render_job_gates_and_rejection(drive, tmp_path, fake_render):
-    plan = json.loads((ROOT / "templates" / "test-plan.json").read_text())
+    plan = stamped(json.loads((ROOT / "templates" / "test-plan.json").read_text()), drive)
     drive.put_json("jobs/inbox/rn1.json", {"id": "rn1", "type": "render"})
     w = Worker(drive, work=tmp_path / "work")
     st = lambda: drive.read_json("jobs/state/rn1.json")  # noqa: E731
@@ -192,7 +228,8 @@ def test_render_job_gates_and_rejection(drive, tmp_path, fake_render):
     assert fake_render == []  # nothing rendered before gate 4
 
     approve(drive, "rn1", 4, 1, "Y")
-    assert w.process_once() == [("rn1", "AWAIT_GATE5")]
+    assert w.process_once() == [("rn1", "AWAIT_LOOK")]   # protocol: Claude must look at the frames first
+    look(drive, w, "rn1", "AWAIT_GATE5")
     assert fake_render == ["preview"]
     assert drive.exists("output/previews/rn1_preview_v1.mp4")
 
@@ -204,9 +241,11 @@ def test_render_job_gates_and_rejection(drive, tmp_path, fake_render):
     drive.put_json("jobs/plans/rn1-v2.json", plan2)
     assert w.process_once() == [("rn1", "AWAIT_GATE4")]
     approve(drive, "rn1", 4, 2, "Y")
-    assert w.process_once() == [("rn1", "AWAIT_GATE5")]
+    assert w.process_once() == [("rn1", "AWAIT_LOOK")]
+    look(drive, w, "rn1", "AWAIT_GATE5")
     approve(drive, "rn1", 5, 2, "Y")
-    assert w.process_once() == [("rn1", "AWAIT_GATE6")]
+    assert w.process_once() == [("rn1", "AWAIT_LOOK")]
+    look(drive, w, "rn1", "AWAIT_GATE6")
     assert fake_render == ["preview", "preview", "final"]
     assert not drive.exists("output/final-4k/rn1_v2.mp4")  # not published before gate 6
     approve(drive, "rn1", 6, 2, "Y")
@@ -231,7 +270,7 @@ def test_render_failure_retries_then_fails(drive, tmp_path, monkeypatch):
         raise RuntimeError("remotion exploded")
 
     monkeypatch.setattr(render_mod, "render_plan", boom)
-    plan = json.loads((ROOT / "templates" / "test-plan.json").read_text())
+    plan = stamped(json.loads((ROOT / "templates" / "test-plan.json").read_text()), drive)
     drive.put_json("jobs/inbox/rn3.json", {"id": "rn3", "type": "render"})
     drive.put_json("jobs/plans/rn3-v1.json", plan)
     w = Worker(drive, work=tmp_path / "work")

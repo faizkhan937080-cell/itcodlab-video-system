@@ -1,4 +1,4 @@
-"""Green-screen key: synthetic clip (grey box on green) -> alpha WebM; green gone, box kept, colour found automatically."""
+"""Green-screen key (rulebooks/23): judged on real-looking frames, tuned, verified, never ships a ghost or a green wall."""
 import shutil
 import subprocess
 
@@ -11,29 +11,68 @@ from scripts import matte
 pytestmark = pytest.mark.skipif(not shutil.which("ffmpeg"), reason="ffmpeg missing")
 
 
-def _clip(path):
-    w, h, n = 160, 288, 12
-    vw = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 12, (w, h))
-    for _ in range(n):
+def _clip(path, spill=False, green=True):
+    """Lit wall (gradient + shadow) with a skin face, dark hair, navy shirt and a WHITE table, like the real shoot."""
+    w, h, n = 216, 384, 14
+    vw = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 14, (w, h))
+    yy = np.linspace(0, 1, h)[:, None]
+    for i in range(n):
         fr = np.zeros((h, w, 3), np.uint8)
-        fr[:] = (40, 190, 50)                      # BGR studio green
-        fr[90:200, 50:110] = (120, 120, 120)       # the "person"
+        wall = np.stack([40 + 20 * yy, 200 - 70 * yy, 70 + 10 * yy], -1) if green else np.full((h, 1, 3), 120.0)  # BGR
+        fr[:] = np.broadcast_to(wall, (h, w, 3)).astype(np.uint8)
+        fr[:, :40] = (fr[:, :40] * 0.7).astype(np.uint8)                       # shadow on the left
+        cv2.rectangle(fr, (60, 170), (160, 290), (90, 40, 20), -1)               # navy shirt
+        cv2.circle(fr, (110 + (i % 3), 130), 30, (110, 150, 200), -1)            # skin
+        cv2.rectangle(fr, (80, 95), (140, 112), (20, 25, 35), -1)                # dark hair
+        cv2.rectangle(fr, (0, 290), (w, h), (240, 242, 240), -1)                 # white table
+        if spill:
+            fr[120:150, 85:135] = (fr[120:150, 85:135] * 0.85 + np.array([10, 30, 5])).clip(0, 255).astype(np.uint8)
         vw.write(fr)
     vw.release()
 
 
-def test_key_color_and_alpha(tmp_path):
+def test_key_color_is_the_wall(tmp_path):
     src = tmp_path / "gs.mp4"
     _clip(src)
     col = matte.key_color(src)
     r, g, b = int(col[0:2], 16), int(col[2:4], 16), int(col[4:6], 16)
-    assert g > 150 and r < 90 and b < 90
-    out, used = matte.chroma_key(src, tmp_path / "fx")
+    assert g > 110 and g > r + 30 and g > b + 30
+
+
+def test_tuned_key_solid_subject_clear_wall(tmp_path):
+    src = tmp_path / "gs.mp4"
+    _clip(src, spill=True)
+    out, col, q = matte.chroma_key(src, tmp_path / "fx")
     assert out.suffix == ".webm" and out.stat().st_size > 0
-    png = tmp_path / "f.png"
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-c:v", "libvpx-vp9", "-i", str(out), "-frames:v", "1", str(png)], check=True)
-    a = cv2.imread(str(png), cv2.IMREAD_UNCHANGED)
-    assert a.shape[2] == 4
-    assert a[10, 10, 3] < 30            # green corner -> transparent
-    assert a[145, 80, 3] > 220          # grey box -> solid
-    assert matte.chroma_key(src, tmp_path / "fx")[0] == out    # cached
+    v = q["verified"]
+    assert v["fg_alpha_min"] >= 0.95 and v["bg_alpha_max"] <= 0.05 and v["green_visible_max"] <= 0.003
+    assert matte.chroma_key(src, tmp_path / "fx")[0] == out        # cached with its quality file
+
+
+def test_window_keys_only_that_part(tmp_path):
+    src = tmp_path / "gs.mp4"
+    _clip(src)
+    out, _, _ = matte.chroma_key(src, tmp_path / "fx", {"start_s": 0.0, "end_s": 0.5})
+    p = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(out)], capture_output=True, text=True)
+    assert float(p.stdout.strip()) < 0.8
+
+
+def test_no_green_stops_instead_of_shipping(tmp_path):
+    src = tmp_path / "nogs.mp4"
+    _clip(src, green=False)
+    with pytest.raises(RuntimeError):
+        matte.chroma_key(src, tmp_path / "fx")
+
+
+def test_quality_judge_catches_a_ghost():
+    bgr = np.zeros((100, 100, 3), np.uint8)
+    bgr[:] = (40, 190, 60)
+    bgr[30:90, 30:70] = (90, 40, 20)                                             # clearly not green
+    rgba = np.dstack([bgr[..., ::-1], np.full((100, 100), 255, np.uint8)]).copy()
+    rgba = cv2.cvtColor(bgr, cv2.COLOR_BGR2BGRA)
+    rgba[..., 3] = 0
+    rgba[30:90, 30:70, 3] = 90                                                   # subject only ~35% opaque = ghost
+    q = matte.key_quality(bgr, rgba, "3CBE28")
+    assert not q["ok"] and q["fg_alpha"] < 0.5
+    rgba[30:90, 30:70, 3] = 255
+    assert matte.key_quality(bgr, rgba, "3CBE28")["ok"]

@@ -12,7 +12,7 @@ from pathlib import Path
 
 from .common import ROOT, limits, log, run_cmd, tail
 
-KEEP = ("collage_*.jpg", "metrics_summary.json", "manifest.json", "descriptions.json", "video.mp4")
+KEEP = ("collage_*.jpg", "style_record.json", "metrics_summary.json", "manifest.json", "descriptions.json", "video.mp4")
 
 
 def _scrub(text, url):

@@ -255,5 +255,15 @@
   },
   "videogen": {
     "timeout_s": 2400
+  },
+  "protocol": {
+    "sample_max_s": 8,
+    "frame_step_s": 6,
+    "frame_max_tiles": 10,
+    "green_residue_max": 0.01,
+    "key_fg_alpha_min": 0.97,
+    "key_semi_max": 0.05,
+    "key_bg_alpha_max": 0.04,
+    "_note": "rulebooks/23-protocol.md enforced in code: plan needs protocol block (digest), sample before full, frame check + look before gate"
   }
 }

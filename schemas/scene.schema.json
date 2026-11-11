@@ -638,6 +638,35 @@
     },
     "grain_src": {
       "type": "string"
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "digest",
+        "kind",
+        "reference"
+      ],
+      "properties": {
+        "digest": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "sample",
+            "full"
+          ]
+        },
+        "reference": {
+          "type": "string"
+        },
+        "reference_reason": {
+          "type": "string"
+        },
+        "sample_job": {
+          "type": "string"
+        }
+      }
     }
   }
 }
