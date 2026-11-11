@@ -117,10 +117,86 @@ def key_color(src, samples=6, start_s=None, end_s=None):
     return f"{bgr[2]:02X}{bgr[1]:02X}{bgr[0]:02X}"
 
 
-def chroma_filter(color, similarity=0.13, blend=0.06, despill=0.6):
-    """ffmpeg filter chain: key -> despill (removes green fringe on hair/skin) -> alpha format."""
+def chroma_chain(color, similarity=0.13, blend=0.06, despill=0.6):
+    """Simple -vf chain (no grade): used to try key settings on single frames."""
     return (f"format=yuv444p,chromakey=0x{color}:{similarity}:{blend},format=gbrap,"
             f"despill=type=green:mix={despill}:expand=0:alpha=0,format=yuva420p")
+
+
+def chroma_filter(color, similarity=0.13, blend=0.06, despill=0.6, cube=None):
+    """ffmpeg filter graph [0:v] -> [v]: key -> despill (removes green fringe on hair/skin) -> colour grade (3D LUT, picture
+    only: alpha is split off and put back) -> alpha format. The grade comes AFTER the key so the green wall never steers it."""
+    base = (f"format=yuv444p,chromakey=0x{color}:{similarity}:{blend},format=gbrap,"
+            f"despill=type=green:mix={despill}:expand=0:alpha=0")
+    if not cube:
+        return f"[0:v]{base},format=yuva420p[v]"
+    c = str(cube).replace("\\", "/").replace(":", r"\:")
+    return (f"[0:v]{base},split=2[c][m];[m]alphaextract[al];[c]format=gbrp,lut3d=file='{c}':interp=tetrahedral[g];"
+            f"[g][al]alphamerge,format=yuva420p[v]")
+
+
+PAGE = (250, 250, 249)   # the clean page colour behind the person (remotion Clean.tsx)
+
+
+def person_frames(src, color, start_s, end_s, n=6):
+    """Float RGB 'frames' (N,1,3) holding ONLY the person's pixels (screen colour and green cast removed), for measuring the grade."""
+    key = np.uint8([[[int(color[4:6], 16), int(color[2:4], 16), int(color[0:2], 16)]]])
+    kc = cv2.cvtColor(key, cv2.COLOR_BGR2YCrCb).astype(float)[0, 0]
+    out = []
+    for t in _src_times(src, start_s, end_s, n):
+        bgr = _png_frame(["-ss", str(t), "-i", str(src)])[..., :3]
+        ycc = cv2.cvtColor(bgr, cv2.COLOR_BGR2YCrCb).astype(float)
+        d = np.hypot(ycc[..., 1] - kc[1], ycc[..., 2] - kc[2]) / 255.0
+        b_, g_, r_ = [bgr[..., i].astype(int) for i in range(3)]
+        m = (d > 0.22) & (g_ - np.maximum(r_, b_) < 10)
+        if m.sum() > 2000:
+            px = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)[m].astype(np.float32) / 255.0
+            out.append(px.reshape(-1, 1, 3)[:: max(1, len(px) // 20000)])
+    return out
+
+
+def person_grade(src, color, start_s, end_s, mode, ref, strength, lim, work):
+    """Grade of the PERSON in a green-screen clip (rulebooks/13-grade.md, same maths). -> (cube_path or None, report)."""
+    from . import grade as G
+    if mode == "off":
+        return None, {"mode": "off"}
+    frames = person_frames(src, color, start_s, end_s)
+    if not frames:
+        return None, {"mode": mode, "skipped": "no person pixels found to measure"}
+    stats = G.measure(frames, lim)
+    pooled = np.concatenate(frames)
+    params, notes = G.solve(stats, pooled, mode, ref, lim, strength)
+    rep = {"mode": mode, "stats": {k: stats[k] for k in ("p1", "p50", "p99", "colourfulness", "skin_hue", "spread")},
+           "params": {k: (round(v, 4) if isinstance(v, float) else [round(x, 4) for x in v] if isinstance(v, list) else v) for k, v in params.items()},
+           "verify": G.verify(pooled, params, stats, ref, lim), "notes": notes + stats["warnings"]}
+    if G.is_identity(params, lim):
+        rep["changed"] = False
+        return None, rep
+    cube = G.write_cube(Path(work) / f"person_{hashlib.sha1(json.dumps(rep['params'], sort_keys=True).encode()).hexdigest()[:8]}.cube", G.make_lut(params))
+    rep["changed"] = True
+    return cube, rep
+
+
+def key_check_image(src, webm, start_s, end_s, out_jpg, n=3):
+    """The look at the real clip (rulebooks/23 rule 3): per frame  RAW | ALPHA matte | RESULT on the page (as the render shows it).
+    Claude looks at this: grey in the alpha panel on the face = see-through skin; washed colour with solid alpha = a colour/grade problem."""
+    off = start_s or 0.0
+    rows = []
+    for t in _src_times(src, start_s, end_s, n):
+        bgr = _png_frame(["-ss", str(t), "-i", str(src)])[..., :3]
+        rgba = _png_frame(["-c:v", "libvpx-vp9", "-ss", str(round(t - off, 2)), "-i", str(webm)])
+        h, w = bgr.shape[:2]
+        if rgba.shape[:2] != (h, w):
+            rgba = cv2.resize(rgba, (w, h), interpolation=cv2.INTER_AREA)
+        a = rgba[..., 3:4].astype(np.float32) / 255.0
+        page = np.array(PAGE[::-1], np.float32)
+        res = page * (1 - a) + a * (rgba[..., :3].astype(np.float32) * page / 255.0)
+        k = 360.0 / h
+        tile = lambda im: cv2.resize(im, (int(w * k), 360), interpolation=cv2.INTER_AREA)  # noqa: E731
+        alpha_vis = cv2.cvtColor((a[..., 0] * 255).astype(np.uint8), cv2.COLOR_GRAY2BGR)
+        rows.append(np.hstack([tile(bgr), tile(alpha_vis), tile(np.clip(res, 0, 255).astype(np.uint8))]))
+    cv2.imwrite(str(out_jpg), np.vstack(rows), [cv2.IMWRITE_JPEG_QUALITY, 90])
+    return out_jpg
 
 
 def _png_frame(args):
@@ -186,7 +262,7 @@ def tune_key(src, color, start_s, end_s, lim, n=6):
     for sim, bl, ds in KEY_CANDIDATES:
         per = []
         for t, bgr in srcs:
-            rgba = _png_frame(["-ss", str(t), "-i", str(src), "-vf", chroma_filter(color, sim, bl, ds) + ",format=rgba"])
+            rgba = _png_frame(["-ss", str(t), "-i", str(src), "-vf", chroma_chain(color, sim, bl, ds) + ",format=rgba"])
             per.append(key_quality(bgr, rgba, color, lim))
         a = _agg(per)
         tried.append({"similarity": sim, "blend": bl, "despill": ds, **a})
@@ -228,7 +304,8 @@ def chroma_key(src, out_dir, opts=None, lim=None):
     start_s, end_s = opts.get("start_s"), opts.get("end_s")
     color = (opts.get("color") or key_color(src, start_s=start_s, end_s=end_s)).lstrip("#").upper()
     manual = all(k in opts for k in ("similarity", "blend", "despill"))
-    tag = f"{color}{opts.get('similarity')}{opts.get('blend')}{opts.get('despill')}{start_s}{end_s}"
+    g_mode = opts.get("grade_mode", "auto")
+    tag = f"{color}{opts.get('similarity')}{opts.get('blend')}{opts.get('despill')}{start_s}{end_s}g{g_mode}{opts.get('grade_strength')}"
     dst = out_dir / f"{src.stem}.key.{_key(src, tag)}.webm"
     side = dst.with_suffix(".quality.json")
     if dst.exists() and side.exists():
@@ -244,13 +321,20 @@ def chroma_key(src, out_dir, opts=None, lim=None):
             raise RuntimeError(f"chroma key quality too low on the real clip: {agg} (tried {len(tried)} settings). Light/green spill needs a manual look.")
     sim, bl, ds = params
     m = lim.get("matte", {})
+    cube, g_rep = None, {"mode": g_mode}
+    try:
+        cube, g_rep = person_grade(src, color, start_s, end_s, g_mode, opts.get("grade_ref"), opts.get("grade_strength"), lim, out_dir)
+    except Exception as e:  # noqa: BLE001  (a grading problem must never kill the key)
+        g_rep = {"mode": g_mode, "error": f"{type(e).__name__}: {e}"[:200]}
+    q["grade"] = g_rep
     cmd = ["ffmpeg", "-y", "-v", "error"]
     if start_s:
         cmd += ["-ss", str(start_s)]
     cmd += ["-i", str(src)]
     if end_s:
         cmd += ["-t", str(round(end_s - (start_s or 0), 3))]
-    cmd += ["-c:a", "libopus", "-b:a", "192k", "-vf", chroma_filter(color, sim, bl, ds),
+    cmd += ["-filter_complex", chroma_filter(color, sim, bl, ds, cube), "-map", "[v]", "-map", "0:a?",
+            "-c:a", "libopus", "-b:a", "192k",
             "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "0", "-crf", str(m.get("key_crf", 18)),
             "-row-mt", "1", "-deadline", "good", "-cpu-used", str(m.get("key_cpu_used", 5)), "-auto-alt-ref", "0", str(dst)]
     rc, _, err = run_cmd(cmd, timeout=int(m.get("key_timeout_s", 3 * 3600)))
@@ -262,5 +346,9 @@ def chroma_key(src, out_dir, opts=None, lim=None):
     if (v["fg_alpha_min"] or 1) < 0.9 or v["bg_alpha_max"] > 0.15:
         _set_aside(dst)
         raise RuntimeError(f"keyed WebM failed the check on real frames: {v}")
+    try:
+        q["check_image"] = key_check_image(src, dst, start_s, end_s, dst.with_suffix(".keycheck.jpg")).name
+    except Exception as e:  # noqa: BLE001
+        q["check_image_error"] = f"{type(e).__name__}: {e}"[:150]
     side.write_text(json.dumps(q), encoding="utf-8")
     return dst, color, q

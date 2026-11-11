@@ -108,7 +108,7 @@ def cmd_plan_stamp(a):
     print(protocol.protocol_text())
     print("-" * 60)
     plan = json.loads(Path(a.plan).read_text(encoding="utf-8"))
-    out = protocol.stamp(plan, a.kind, a.reference, a.reason or "", a.sample_job)
+    out = protocol.stamp(plan, a.kind, a.reference, a.reason or "", a.sample_job, a.grade_off_reason)
     errs = []
     if a.kind == "sample" and protocol.plan_total_s(out) > 8.01:
         errs.append(f"a sample is at most 8 s; this plan is {protocol.plan_total_s(out):.1f} s")
@@ -957,6 +957,7 @@ def build_parser():
     s.add_argument("--reference", required=True, help="Drive path of style_record.json, or 'none'")
     s.add_argument("--reason", default="")
     s.add_argument("--sample-job")
+    s.add_argument("--grade-off-reason", help="only if plan.grade.mode is off: what Faiz said (grading is automatic by default)")
     s.set_defaults(fn=cmd_plan_stamp)
 
     s = sub.add_parser("look-ok", help="record that I LOOKED at the frame collage of a preview/final")

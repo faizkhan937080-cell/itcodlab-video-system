@@ -120,3 +120,11 @@ def test_protocol_file_is_in_the_worker_repo():
     rb = ROOT / "rulebooks" / "23-protocol.md"
     if rb.exists():   # the brain copy Claude reads must say the same
         assert rb.read_text().strip() == protocol.PROTOCOL_FILE.read_text().strip()
+
+
+def test_grade_off_needs_what_faiz_said(plan, drive):
+    plan["grade"] = {"mode": "off"}
+    p = stamped(plan, kind="sample")
+    assert any("grade.mode is 'off'" in e for e in protocol.check_plan(p, drive))
+    p = protocol.stamp(plan, "sample", reference="none", reference_reason="unit test, no reference", grade_off_reason="Faiz: no grading on this one")
+    assert protocol.check_plan(p, drive) == []

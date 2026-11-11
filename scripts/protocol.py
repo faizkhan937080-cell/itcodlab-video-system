@@ -28,7 +28,7 @@ def digest():
     return hashlib.sha256(protocol_text().replace("\r\n", "\n").strip().encode("utf-8")).hexdigest()[:12]
 
 
-def stamp(plan, kind, reference="none", reference_reason="", sample_job=None):
+def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, grade_off_reason=None):
     """Add the protocol block to a plan (the CLI prints the protocol text first)."""
     plan = json.loads(json.dumps(plan))
     blk = {"digest": digest(), "kind": kind, "reference": reference}
@@ -36,6 +36,8 @@ def stamp(plan, kind, reference="none", reference_reason="", sample_job=None):
         blk["reference_reason"] = reference_reason
     if sample_job:
         blk["sample_job"] = sample_job
+    if grade_off_reason:
+        blk["grade_off_reason"] = grade_off_reason
     plan["protocol"] = blk
     return plan
 
@@ -99,6 +101,9 @@ def check_plan(plan, storage, lim=None):
                     errs.append(f"protocol: could not read the sample plan: {e}")
     else:
         errs.append("protocol: protocol.kind must be 'sample' or 'full'.")
+    if (plan.get("grade") or {}).get("mode") == "off" and len(str(b.get("grade_off_reason", ""))) < 8:
+        errs.append("protocol: plan.grade.mode is 'off'. Grading is automatic by default (rulebooks/13-grade.md); 'off' only when Faiz said so "
+                    "-> stamp with --grade-off-reason '<what Faiz said>', or remove plan.grade.")
     ref = b.get("reference")
     if not ref:
         errs.append("protocol: protocol.reference missing (style_record.json path, or 'none' with reference_reason).")

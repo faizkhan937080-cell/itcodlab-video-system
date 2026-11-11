@@ -841,7 +841,7 @@ class Worker:
             except Exception:  # noqa: BLE001
                 pass
             rel = self.storage.put_file(out, f"{folder}/{fname}")
-            fcheck = self._frame_check(job, st, wd, out, quality, folder, fname)
+            fcheck = self._frame_check(job, st, wd, out, quality, folder, fname, chk)
             key = "preview" if quality == "preview" else "final_candidate"
             st["paths"][key] = rel
             st["output_link"] = rel
@@ -864,11 +864,23 @@ class Worker:
         except Exception as e:  # noqa: BLE001
             return self.failed(st, job, f"render_{quality}", e)
 
-    def _frame_check(self, job, st, wd, out, quality, folder, fname):
+    def _frame_check(self, job, st, wd, out, quality, folder, fname, chk=None):
         """rulebooks/23 rule 1: frames every ~6 s -> collage in Drive + review branch. Never silently skipped."""
         from . import protocol
         fc = protocol.frame_check(out, Path(wd) / "framecheck", self.lim)
         stem = Path(fname).stem
+        try:   # raw | alpha | result of every keyed clip: the real-clip look of the key + grade (rulebooks/23 rule 3)
+            from .render import REMOTION_DIR
+            n = 0
+            for clip in ((chk or {}).get("effects") or {}).get("clips", {}).values():
+                img = (clip.get("chroma_key") or {}).get("check_image")
+                src = REMOTION_DIR / "public" / "fx" / img if img else None
+                if src and src.exists():
+                    n += 1
+                    shutil.copy2(src, Path(wd) / "framecheck" / f"collage_key_{n}.jpg")
+                    self.storage.put_file(src, f"{folder}/{stem}_keycheck{n}.jpg")
+        except Exception as e:  # noqa: BLE001
+            log(f"key check image not published: {e}")
         try:
             self.storage.put_file(Path(wd) / "framecheck" / fc["collage"], f"{folder}/{stem}_frames.jpg")
         except Exception as e:  # noqa: BLE001

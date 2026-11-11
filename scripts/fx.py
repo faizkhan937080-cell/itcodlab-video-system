@@ -252,6 +252,9 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
                 ck = dict(p["chroma_key"]) if isinstance(p.get("chroma_key"), dict) else {}
                 ck.setdefault("start_s", p.get("trim_start_s"))
                 ck.setdefault("end_s", p.get("trim_end_s"))
+                gcfg = new.get("grade") or {}
+                ck.setdefault("grade_mode", gcfg.get("mode", "auto"))     # rulebooks/13: auto is the default; off only when Faiz says so
+                ck.setdefault("grade_strength", gcfg.get("strength"))
                 try:
                     out, col, q = (hooks.get("chroma") or matte.chroma_key)(pub / p["src"], pub / "fx", ck)
                 except Exception as e:  # noqa: BLE001
@@ -262,7 +265,8 @@ def expand_plan(plan, public_dir=None, work=None, lim=None, hooks=None):
                     p.pop("trim_start_s", None)
                     p.pop("trim_end_s", None)                 # the keyed file already starts at the window
                 p.pop("chroma_key", None)
-                r["chroma_key"] = {"file": out.name, "color": col, "params": (q or {}).get("params"), "quality": (q or {}).get("verified") or (q or {}).get("frames")}
+                r["chroma_key"] = {"file": out.name, "color": col, "params": (q or {}).get("params"), "quality": (q or {}).get("verified") or (q or {}).get("frames"),
+                                    "grade": (q or {}).get("grade"), "check_image": (q or {}).get("check_image")}
             if p.get("remove_bg"):
                 from . import matte
                 out = matte.process(pub / p["src"], pub / "fx", remover=hooks.get("matte"))

@@ -76,3 +76,43 @@ def test_quality_judge_catches_a_ghost():
     assert not q["ok"] and q["fg_alpha"] < 0.5
     rgba[30:90, 30:70, 3] = 255
     assert matte.key_quality(bgr, rgba, "3CBE28")["ok"]
+
+
+def _dim(path, src):
+    """Same shoot, underexposed person (the grade must lift it) - the wall stays green."""
+    cap = cv2.VideoCapture(str(src))
+    w, h = int(cap.get(3)), int(cap.get(4))
+    vw = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*"mp4v"), 14, (w, h))
+    ok, fr = cap.read()
+    while ok:
+        f = fr.astype(int)
+        wall = (f[..., 1] - np.maximum(f[..., 0], f[..., 2])) > 40
+        out = fr.copy()
+        out[~wall] = (fr[~wall] * 0.45).astype(np.uint8)                 # only the person gets darker
+        vw.write(out)
+        ok, fr = cap.read()
+    vw.release()
+
+
+def test_person_is_graded_after_the_key_and_alpha_survives(tmp_path):
+    base = tmp_path / "gs.mp4"
+    _clip(base)
+    dim = tmp_path / "dim.mp4"
+    _dim(dim, base)
+    on, _, q_on = matte.chroma_key(dim, tmp_path / "fx_on", {"grade_mode": "auto"})
+    off, _, q_off = matte.chroma_key(dim, tmp_path / "fx_off", {"grade_mode": "off"})
+    assert q_on["grade"].get("changed") is True and q_on["grade"]["mode"] == "auto"
+    assert q_off["grade"]["mode"] == "off"
+    assert q_on["verified"]["fg_alpha_min"] >= 0.9                      # alpha still solid after the LUT
+    a = matte._png_frame(["-c:v", "libvpx-vp9", "-ss", "0.3", "-i", str(on)])
+    b = matte._png_frame(["-c:v", "libvpx-vp9", "-ss", "0.3", "-i", str(off)])
+    solid = a[..., 3] > 250
+    assert a[..., :3][solid].mean() > b[..., :3][solid].mean() + 2      # lifted a little (the grade is bounded)
+
+
+def test_check_image_shows_raw_alpha_result(tmp_path):
+    src = tmp_path / "gs.mp4"
+    _clip(src)
+    out, _, q = matte.chroma_key(src, tmp_path / "fx")
+    img = cv2.imread(str(out.parent / q["check_image"]))
+    assert img is not None and img.shape[0] == 3 * 360 and img.shape[1] > 3 * 150
