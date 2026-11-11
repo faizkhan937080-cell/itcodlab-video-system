@@ -9,6 +9,18 @@ import {reframeAt} from '../lib/zoom';
  *        transparent (alpha WebM from background removal), reframe_path + src_aspect (auto-reframe: a 9:16 window
  *        that follows the subject inside a wider clip; set by scripts/fx.py).
  */
+const fadeMask = (f: {from: number; to: number; side?: number}): React.CSSProperties => {
+  const layers = [`linear-gradient(to bottom, #000 0%, #000 ${f.from * 100}%, transparent ${f.to * 100}%)`];
+  if (f.side) layers.push(`linear-gradient(to right, transparent 0%, #000 ${f.side * 100}%, #000 ${(1 - f.side) * 100}%, transparent 100%)`);
+  const img = layers.join(',');
+  return {
+    maskImage: img,
+    WebkitMaskImage: img,
+    maskComposite: 'intersect',
+    WebkitMaskComposite: 'source-in',
+  } as React.CSSProperties;
+};
+
 export const VideoScene: React.FC<{
   src: string;
   trimStartS?: number;
@@ -21,8 +33,9 @@ export const VideoScene: React.FC<{
   srcAspect?: number;
   scale?: number; // shrink the clip, anchored at the bottom centre (keyed person over a designed page)
   offsetY?: number; // move up (negative) / down, fraction of height
+  fade?: {from: number; to: number; side?: number}; // soft edge: opaque down to `from` (fraction of the clip height), gone by `to`; `side` fades the left/right edges (fraction of width)
   blend?: 'multiply'; // white parts (a white table) melt into the page behind; needs no ancestor that isolates the stacking context
-}> = ({src, trimStartS, trimEndS, fit = 'cover', muted, volume = 1, transparent, reframePath, srcAspect, scale, offsetY, blend}) => {
+}> = ({src, trimStartS, trimEndS, fit = 'cover', muted, volume = 1, transparent, reframePath, srcAspect, scale, offsetY, blend, fade}) => {
   const {fps, width, height} = useVideoConfig();
   const frame = useCurrentFrame();
   let style: React.CSSProperties = {width: '100%', height: '100%', objectFit: fit};
@@ -44,6 +57,7 @@ export const VideoScene: React.FC<{
         style={{
           ...(scale || offsetY ? {...style, transform: `translateY(${(offsetY ?? 0) * height}px) scale(${scale ?? 1})`, transformOrigin: '50% 100%'} : style),
           ...(blend ? {mixBlendMode: blend} : {}),
+          ...(fade ? fadeMask(fade) : {}),
         }}
       />
     </AbsoluteFill>

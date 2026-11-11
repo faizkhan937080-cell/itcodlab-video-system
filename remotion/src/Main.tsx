@@ -55,6 +55,7 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           scale={p.scale}
           offsetY={p.offset_y}
           blend={p.blend}
+          fade={p.fade}
         />
       );
     case 'clean_bg':
