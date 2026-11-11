@@ -58,10 +58,23 @@ def _activity(video):
     return fps, (n / fps if n else i / fps), rows
 
 
+def _thresholds(rows):
+    """Per-sample threshold. A reel with something always drifting (timeline, background) never goes quiet, so a fixed
+    level merges everything into one event. The level follows the local baseline (rolling median ~3 s) and the loud end."""
+    f = np.array([r["frac"] for r in rows]) if rows else np.zeros(0)
+    if len(f) == 0:
+        return f
+    half = int(SAMPLE_FPS * 1.5)
+    base = np.array([np.median(f[max(0, i - half): i + half + 1]) for i in range(len(f))])
+    p95 = float(np.percentile(f, 95))
+    return np.maximum(ACTIVE_FRAC, np.maximum(base * 2.5, 0.2 * p95))
+
+
 def _bursts(rows):
+    thr = _thresholds(rows)
     out, cur, gap = [], None, 0
-    for r in rows:
-        if r["frac"] > ACTIVE_FRAC and r["bbox"]:
+    for r, th in zip(rows, thr):
+        if r["frac"] > th and r["bbox"]:
             if cur is None:
                 cur = {"t_in": max(0.0, r["t"] - 1 / SAMPLE_FPS), "rows": []}
             cur["rows"].append(r)
@@ -187,5 +200,7 @@ def build(video, out_dir, lim=None, with_ocr=True):
     rec = {"video": {"width": w, "height": h, "fps": round(fps, 2), "duration_s": round(dur, 2)},
            "static_text": static, "events": events, "event_collage": coll.name if coll else None,
            "event_count": len(events), "complete": not problems, "problems": problems}
+    # raw activity curve: lets the detector be tuned on the real reel without rendering anything again
+    (out_dir / "activity.json").write_text(json.dumps([[r["t"], round(r["frac"], 5)] + ([round(x, 3) for x in r["bbox"]] if r["bbox"] else []) for r in rows]), encoding="utf-8")
     (out_dir / "style_record.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
     return rec

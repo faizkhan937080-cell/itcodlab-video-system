@@ -670,6 +670,7 @@ class Worker:
             with stage("style_record"):
                 rec = style_record.build(local, wd / "style", self.lim)
             self.storage.put_file(wd / "style" / "style_record.json", f"{out_rel}/style_record.json")
+            self.storage.put_file(wd / "style" / "activity.json", f"{out_rel}/activity.json")
             if rec.get("event_collage"):
                 self.storage.put_file(wd / "style" / rec["event_collage"], f"{out_rel}/{rec['event_collage']}")
                 shutil.copy2(wd / "style" / rec["event_collage"], wd / "style" / "collage_events.jpg") if rec["event_collage"] != "collage_events.jpg" else None
