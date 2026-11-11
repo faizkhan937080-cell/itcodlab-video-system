@@ -81,7 +81,7 @@ export const CleanBg: React.FC<{brand?: string; footer?: string[]}> = ({brand, f
   );
 };
 
-const Icon: React.FC<{name?: string; size: number}> = ({name, size}) => {
+export const Icon: React.FC<{name?: string; size: number}> = ({name, size}) => {
   const s = size;
   const st = {width: s, height: s, flex: 'none' as const};
   if (name === 'check')

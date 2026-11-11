@@ -96,7 +96,9 @@
               "sticker",
               "med",
               "clean_bg",
-              "clean_card"
+              "clean_card",
+              "nt_bg",
+              "nt_card"
             ]
           },
           "props": {
@@ -199,7 +201,9 @@
                     "meme_text",
                     "sticker",
                     "clean_bg",
-                    "clean_card"
+                    "clean_card",
+                    "nt_bg",
+                    "nt_card"
                   ]
                 },
                 "props": {
@@ -329,7 +333,9 @@
                     "meme_text",
                     "sticker",
                     "clean_bg",
-                    "clean_card"
+                    "clean_card",
+                    "nt_bg",
+                    "nt_card"
                   ]
                 },
                 "props": {
@@ -568,15 +574,38 @@
         "look": {
           "enum": [
             "tiktok",
-            "clean"
+            "clean",
+            "nt"
           ],
-          "description": "clean = dark bold word on light page, no stroke (ref reel-Dfj6PH9tIBB)"
+          "description": "clean = dark bold word on light page, no stroke (ref reel-Dfj6PH9tIBB); nt = white bold, spoken word heavy (neuraltech.ai)"
         },
         "y": {
           "type": "number",
           "minimum": 0,
           "maximum": 1,
           "description": "clean look: centre of the caption line, fraction of height"
+        },
+        "y_by_time": {
+          "type": "array",
+          "description": "nt look: caption line centre (fraction of height) from a time on",
+          "items": {
+            "type": "object",
+            "required": [
+              "from_s",
+              "y"
+            ],
+            "properties": {
+              "from_s": {
+                "type": "number",
+                "minimum": 0
+              },
+              "y": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
         }
       }
     },

@@ -21,6 +21,15 @@ const fadeMask = (f: {from: number; to: number; side?: number}): React.CSSProper
   } as React.CSSProperties;
 };
 
+export type LayoutSeg = {
+  from_s: number;
+  scale?: number;
+  offset_y?: number;
+  fade?: {from: number; to: number; side?: number};
+  clip_top?: number; // fraction of the frame height cut off at the top (keeps hands out of the graphic panel)
+  hidden?: boolean;
+};
+
 export const VideoScene: React.FC<{
   src: string;
   trimStartS?: number;
@@ -35,9 +44,16 @@ export const VideoScene: React.FC<{
   offsetY?: number; // move up (negative) / down, fraction of height
   fade?: {from: number; to: number; side?: number}; // soft edge: opaque down to `from` (fraction of the clip height), gone by `to`; `side` fades the left/right edges (fraction of width)
   blend?: 'multiply'; // white parts (a white table) melt into the page behind; needs no ancestor that isolates the stacking context
-}> = ({src, trimStartS, trimEndS, fit = 'cover', muted, volume = 1, transparent, reframePath, srcAspect, scale, offsetY, blend, fade}) => {
+  layout?: LayoutSeg[]; // hard-cut layout changes over scene time (one keyed clip, continuous audio): each entry holds from its from_s
+}> = ({src, trimStartS, trimEndS, fit = 'cover', muted, volume = 1, transparent, reframePath, srcAspect, scale: scaleP, offsetY: offsetYP, blend, fade: fadeP, layout}) => {
   const {fps, width, height} = useVideoConfig();
   const frame = useCurrentFrame();
+  const t = frame / fps;
+  const seg = layout && layout.length ? [...layout].filter((l) => l.from_s <= t + 1e-6).pop() ?? layout[0] : undefined;
+  const scale = seg?.scale ?? scaleP;
+  const offsetY = seg?.offset_y ?? offsetYP;
+  const fade = seg?.fade ?? fadeP;
+  const hidden = !!seg?.hidden; // person off screen, audio keeps playing (full-frame graphic)
   let style: React.CSSProperties = {width: '100%', height: '100%', objectFit: fit};
   if (reframePath && reframePath.length && srcAspect && srcAspect * height > width) {
     const vw = srcAspect * height;
@@ -46,7 +62,13 @@ export const VideoScene: React.FC<{
     style = {position: 'absolute', left, top: 0, width: vw, height};
   }
   return (
-    <AbsoluteFill style={{backgroundColor: transparent ? 'transparent' : '#000'}}>
+    <AbsoluteFill
+      style={{
+        backgroundColor: transparent ? 'transparent' : '#000',
+        opacity: hidden ? 0 : 1,
+        ...(seg?.clip_top ? {clipPath: `inset(${seg.clip_top * 100}% 0 0 0)`} : {}),
+      }}
+    >
       <OffthreadVideo
         src={staticFile(src)}
         trimBefore={trimStartS ? Math.round(trimStartS * fps) : undefined}

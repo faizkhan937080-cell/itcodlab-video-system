@@ -25,6 +25,9 @@ def test_new_templates_validate():
         "audio_bars": {"src": "assets/music.mp3", "bars": 24, "color": "coral"},
         "meme_text": {"text": "bro what", "position": "bottom"},
         "sticker": {"text": "😂", "x": 0.8, "y": 0.2, "size": 0.25},
+        "nt_bg": {"mode": "split"},
+        "nt_card": {"layout": "split", "kicker": "Step 1", "title": "x", "rows": [{"text": "a", "icon": "check", "at_s": 1}]},
+        "video": {"src": "a.mp4", "layout": [{"from_s": 0, "scale": 0.8, "offset_y": 0.15, "clip_top": 0.5}, {"from_s": 4, "hidden": True}]},
     }
     for tpl, props in samples.items():
         assert validate("scene", _plan(tpl, props)) == [], tpl
@@ -111,4 +114,10 @@ def test_sfx_cues_add_meme_fx_idempotent_and_valid():
     assert first == [f for sc in plan["scenes"] for f in sc.get("fx", [])]
     assert any(f["type"] == "glitch" and not f.get("auto") for f in plan["scenes"][1]["fx"])
     assert any(f["type"] == "rgb_split" and f["start_s"] == 0.0 for f in plan["scenes"][1]["fx"])
+    assert validate("scene", plan) == []
+
+
+def test_nt_caption_look_validates():
+    plan = _plan("title", {"text": "x"})
+    plan["caption_style"] = {"look": "nt", "max_words": 2, "y": 0.55, "y_by_time": [{"from_s": 0, "y": 0.12}, {"from_s": 4.5, "y": 0.545}]}
     assert validate("scene", plan) == []

@@ -15,6 +15,43 @@ const Page: React.FC<{page: CaptionPage; style: CaptionStyle; colors: Colors}> =
   const pos = style.position ?? 'bottom';
   const hi = colors[style.highlight ?? 'coral'] ?? colors.coral;
   const justify = pos === 'top' ? 'flex-start' : pos === 'center' ? 'center' : 'flex-end';
+  if (style.look === 'nt') {
+    // neuraltech.ai: 1-3 word pages, bold white, spoken word heaviest, others lighter; pops in, cuts out on the next page.
+    const k = easeOut(frame, 0, 4);
+    const yt = (style.y_by_time ?? []).filter((z) => z.from_s <= page.start_s + 1e-6).pop();
+    const y = yt?.y ?? style.y ?? 0.55;
+    const size = 66 * (style.size ?? 1) * u;
+    return (
+      <AbsoluteFill>
+        <div
+          style={{
+            position: 'absolute',
+            left: 50 * u,
+            right: 50 * u,
+            top: y * height,
+            transform: `translateY(-50%) scale(${0.92 + 0.08 * k})`,
+            opacity: k,
+            textAlign: 'center',
+            fontFamily: CLEAN_FONT,
+            fontSize: size,
+            lineHeight: 1.2,
+            color: '#FFFFFF',
+            WebkitTextStroke: `${5 * u}px rgba(0,0,0,0.55)`,
+            paintOrder: 'stroke fill',
+          }}
+        >
+          {page.words.map((w, i) => {
+            const active = w.start_s <= now && now < w.end_s;
+            return (
+              <span key={i} style={{display: 'inline-block', marginRight: 0.26 * size, fontWeight: active ? 800 : 600, opacity: active ? 1 : 0.82}}>
+                {w.text}
+              </span>
+            );
+          })}
+        </div>
+      </AbsoluteFill>
+    );
+  }
   if (style.look === 'clean') {
     // Reference look (heysansser): big dark-grey bold words; the word being spoken is sharp, the next ones wait blurred and faint.
     const k = easeOut(frame, 0, 5);

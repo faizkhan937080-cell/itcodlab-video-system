@@ -6,6 +6,7 @@ import {BarChart} from './components/BarChart';
 import {Checklist} from './components/Checklist';
 import {CleanBg, CleanCard} from './components/Clean';
 import {Captions} from './components/Captions';
+import {NtBg, NtCard} from './components/Nt';
 import {Counter} from './components/Counter';
 import {Grain, Vignette} from './components/Grain';
 import {ImageScene} from './components/ImageScene';
@@ -56,12 +57,17 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           offsetY={p.offset_y}
           blend={p.blend}
           fade={p.fade}
+          layout={p.layout}
         />
       );
     case 'clean_bg':
       return <CleanBg brand={p.brand} footer={p.footer} />;
     case 'clean_card':
       return <CleanCard {...p} />;
+    case 'nt_bg':
+      return <NtBg mode={p.mode} />;
+    case 'nt_card':
+      return <NtCard {...p} />;
     case 'counter':
       return (
         <Counter
