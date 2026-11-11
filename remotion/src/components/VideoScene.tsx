@@ -21,7 +21,8 @@ export const VideoScene: React.FC<{
   srcAspect?: number;
   scale?: number; // shrink the clip, anchored at the bottom centre (keyed person over a designed page)
   offsetY?: number; // move up (negative) / down, fraction of height
-}> = ({src, trimStartS, trimEndS, fit = 'cover', muted, volume = 1, transparent, reframePath, srcAspect, scale, offsetY}) => {
+  blend?: 'multiply'; // white parts (a white table) melt into the page behind; needs no ancestor that isolates the stacking context
+}> = ({src, trimStartS, trimEndS, fit = 'cover', muted, volume = 1, transparent, reframePath, srcAspect, scale, offsetY, blend}) => {
   const {fps, width, height} = useVideoConfig();
   const frame = useCurrentFrame();
   let style: React.CSSProperties = {width: '100%', height: '100%', objectFit: fit};
@@ -40,7 +41,10 @@ export const VideoScene: React.FC<{
         muted={muted}
         volume={volume}
         transparent={transparent}
-        style={scale || offsetY ? {...style, transform: `translateY(${(offsetY ?? 0) * height}px) scale(${scale ?? 1})`, transformOrigin: '50% 100%'} : style}
+        style={{
+          ...(scale || offsetY ? {...style, transform: `translateY(${(offsetY ?? 0) * height}px) scale(${scale ?? 1})`, transformOrigin: '50% 100%'} : style),
+          ...(blend ? {mixBlendMode: blend} : {}),
+        }}
       />
     </AbsoluteFill>
   );

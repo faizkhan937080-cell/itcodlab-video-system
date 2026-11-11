@@ -54,6 +54,7 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           srcAspect={p.src_aspect}
           scale={p.scale}
           offsetY={p.offset_y}
+          blend={p.blend}
         />
       );
     case 'clean_bg':

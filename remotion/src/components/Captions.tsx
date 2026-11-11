@@ -16,6 +16,7 @@ const Page: React.FC<{page: CaptionPage; style: CaptionStyle; colors: Colors}> =
   const hi = colors[style.highlight ?? 'coral'] ?? colors.coral;
   const justify = pos === 'top' ? 'flex-start' : pos === 'center' ? 'center' : 'flex-end';
   if (style.look === 'clean') {
+    // Reference look (heysansser): big dark-grey bold words; the word being spoken is sharp, the next ones wait blurred and faint.
     const k = easeOut(frame, 0, 5);
     return (
       <AbsoluteFill>
@@ -24,19 +25,34 @@ const Page: React.FC<{page: CaptionPage; style: CaptionStyle; colors: Colors}> =
             position: 'absolute',
             left: 60 * u,
             right: 60 * u,
-            top: (style.y ?? 0.66) * height,
-            transform: `translateY(-50%) translateY(${(1 - k) * 18 * u}px) scale(${0.96 + 0.04 * k})`,
+            top: (style.y ?? 0.68) * height,
+            transform: `translateY(-50%) translateY(${(1 - k) * 18 * u}px)`,
             opacity: k,
             textAlign: 'center',
             fontFamily: CLEAN_FONT,
             fontWeight: 800,
             letterSpacing: -0.5 * u,
             fontSize: 76 * (style.size ?? 1) * u,
-            lineHeight: 1.15,
+            lineHeight: 1.2,
             color: '#2A2E2C',
           }}
         >
-          {page.words.map((w) => w.text).join(' ')}
+          {page.words.map((w, i) => {
+            const into = Math.min(1, Math.max(0, (now - w.start_s) * fps / 6)); // 0 = still to come, 1 = spoken (6 frames to sharpen)
+            return (
+              <span
+                key={i}
+                style={{
+                  display: 'inline-block',
+                  marginRight: 0.28 * 76 * (style.size ?? 1) * u,
+                  opacity: 0.3 + 0.7 * into,
+                  filter: `blur(${(1 - into) * 7 * u}px)`,
+                }}
+              >
+                {w.text}
+              </span>
+            );
+          })}
         </div>
       </AbsoluteFill>
     );
