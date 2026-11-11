@@ -109,3 +109,14 @@ def test_sample_plan_ends_at_sample_ok(plan, drive, tmp_path, fake_render):  # n
     w.process_once()
     st = drive.read_json("jobs/state/sm1.json")
     assert st["status"] == "SAMPLE_OK" and st["sample_ok"] and fake_render == ["preview"]
+
+
+def test_protocol_file_is_in_the_worker_repo():
+    """The worker checkout has no rulebooks/ (private repo). The protocol it checks must be a tracked file."""
+    import subprocess
+    assert protocol.PROTOCOL_FILE.exists()
+    ignored = subprocess.run(["git", "check-ignore", "-q", str(protocol.PROTOCOL_FILE)], cwd=ROOT).returncode == 0
+    assert not ignored, "config/protocol.md is git-ignored: the worker would not have it"
+    rb = ROOT / "rulebooks" / "23-protocol.md"
+    if rb.exists():   # the brain copy Claude reads must say the same
+        assert rb.read_text().strip() == protocol.PROTOCOL_FILE.read_text().strip()

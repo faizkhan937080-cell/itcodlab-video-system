@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw
 
 from .common import ROOT, limits
 
-PROTOCOL_FILE = ROOT / "rulebooks" / "23-protocol.md"
+PROTOCOL_FILE = ROOT / "config" / "protocol.md"   # tracked copy: the worker repo has no rulebooks/ (private brain repo)
 FX_KEYS = ("stabilize", "speed", "speed_ramp", "clean_voice", "chroma_key", "remove_bg", "reframe", "track_from", "denoise")
 LOOK_GATE = 7   # approvals/<job>__gate7__r<plan_ver>.json: written after Claude looked at the frame collage
 
@@ -66,7 +66,7 @@ def check_plan(plan, storage, lim=None):
     pl = lim.get("protocol", {})
     b = plan.get("protocol")
     if not isinstance(b, dict):
-        return ["protocol: plan has no protocol block. Run `./run plan-stamp` (it prints rulebooks/23-protocol.md first)."]
+        return ["protocol: plan has no protocol block. Run `./run plan-stamp` (it prints config/protocol.md first)."]
     errs = []
     if b.get("digest") != digest():
         errs.append(f"protocol: digest {b.get('digest')} is not the current protocol {digest()}. Read rulebooks/23-protocol.md and stamp again.")
