@@ -13,12 +13,14 @@
     "@remotion/layout-utils": "^4.0.541",
     "@remotion/lottie": "^4.0.541",
     "@remotion/media-utils": "^4.0.541",
+    "culori": "^4.0.2",
     "lottie-web": "^5.13.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "remotion": "^4.0.0"
   },
   "devDependencies": {
+    "@types/culori": "^4.0.1",
     "@types/react": "^18.3.0",
     "typescript": "^5.4.0"
   }

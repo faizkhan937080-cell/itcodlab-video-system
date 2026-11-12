@@ -73,5 +73,214 @@
    "@remotion/captions",
    "remotion"
   ]
+ },
+ "checkbox": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/checkbox",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Checkbox",
+  "files": [
+   "ext/remocn/checkbox.tsx",
+   "ext/remocn/use-checkbox-transition.ts"
+  ],
+  "sha256": "bc94beadbeba070f",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "cursor": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/cursor",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Cursor",
+  "files": [
+   "ext/remocn/cursor.tsx",
+   "ext/remocn/use-cursor-path.ts"
+  ],
+  "sha256": "f011c4640c04fef1",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "input": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/input",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Input",
+  "files": [
+   "ext/remocn/input.tsx",
+   "ext/remocn/use-input-transition.ts"
+  ],
+  "sha256": "8cecd354765b248e",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "typing-indicator": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/typing-indicator",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Typing Indicator",
+  "files": [
+   "ext/remocn/typing-indicator.tsx"
+  ],
+  "sha256": "1bf92e39134075e6",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "ai-prompt-flow": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/ai-prompt-flow",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI AI Prompt Flow",
+  "files": [
+   "ext/remocn/ai-prompt-flow.tsx"
+  ],
+  "sha256": "c4c0f16102c5cc61",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "chat-flow": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/chat-flow",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Chat Flow",
+  "files": [
+   "ext/remocn/chat-flow.tsx"
+  ],
+  "sha256": "db04adbd18692363",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "message-bubble": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/message-bubble",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Message Bubble",
+  "files": [
+   "ext/remocn/message-bubble.tsx",
+   "ext/remocn/use-message-bubble-transition.ts"
+  ],
+  "sha256": "e2c9c71a419f0e48",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "skeleton": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/skeleton",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Skeleton",
+  "files": [
+   "ext/remocn/skeleton.tsx",
+   "ext/remocn/use-skeleton-transition.ts"
+  ],
+  "sha256": "95fc379827a16666",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "caret": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/caret",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Caret",
+  "files": [
+   "ext/remocn/caret.tsx"
+  ],
+  "sha256": "c52f1aa250a37622",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "button": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/button",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Button",
+  "files": [
+   "ext/remocn/button.tsx",
+   "ext/remocn/use-button-transition.ts"
+  ],
+  "sha256": "816860cc05028c73",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "skeleton-block": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/skeleton-block",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Skeleton Block",
+  "files": [
+   "ext/remocn/skeleton-block.tsx"
+  ],
+  "sha256": "569573dc96d11cab",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "toast": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/toast",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Toast",
+  "files": [
+   "ext/remocn/toast.tsx",
+   "ext/remocn/use-toast-transition.ts"
+  ],
+  "sha256": "da7d7c5d46f153a8",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "spinner": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/spinner",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "UI Spinner",
+  "files": [
+   "ext/remocn/spinner.tsx"
+  ],
+  "sha256": "caf497ecb00ecbbe",
+  "deps": [
+   "remotion"
+  ]
+ },
+ "remocn-ui": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/remocn-ui",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "remocn UI Core",
+  "files": [
+   "ext/remocn/ui-core/timeline.ts",
+   "ext/remocn/ui-core/theme.ts",
+   "ext/remocn/ui-core/color.ts",
+   "ext/remocn/ui-core/motion.ts",
+   "ext/remocn/ui-core/types.ts",
+   "ext/remocn/ui-core/index.ts"
+  ],
+  "sha256": "cb97bb03bdd6d898",
+  "deps": [
+   "culori",
+   "remotion"
+  ]
  }
 }

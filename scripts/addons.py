@@ -21,10 +21,13 @@ from .common import ROOT
 EXT = ROOT / "remotion" / "src" / "ext"
 REG = EXT / "REGISTRY.json"
 SOURCES = {
-    "remocn": {"url": "https://github.com/Remocn/remocn", "licence": "MIT", "prefixes": ("components/remocn/", "lib/remocn/")},
+    "remocn": {"url": "https://github.com/Remocn/remocn", "licence": "MIT",
+               # registry target prefix -> folder inside ext/remocn/ (longest first)
+               "map": [("lib/remocn-icons/", "icons-core/"), ("lib/remocn-ui/", "ui-core/"), ("components/remocn/", ""), ("lib/remocn/", "")]},
 }
 NPM_OK = {"remotion", "@remotion/captions", "@remotion/google-fonts", "@remotion/transitions", "@remotion/paths",
-          "@remotion/media-utils", "@remotion/layout-utils", "@remotion/shapes", "@remotion/noise", "@remotion/animation-utils"}
+          "@remotion/media-utils", "@remotion/layout-utils", "@remotion/shapes", "@remotion/noise", "@remotion/animation-utils",
+          "culori"}   # culori: MIT colour maths used by remocn-ui core
 
 
 def load_registry():
@@ -67,23 +70,30 @@ def search(word, source="remocn"):
 
 
 def _target_rel(target, source):
-    for pre in SOURCES[source]["prefixes"]:
+    for pre, folder in SOURCES[source]["map"]:
         if target.startswith(pre):
-            return target[len(pre):]
+            return folder + target[len(pre):]
     raise ValueError(f"unexpected target path {target}")
 
 
 def _rewrite(content, here_rel, source):
-    """'@/lib/remocn/x' and '@/components/remocn/x' -> relative imports inside ext/<source>/."""
+    """'@/lib/remocn[-ui|-icons]/x' and '@/components/remocn/x' -> relative imports inside ext/<source>/."""
     here_dir = Path(here_rel).parent
 
     def rel(m):
-        target = m.group(2)
-        rp = Path(target)
-        r = Path(*([".."] * len(here_dir.parts))) / rp if here_dir.parts else rp
-        s = str(r).replace("\\", "/")
-        return f'{m.group(1)}{s if s.startswith(".") else "./" + s}{m.group(3)}'
-    return re.sub(r'(from\s+["\'])@/(?:lib|components)/' + source + r'/([^"\']+)(["\'])', rel, content)
+        alias = m.group(2).rstrip("/")
+        rest = m.group(3) or ""
+        target = None
+        for pre, folder in SOURCES[source]["map"]:
+            if (alias + "/") == pre:
+                target = folder + (rest.lstrip("/") if rest else "index")
+                break
+        if target is None:
+            return m.group(0)
+        up = "/".join([".."] * len(here_dir.parts))
+        r = f"{up}/{target}" if up else f"./{target}"
+        return f"{m.group(1)}{r}{m.group(4)}"
+    return re.sub(r'(from\s+["\'])@/((?:lib|components)/' + source + r'(?:-ui|-icons)?)(/[^"\']+)?(["\'])', rel, content)
 
 
 def add(names, src_dir, source="remocn", commit=""):
