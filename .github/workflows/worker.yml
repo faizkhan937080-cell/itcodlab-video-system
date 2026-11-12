@@ -42,7 +42,7 @@ jobs:
       RCLONE_LOW_LEVEL_RETRIES: '5'
       RCLONE_TPSLIMIT: '6'   # at most 6 Drive calls per second: stay under Google's per-minute limit (crash 2026-11-12)
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         timeout-minutes: 3
       - name: Check the one-time secret
         id: chk
