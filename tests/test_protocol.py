@@ -128,3 +128,16 @@ def test_grade_off_needs_what_faiz_said(plan, drive):
     assert any("grade.mode is 'off'" in e for e in protocol.check_plan(p, drive))
     p = protocol.stamp(plan, "sample", reference="none", reference_reason="unit test, no reference", grade_off_reason="Faiz: no grading on this one")
     assert protocol.check_plan(p, drive) == []
+
+
+def test_full_plan_may_skip_the_sample_only_with_faiz_words():
+    from scripts import protocol as P
+    plan = {"scenes": [{"id": "s", "duration_s": 30, "template": "title", "props": {"text": "x"}}]}
+
+    class S:
+        def read_json(self, rel):
+            return {}
+    p = P.stamp(plan, "full", "creators/x/style_record.json")
+    assert any("sample_job" in e for e in P.check_plan(p, S()))
+    p = P.stamp(plan, "full", "creators/x/style_record.json", sample_skip="Faiz 21:31: Y, skip the 8 s sample")
+    assert not any("sample_job" in e for e in P.check_plan(p, S()))

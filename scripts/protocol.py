@@ -28,7 +28,7 @@ def digest():
     return hashlib.sha256(protocol_text().replace("\r\n", "\n").strip().encode("utf-8")).hexdigest()[:12]
 
 
-def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, grade_off_reason=None):
+def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, grade_off_reason=None, sample_skip=None):
     """Add the protocol block to a plan (the CLI prints the protocol text first)."""
     plan = json.loads(json.dumps(plan))
     blk = {"digest": digest(), "kind": kind, "reference": reference}
@@ -38,6 +38,8 @@ def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, gr
         blk["sample_job"] = sample_job
     if grade_off_reason:
         blk["grade_off_reason"] = grade_off_reason
+    if sample_skip:
+        blk["sample_skip"] = sample_skip
     clone = plan.pop("_clone", None)   # clone plans carry their shot map in "_clone" until stamped
     plan.pop("_ref_record", None)
     if clone:
@@ -83,8 +85,12 @@ def check_plan(plan, storage, lim=None):
             errs.append(f"protocol: a sample plan is at most {mx:g} s (this one is {plan_total_s(plan):.1f} s). Cut a 5-6 s piece.")
     elif kind == "full":
         sj = b.get("sample_job")
-        if not sj:
-            errs.append("protocol: a full plan needs protocol.sample_job (an approved 5-6 s sample of the SAME clip and effects).")
+        skip = str(b.get("sample_skip", ""))
+        if not sj and len(skip) >= 12:
+            pass   # Faiz said in chat to skip the sample for this video (his words are kept in the plan)
+        elif not sj:
+            errs.append("protocol: a full plan needs protocol.sample_job (an approved 5-6 s sample of the SAME clip and effects), "
+                        "or protocol.sample_skip = Faiz's own words in chat asking to skip it.")
         else:
             try:
                 sst = storage.read_json(f"jobs/state/{sj}.json")
