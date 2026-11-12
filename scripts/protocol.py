@@ -104,6 +104,9 @@ def check_plan(plan, storage, lim=None):
     if (plan.get("grade") or {}).get("mode") == "off" and len(str(b.get("grade_off_reason", ""))) < 8:
         errs.append("protocol: plan.grade.mode is 'off'. Grading is automatic by default (rulebooks/13-grade.md); 'off' only when Faiz said so "
                     "-> stamp with --grade-off-reason '<what Faiz said>', or remove plan.grade.")
+    if b.get("clone"):
+        from . import clone_match
+        errs += clone_match.check_plan(plan, plan_total_s(plan), lim)
     ref = b.get("reference")
     if not ref:
         errs.append("protocol: protocol.reference missing (style_record.json path, or 'none' with reference_reason).")

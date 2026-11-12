@@ -719,6 +719,22 @@ def cmd_security(a):
     return 1 if r["verdict"] == "FAIL" and a.strict else 0
 
 
+def cmd_addon(a):
+    from . import addons
+    if a.action == "catalog":
+        print(addons.catalog(a.src), "components in catalog")
+    elif a.action == "search":
+        for c in addons.search(" ".join(a.names))[:40]:
+            print(f"{c['name']:28s} {c['title']} | {c['description'][:110]}")
+    elif a.action == "add":
+        print(json.dumps(addons.add(a.names, a.src, commit=a.commit or ""), indent=1))
+    elif a.action == "font":
+        print("fonts:", addons.write_fonts(a.names))
+    else:
+        for k, v in addons.load_registry().items():
+            print(f"{k:28s} {v['source']} {v['licence']} {v['url']}")
+
+
 def cmd_vet(a):
     from . import security
     v = security.vet_file(a.file, a.kind)
@@ -859,6 +875,12 @@ def build_parser():
     s.add_argument("--net", action="store_true")
     s.add_argument("--strict", action="store_true", help="exit 1 on FAIL (CI)")
     s.set_defaults(fn=cmd_security)
+    s = sub.add_parser("addon", help="outside Remotion add-ons (remocn): catalog | search | add | list")
+    s.add_argument("action", choices=["catalog", "search", "add", "font", "list"])
+    s.add_argument("names", nargs="*")
+    s.add_argument("--src", help="local clone of the source registry (e.g. /tmp/extsrc/remocn)")
+    s.add_argument("--commit", default="")
+    s.set_defaults(fn=cmd_addon)
     s = sub.add_parser("vet", help="safety-check one incoming file (type, size, virus scan)")
     s.add_argument("file")
     s.add_argument("kind", choices=["video", "audio", "image", "font", "pdf", "model", "other"])

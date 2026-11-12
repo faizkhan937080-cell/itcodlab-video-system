@@ -311,9 +311,7 @@ class Worker:
                         with stage("style_record"):
                             from . import style_record
                             rec = style_record.build(src, res["out_root"], self.lim)
-                            for sh in rec.get("frame_sheets") or []:
-                self.storage.put_file(wd / "style" / sh["file"], f"{out_rel}/{sh['file']}")
-            if rec.get("event_collage"):
+                            if rec.get("event_collage"):
                                 shutil.copy2(Path(res["out_root"]) / rec["event_collage"], Path(res["pack"]) / "collage_events.jpg")
                             st["style_record"] = {"complete": rec["complete"], "events": rec["event_count"], "problems": rec["problems"]}
                     except Exception as e:  # noqa: BLE001
@@ -673,6 +671,8 @@ class Worker:
                 rec = style_record.build(local, wd / "style", self.lim)
             self.storage.put_file(wd / "style" / "style_record.json", f"{out_rel}/style_record.json")
             self.storage.put_file(wd / "style" / "activity.json", f"{out_rel}/activity.json")
+            for sh in rec.get("frame_sheets") or []:
+                self.storage.put_file(wd / "style" / sh["file"], f"{out_rel}/{sh['file']}")
             if rec.get("event_collage"):
                 self.storage.put_file(wd / "style" / rec["event_collage"], f"{out_rel}/{rec['event_collage']}")
                 shutil.copy2(wd / "style" / rec["event_collage"], wd / "style" / "collage_events.jpg") if rec["event_collage"] != "collage_events.jpg" else None
@@ -843,7 +843,18 @@ class Worker:
             except Exception:  # noqa: BLE001
                 pass
             rel = self.storage.put_file(out, f"{folder}/{fname}")
-            fcheck = self._frame_check(job, st, wd, out, quality, folder, fname, chk)
+            fcheck = self._frame_check(job, st, wd, out, quality, folder, fname, chk, plan)
+            cm = (fcheck or {}).get("clone_match")
+            if cm is not None:
+                st["clone_match"] = {k: cm.get(k) for k in ("mean", "min", "min_score", "pass", "low", "collage", "error")}
+                note += f" | reference match mean {cm.get('mean', 0) * 100:.0f}% min {cm.get('min', 0) * 100:.0f}%"
+                if not cm.get("pass"):   # under the floor: back to the plan, Faiz never sees it
+                    st["paths"]["preview" if quality == "preview" else "final_candidate"] = rel
+                    st["plan_ver"] += 1
+                    lows = "; ".join(f"ours {x['out_t']}s vs ref {x['ref_t']}s {x['total'] * 100:.0f}%" for x in cm.get("low", [])[:4])
+                    self.set_status(st, job, "AWAIT_PLAN", f"Reference match too low (min {cm.get('min', 0) * 100:.0f}% < "
+                                    f"{cm.get('min_score', 0) * 100:.0f}%): {lows or cm.get('error', '')}. Fix and send plan v{st['plan_ver']}.")
+                    return True
             key = "preview" if quality == "preview" else "final_candidate"
             st["paths"][key] = rel
             st["output_link"] = rel
@@ -866,11 +877,29 @@ class Worker:
         except Exception as e:  # noqa: BLE001
             return self.failed(st, job, f"render_{quality}", e)
 
-    def _frame_check(self, job, st, wd, out, quality, folder, fname, chk=None):
-        """rulebooks/23 rule 1: frames every ~6 s -> collage in Drive + review branch. Never silently skipped."""
+    def _frame_check(self, job, st, wd, out, quality, folder, fname, chk=None, plan=None):
+        """rulebooks/23 rule 1: frames every ~6 s -> collage in Drive + review branch. Never silently skipped.
+        Clone plans also get the side-by-side reference match (collage_match.jpg); its sha becomes the look sha,
+        so Claude's look marker must be written after seeing ref | ours."""
         from . import protocol
         fc = protocol.frame_check(out, Path(wd) / "framecheck", self.lim)
         stem = Path(fname).stem
+        clone = ((plan or {}).get("protocol") or {}).get("clone")
+        if clone:
+            try:
+                from . import clone_match
+                ref_local = Path(wd) / ("ref_" + Path(clone["ref_video"]).name)
+                if not ref_local.exists():
+                    self.storage.fetch(clone["ref_video"], ref_local)
+                cm = clone_match.match(out, ref_local, clone, Path(wd) / "framecheck", self.lim)
+                self.storage.put_json(f"{folder}/{stem}_match.json", cm)
+                if cm.get("collage"):
+                    self.storage.put_file(Path(wd) / "framecheck" / cm["collage"], f"{folder}/{stem}_match.jpg")
+                    fc["sha"] = cm["sha"]
+                    fc["collage"] = cm["collage"]
+                fc["clone_match"] = cm
+            except Exception as e:  # noqa: BLE001
+                fc["clone_match"] = {"pass": False, "error": f"match failed: {type(e).__name__}: {e}"[:200], "low": []}
         try:   # raw | alpha | result of every keyed clip: the real-clip look of the key + grade (rulebooks/23 rule 3)
             from .render import REMOTION_DIR
             n = 0

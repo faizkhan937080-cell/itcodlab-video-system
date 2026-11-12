@@ -8,7 +8,7 @@ export type CaptionStyle = {
   max_words?: number;
   highlight?: string; // key of brand colors, default 'coral'
   size?: number; // 1 = default (72 px at 1080 short side)
-  look?: 'tiktok' | 'clean' | 'nt'; // clean = dark bold word on a light page, no stroke; nt = white bold, spoken word heavy (neuraltech.ai)
+  look?: 'tiktok' | 'clean' | 'nt' | 'ext'; // clean = dark bold word on a light page, no stroke; nt = white bold, spoken word heavy (neuraltech.ai)
   y?: number; // clean / nt look: centre of the line, fraction of height
   y_by_time?: {from_s: number; y: number}[]; // nt look: caption line moves with the layout (split / punch-in / full graphic)
 };

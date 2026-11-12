@@ -6,6 +6,8 @@ import {BarChart} from './components/BarChart';
 import {Checklist} from './components/Checklist';
 import {CleanBg, CleanCard} from './components/Clean';
 import {Captions} from './components/Captions';
+import {ExtCaptions} from './components/ExtCaptions';
+import {EXT} from './ext';
 import {NtBg, NtCard} from './components/Nt';
 import {Counter} from './components/Counter';
 import {Grain, Vignette} from './components/Grain';
@@ -64,6 +66,12 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <CleanBg brand={p.brand} footer={p.footer} />;
     case 'clean_card':
       return <CleanCard {...p} />;
+    case 'ext':
+    case 'clone': {
+      const C = EXT[p.component];
+      if (!C) throw new Error(`component ${p.component} not in ext/REGISTRY`);
+      return <C {...(p.props ?? {})} />;
+    }
     case 'nt_bg':
       return <NtBg mode={p.mode} />;
     case 'nt_card':
@@ -214,7 +222,11 @@ export const Main: React.FC<Plan> = (plan) => {
         </AbsoluteFill>
       ) : null}
       {plan.captions && plan.captions.length ? (
-        <Captions captions={plan.captions} style={plan.caption_style} colors={colors} />
+        plan.caption_style?.look === 'ext' ? (
+          <ExtCaptions captions={plan.captions} style={plan.caption_style as any} />
+        ) : (
+          <Captions captions={plan.captions} style={plan.caption_style} colors={colors} />
+        )
       ) : null}
       {(plan.audio ?? []).map((t, i) => (
         <AudioTrack key={`audio-${i}`} track={t} totalFrames={totalFrames(plan)} />

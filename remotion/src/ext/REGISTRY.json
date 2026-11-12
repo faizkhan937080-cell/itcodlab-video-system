@@ -1,0 +1,77 @@
+{
+ "caption-weight": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/caption-weight",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "Caption Weight",
+  "files": [
+   "ext/remocn/caption-weight.tsx"
+  ],
+  "sha256": "f6a93a67559c2592",
+  "deps": [
+   "@remotion/captions",
+   "remotion"
+  ]
+ },
+ "caption-word-pop": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/caption-word-pop",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "Caption Word Pop",
+  "files": [
+   "ext/remocn/caption-word-pop.tsx"
+  ],
+  "sha256": "5607f7495e5d54bb",
+  "deps": [
+   "@remotion/captions",
+   "remotion"
+  ]
+ },
+ "caption-dim-progress": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/caption-dim-progress",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "Caption Dim Progress",
+  "files": [
+   "ext/remocn/caption-dim-progress.tsx"
+  ],
+  "sha256": "ada383daff356fca",
+  "deps": [
+   "@remotion/captions",
+   "remotion"
+  ]
+ },
+ "caption-active-pop": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/caption-active-pop",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "Caption Active Pop",
+  "files": [
+   "ext/remocn/caption-active-pop.tsx"
+  ],
+  "sha256": "ad2b0e209d6d392c",
+  "deps": [
+   "@remotion/captions",
+   "remotion"
+  ]
+ },
+ "caption-core": {
+  "source": "remocn",
+  "url": "https://github.com/Remocn/remocn/tree/main/registry/remocn/caption-core",
+  "licence": "MIT",
+  "commit": "1d15141",
+  "title": "Caption Core",
+  "files": [
+   "ext/remocn/caption-core.ts"
+  ],
+  "sha256": "9234dc8de0f03971",
+  "deps": [
+   "@remotion/captions",
+   "remotion"
+  ]
+ }
+}

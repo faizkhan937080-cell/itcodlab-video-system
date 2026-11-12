@@ -265,5 +265,9 @@
     "key_semi_max": 0.05,
     "key_bg_alpha_max": 0.04,
     "_note": "rulebooks/23-protocol.md enforced in code: plan needs protocol block (digest), sample before full, frame check + look before gate"
+  },
+  "clone": {
+    "min_score": 0.85,
+    "_note": "clone mode (scripts/clone_match.py): every shot scored vs its reference moment (colour 0.4, layout 0.35, structure 0.25); under min_score -> back to plan, nothing goes to Faiz"
   }
 }

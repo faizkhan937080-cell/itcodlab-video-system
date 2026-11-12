@@ -98,7 +98,9 @@
               "clean_bg",
               "clean_card",
               "nt_bg",
-              "nt_card"
+              "nt_card",
+              "ext",
+              "clone"
             ]
           },
           "props": {
@@ -203,7 +205,9 @@
                     "clean_bg",
                     "clean_card",
                     "nt_bg",
-                    "nt_card"
+                    "nt_card",
+                    "ext",
+                    "clone"
                   ]
                 },
                 "props": {
@@ -335,7 +339,9 @@
                     "clean_bg",
                     "clean_card",
                     "nt_bg",
-                    "nt_card"
+                    "nt_card",
+                    "ext",
+                    "clone"
                   ]
                 },
                 "props": {
@@ -573,9 +579,10 @@
         },
         "look": {
           "enum": [
-            "tiktok",
             "clean",
-            "nt"
+            "ext",
+            "nt",
+            "tiktok"
           ],
           "description": "clean = dark bold word on light page, no stroke (ref reel-Dfj6PH9tIBB); nt = white bold, spoken word heavy (neuraltech.ai)"
         },
@@ -606,6 +613,18 @@
               }
             }
           }
+        },
+        "component": {
+          "type": "string",
+          "description": "look ext: outside caption component (remotion/src/ext/REGISTRY.json), e.g. caption-weight"
+        },
+        "font": {
+          "type": "string",
+          "description": "look ext: Google font family name (@remotion/google-fonts)"
+        },
+        "props": {
+          "type": "object",
+          "description": "look ext: props passed to the caption component (fontSize, fontWeight, color...)"
         }
       }
     },
@@ -693,6 +712,62 @@
           "type": "string"
         },
         "sample_job": {
+          "type": "string"
+        },
+        "clone": {
+          "type": "object",
+          "required": [
+            "reel",
+            "ref_video",
+            "shots"
+          ],
+          "properties": {
+            "reel": {
+              "type": "string"
+            },
+            "ref_video": {
+              "type": "string"
+            },
+            "min_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "shots": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "out",
+                  "ref"
+                ],
+                "properties": {
+                  "out": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "ref": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "what": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "grade_off_reason": {
           "type": "string"
         }
       }
