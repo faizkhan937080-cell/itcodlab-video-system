@@ -22,5 +22,12 @@ Applies to EVERY video job, even when Faiz says "jaldi banao". Speed = smaller f
 ## 5. Speed never skips checks
 - "Jaldi" = start with the sample at once. Rules 1-4 still run.
 
+## 6. Clone of a reference (Faiz 2026-11-12: "99% like the reference")
+- Plan carries protocol.clone (reel, ref_video, shot map out->ref for EVERY second). Worker refuses Claude's own
+  templates/text animations: only outside add-ons (remocn, ./run addon) + replicas of THIS reel + Google fonts.
+- Script, caption language/case and screen structure follow the reference too, not only the look.
+- After each render every shot is scored vs its reference moment; under limits clone.min_score it never reaches Faiz.
+  Claude looks at collage_match.jpg (ref | ours) before anything is sent.
+
 ## Done check (before every send)
-frames looked at? reference record complete? tool tested on real clip? sample approved?
+frames looked at? reference record complete? tool tested on real clip? sample approved? clone: match collage seen, all shots above the floor?
