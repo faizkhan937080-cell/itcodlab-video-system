@@ -115,6 +115,64 @@ def check_output(out_path, plan, quality, lim=None, size=None):
     return {"ok": not problems, "problems": problems, "probe": p}
 
 
+
+DERIVED = ("fx", "graded")
+
+
+def restore_derived(plan, storage):
+    """Keyed / graded / effect copies of the raw clips are slow to make (a 54 s 4K green-screen key ~5 min) and
+    depend only on the clip + settings, which are in their file names. They are kept on Drive (cache/derived/) and
+    fetched on a new machine instead of being made again: the same bytes, so the render is identical (rule 17)."""
+    if storage is None:
+        return []
+    stems = {Path(s).stem for s in source_clips(plan)}
+    got = []
+    for sub in DERIVED:
+        try:
+            names = storage.list_dir(f"cache/derived/{sub}")
+        except Exception as e:  # noqa: BLE001
+            log(f"derived cache not readable: {e}")
+            continue
+        for n in names:
+            if any(n.startswith(st + ".") for st in stems):
+                dst = REMOTION_DIR / "public" / sub / n
+                if not dst.exists():
+                    try:
+                        part = dst.with_name(dst.name + ".part")      # never leave a half file under the real name
+                        storage.fetch(f"cache/derived/{sub}/{n}", part)
+                        part.rename(dst)
+                        got.append(f"{sub}/{n}")
+                    except Exception as e:  # noqa: BLE001
+                        log(f"derived cache fetch failed for {n}: {e}")
+    if got:
+        log(f"derived cache: reused {len(got)} file(s) {got[:4]}")
+    return got
+
+
+def _derived_now():
+    out = set()
+    for sub in DERIVED:
+        d = REMOTION_DIR / "public" / sub
+        if d.is_dir():
+            out |= {f"{sub}/{p.name}" for p in d.iterdir() if p.is_file()}
+    return out
+
+
+def save_derived(storage, before):
+    """Upload derived copies made by this render (new names only) for the next machine."""
+    if storage is None:
+        return []
+    sent = []
+    for rel in sorted(_derived_now() - before):
+        try:
+            dest = f"cache/derived/{rel}"
+            if not storage.exists(dest):
+                storage.put_file(REMOTION_DIR / "public" / rel, dest)
+                sent.append(rel)
+        except Exception as e:  # noqa: BLE001
+            log(f"derived cache upload failed for {rel}: {e}")
+    return sent
+
 def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=None):
     """plan: dict (already validated). Returns check dict. Raises RuntimeError on render failure."""
     lim = limits()
@@ -123,11 +181,14 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=
         raise RuntimeError("plan invalid:\n" + errors_tail(errs))
     if storage is not None:
         stage_assets(plan, storage)
+        restore_derived(plan, storage)
+    derived_before = _derived_now()
     ensure_node_deps()
     from . import fx
     from .grade_video import grade_plan
     plan, fx_report = fx.expand_plan(plan, lim=lim)            # stabilise / speed ramp / voice / cut-out / tracks (copies; never fails the render)
     plan, grade_report = grade_plan(plan, storage, lim=lim)   # graded copies of footage; never fails the render
+    save_derived(storage, derived_before)
     w, h = master_size(plan, lim, probe_sources(plan))
     scale = lim["render"]["preview_scale"] if quality == "preview" else 1.0
     out_path = Path(out_path)
