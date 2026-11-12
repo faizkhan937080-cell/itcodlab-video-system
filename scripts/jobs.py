@@ -204,7 +204,14 @@ class Worker:
         poll = self.lim["jobs"]["poll_seconds"]
         end = time.time() + max_minutes * 60
         last, changed = None, time.time()
+        upd = time.time()
         while time.time() < end:
+            if time.time() - upd >= 120:     # a job dropped after a code push must meet the NEW code (2026-11-12 race)
+                upd = time.time()
+                try:
+                    self._self_update()
+                except Exception as e:  # noqa: BLE001
+                    log(f"self-update skipped: {e}")
             res = self.process_once()
             if res != last:
                 last, changed = res, time.time()
