@@ -10,9 +10,10 @@ export const ExtCaptions: React.FC<{captions: CaptionDef[]; style: CaptionStyle 
   const {height} = useVideoConfig();
   const C = EXT[style.component ?? ''];
   if (!C) throw new Error(`caption component ${style.component} not in ext/REGISTRY`);
-  const caps = captions.flatMap((c) =>
+  // every token but the very first starts with a space: tokens of two caption lines can share one page
+  const caps = captions.flatMap((c, ci) =>
     (c.words && c.words.length ? c.words : [{text: c.text, start_s: c.start_s, end_s: c.end_s}]).map((w, i) => ({
-      text: (i === 0 ? '' : ' ') + w.text,
+      text: (ci === 0 && i === 0 ? '' : ' ') + w.text,
       startMs: Math.round(w.start_s * 1000),
       endMs: Math.round(w.end_s * 1000),
       timestampMs: Math.round(((w.start_s + w.end_s) / 2) * 1000),
