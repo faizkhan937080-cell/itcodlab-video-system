@@ -27,6 +27,8 @@ export type LayoutSeg = {
   offset_y?: number;
   fade?: {from: number; to: number; side?: number};
   clip_top?: number; // fraction of the frame height cut off at the top (keeps hands out of the graphic panel)
+  clip_box?: [number, number, number, number]; // x0,y0,x1,y1 fractions: person shown only inside this box (phone card)
+  clip_radius?: number; // px of a 1080-wide frame
   hidden?: boolean;
 };
 
@@ -66,7 +68,11 @@ export const VideoScene: React.FC<{
       style={{
         backgroundColor: transparent ? 'transparent' : '#000',
         opacity: hidden ? 0 : 1,
-        ...(seg?.clip_top ? {clipPath: `inset(${seg.clip_top * 100}% 0 0 0)`} : {}),
+        ...(seg?.clip_box
+          ? {clipPath: `inset(${seg.clip_box[1] * 100}% ${(1 - seg.clip_box[2]) * 100}% ${(1 - seg.clip_box[3]) * 100}% ${seg.clip_box[0] * 100}% round ${((seg.clip_radius ?? 0) * width) / 1080}px)`}
+          : seg?.clip_top
+            ? {clipPath: `inset(${seg.clip_top * 100}% 0 0 0)`}
+            : {}),
       }}
     >
       <OffthreadVideo

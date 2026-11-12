@@ -282,5 +282,179 @@
    "culori",
    "remotion"
   ]
+ },
+ "fluent-icons": {
+  "source": "fluent-system-icons",
+  "url": "https://github.com/microsoft/fluentui-system-icons",
+  "licence": "MIT",
+  "commit": "main 2026-11-12",
+  "title": "Fluent UI System Icons (folder, folder open, document, checkmark)",
+  "files": [
+   "ext/fluent/icons.ts"
+  ],
+  "sha256": "6876e60146d4a131",
+  "deps": []
+ },
+ "nt-page": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "cream page (full or top half) + real plate below",
+  "files": [
+   "clones/DfMQ7zqkuxO/Page.tsx"
+  ],
+  "ref_times": [
+   12.5,
+   55.9
+  ],
+  "sha256": "d22fd4517548bad0",
+  "deps": []
+ },
+ "nt-step-header": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "Step N Title header at 4 % height",
+  "files": [
+   "clones/DfMQ7zqkuxO/StepHeader.tsx"
+  ],
+  "ref_times": [
+   12.5,
+   37.5,
+   43.9
+  ],
+  "sha256": "b57f27f8a733948b",
+  "deps": []
+ },
+ "nt-table": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "Step table with ticking checkboxes",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefTable.tsx"
+  ],
+  "ref_times": [
+   37.5,
+   43.0
+  ],
+  "sha256": "b827379548e721db",
+  "deps": []
+ },
+ "nt-tree": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "folder tree with active chip",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefTree.tsx"
+  ],
+  "ref_times": [
+   55.9,
+   63.3
+  ],
+  "sha256": "8b7f6d725783438a",
+  "deps": []
+ },
+ "nt-drafts": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "Draft 1/2/3 cards + loop + Approved",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefDrafts.tsx"
+  ],
+  "ref_times": [
+   81.8,
+   86.5
+  ],
+  "sha256": "352fe4375c6503d0",
+  "deps": []
+ },
+ "nt-doc": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "brand-kit.md mono card with typed lines",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefDoc.tsx"
+  ],
+  "ref_times": [
+   87.4,
+   92.0
+  ],
+  "sha256": "0db284294b5dac1a",
+  "deps": []
+ },
+ "nt-title": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "series stinger on paper folders",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefTitle.tsx"
+  ],
+  "ref_times": [
+   8.8,
+   10.6
+  ],
+  "sha256": "d91ada0780ff1bc9",
+  "deps": []
+ },
+ "nt-wall": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "wall of reels",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefWall.tsx"
+  ],
+  "ref_times": [
+   0.5,
+   5.1
+  ],
+  "sha256": "4e2df0e1a6efbe9e",
+  "deps": []
+ },
+ "nt-phone-edit": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "phone card + timecode + editor timeline",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefPhoneEdit.tsx"
+  ],
+  "ref_times": [
+   6.0,
+   7.9
+  ],
+  "sha256": "b2ede87fbec620a8",
+  "deps": []
+ },
+ "nt-window": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "macOS window",
+  "files": [
+   "clones/DfMQ7zqkuxO/MacWindow.tsx"
+  ],
+  "ref_times": [
+   12.5,
+   19.0,
+   29.1
+  ],
+  "sha256": "6067c953dbdd72d7",
+  "deps": []
  }
 }

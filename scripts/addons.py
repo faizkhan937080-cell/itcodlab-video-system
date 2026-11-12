@@ -187,3 +187,17 @@ def write_fonts(names=None):
     lines.append("};")
     (EXT / "fonts.ts").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return have
+
+
+def register_replica(name, reel, file, ref_times, note=""):
+    """A replica component of ONE reference reel (remotion/src/clones/<reel>/...), measured from its frame sheets.
+    Allowed in clone plans of that reel only (clone_match checks source == clone:<reel>)."""
+    path = ROOT / "remotion" / "src" / file
+    if not path.exists():
+        raise FileNotFoundError(file)
+    reg = load_registry()
+    reg[name] = {"source": f"clone:{reel}", "url": f"creators/*/reel-{reel}/collage_ref_*.jpg", "licence": "own replica of the reference look",
+                 "commit": "", "title": note, "files": [file], "ref_times": ref_times,
+                 "sha256": hashlib.sha256(path.read_bytes()).hexdigest()[:16], "deps": []}
+    REG.write_text(json.dumps(reg, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    write_index()

@@ -10,13 +10,23 @@ import {Caret as C7} from './remocn/caret';
 import {ChatFlow as C8} from './remocn/chat-flow';
 import {Checkbox as C9} from './remocn/checkbox';
 import {Cursor as C10} from './remocn/cursor';
-import {Input as C11} from './remocn/input';
-import {MessageBubble as C12} from './remocn/message-bubble';
-import {Skeleton as C14} from './remocn/skeleton';
-import {SkeletonBlock as C15} from './remocn/skeleton-block';
-import {Spinner as C16} from './remocn/spinner';
-import {Toast as C17} from './remocn/toast';
-import {TypingIndicator as C18} from './remocn/typing-indicator';
+import {Input as C12} from './remocn/input';
+import {MessageBubble as C13} from './remocn/message-bubble';
+import {RefDoc as C14} from '../clones/DfMQ7zqkuxO/RefDoc';
+import {RefDrafts as C15} from '../clones/DfMQ7zqkuxO/RefDrafts';
+import {Page as C16} from '../clones/DfMQ7zqkuxO/Page';
+import {RefPhoneEdit as C17} from '../clones/DfMQ7zqkuxO/RefPhoneEdit';
+import {StepHeader as C18} from '../clones/DfMQ7zqkuxO/StepHeader';
+import {RefTable as C19} from '../clones/DfMQ7zqkuxO/RefTable';
+import {RefTitle as C20} from '../clones/DfMQ7zqkuxO/RefTitle';
+import {RefTree as C21} from '../clones/DfMQ7zqkuxO/RefTree';
+import {RefWall as C22} from '../clones/DfMQ7zqkuxO/RefWall';
+import {MacWindow as C23} from '../clones/DfMQ7zqkuxO/MacWindow';
+import {Skeleton as C25} from './remocn/skeleton';
+import {SkeletonBlock as C26} from './remocn/skeleton-block';
+import {Spinner as C27} from './remocn/spinner';
+import {Toast as C28} from './remocn/toast';
+import {TypingIndicator as C29} from './remocn/typing-indicator';
 export const EXT: Record<string, React.FC<any>> = {
   'ai-prompt-flow': C0 as React.FC<any>,
   'button': C1 as React.FC<any>,
@@ -28,11 +38,21 @@ export const EXT: Record<string, React.FC<any>> = {
   'chat-flow': C8 as React.FC<any>,
   'checkbox': C9 as React.FC<any>,
   'cursor': C10 as React.FC<any>,
-  'input': C11 as React.FC<any>,
-  'message-bubble': C12 as React.FC<any>,
-  'skeleton': C14 as React.FC<any>,
-  'skeleton-block': C15 as React.FC<any>,
-  'spinner': C16 as React.FC<any>,
-  'toast': C17 as React.FC<any>,
-  'typing-indicator': C18 as React.FC<any>,
+  'input': C12 as React.FC<any>,
+  'message-bubble': C13 as React.FC<any>,
+  'nt-doc': C14 as React.FC<any>,
+  'nt-drafts': C15 as React.FC<any>,
+  'nt-page': C16 as React.FC<any>,
+  'nt-phone-edit': C17 as React.FC<any>,
+  'nt-step-header': C18 as React.FC<any>,
+  'nt-table': C19 as React.FC<any>,
+  'nt-title': C20 as React.FC<any>,
+  'nt-tree': C21 as React.FC<any>,
+  'nt-wall': C22 as React.FC<any>,
+  'nt-window': C23 as React.FC<any>,
+  'skeleton': C25 as React.FC<any>,
+  'skeleton-block': C26 as React.FC<any>,
+  'spinner': C27 as React.FC<any>,
+  'toast': C28 as React.FC<any>,
+  'typing-indicator': C29 as React.FC<any>,
 };
