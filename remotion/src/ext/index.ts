@@ -14,19 +14,21 @@ import {Input as C12} from './remocn/input';
 import {MessageBubble as C13} from './remocn/message-bubble';
 import {RefDoc as C14} from '../clones/DfMQ7zqkuxO/RefDoc';
 import {RefDrafts as C15} from '../clones/DfMQ7zqkuxO/RefDrafts';
-import {Page as C16} from '../clones/DfMQ7zqkuxO/Page';
-import {RefPhoneEdit as C17} from '../clones/DfMQ7zqkuxO/RefPhoneEdit';
-import {StepHeader as C18} from '../clones/DfMQ7zqkuxO/StepHeader';
-import {RefTable as C19} from '../clones/DfMQ7zqkuxO/RefTable';
-import {RefTitle as C20} from '../clones/DfMQ7zqkuxO/RefTitle';
-import {RefTree as C21} from '../clones/DfMQ7zqkuxO/RefTree';
-import {RefWall as C22} from '../clones/DfMQ7zqkuxO/RefWall';
-import {MacWindow as C23} from '../clones/DfMQ7zqkuxO/MacWindow';
-import {Skeleton as C25} from './remocn/skeleton';
-import {SkeletonBlock as C26} from './remocn/skeleton-block';
-import {Spinner as C27} from './remocn/spinner';
-import {Toast as C28} from './remocn/toast';
-import {TypingIndicator as C29} from './remocn/typing-indicator';
+import {RefFinder as C16} from '../clones/DfMQ7zqkuxO/RefFinder';
+import {Page as C17} from '../clones/DfMQ7zqkuxO/Page';
+import {RefPhoneEdit as C18} from '../clones/DfMQ7zqkuxO/RefPhoneEdit';
+import {RefPlate as C19} from '../clones/DfMQ7zqkuxO/Plate';
+import {StepHeader as C20} from '../clones/DfMQ7zqkuxO/StepHeader';
+import {RefTable as C21} from '../clones/DfMQ7zqkuxO/RefTable';
+import {RefTitle as C22} from '../clones/DfMQ7zqkuxO/RefTitle';
+import {RefTree as C23} from '../clones/DfMQ7zqkuxO/RefTree';
+import {RefWall as C24} from '../clones/DfMQ7zqkuxO/RefWall';
+import {MacWindow as C25} from '../clones/DfMQ7zqkuxO/MacWindow';
+import {Skeleton as C27} from './remocn/skeleton';
+import {SkeletonBlock as C28} from './remocn/skeleton-block';
+import {Spinner as C29} from './remocn/spinner';
+import {Toast as C30} from './remocn/toast';
+import {TypingIndicator as C31} from './remocn/typing-indicator';
 export const EXT: Record<string, React.FC<any>> = {
   'ai-prompt-flow': C0 as React.FC<any>,
   'button': C1 as React.FC<any>,
@@ -42,17 +44,19 @@ export const EXT: Record<string, React.FC<any>> = {
   'message-bubble': C13 as React.FC<any>,
   'nt-doc': C14 as React.FC<any>,
   'nt-drafts': C15 as React.FC<any>,
-  'nt-page': C16 as React.FC<any>,
-  'nt-phone-edit': C17 as React.FC<any>,
-  'nt-step-header': C18 as React.FC<any>,
-  'nt-table': C19 as React.FC<any>,
-  'nt-title': C20 as React.FC<any>,
-  'nt-tree': C21 as React.FC<any>,
-  'nt-wall': C22 as React.FC<any>,
-  'nt-window': C23 as React.FC<any>,
-  'skeleton': C25 as React.FC<any>,
-  'skeleton-block': C26 as React.FC<any>,
-  'spinner': C27 as React.FC<any>,
-  'toast': C28 as React.FC<any>,
-  'typing-indicator': C29 as React.FC<any>,
+  'nt-finder': C16 as React.FC<any>,
+  'nt-page': C17 as React.FC<any>,
+  'nt-phone-edit': C18 as React.FC<any>,
+  'nt-plate': C19 as React.FC<any>,
+  'nt-step-header': C20 as React.FC<any>,
+  'nt-table': C21 as React.FC<any>,
+  'nt-title': C22 as React.FC<any>,
+  'nt-tree': C23 as React.FC<any>,
+  'nt-wall': C24 as React.FC<any>,
+  'nt-window': C25 as React.FC<any>,
+  'skeleton': C27 as React.FC<any>,
+  'skeleton-block': C28 as React.FC<any>,
+  'spinner': C29 as React.FC<any>,
+  'toast': C30 as React.FC<any>,
+  'typing-indicator': C31 as React.FC<any>,
 };

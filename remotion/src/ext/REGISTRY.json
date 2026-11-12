@@ -308,7 +308,7 @@
    12.5,
    55.9
   ],
-  "sha256": "d22fd4517548bad0",
+  "sha256": "d25daaa2876a58d8",
   "deps": []
  },
  "nt-step-header": {
@@ -437,7 +437,7 @@
    6.0,
    7.9
   ],
-  "sha256": "b2ede87fbec620a8",
+  "sha256": "bcb7781f0bbb56e0",
   "deps": []
  },
  "nt-window": {
@@ -455,6 +455,41 @@
    29.1
   ],
   "sha256": "6067c953dbdd72d7",
+  "deps": []
+ },
+ "nt-plate": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "real dark-room plate behind the keyed head",
+  "files": [
+   "clones/DfMQ7zqkuxO/Plate.tsx"
+  ],
+  "ref_times": [
+   1.4,
+   11.6,
+   26.4
+  ],
+  "sha256": "f97f3945b7144c43",
+  "deps": []
+ },
+ "nt-finder": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "Finder window, thumbnails dropping in",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefFinder.tsx"
+  ],
+  "ref_times": [
+   43.9,
+   44.9,
+   45.8,
+   46.7
+  ],
+  "sha256": "38e04fabaa0a31a0",
   "deps": []
  }
 }

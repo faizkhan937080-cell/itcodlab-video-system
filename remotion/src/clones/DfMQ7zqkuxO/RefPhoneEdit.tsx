@@ -1,5 +1,5 @@
 import React from 'react';
-import {useCurrentFrame, useVideoConfig} from 'remotion';
+import {Img, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Page} from './Page';
 import {SoftShadow, TimedCheck} from './parts';
 import {F, K, unit} from './theme';
@@ -10,7 +10,7 @@ type Row = {name: string; what: string; check_s?: number | null};
  * compact Step table and whose bottom half shows the talking head (the keyed clip is placed there by the video layout,
  * this card is drawn BEHIND it); timecode under it; editor timeline (ruler, V2 inserts, V1 film strip, A1 green
  * waveform, red playhead) at y 58.8-72.8 %. */
-export const RefPhoneEdit: React.FC<{step: string; title: string; rows: Row[]; tc_from: number; tc_to: number; total_s?: number; inserts?: [number, number][]}> = ({step, title, rows, tc_from, tc_to, total_s = 60, inserts = [[0.03, 0.11], [0.3, 0.38], [0.41, 0.53], [0.72, 0.8], [0.92, 0.99]]}) => {
+export const RefPhoneEdit: React.FC<{step: string; title: string; rows: Row[]; tc_from: number; tc_to: number; total_s?: number; plate?: string; inserts?: [number, number][]}> = ({step, title, rows, tc_from, tc_to, total_s = 60, plate, inserts = [[0.03, 0.11], [0.3, 0.38], [0.41, 0.53], [0.72, 0.8], [0.92, 0.99]]}) => {
   const frame = useCurrentFrame();
   const {width, height, fps, durationInFrames} = useVideoConfig();
   const u = unit(width);
@@ -42,7 +42,9 @@ export const RefPhoneEdit: React.FC<{step: string; title: string; rows: Row[]; t
               </div>
             ))}
           </div>
-          <div style={{position: 'absolute', left: 0, right: 0, top: '48%', bottom: 0, background: K.dark}} />
+          <div style={{position: 'absolute', left: 0, right: 0, top: '48%', bottom: 0, background: K.dark, overflow: 'hidden'}}>
+            {plate ? <Img src={plate.startsWith('http') ? plate : staticFile(plate)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /> : null}
+          </div>
         </div>
       </div>
       <div style={{position: 'absolute', left: 0, right: 0, top: 0.553 * height, textAlign: 'center', fontFamily: F.mono, transform: 'translateY(-50%)'}}>

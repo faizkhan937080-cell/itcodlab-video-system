@@ -29,10 +29,3 @@ export const Page: React.FC<{mode?: 'full' | 'split'; plate?: string; plateY?: n
     </AbsoluteFill>
   );
 };
-
-/** Full-frame dark room plate (talking head full / punch-in layouts). */
-export const Plate: React.FC<{src: string; y?: number; scale?: number}> = ({src, y = 0.5, scale = 1}) => (
-  <AbsoluteFill style={{backgroundColor: K.dark, overflow: 'hidden'}}>
-    <Img src={src.startsWith('http') ? src : staticFile(src)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: `50% ${y * 100}%`, transform: `scale(${scale})`}} />
-  </AbsoluteFill>
-);

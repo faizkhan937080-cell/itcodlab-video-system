@@ -19,7 +19,7 @@ export const ExtCaptions: React.FC<{captions: CaptionDef[]; style: CaptionStyle 
       confidence: 1,
     })),
   );
-  const yBy = (style.y_by_time ?? []) as {from_s: number; y: number}[];
+  const yBy = (style.y_by_time ?? []) as {from_s: number; y: number; hide?: boolean}[];
   const family = style.font ? FONTS[style.font] : undefined;
   return (
     <AbsoluteFill style={{fontFamily: family}}>
@@ -30,11 +30,13 @@ export const ExtCaptions: React.FC<{captions: CaptionDef[]; style: CaptionStyle 
   );
 };
 
-const YBox: React.FC<{yBy: {from_s: number; y: number}[]; y: number; height: number; children: React.ReactNode}> = ({yBy, y, height, children}) => {
+const YBox: React.FC<{yBy: {from_s: number; y: number; hide?: boolean}[]; y: number; height: number; children: React.ReactNode}> = ({yBy, y, height, children}) => {
   const {fps} = useVideoConfig();
   const frame = useCurrentFrame();
   const t = frame / fps;
-  const cur = yBy.filter((z) => z.from_s <= t + 1e-6).pop()?.y ?? y;
+  const seg = yBy.filter((z) => z.from_s <= t + 1e-6).pop();
+  if (seg?.hide) return null; // the reference shows no captions on full-frame graphics (6-8 s, 8.8-10.6 s, 55.9-63 s)
+  const cur = seg?.y ?? y;
   return (
     <div style={{position: 'absolute', left: 0, right: 0, top: cur * height, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'center'}}>
       {children}
