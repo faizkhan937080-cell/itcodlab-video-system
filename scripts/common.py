@@ -101,6 +101,11 @@ import threading as _th
 
 _TIMES, _TLOCK = {}, _th.Lock()
 _BEAT = [time.time()]
+_STAGES = [0]   # how many measured stages started (real work), for the warm worker
+
+
+def stages_started():
+    return _STAGES[0]
 
 
 def beat():
@@ -116,6 +121,7 @@ def since_beat():
 def stage(name):
     t0 = time.time()
     beat()
+    _STAGES[0] += 1
     try:
         yield
     finally:

@@ -38,6 +38,7 @@ def _worker(results, clock, work_s=0):
 
 def test_idle_run_stops_after_grace(monkeypatch):
     c = Clock()
+    w0 = None  # a slow Drive scan (no stage) is not work
     monkeypatch.setattr(jobs.time, "time", c.time)
     monkeypatch.setattr(jobs.time, "sleep", c.sleep)
     w = _worker([[("a", "AWAIT_PLAN")]], c)
@@ -67,7 +68,8 @@ def test_long_call_counts_as_work(monkeypatch):
     def first_is_render():
         calls["n"] += 1
         if calls["n"] == 1:
-            c.t += 200          # the whole render happened inside the first call
+            with common.stage("render"):   # the whole render happened inside the first call
+                c.t += 200
         return orig()
     w.process_once = first_is_render
     t0 = c.t

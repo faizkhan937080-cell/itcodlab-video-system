@@ -225,7 +225,7 @@ class Worker:
         approvals or candidates that arrive meanwhile are still picked up), then return so the machine can stop.
         warm_s: once this run has done real work, stay ready that long for the next step (Claude's next plan,
         an approval) so it starts at once instead of paying a new ~3 min machine setup (2026-11-12)."""
-        from .common import beat
+        from .common import beat, stages_started
         poll = self.lim["jobs"]["poll_seconds"]
         end = time.time() + max_minutes * 60
         last, changed = None, time.time()
@@ -240,9 +240,9 @@ class Worker:
                     self._self_update()
                 except Exception as e:  # noqa: BLE001
                     log(f"self-update skipped: {e}")
-            t0 = time.time()
+            n0 = stages_started()
             res = self.process_once()
-            if time.time() - t0 > 30:       # a render/analysis ran inside this call
+            if stages_started() > n0:       # a measured stage (render, analysis, ...) ran inside this call
                 worked = True
             if res != last:
                 worked = worked or last is not None
