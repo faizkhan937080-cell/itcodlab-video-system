@@ -81,16 +81,28 @@ jobs:
           mkdir -p work; echo "python_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
       - uses: actions/cache@v4
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 4
+        continue-on-error: true
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 3
         with:
           path: ~/.cache/huggingface
           key: hf-whisper-clap-v1
       - uses: actions/cache@v4
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 4
+        continue-on-error: true
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 3
         with:
           path: ~/.cache/torch
           key: demucs-weights-v1
       - uses: actions/cache@v4
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 4
+        continue-on-error: true
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 3
         with:
           path: remotion/node_modules
           key: remotion-${{ hashFiles('remotion/package.json') }}
