@@ -122,7 +122,12 @@ class Storage:
         if self.root is not None:
             shutil.copyfile(self.root / rel, local_path)
         else:
-            r = _rc(["rclone", "copyto", f"{self.remote}/{rel}", str(local_path)], long=True)
+            import time
+            for i in range(3):   # Drive sometimes answers "directory not found" for a file that is there (busy API)
+                r = _rc(["rclone", "copyto", f"{self.remote}/{rel}", str(local_path)], long=True)
+                if r.returncode == 0 or i == 2:
+                    break
+                time.sleep(15 * (i + 1))
             if r.returncode != 0:
                 raise StorageError(f"cannot fetch {rel}: {r.stderr[-300:]}")
         return local_path
