@@ -167,6 +167,9 @@ def cmd_bench_render(a):
     plan = st.read_json(a.plan)
     fr = tuple(int(x) for x in a.frames.split("-"))
     cs = tuple(int(x) for x in a.concurrencies.split(","))
+    if a.chunks:
+        rep = bench_render.chunks(plan, st)
+        return 0 if rep.get("pass") else 1
     rep = bench_render.run(plan, st, frames=fr, concurrencies=cs, quality=a.quality)
     return 0 if rep.get("best") else 1
 
@@ -1022,6 +1025,7 @@ def build_parser():
     s.add_argument("--frames", default="0-299")
     s.add_argument("--concurrencies", default="2,3,4")
     s.add_argument("--quality", choices=["preview", "final"], default="preview")
+    s.add_argument("--chunks", action="store_true", help="prove + time 'render only changed shots' instead")
     s.set_defaults(fn=cmd_bench_render)
     s = sub.add_parser("voice", help="voice registry: list | register | verify (clone needs signed consent, verified by Faiz in chat)")
     s.add_argument("what", choices=["list", "register", "verify"])

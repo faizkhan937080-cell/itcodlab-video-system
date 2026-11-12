@@ -150,6 +150,13 @@ jobs:
         run: |
           PLAN=$(git log -1 --format=%B | sed -n 's/.*\[bench-render:\([A-Za-z0-9_./-]*\)\].*/\1/p' | head -1)
           ./run bench-render --plan "$PLAN" --frames 0-299 --concurrencies 2,3,4,6 | tail -30
+      - name: Changed-shots render proof (only when the wake message has [bench-chunks:<Drive plan path>]; report to Drive costs/compare/)
+        if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[bench-chunks:')
+        continue-on-error: true
+        timeout-minutes: 60
+        run: |
+          PLAN=$(git log -1 --format=%B | sed -n 's/.*\[bench-chunks:\([A-Za-z0-9_./-]*\)\].*/\1/p' | head -1)
+          ./run bench-render --plan "$PLAN" --chunks | tail -30
       - name: Kaggle GPU compare (only when the wake message has [kaggle-compare:<job>]; report goes to Drive costs/compare/)
         if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[kaggle-compare:')
         continue-on-error: true

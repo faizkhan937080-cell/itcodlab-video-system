@@ -148,6 +148,18 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=
     if os.environ.get("ITCOD_BROWSER"):  # use an installed Chromium instead of downloading one
         cmd += [f"--browser-executable={os.environ['ITCOD_BROWSER']}", "--chrome-mode=chrome-for-testing"]
     log(f"rendering {quality}: {w}x{h} x{scale}")
+    if quality == "preview" and not frames and lim["render"].get("chunk_cache") and os.environ.get("ITCOD_NO_CHUNKS") != "1":
+        from . import render_chunks
+        if render_chunks.eligible(props):
+            dur = plan_duration_s(plan)
+            render_chunks.render(props_file, props, out_path, scale, m, plan["fps"],
+                                 sum(max(1, int(s["duration_s"] * plan["fps"] + 0.5)) for s in plan["scenes"]),
+                                 int(600 + dur * 20))
+            res = check_output(out_path, plan, quality, lim, size=(w, h))
+            res["grade"], res["effects"], res["chunked"] = grade_report, fx_report, True
+            from .safezone import lint
+            res["safe_zone"] = lint(plan, (w, h), lim)
+            return res
     # watchdog: a hung render must end, not block the worker for hours (54 s preview ~3 min, so 10 min + 20x is roomy)
     dur = plan_duration_s(plan)
     limit_s = int(600 + dur * (20 if quality == "preview" else 60))

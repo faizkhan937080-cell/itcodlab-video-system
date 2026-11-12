@@ -190,7 +190,8 @@
     "duration_tolerance_s": 0.25,
     "match_source": true,
     "max_long_edge_px": 7680,
-    "note": "Output size = largest raw source clip in the plan (4K in -> 4K out); plan.output overrides; none -> master default. Preview = preview_scale of that."
+    "note": "Output size = largest raw source clip in the plan (4K in -> 4K out); plan.output overrides; none -> master default. Preview = preview_scale of that.",
+    "chunk_cache": false
   },
   "storage": {
     "delete_allowed": false,
