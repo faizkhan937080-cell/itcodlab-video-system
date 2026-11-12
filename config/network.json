@@ -107,6 +107,20 @@
         6,
         24
       ]
+    },
+    "wikimedia": {
+      "match": [
+        "wikimedia.org",
+        "wikipedia.org"
+      ],
+      "min_gap_s": 1.0,
+      "jitter_s": 0.5,
+      "daily_max": 400,
+      "cooldown_h": [
+        1,
+        6,
+        24
+      ]
     }
   },
   "block_signals": [

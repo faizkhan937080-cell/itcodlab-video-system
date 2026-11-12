@@ -13,6 +13,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 OPENVERSE_IMG = "https://api.openverse.org/v1/images/"
+COMMONS = "https://commons.wikimedia.org/w/api.php"
 OK = ("cc0", "pdm", "by")
 
 
@@ -29,6 +30,48 @@ def search_images(query, aspect=None, page_size=30, token=None):
         with urllib.request.urlopen(req, timeout=30) as r:  # noqa: S310
             return json.loads(r.read().decode("utf-8")).get("results", [])
     return guard().call("openverse", go)
+
+
+def _commons_licence(meta):
+    """Wikimedia extmetadata -> our licence code (only commercial-safe ones; share-alike / non-commercial -> None)."""
+    lic = str((meta.get("License") or {}).get("value", "")).lower()
+    short = str((meta.get("LicenseShortName") or {}).get("value", "")).lower()
+    if lic in ("cc0", "cc-zero") or "cc0" in short:
+        return "cc0"
+    if lic.startswith("pd") or "public domain" in short:
+        return "pdm"
+    if lic.startswith("cc-by-") and "-sa" not in lic and "-nc" not in lic and "-nd" not in lic:
+        return "by"
+    return None
+
+
+def search_commons(query, aspect=None, page_size=30, token=None):
+    """Wikimedia Commons (official API): files with a commercial-safe licence, as Openverse-shaped results."""
+    import re as _re
+    from .netguard import config, guard
+    p = {"action": "query", "format": "json", "generator": "search", "gsrnamespace": 6, "gsrsearch": f"{query} filetype:bitmap",
+         "gsrlimit": page_size, "prop": "imageinfo", "iiprop": "url|extmetadata|size", "iiurlwidth": 1600}
+    req = urllib.request.Request(f"{COMMONS}?{urllib.parse.urlencode(p)}", headers={"User-Agent": config()["user_agent"]})
+
+    def go():
+        with urllib.request.urlopen(req, timeout=30) as r:  # noqa: S310
+            return json.loads(r.read().decode("utf-8"))
+    data = guard().call("wikimedia", go)
+    out = []
+    for pg in sorted((data.get("query") or {}).get("pages", {}).values(), key=lambda x: x.get("index", 0)):
+        ii = (pg.get("imageinfo") or [{}])[0]
+        meta = ii.get("extmetadata") or {}
+        lic = _commons_licence(meta)
+        w, h = ii.get("width") or 0, ii.get("height") or 0
+        if not lic or not ii.get("thumburl") or min(w, h) < 600:
+            continue
+        if aspect == "wide" and w < h * 1.2 or aspect == "tall" and h < w * 1.2:
+            continue
+        artist = _re.sub(r"<[^>]+>", "", str((meta.get("Artist") or {}).get("value", ""))).strip()
+        out.append({"url": ii["thumburl"], "license": lic, "license_version": str((meta.get("LicenseShortName") or {}).get("value", "")),
+                    "creator": artist or "unknown", "title": pg.get("title", "").replace("File:", ""), "foreign_landing_url": ii.get("descriptionurl", ""),
+                    "filetype": ii["thumburl"].rsplit(".", 1)[-1].lower(), "width": w, "height": h, "source": "wikimedia"})
+    return out
 
 
 def _credit(it):
@@ -68,8 +111,14 @@ def run(storage, job, wd, token=None, search_fn=None, download_fn=None):
     for qi, q in enumerate(job.get("queries") or [], 1):
         name = library._slug(q.get("name") or q["query"])
         want = max(1, min(int(q.get("count", 6)), 12))
-        res = (search_fn or search_images)(q["query"], q.get("aspect"), 30, token)
-        res = [r for r in res if str(r.get("license", "")).lower() in OK and r.get("url")]
+        res, errors = [], []
+        for src in ([search_fn] if search_fn else [search_images, search_commons]):   # official APIs, one after the other
+            try:
+                res += [r for r in src(q["query"], q.get("aspect"), 30, token) if str(r.get("license", "")).lower() in OK and r.get("url")]
+            except Exception as e:  # noqa: BLE001  (a host that said stop is not retried here: netguard keeps the cooldown)
+                errors.append(f"{getattr(src, '__name__', 'source')}: {type(e).__name__}: {e}"[:160])
+            if len(res) >= want * 2:
+                break
         got = []
         for it in res:
             if len(got) >= want:
@@ -89,7 +138,7 @@ def run(storage, job, wd, token=None, search_fn=None, download_fn=None):
             got.append({"n": len(got) + 1, "file": rel, "licence": it["license"], "w": it.get("width"), "h": it.get("height"),
                         "credit": _credit(it), "local": str(dest)})
         sheet = _sheet([g["local"] for g in got], wd / f"collage_assets_{qi:02d}.jpg", name) if got else None
-        report.append({"query": q["query"], "name": name, "found": len(res), "kept": [{k: v for k, v in g.items() if k != "local"} for g in got],
+        report.append({"query": q["query"], "name": name, "found": len(res), "errors": errors, "kept": [{k: v for k, v in g.items() if k != "local"} for g in got],
                        "sheet": sheet.name if sheet else None})
     (wd / "manifest.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
     return report

@@ -698,7 +698,7 @@ class Worker:
             from .common import stage
             wd = self.work / job["id"]
             with stage("assets"):
-                rep = assets_job.run(self.storage, job, wd, token=os.environ.get("OPENVERSE_TOKEN"))
+                rep = assets_job.run(self.storage, job, wd, token=None)   # OPENVERSE_TOKEN gave HTTP 401 (2026-11-12): anonymous API
             from .review import publish
             st["review"] = publish(wd, job["id"], None)
             st["assets"] = rep
