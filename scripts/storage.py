@@ -25,6 +25,15 @@ STATE_PREFIXES = tuple(limits()["storage"]["overwrite_allowed_only_under"])
 DERIVED_SUFFIXES = ("/INDEX.md", "/INDEX.json", "/recipe.json", "/RECIPE.md")
 
 
+
+def _rc(cmd, long=False):
+    """rclone with a hard time limit (watchdog, 2026-11-12: a stuck call must never freeze the worker).
+    Short calls (list/cat/mkdir) 3 min, transfers 40 min; a timeout returns exit code 124 like `timeout`."""
+    try:
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=2400 if long else 180)
+    except subprocess.TimeoutExpired:
+        return subprocess.CompletedProcess(cmd, 124, "", f"rclone timed out: {' '.join(cmd[:2])}")
+
 class StorageError(RuntimeError):
     pass
 
@@ -58,14 +67,16 @@ class Storage:
     def exists(self, rel):
         if self.root is not None:
             return (self.root / rel).exists()
-        rc = subprocess.run(["rclone", "lsf", f"{self.remote}/{rel}"], capture_output=True, text=True)
+        rc = _rc(["rclone", "lsf", f"{self.remote}/{rel}"])
+        if rc.returncode == 124:  # unknown is not "absent": guessing absent could overwrite a file
+            raise StorageError(f"cannot check {rel}: rclone timed out")
         return rc.returncode == 0 and rc.stdout.strip() != ""
 
     def list_dir(self, rel):
         if self.root is not None:
             d = self.root / rel
             return sorted(p.name for p in d.iterdir()) if d.is_dir() else []
-        r = subprocess.run(["rclone", "lsf", f"{self.remote}/{rel}"], capture_output=True, text=True)
+        r = _rc(["rclone", "lsf", f"{self.remote}/{rel}"])
         if r.returncode != 0:
             return []
         return sorted(x.rstrip("/") for x in r.stdout.splitlines() if x.strip())
@@ -73,7 +84,7 @@ class Storage:
     def read_text(self, rel):
         if self.root is not None:
             return (self.root / rel).read_text(encoding="utf-8")
-        r = subprocess.run(["rclone", "cat", f"{self.remote}/{rel}"], capture_output=True, text=True)
+        r = _rc(["rclone", "cat", f"{self.remote}/{rel}"])
         if r.returncode != 0:
             raise StorageError(f"cannot read {rel}: {r.stderr[-300:]}")
         return r.stdout
@@ -88,8 +99,7 @@ class Storage:
         if self.root is not None:
             shutil.copyfile(self.root / rel, local_path)
         else:
-            r = subprocess.run(["rclone", "copyto", f"{self.remote}/{rel}", str(local_path)],
-                               capture_output=True, text=True)
+            r = _rc(["rclone", "copyto", f"{self.remote}/{rel}", str(local_path)], long=True)
             if r.returncode != 0:
                 raise StorageError(f"cannot fetch {rel}: {r.stderr[-300:]}")
         return local_path
@@ -108,8 +118,7 @@ class Storage:
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(local_path, dest)
         else:
-            r = subprocess.run(["rclone", "copyto", str(local_path), f"{self.remote}/{rel}"],
-                               capture_output=True, text=True)
+            r = _rc(["rclone", "copyto", str(local_path), f"{self.remote}/{rel}"], long=True)
             if r.returncode != 0:
                 raise StorageError(f"upload failed for {rel}: {r.stderr[-300:]}")
         return rel
@@ -119,7 +128,7 @@ class Storage:
         if self.root is not None:
             (self.root / rel).mkdir(parents=True, exist_ok=True)
         else:
-            subprocess.run(["rclone", "mkdir", f"{self.remote}/{rel}"], capture_output=True, text=True)
+            _rc(["rclone", "mkdir", f"{self.remote}/{rel}"])
 
     def put_text(self, rel, text, versioned=True):
         with tempfile.NamedTemporaryFile("w", delete=False, suffix=".tmp", encoding="utf-8") as t:
@@ -150,8 +159,7 @@ class Storage:
         """New names go up with ONE `rclone copy` (never overwrites); names that already exist use put_file (_vN).
         Returns None when the listing/copy tooling fails before anything was uploaded -> caller uses the per-file path."""
         try:
-            ls = subprocess.run(["rclone", "lsf", "-R", "--files-only", f"{self.remote}/{rel_dir}"],
-                                capture_output=True, text=True)
+            ls = _rc(["rclone", "lsf", "-R", "--files-only", f"{self.remote}/{rel_dir}"])
         except OSError:  # rclone cannot even start: the per-file path will report it properly
             return None
         existing = set(x.strip() for x in ls.stdout.splitlines()) if ls.returncode == 0 else set()
@@ -161,9 +169,8 @@ class Storage:
         if new:
             with tempfile.NamedTemporaryFile("w", delete=False, suffix=".txt", encoding="utf-8") as t:
                 t.write("\n".join(new) + "\n")
-            c = subprocess.run(["rclone", "copy", str(local_dir), f"{self.remote}/{rel_dir}", "--files-from", t.name,
-                                "--transfers", "8", "--checkers", "8", "--ignore-existing"],
-                               capture_output=True, text=True)
+            c = _rc(["rclone", "copy", str(local_dir), f"{self.remote}/{rel_dir}", "--files-from", t.name,
+                                "--transfers", "8", "--checkers", "8", "--ignore-existing"], long=True)
             if c.returncode != 0:  # maybe part went up: only send what is still missing, never version a half-upload
                 return [f"{rel_dir}/{r}" if self.exists(f"{rel_dir}/{r}") else self.put_file(local_dir / r, f"{rel_dir}/{r}")
                         for r in new] + [self.put_file(local_dir / r, f"{rel_dir}/{r}") for r in old]

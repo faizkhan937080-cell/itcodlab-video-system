@@ -6,10 +6,15 @@ on:
     branches: [main]   # not dependabot/other branches: they only burned free minutes
     paths: ['trigger/**']
   workflow_dispatch:
+    inputs:
+      restart_n:
+        description: 'watchdog restart count (set by the worker itself; leave 0)'
+        default: '0'
   schedule:
     - cron: '17 1 * * *'   # once a day (was every 6 h: ~20 min/day of free minutes spent on nothing)
 permissions:
   contents: write
+  actions: write   # watchdog: a failed/stuck run starts a fresh one (workflow_dispatch works with GITHUB_TOKEN)
 concurrency:
   group: worker
   cancel-in-progress: false
@@ -30,8 +35,13 @@ jobs:
       KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
       KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
       ITCOD_RUN_STARTED: ${{ github.run_started_at }}
+      # watchdog: rclone gives up on a stalled transfer instead of hanging (idle timeout, not total time)
+      RCLONE_TIMEOUT: 2m
+      RCLONE_CONTIMEOUT: 30s
+      RCLONE_LOW_LEVEL_RETRIES: '5'
     steps:
       - uses: actions/checkout@v4
+        timeout-minutes: 3
       - name: Check the one-time secret
         id: chk
         run: |
@@ -41,6 +51,7 @@ jobs:
           echo "::error::Secret RCLONE_TOKEN is missing (see docs/HOSTING.md step 4)"; exit 1
       - uses: actions/setup-python@v5
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 5
         with:
           python-version: '3.11'
           cache: pip
@@ -75,6 +86,7 @@ jobs:
           sudo freshclam --quiet || echo "::warning::virus database not updated; scans use the packaged one"
       - name: Python packages
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 15
         run: |
           _t=$(date +%s)
           pip install -q --prefer-binary -r requirements.txt && pip install -q -U yt-dlp && pip install -q -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
@@ -108,6 +120,7 @@ jobs:
           key: remotion-${{ hashFiles('remotion/package.json') }}
       - name: Remotion packages
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 10
         run: |
           _t=$(date +%s)
           cd remotion && npm install --silent --no-audit --no-fund && npx remotion browser ensure
@@ -115,12 +128,14 @@ jobs:
       - name: Render self-check (only when the wake message has [render-check]; nothing is saved to Drive)
         if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[render-check]')
         continue-on-error: true
+        timeout-minutes: 20
         run: |
           start=$(date +%s)
           ITCOD_RENDER_CONCURRENCY=$(( $(nproc) / 2 + 1 )) ./run render-local --plan config/selfcheck_plan.json --quality preview --out "$RUNNER_TEMP/rc/check.mp4" | tail -40
           echo "RENDER CHECK SECONDS: $(( $(date +%s) - start ))"
       - name: Connect Drive and GitHub
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 3
         run: |
           mkdir -p ~/.config/rclone
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
@@ -137,4 +152,16 @@ jobs:
           ./run kaggle-compare --job "$JOB" | tail -5
       - name: Work until nothing is left to do
         if: steps.chk.outputs.ready == 'true'
-        run: ./run worker --until-idle --no-sheet --grace 180 --max-minutes 320
+        timeout-minutes: 330
+        # --warm: after real work the worker stays ready 40 min for the next plan/approval (no new ~3 min setup).
+        # The in-process watchdog exits with 75 when nothing moves for limits.jobs.watchdog_minutes.
+        run: ./run worker --until-idle --no-sheet --grace 180 --warm 2400 --max-minutes 320
+      - name: Watchdog restart (a step failed or got stuck; the new run resumes every job from its saved state)
+        if: failure() && steps.chk.outputs.ready == 'true'
+        timeout-minutes: 2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n="${{ github.event.inputs.restart_n }}"; n=${n:-0}
+          if [ "$n" -ge 2 ]; then echo "::error::2 restarts in a row failed; stopping (alert in jobs/state/_worker_alert.json)"; exit 0; fi
+          gh workflow run worker.yml --ref main -f restart_n=$((n + 1)) && echo "fresh run started (restart $((n + 1)))"

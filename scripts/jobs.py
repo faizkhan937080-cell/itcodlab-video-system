@@ -198,24 +198,56 @@ class Worker:
         log(f"code updated {before.strip()[:7]} -> {after.strip()[:7]}; restarting worker")
         os.execv(str(ROOT / "run"), [str(ROOT / "run"), *sys.argv[1:]])
 
-    def run_until_idle(self, max_minutes=330, grace_s=180):
+    def start_watchdog(self, limit_min=None):
+        """Watchdog (2026-11-12, a run hung 16 min): no heartbeat for `limit_min` minutes = something is stuck.
+        Write an alert and exit with code 75; the workflow then starts a fresh run that resumes from the job state."""
+        import os
+        import threading
+        from .common import since_beat
+        limit = 60 * (limit_min or self.lim["jobs"].get("watchdog_minutes", 100))
+
+        def watch():
+            while True:
+                time.sleep(30)
+                if since_beat() > limit:
+                    log(f"WATCHDOG: no progress for {since_beat() / 60:.0f} min; stopping this run so a fresh one resumes")
+                    try:
+                        self.storage.write_state("jobs/state/_worker_alert.json", {
+                            "id": "_worker", "status": "ALERT", "updated": now_iso(),
+                            "note": f"watchdog stopped a stuck run after {limit // 60} min without progress; restarted"})
+                    except Exception:  # noqa: BLE001
+                        pass
+                    os._exit(75)
+        threading.Thread(target=watch, daemon=True).start()
+
+    def run_until_idle(self, max_minutes=330, grace_s=180, warm_s=None):
         """For GitHub Actions / one-shot hosts: work until nothing changes for `grace_s` seconds (new inbox jobs,
-        approvals or candidates that arrive meanwhile are still picked up), then return so the machine can stop."""
+        approvals or candidates that arrive meanwhile are still picked up), then return so the machine can stop.
+        warm_s: once this run has done real work, stay ready that long for the next step (Claude's next plan,
+        an approval) so it starts at once instead of paying a new ~3 min machine setup (2026-11-12)."""
+        from .common import beat
         poll = self.lim["jobs"]["poll_seconds"]
         end = time.time() + max_minutes * 60
         last, changed = None, time.time()
         upd = time.time()
+        worked = False
+        self.start_watchdog()
         while time.time() < end:
+            beat()
             if time.time() - upd >= 120:     # a job dropped after a code push must meet the NEW code (2026-11-12 race)
                 upd = time.time()
                 try:
                     self._self_update()
                 except Exception as e:  # noqa: BLE001
                     log(f"self-update skipped: {e}")
+            t0 = time.time()
             res = self.process_once()
+            if time.time() - t0 > 30:       # a render/analysis ran inside this call
+                worked = True
             if res != last:
+                worked = worked or last is not None
                 last, changed = res, time.time()
-            elif time.time() - changed >= grace_s:
+            elif time.time() - changed >= (warm_s if (worked and warm_s) else grace_s):
                 return last or []
             time.sleep(poll)
         return last or []

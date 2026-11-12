@@ -3,6 +3,7 @@ Preview = scale 0.5 of the output size. Final = full output size: same as the bi
 else the 4K master default (limits.render.master).
 """
 import json
+import subprocess
 import os
 from pathlib import Path
 
@@ -145,7 +146,13 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
     if os.environ.get("ITCOD_BROWSER"):  # use an installed Chromium instead of downloading one
         cmd += [f"--browser-executable={os.environ['ITCOD_BROWSER']}", "--chrome-mode=chrome-for-testing"]
     log(f"rendering {quality}: {w}x{h} x{scale}")
-    rc, out, err = run_cmd(cmd, cwd=str(REMOTION_DIR), timeout=60 * 60 * 3)
+    # watchdog: a hung render must end, not block the worker for hours (54 s preview ~3 min, so 10 min + 20x is roomy)
+    dur = plan_duration_s(plan)
+    limit_s = int(600 + dur * (20 if quality == "preview" else 60))
+    try:
+        rc, out, err = run_cmd(cmd, cwd=str(REMOTION_DIR), timeout=limit_s)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f"remotion render stopped by watchdog after {limit_s}s ({dur:.0f}s video, {quality})")
     if rc != 0:
         raise RuntimeError("remotion render failed:\n" + tail(err or out))
     res = check_output(out_path, plan, quality, lim, size=(w, h))

@@ -374,7 +374,7 @@ def cmd_worker(a):
     sheets = None if a.no_sheet else SheetsClient()
     w = Worker(_storage(), sheets)
     if a.until_idle:
-        for jid, status in w.run_until_idle(max_minutes=a.max_minutes, grace_s=a.grace):
+        for jid, status in w.run_until_idle(max_minutes=a.max_minutes, grace_s=a.grace, warm_s=a.warm):
             print(f"{jid}: {status}")
     elif a.loop:
         w.loop(max_minutes=a.max_minutes)
@@ -1040,6 +1040,7 @@ def build_parser():
     s.add_argument("--loop", action="store_true")
     s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")
     s.add_argument("--grace", type=int, default=180)
+    s.add_argument("--warm", type=int, default=0, help="after real work, stay ready this many idle seconds for the next step")
     s.add_argument("--max-minutes", type=int, default=60)
     s.add_argument("--no-sheet", action="store_true")
     s.set_defaults(fn=cmd_worker)

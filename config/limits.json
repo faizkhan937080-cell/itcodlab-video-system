@@ -12,7 +12,9 @@
   },
   "jobs": {
     "max_retries": 2,
-    "poll_seconds": 20
+    "poll_seconds": 20,
+    "watchdog_minutes": 100,
+    "warm_seconds": 2400
   },
   "analysis": {
     "max_frames_analyzed": 6000,

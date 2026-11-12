@@ -100,14 +100,26 @@ import contextlib as _cl
 import threading as _th
 
 _TIMES, _TLOCK = {}, _th.Lock()
+_BEAT = [time.time()]
+
+
+def beat():
+    """Heartbeat for the worker watchdog: every stage start/end and every loop turn."""
+    _BEAT[0] = time.time()
+
+
+def since_beat():
+    return time.time() - _BEAT[0]
 
 
 @_cl.contextmanager
 def stage(name):
     t0 = time.time()
+    beat()
     try:
         yield
     finally:
+        beat()
         dt = round(time.time() - t0, 1)
         with _TLOCK:
             _TIMES[name] = round(_TIMES.get(name, 0) + dt, 1)
