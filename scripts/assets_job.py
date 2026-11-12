@@ -156,9 +156,18 @@ def derive(storage, spec, wd):
     Saved as assets/library/image/derived/<name>.jpg with the licences + credits of every source."""
     from PIL import ImageFilter
     from . import library
+    items = {i.get("file"): i for i in library.load(storage)}
+    if spec.get("copy"):     # clean-named copy of one library picture (long edge <= 1600)
+        L = spec["layers"][0]
+        local = Path(wd) / "src" / "copy_src"
+        local.parent.mkdir(parents=True, exist_ok=True)
+        storage.fetch(L["file"], local)
+        im = Image.open(local).convert("RGB")
+        im.thumbnail((1600, 1600))
+        spec = {**spec, "w": im.width, "h": im.height, "bg": "#000000",
+                "layers": [{**L, "x": 0.5, "y": 0.5, "w": 1.0, "blur": 0, "opacity": 1.0}]}
     W, H = int(spec.get("w", 1080)), int(spec.get("h", 1920))
     canvas = Image.new("RGB", (W, H), spec.get("bg", "#000000"))
-    items = {i.get("file"): i for i in library.load(storage)}
     lic, credits = [], []
     for L in spec.get("layers", []):
         local = Path(wd) / "src" / Path(L["file"]).name
