@@ -122,7 +122,7 @@ def render(props_file, plan, out_path, scale, master, fps, total_frames, timeout
         n = fb - fa + 1
         if not (d / "done").exists() or len(list(d.glob("*.png"))) != n:
             shutil.rmtree(d, ignore_errors=True)
-            tmp = d.with_name(key + ".tmp")
+            tmp = d.with_name("tmp_" + key)   # Remotion: a sequence folder name must have no extension
             shutil.rmtree(tmp, ignore_errors=True)
             tmp.mkdir(parents=True)
             _remotion([str(tmp), f"--props={props_file}", "--sequence", "--image-format=png", f"--frames={fa}-{fb}",

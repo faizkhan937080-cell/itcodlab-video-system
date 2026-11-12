@@ -16,6 +16,7 @@ from . import finish as finish_mod
 from . import layout
 from . import render as render_mod
 from .common import limits, log, now_iso, tail, workdir
+from .storage import StorageError
 from .dna import REQUIRED_TYPES, errors_tail, save_dna, validate
 from .dna_check import check as check_dna
 
@@ -72,8 +73,11 @@ class Worker:
 
     def load_state(self, job):
         rel = self._state_rel(job["id"])
-        if self.storage.exists(rel):
+        try:                                   # one Drive call instead of two (exists + read): fewer quota hits
             return self.storage.read_json(rel)
+        except (StorageError, OSError):        # OSError: local-folder storage (FileNotFoundError)
+            if self.storage.exists(rel):       # the file is there but could not be read now: never start it over
+                raise
         return {"id": job["id"], "type": job.get("type"), "status": "QUEUED", "created": now_iso(),
                 "updated": now_iso(), "history": [], "attempts": {}, "candidate_ver": 1, "plan_ver": 1,
                 "paths": {}, "note": "picked up by worker"}
@@ -149,23 +153,43 @@ class Worker:
 
     # ------------------------------------------------------------ main loop
     def process_once(self):
+        """One look at the queue. Jobs waiting for a human (AWAIT_*) are re-read only when the approvals/plans
+        folders changed or every 5 min, not every 20 s: on 2026-11-12 the many Drive reads hit Google's
+        per-minute limit and crashed the worker. A Drive error on one job skips that job for this pass only."""
         summary = []
         done = self.__dict__.setdefault("_finished", set())  # finished jobs are not re-read every 20 s
+        waiting = self.__dict__.setdefault("_waiting", {})    # jid -> (status, checked_at, folders signature)
+        try:
+            sig = hash((tuple(self.storage.list_dir("jobs/approvals")), tuple(self.storage.list_dir("jobs/plans"))))
+        except Exception:  # noqa: BLE001
+            sig = None
         for name in self.storage.list_dir("jobs/inbox"):
             if not name.endswith(".json") or name[:-5] in done:
+                continue
+            w = waiting.get(name[:-5])
+            if w and sig is not None and w[2] == sig and time.time() - w[1] < 300:
+                summary.append((name[:-5], w[0]))
                 continue
             try:
                 job = self.storage.read_json(f"jobs/inbox/{name}")
                 jid = job["id"]
             except Exception:  # half-written or invalid file: try again next pass
                 continue
-            st = self.load_state(job)
-            if st["status"] in TERMINAL:
-                done.add(name[:-5])
+            try:
+                st = self.load_state(job)
+                if st["status"] in TERMINAL:
+                    done.add(name[:-5])
+                    continue
+                for _ in range(25):
+                    if not self.step(job, st):
+                        break
+            except StorageError as e:
+                log(f"{jid}: Drive not reachable this pass ({str(e)[:120]}); next pass tries again")
                 continue
-            for _ in range(25):
-                if not self.step(job, st):
-                    break
+            if str(st["status"]).startswith("AWAIT") and st["status"] not in TERMINAL:
+                waiting[jid] = (st["status"], time.time(), sig)
+            else:
+                waiting.pop(jid, None)
             summary.append((jid, st["status"]))
         return summary
 
@@ -242,7 +266,12 @@ class Worker:
                     log(f"self-update skipped: {e}")
             n0 = stages_started()
             tp = time.time()
-            res = self.process_once()
+            try:
+                res = self.process_once()
+            except StorageError as e:      # Drive down / over its limit: wait, never crash the worker
+                log(f"queue pass skipped, Drive problem: {str(e)[:160]}")
+                time.sleep(60)
+                continue
             if time.time() - tp > 15 or last is None:   # how slow is one look at the queue (poll latency)
                 log(f"queue pass {time.time() - tp:.0f}s, {len(res or [])} open job(s)")
             if stages_started() > n0:       # a measured stage (render, analysis, ...) ran inside this call

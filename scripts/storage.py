@@ -26,13 +26,23 @@ DERIVED_SUFFIXES = ("/INDEX.md", "/INDEX.json", "/recipe.json", "/RECIPE.md")
 
 
 
-def _rc(cmd, long=False):
+RATE_WORDS = ("rateLimitExceeded", "RATE_LIMIT_EXCEEDED", "userRateLimitExceeded", "Quota exceeded")
+
+
+def _rc(cmd, long=False, tries=4):
     """rclone with a hard time limit (watchdog, 2026-11-12: a stuck call must never freeze the worker).
-    Short calls (list/cat/mkdir) 3 min, transfers 40 min; a timeout returns exit code 124 like `timeout`."""
-    try:
-        return subprocess.run(cmd, capture_output=True, text=True, timeout=2400 if long else 180)
-    except subprocess.TimeoutExpired:
-        return subprocess.CompletedProcess(cmd, 124, "", f"rclone timed out: {' '.join(cmd[:2])}")
+    Short calls (list/cat/mkdir) 3 min, transfers 40 min; a timeout returns exit code 124 like `timeout`.
+    Google's per-minute limit (RATE_LIMIT_EXCEEDED crashed the worker 2026-11-12): wait 10/30/90 s and try again."""
+    import time
+    for i in range(tries):
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=2400 if long else 180)
+        except subprocess.TimeoutExpired:
+            return subprocess.CompletedProcess(cmd, 124, "", f"rclone timed out: {' '.join(cmd[:2])}")
+        if r.returncode == 0 or not any(w in (r.stderr or "") for w in RATE_WORDS) or i == tries - 1:
+            return r
+        time.sleep(10 * 3 ** i)
+    return r
 
 class StorageError(RuntimeError):
     pass

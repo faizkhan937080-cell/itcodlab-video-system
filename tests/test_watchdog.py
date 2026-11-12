@@ -94,3 +94,42 @@ def test_stage_beats_the_heart():
     with common.stage("t"):
         pass
     assert common.since_beat() < 5
+
+
+def test_rate_limit_is_retried_then_succeeds(monkeypatch):
+    calls = {"n": 0}
+
+    def flaky(cmd, **k):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            return subprocess.CompletedProcess(cmd, 1, "", 'googleapi: Error 403: RATE_LIMIT_EXCEEDED')
+        return subprocess.CompletedProcess(cmd, 0, "ok", "")
+    slept = []
+    monkeypatch.setattr(storage.subprocess, "run", flaky)
+    import time as _t
+    monkeypatch.setattr(_t, "sleep", lambda s: slept.append(s))
+    r = storage._rc(["rclone", "cat", "x:a"])
+    assert r.returncode == 0 and calls["n"] == 3 and slept == [10, 30]
+
+
+def test_drive_error_on_one_job_does_not_crash_the_pass(monkeypatch):
+    w = jobs.Worker.__new__(jobs.Worker)
+
+    class S:
+        def list_dir(self, rel):
+            return ["a.json", "b.json"] if rel == "jobs/inbox" else []
+
+        def read_json(self, rel):
+            if rel == "jobs/state/a.json":
+                raise storage.StorageError("cannot read: RATE_LIMIT_EXCEEDED")
+            if rel.startswith("jobs/inbox/"):
+                return {"id": rel.split("/")[-1][:-5], "type": "render"}
+            return {"id": "b", "status": "AWAIT_GATE5"}
+
+        def exists(self, rel):
+            return True
+    w.storage = S()
+    w.step = lambda job, st: False
+    res = w.process_once()
+    assert res == [("b", "AWAIT_GATE5")]          # a skipped, b handled, no crash
+    assert w.process_once() == [("b", "AWAIT_GATE5")] and "b" in w._waiting   # b served from the waiting cache
