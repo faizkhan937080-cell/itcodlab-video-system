@@ -112,8 +112,8 @@ def cmd_plan_stamp(a):
     errs = []
     if a.kind == "sample" and protocol.plan_total_s(out) > 8.01:
         errs.append(f"a sample is at most 8 s; this plan is {protocol.plan_total_s(out):.1f} s")
-    if a.kind == "full" and not a.sample_job:
-        errs.append("a full plan needs --sample-job <approved sample job id>")
+    if a.kind == "full" and not a.sample_job and len(a.sample_skip or "") < 12:
+        errs.append("a full plan needs --sample-job <approved sample job id> (or --sample-skip with Faiz's own words)")
     if a.reference == "none" and len(a.reason or "") < 8:
         errs.append("--reference none needs --reason (why there is no reference)")
     Path(a.out or a.plan).write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")

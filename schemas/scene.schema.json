@@ -769,6 +769,11 @@
         },
         "grade_off_reason": {
           "type": "string"
+        },
+        "sample_skip": {
+          "type": "string",
+          "minLength": 12,
+          "description": "full plan without a sample: Faiz's own words in chat asking to skip it"
         }
       }
     }
