@@ -85,3 +85,37 @@ def test_match_writes_side_by_side_and_fails_low(tmp_path):
     assert ok["pass"] and ok["min"] > 0.95 and (tmp_path / "o1" / "collage_match.jpg").exists()
     assert not bad["pass"] and bad["low"]
     json.dumps(ok)
+
+
+def test_assets_job_keeps_only_commercial_licences(tmp_path, monkeypatch):
+    from PIL import Image
+    from scripts import assets_job, library
+
+    class S:
+        def __init__(self):
+            self.files, self.idx = {}, []
+
+        def put_file(self, src, rel):
+            self.files[rel] = src
+
+        def read_json(self, rel):
+            return self.idx
+
+        def put_json(self, rel, d, versioned=True):
+            self.idx = d
+
+        def put_text(self, rel, t, versioned=True):
+            pass
+
+    res = [{"url": "https://x/a.jpg", "license": "by-nc", "filetype": "jpg"},
+           {"url": "https://x/b.jpg", "license": "cc0", "filetype": "jpg", "creator": "c", "title": "t"},
+           {"url": "https://x/c.jpg", "license": "by", "filetype": "jpg"}]
+
+    def dl(url, dest, kind):
+        Image.new("RGB", (40, 60), (20, 20, 20)).save(dest)
+    st = S()
+    rep = assets_job.run(st, {"queries": [{"query": "dark room", "name": "dark-room", "count": 5}]}, tmp_path,
+                         search_fn=lambda *a, **k: res, download_fn=dl)
+    assert [k["licence"] for k in rep[0]["kept"]] == ["cc0", "by"]
+    assert rep[0]["sheet"] and (tmp_path / rep[0]["sheet"]).exists()
+    assert len(st.idx) == 2 and all(e["file"].startswith(library.BASE + "/image/dark-room/") for e in st.idx)

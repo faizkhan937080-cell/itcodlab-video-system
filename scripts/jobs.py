@@ -235,6 +235,8 @@ class Worker:
             return self.step_render(job, st)
         if job.get("type") == "style":
             return self.step_style(job, st)
+        if job.get("type") == "assets":
+            return self.step_assets(job, st)
         self.set_status(st, job, "NEEDS_INPUT", f"unknown job type: {job.get('type')}")
         return False
 
@@ -682,6 +684,26 @@ class Worker:
             self.set_status(st, job, "DONE", f"style record: {rec['event_count']} events, complete={rec['complete']} {rec['problems']}")
         except Exception as e:  # noqa: BLE001
             return self.failed(st, job, "style", e)
+        return False
+
+    # ================================================================ outside pictures (Openverse, commercial licences)
+    def step_assets(self, job, st):
+        if st["status"] != "QUEUED":
+            return False
+        try:
+            import os
+            from . import assets_job
+            from .common import stage
+            wd = self.work / job["id"]
+            with stage("assets"):
+                rep = assets_job.run(self.storage, job, wd, token=os.environ.get("OPENVERSE_TOKEN"))
+            from .review import publish
+            st["review"] = publish(wd, job["id"], None)
+            st["assets"] = rep
+            kept = sum(len(r["kept"]) for r in rep)
+            self.set_status(st, job, "DONE", f"assets: {kept} picture(s) kept for {len(rep)} quer(ies); look at collage_assets_*.jpg")
+        except Exception as e:  # noqa: BLE001
+            return self.failed(st, job, "assets", e)
         return False
 
     # ================================================================ render jobs
