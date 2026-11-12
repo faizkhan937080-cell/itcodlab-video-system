@@ -38,6 +38,10 @@ def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, gr
         blk["sample_job"] = sample_job
     if grade_off_reason:
         blk["grade_off_reason"] = grade_off_reason
+    clone = plan.pop("_clone", None)   # clone plans carry their shot map in "_clone" until stamped
+    plan.pop("_ref_record", None)
+    if clone:
+        blk["clone"] = clone
     plan["protocol"] = blk
     return plan
 
