@@ -14,8 +14,8 @@ export const RefTitle: React.FC<{bg: string; lines: {text: string; size: number}
     <AbsoluteFill style={{backgroundColor: '#0E0D0B', overflow: 'hidden'}}>
       <div style={{position: 'absolute', inset: 0, transform: `scale(${z})`}}>
         <Img src={bg.startsWith('http') ? bg : staticFile(bg)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'none'}} />
-        <div style={{position: 'absolute', left: 0.18 * width, top: 0.47 * height, width: 0.64 * width, height: 0.36 * height, background: '#D9CFB8', transform: 'rotate(-1.5deg)', boxShadow: 'none', border: `${1.5 * u}px solid #BFB399`}}>
-          <div style={{position: 'absolute', left: 0, right: 0, top: 0.07 * height, textAlign: 'center', fontFamily: F.type, color: '#8E4A3D'}}>
+        <div style={{position: 'absolute', left: 0.12 * width, top: 0.4 * height, width: 0.76 * width, transform: 'rotate(-4deg)'}}>
+          <div style={{textAlign: 'center', fontFamily: F.type, color: '#9A4A3A', opacity: 0.92}}>
             {lines.map((l, i) => (
               <div key={i} style={{fontSize: l.size * u, lineHeight: 1.1, marginTop: i ? 10 * u : 0}}>{l.text}</div>
             ))}
