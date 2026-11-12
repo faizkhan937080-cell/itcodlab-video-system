@@ -37,3 +37,20 @@ def test_events_found_despite_constant_drift(tmp_path):
     for t0 in CARD_TIMES:
         assert any(abs(s - t0) < 1.0 for s in starts), (t0, starts)
     assert (tmp_path / "out" / "activity.json").exists()
+
+
+def test_frame_sheets_cover_the_whole_reel(tmp_path):
+    import cv2
+    import numpy as np
+    v = tmp_path / "r.mp4"
+    w = cv2.VideoWriter(str(v), cv2.VideoWriter_fourcc(*"mp4v"), 10, (108, 192))
+    for i in range(300):  # 30 s
+        f = np.full((192, 108, 3), (i * 7) % 255, np.uint8)
+        w.write(f)
+    w.release()
+    cap = cv2.VideoCapture(str(v))
+    sheets = style_record._sheets(cap, 30.0, tmp_path)
+    cap.release()
+    times = [t for s in sheets for t in s["times"]]
+    assert len(sheets) <= 9 and times[0] < 1.0 and times[-1] > 28.0
+    assert all((tmp_path / s["file"]).exists() for s in sheets)

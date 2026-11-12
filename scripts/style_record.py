@@ -169,6 +169,37 @@ def _collage(cap, events, path, max_tiles=10):
     return path
 
 
+def _sheets(cap, dur, out_dir, max_sheets=9, per_sheet=12, cols=4, tile_w=240):
+    """Dense look at the WHOLE reference (not only movement events): a frame about every second, labelled with its
+    time, on at most `max_sheets` sheets (collage cap 10 incl. the event collage). These sheets are what a clone is
+    built and checked against."""
+    n = max_sheets * per_sheet
+    step = max(dur / n, 0.25)
+    times = [round(min(dur - 0.05, (i + 0.5) * step), 2) for i in range(int(dur / step))][:n]
+    w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)) or 1080
+    h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)) or 1920
+    tile_h = int(tile_w * h / w)
+    names = []
+    for k in range(0, len(times), per_sheet):
+        chunk = times[k:k + per_sheet]
+        rows = (len(chunk) + cols - 1) // cols
+        sheet = Image.new("RGB", (cols * tile_w, rows * tile_h), (0, 0, 0))
+        d = ImageDraw.Draw(sheet)
+        for j, t in enumerate(chunk):
+            fr = _read_at(cap, t)
+            if fr is None:
+                continue
+            im = Image.fromarray(cv2.cvtColor(cv2.resize(fr, (tile_w, tile_h), interpolation=cv2.INTER_AREA), cv2.COLOR_BGR2RGB))
+            x, y = (j % cols) * tile_w, (j // cols) * tile_h
+            sheet.paste(im, (x, y))
+            d.rectangle([x, y, x + 52, y + 16], fill=(0, 0, 0))
+            d.text((x + 3, y + 2), f"{t:.1f}s", fill=(255, 255, 0))
+        name = f"collage_ref_{len(names) + 1:02d}.jpg"
+        sheet.save(Path(out_dir) / name, quality=88)
+        names.append({"file": name, "times": chunk})
+    return names
+
+
 def build(video, out_dir, lim=None, with_ocr=True):
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -190,6 +221,7 @@ def build(video, out_dir, lim=None, with_ocr=True):
             ev["text"] = _text_in(fr, ev["bbox"]) if fr is not None else None
     static = _static_text(cap, dur) if with_ocr else []
     coll = _collage(cap, events, out_dir / "collage_events.jpg")
+    sheets = _sheets(cap, dur, out_dir)
     cap.release()
     problems = []
     need = 1 if dur < 8 else max(2, int(dur / 15))
@@ -199,7 +231,7 @@ def build(video, out_dir, lim=None, with_ocr=True):
         problems.append("no text could be read on any event (OCR missing or text too small)")
     rec = {"video": {"width": w, "height": h, "fps": round(fps, 2), "duration_s": round(dur, 2)},
            "static_text": static, "events": events, "event_collage": coll.name if coll else None,
-           "event_count": len(events), "complete": not problems, "problems": problems}
+           "event_count": len(events), "frame_sheets": sheets, "complete": not problems, "problems": problems}
     # raw activity curve: lets the detector be tuned on the real reel without rendering anything again
     (out_dir / "activity.json").write_text(json.dumps([[r["t"], round(r["frac"], 5)] + ([round(x, 3) for x in r["bbox"]] if r["bbox"] else []) for r in rows]), encoding="utf-8")
     (out_dir / "style_record.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")

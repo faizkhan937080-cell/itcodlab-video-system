@@ -311,7 +311,9 @@ class Worker:
                         with stage("style_record"):
                             from . import style_record
                             rec = style_record.build(src, res["out_root"], self.lim)
-                            if rec.get("event_collage"):
+                            for sh in rec.get("frame_sheets") or []:
+                self.storage.put_file(wd / "style" / sh["file"], f"{out_rel}/{sh['file']}")
+            if rec.get("event_collage"):
                                 shutil.copy2(Path(res["out_root"]) / rec["event_collage"], Path(res["pack"]) / "collage_events.jpg")
                             st["style_record"] = {"complete": rec["complete"], "events": rec["event_count"], "problems": rec["problems"]}
                     except Exception as e:  # noqa: BLE001
