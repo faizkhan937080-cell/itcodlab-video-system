@@ -115,7 +115,7 @@ def check_output(out_path, plan, quality, lim=None, size=None):
     return {"ok": not problems, "problems": problems, "probe": p}
 
 
-def render_plan(plan, quality, out_path, storage=None, concurrency=None):
+def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=None):
     """plan: dict (already validated). Returns check dict. Raises RuntimeError on render failure."""
     lim = limits()
     errs = validate("scene", plan)
@@ -141,6 +141,8 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
            f"--props={props_file}", f"--codec={m['codec']}", f"--crf={m['crf']}",
            f"--pixel-format={m['pixel_format']}", f"--color-space={m['colorspace']}",
            f"--scale={scale}"]
+    if frames:  # benchmark / part render: only frames a..b (inclusive)
+        cmd.append(f"--frames={int(frames[0])}-{int(frames[1])}")
     if concurrency or os.environ.get("ITCOD_RENDER_CONCURRENCY"):
         cmd.append(f"--concurrency={concurrency or os.environ['ITCOD_RENDER_CONCURRENCY']}")
     if os.environ.get("ITCOD_BROWSER"):  # use an installed Chromium instead of downloading one
@@ -155,6 +157,8 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None):
         raise RuntimeError(f"remotion render stopped by watchdog after {limit_s}s ({dur:.0f}s video, {quality})")
     if rc != 0:
         raise RuntimeError("remotion render failed:\n" + tail(err or out))
+    if frames:
+        return {"ok": out_path.exists() and out_path.stat().st_size > 0, "frames": list(frames), "size": [w, h]}
     res = check_output(out_path, plan, quality, lim, size=(w, h))
     res["grade"] = grade_report
     res["effects"] = fx_report

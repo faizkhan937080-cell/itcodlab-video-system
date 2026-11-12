@@ -160,6 +160,17 @@ def cmd_render_local(a):
     return 0 if res.get("ok") else 1
 
 
+def cmd_bench_render(a):
+    """Speed test of Remotion concurrency on a real plan from Drive, with an identical-frames proof."""
+    from . import bench_render
+    st = _storage()
+    plan = st.read_json(a.plan)
+    fr = tuple(int(x) for x in a.frames.split("-"))
+    cs = tuple(int(x) for x in a.concurrencies.split(","))
+    rep = bench_render.run(plan, st, frames=fr, concurrencies=cs, quality=a.quality)
+    return 0 if rep.get("best") else 1
+
+
 def cmd_check(a):
     from .habits import survey
     rows = survey()
@@ -1006,6 +1017,12 @@ def build_parser():
     s.set_defaults(fn=cmd_test)
     s = sub.add_parser("guard-install", help="make the guard + survey hooks active from any folder (~/.claude/settings.json)")
     s.set_defaults(fn=cmd_guard_install)
+    s = sub.add_parser("bench-render", help="worker only: Remotion concurrency speed test with identical-frame proof")
+    s.add_argument("--plan", required=True, help="Drive path of a scene plan, e.g. jobs/plans/<job>-v3.json")
+    s.add_argument("--frames", default="0-299")
+    s.add_argument("--concurrencies", default="2,3,4")
+    s.add_argument("--quality", choices=["preview", "final"], default="preview")
+    s.set_defaults(fn=cmd_bench_render)
     s = sub.add_parser("voice", help="voice registry: list | register | verify (clone needs signed consent, verified by Faiz in chat)")
     s.add_argument("what", choices=["list", "register", "verify"])
     s.add_argument("id", nargs="?")

@@ -99,6 +99,11 @@ class SecurityError(RuntimeError):
 
 def clam_scan(path):
     """ClamAV if installed on this machine. -> {'status': 'clean'|'infected'|'unavailable', 'detail': str}"""
+    import time
+    flag = Path("/tmp/itcod/clam.installing")   # the worker installs the scanner in the background (worker.yml)
+    t0 = time.time()
+    while flag.exists() and time.time() - t0 < 600:
+        time.sleep(3)
     exe = shutil.which("clamscan")
     if not exe:
         return {"status": "unavailable", "detail": "clamscan not installed here"}

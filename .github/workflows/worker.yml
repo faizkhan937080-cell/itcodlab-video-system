@@ -36,6 +36,7 @@ jobs:
       KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
       ITCOD_RUN_STARTED: ${{ github.run_started_at }}
       # watchdog: rclone gives up on a stalled transfer instead of hanging (idle timeout, not total time)
+      ITCOD_RENDER_CONCURRENCY: ${{ vars.RENDER_CONCURRENCY }}   # set from the bench-render report (identical frames only)
       RCLONE_TIMEOUT: 2m
       RCLONE_CONTIMEOUT: 30s
       RCLONE_LOW_LEVEL_RETRIES: '5'
@@ -55,41 +56,33 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-      - name: System tools
+      - name: System tools + virus scanner (in the background, while packages install)
         if: steps.chk.outputs.ready == 'true'
-        timeout-minutes: 25
-        run: |
-          # apt sometimes hangs on a slow mirror. Install first WITHOUT an update (the runner image has package lists),
-          # update only if that fails; rclone falls back to its official installer. Missing tools = the step FAILS (never a silent pass).
-          _t=$(date +%s); trap 'mkdir -p work; echo "system_tools $(( $(date +%s) - _t ))" >> work/setup_times.txt' EXIT
-          APT="-o Acquire::Retries=3 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20"
-          PKGS="ffmpeg tesseract-ocr rclone libnss3 libatk-bridge2.0-0 libcups2 libgbm1 libxkbcommon0 libasound2t64 libchromaprint-tools"
-          for i in 1 2 3; do
-            timeout 180 sudo apt-get -qq $APT install -y $PKGS > /dev/null && break
-            timeout 240 sudo apt-get -qq $APT update || true
-            timeout 240 sudo apt-get -qq $APT install -y $PKGS > /dev/null && break || echo "apt try $i failed"
-          done
-          if ! command -v rclone >/dev/null; then
-            curl -fsSL -o /tmp/rclone.zip https://downloads.rclone.org/rclone-current-linux-amd64.zip
-            unzip -q -o /tmp/rclone.zip -d /tmp/rclone-dl && sudo install -m 0755 /tmp/rclone-dl/rclone-*-linux-amd64/rclone /usr/local/bin/rclone || true
-          fi
-          for t in ffmpeg rclone tesseract; do command -v $t >/dev/null || { echo "MISSING TOOL: $t"; exit 1; }; done
-          ffmpeg -version | head -1; rclone version | head -1
-      - name: Virus scanner (checks every file we bring in)
+        timeout-minutes: 1
+        run: nohup bash .github/scripts/apt_bg.sh > /tmp/apt_bg.log 2>&1 &
+      # Python packages: the whole ready environment is kept between runs (key = package lists), so a normal run
+      # only restores it (~20 s) instead of installing everything (~50 s+).
+      - uses: actions/cache@v4
+        id: venv
         if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 5
         continue-on-error: true
-        timeout-minutes: 8
-        run: |
-          _t=$(date +%s); trap 'mkdir -p work; echo "virus_scanner $(( $(date +%s) - _t ))" >> work/setup_times.txt' EXIT
-          sudo apt-get -qq install -y clamav > /dev/null
-          sudo systemctl stop clamav-freshclam || true
-          sudo freshclam --quiet || echo "::warning::virus database not updated; scans use the packaged one"
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 4
+        with:
+          path: ~/venv
+          key: venv-${{ runner.os }}-py311-${{ hashFiles('requirements.txt', 'requirements-heavy.txt') }}
       - name: Python packages
         if: steps.chk.outputs.ready == 'true'
         timeout-minutes: 15
         run: |
           _t=$(date +%s)
-          pip install -q --prefer-binary -r requirements.txt && pip install -q -U yt-dlp && pip install -q -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
+          if [ ! -x ~/venv/bin/python ] || ! ~/venv/bin/python -c "import cv2, numpy, jsonschema, faster_whisper" 2>/dev/null; then
+            rm -rf ~/venv && python -m venv ~/venv
+            ~/venv/bin/pip install -q --prefer-binary -r requirements.txt && ~/venv/bin/pip install -q -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
+          fi
+          ~/venv/bin/pip install -q -U yt-dlp
+          echo "$HOME/venv/bin" >> "$GITHUB_PATH"
           mkdir -p work; echo "python_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
       - uses: actions/cache@v4
         if: steps.chk.outputs.ready == 'true'
@@ -125,6 +118,14 @@ jobs:
           _t=$(date +%s)
           cd remotion && npm install --silent --no-audit --no-fund && npx remotion browser ensure
           cd .. && mkdir -p work && echo "remotion_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
+      - name: Wait for system tools (started in the background above)
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 12
+        run: |
+          for i in $(seq 1 330); do [ -f /tmp/itcod/tools.done ] && break; sleep 2; done
+          tail -5 /tmp/apt_bg.log || true
+          [ "$(cat /tmp/itcod/tools.done 2>/dev/null)" = "ok" ] || { echo "system tools missing"; exit 1; }
+          ffmpeg -version | head -1; rclone version | head -1
       - name: Render self-check (only when the wake message has [render-check]; nothing is saved to Drive)
         if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[render-check]')
         continue-on-error: true
@@ -142,6 +143,13 @@ jobs:
           rclone lsf "$ITCOD_RCLONE_REMOTE" --max-depth 1 | head -20
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           if [ -n "$INSTAGRAM_COOKIES" ]; then printf '%s' "$INSTAGRAM_COOKIES" > "$RUNNER_TEMP/cookies.txt"; echo "ITCOD_COOKIES=$RUNNER_TEMP/cookies.txt" >> "$GITHUB_ENV"; fi
+      - name: Render speed test (only when the wake message has [bench-render:<Drive plan path>]; report to Drive costs/compare/)
+        if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[bench-render:')
+        continue-on-error: true
+        timeout-minutes: 45
+        run: |
+          PLAN=$(git log -1 --format=%B | sed -n 's/.*\[bench-render:\([A-Za-z0-9_./-]*\)\].*/\1/p' | head -1)
+          ./run bench-render --plan "$PLAN" --frames 0-299 --concurrencies 2,3,4,6 | tail -30
       - name: Kaggle GPU compare (only when the wake message has [kaggle-compare:<job>]; report goes to Drive costs/compare/)
         if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[kaggle-compare:')
         continue-on-error: true
