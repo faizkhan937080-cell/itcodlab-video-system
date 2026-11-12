@@ -91,6 +91,19 @@ class Storage:
             return []
         return sorted(x.rstrip("/") for x in r.stdout.splitlines() if x.strip())
 
+    def list_meta(self, rel):
+        """{name: modified-time string} of one folder in ONE call (rclone lsjson). Used to re-read only files that
+        changed: per-file reads every pass hit Google's per-minute limit (2026-11-12)."""
+        if self.root is not None:
+            d = self.root / rel
+            return {p.name: str(p.stat().st_mtime_ns) for p in d.iterdir()} if d.is_dir() else {}
+        r = _rc(["rclone", "lsjson", "--no-mimetype", f"{self.remote}/{rel}"])
+        if r.returncode != 0:
+            if "directory not found" in (r.stderr or "") and "rateLimit" not in (r.stderr or ""):
+                return {}
+            raise StorageError(f"cannot list {rel}: {(r.stderr or '')[-200:]}")
+        return {x["Name"]: f"{x.get('ModTime')}|{x.get('Size')}" for x in json.loads(r.stdout or "[]")}
+
     def read_text(self, rel):
         if self.root is not None:
             return (self.root / rel).read_text(encoding="utf-8")

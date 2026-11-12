@@ -63,7 +63,7 @@ jobs:
         run: nohup bash .github/scripts/apt_bg.sh > /tmp/apt_bg.log 2>&1 &
       # Python packages: the whole ready environment is kept between runs (key = package lists), so a normal run
       # only restores it (~20 s) instead of installing everything (~50 s+).
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         id: venv
         if: steps.chk.outputs.ready == 'true'
         timeout-minutes: 5
@@ -85,6 +85,14 @@ jobs:
           ~/venv/bin/pip install -q -U yt-dlp
           echo "$HOME/venv/bin" >> "$GITHUB_PATH"
           mkdir -p work; echo "python_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
+      # saved right away (not at the end of the run): a run that later fails or is stopped still leaves it for the next
+      - uses: actions/cache/save@v4
+        if: steps.chk.outputs.ready == 'true' && steps.venv.outputs.cache-hit != 'true'
+        timeout-minutes: 6
+        continue-on-error: true
+        with:
+          path: ~/venv
+          key: venv-${{ runner.os }}-py311-${{ hashFiles('requirements.txt', 'requirements-heavy.txt') }}
       - uses: actions/cache@v4
         if: steps.chk.outputs.ready == 'true'
         timeout-minutes: 4

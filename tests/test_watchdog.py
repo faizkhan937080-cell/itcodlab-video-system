@@ -117,7 +117,7 @@ def test_drive_error_on_one_job_does_not_crash_the_pass(monkeypatch):
 
     class S:
         def list_dir(self, rel):
-            return ["a.json", "b.json"] if rel == "jobs/inbox" else []
+            return ["a.json", "b.json"] if rel in ("jobs/inbox", "jobs/state") else []
 
         def read_json(self, rel):
             if rel == "jobs/state/a.json":
@@ -128,8 +128,29 @@ def test_drive_error_on_one_job_does_not_crash_the_pass(monkeypatch):
 
         def exists(self, rel):
             return True
+
+        def list_meta(self, rel):
+            return {n: "t1" for n in self.list_dir(rel)}
     w.storage = S()
     w.step = lambda job, st: False
     res = w.process_once()
     assert res == [("b", "AWAIT_GATE5")]          # a skipped, b handled, no crash
     assert w.process_once() == [("b", "AWAIT_GATE5")] and "b" in w._waiting   # b served from the waiting cache
+
+
+def test_unchanged_files_are_not_read_again():
+    w = jobs.Worker.__new__(jobs.Worker)
+    reads = []
+
+    class S:
+        def list_meta(self, rel):
+            return {"j.json": "t1"} if rel in ("jobs/inbox", "jobs/state") else {}
+
+        def read_json(self, rel):
+            reads.append(rel)
+            return {"id": "j", "type": "render"} if rel.startswith("jobs/inbox/") else {"id": "j", "status": "RENDERING_PREVIEW"}
+    w.storage = S()
+    w.step = lambda job, st: False
+    w.process_once()
+    w.process_once()
+    assert reads == ["jobs/inbox/j.json", "jobs/state/j.json"]      # second pass: nothing changed, nothing read

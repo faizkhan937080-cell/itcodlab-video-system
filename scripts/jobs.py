@@ -153,17 +153,37 @@ class Worker:
 
     # ------------------------------------------------------------ main loop
     def process_once(self):
-        """One look at the queue. Jobs waiting for a human (AWAIT_*) are re-read only when the approvals/plans
-        folders changed or every 5 min, not every 20 s: on 2026-11-12 the many Drive reads hit Google's
-        per-minute limit and crashed the worker. A Drive error on one job skips that job for this pass only."""
+        """One look at the queue with as few Drive calls as possible (2026-11-12: per-file reads every 20 s hit
+        Google's per-minute limit, crashed the worker and made one pass take up to 7 min):
+        - one listing per folder (inbox, state, approvals, plans) with modified times;
+        - a job file or state file is read again only when its modified time changed;
+        - jobs waiting for a human (AWAIT_*) are stepped only when approvals/plans changed or every 5 min;
+        - a Drive error on one job skips that job for this pass (its last known status stays in the summary)."""
         summary = []
         done = self.__dict__.setdefault("_finished", set())  # finished jobs are not re-read every 20 s
         waiting = self.__dict__.setdefault("_waiting", {})    # jid -> (status, checked_at, folders signature)
+        cache = self.__dict__.setdefault("_files", {})        # rel -> (modtime, parsed json)
         try:
-            sig = hash((tuple(self.storage.list_dir("jobs/approvals")), tuple(self.storage.list_dir("jobs/plans"))))
+            sig = hash((tuple(sorted(self.storage.list_meta("jobs/approvals").items())),
+                        tuple(sorted(self.storage.list_meta("jobs/plans").items()))))
         except Exception:  # noqa: BLE001
             sig = None
-        for name in self.storage.list_dir("jobs/inbox"):
+        inbox = self.storage.list_meta("jobs/inbox")
+        try:
+            states = self.storage.list_meta("jobs/state")
+        except Exception:  # noqa: BLE001
+            states = None
+
+        def cached(rel, mt):
+            hit = cache.get(rel)
+            if mt is not None and hit and hit[0] == mt:
+                return json.loads(json.dumps(hit[1]))
+            data = self.storage.read_json(rel)
+            if mt is not None:
+                cache[rel] = (mt, data)
+            return json.loads(json.dumps(data))
+
+        for name in sorted(inbox):
             if not name.endswith(".json") or name[:-5] in done:
                 continue
             w = waiting.get(name[:-5])
@@ -171,12 +191,16 @@ class Worker:
                 summary.append((name[:-5], w[0]))
                 continue
             try:
-                job = self.storage.read_json(f"jobs/inbox/{name}")
+                job = cached(f"jobs/inbox/{name}", inbox[name])
                 jid = job["id"]
             except Exception:  # half-written or invalid file: try again next pass
                 continue
             try:
-                st = self.load_state(job)
+                srel = self._state_rel(jid)
+                if states is not None and f"{jid}.json" in states:
+                    st = cached(srel, states[f"{jid}.json"])
+                else:
+                    st = self.load_state(job)
                 if st["status"] in TERMINAL:
                     done.add(name[:-5])
                     continue
@@ -185,6 +209,8 @@ class Worker:
                         break
             except StorageError as e:
                 log(f"{jid}: Drive not reachable this pass ({str(e)[:120]}); next pass tries again")
+                if w:
+                    summary.append((jid, w[0]))
                 continue
             if str(st["status"]).startswith("AWAIT") and st["status"] not in TERMINAL:
                 waiting[jid] = (st["status"], time.time(), sig)
