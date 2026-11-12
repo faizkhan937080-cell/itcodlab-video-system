@@ -70,7 +70,7 @@ def search_commons(query, aspect=None, page_size=30, token=None):
         artist = _re.sub(r"<[^>]+>", "", str((meta.get("Artist") or {}).get("value", ""))).strip()
         out.append({"url": ii["thumburl"], "license": lic, "license_version": str((meta.get("LicenseShortName") or {}).get("value", "")),
                     "creator": artist or "unknown", "title": pg.get("title", "").replace("File:", ""), "foreign_landing_url": ii.get("descriptionurl", ""),
-                    "filetype": ii["thumburl"].rsplit(".", 1)[-1].lower(), "width": w, "height": h, "source": "wikimedia"})
+                    "filetype": ii["thumburl"].split("?")[0].rsplit(".", 1)[-1].lower(), "width": w, "height": h, "source": "wikimedia"})
     return out
 
 
@@ -123,7 +123,8 @@ def run(storage, job, wd, token=None, search_fn=None, download_fn=None):
         for it in res:
             if len(got) >= want:
                 break
-            ext = "." + (it.get("filetype") or "jpg").lstrip(".").lower().replace("jpeg", "jpg")
+            ft = str(it.get("filetype") or "jpg").split("?")[0].split("&")[0].lower()
+            ext = "." + (ft if ft in ("jpg", "jpeg", "png", "webp") else "jpg").replace("jpeg", "jpg")
             dest = wd / name / f"{len(got) + 1}{ext}"
             dest.parent.mkdir(parents=True, exist_ok=True)
             try:
@@ -140,5 +141,59 @@ def run(storage, job, wd, token=None, search_fn=None, download_fn=None):
         sheet = _sheet([g["local"] for g in got], wd / f"collage_assets_{qi:02d}.jpg", name) if got else None
         report.append({"query": q["query"], "name": name, "found": len(res), "errors": errors, "kept": [{k: v for k, v in g.items() if k != "local"} for g in got],
                        "sheet": sheet.name if sheet else None})
+    der = [derive(storage, d, wd) for d in job.get("derive") or []]
+    if der:
+        sh = _sheet([d["local"] for d in der], wd / "collage_assets_derived.jpg", "derived")
+        report.append({"query": "derive", "name": "derived", "found": len(der), "errors": [],
+                       "kept": [{k: v for k, v in d.items() if k != "local"} for d in der], "sheet": sh.name if sh else None})
     (wd / "manifest.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
     return report
+
+
+def derive(storage, spec, wd):
+    """Build a picture from library pictures (real photos only): canvas w x h in a base colour, then layers
+    {file, x, y, w (fractions of the canvas, x/y = centre), blur (px), opacity, crop [x0,y0,x1,y1] fractions}.
+    Saved as assets/library/image/derived/<name>.jpg with the licences + credits of every source."""
+    from PIL import ImageFilter
+    from . import library
+    W, H = int(spec.get("w", 1080)), int(spec.get("h", 1920))
+    canvas = Image.new("RGB", (W, H), spec.get("bg", "#000000"))
+    items = {i.get("file"): i for i in library.load(storage)}
+    lic, credits = [], []
+    for L in spec.get("layers", []):
+        local = Path(wd) / "src" / Path(L["file"]).name
+        local.parent.mkdir(parents=True, exist_ok=True)
+        storage.fetch(L["file"], local)
+        im = Image.open(local).convert("RGB")
+        if L.get("crop"):
+            x0, y0, x1, y1 = L["crop"]
+            im = im.crop((int(x0 * im.width), int(y0 * im.height), int(x1 * im.width), int(y1 * im.height)))
+        tw = max(1, int(L.get("w", 1.0) * W))
+        im = im.resize((tw, max(1, int(im.height * tw / im.width))), Image.LANCZOS)
+        if L.get("blur"):
+            im = im.filter(ImageFilter.GaussianBlur(float(L["blur"])))
+        layer = Image.new("RGB", (W, H), (0, 0, 0))
+        mask = Image.new("L", (W, H), 0)
+        cx, cy = int(L.get("x", 0.5) * W), int(L.get("y", 0.5) * H)
+        pos = (cx - im.width // 2, cy - im.height // 2)
+        layer.paste(im, pos)
+        m = Image.new("L", im.size, int(255 * float(L.get("opacity", 1.0))))
+        if L.get("feather"):
+            m = Image.new("L", im.size, 0)
+            ImageDraw.Draw(m).ellipse([0, 0, im.width, im.height], fill=int(255 * float(L.get("opacity", 1.0))))
+            m = m.filter(ImageFilter.GaussianBlur(float(L["feather"])))
+        mask.paste(m, pos)
+        canvas = Image.composite(layer, canvas, mask) if L.get("mode") != "screen" else Image.composite(
+            Image.fromarray(255 - ((255 - __import__("numpy").asarray(canvas, dtype="uint16")) * (255 - __import__("numpy").asarray(layer, dtype="uint16")) // 255).astype("uint8")), canvas, mask)
+        it = items.get(L["file"], {})
+        lic.append(it.get("licence", "unknown"))
+        credits.append(it.get("credit", L["file"]))
+    name = library._slug(spec["name"])
+    out = Path(wd) / f"{name}.jpg"
+    canvas.save(out, quality=92)
+    rel = f"{library.BASE}/image/derived/{name}.jpg"
+    storage.put_file(out, rel)
+    worst = "by" if "by" in lic else ("cc0" if all(x in ("cc0", "pdm") for x in lic) else lic[0] if lic else "unknown")
+    library.add_entry(storage, "image", f"derived-{name}", worst, source="derived from library pictures", file=rel,
+                      credit=" + ".join(credits), tags=["derived", "plate"])
+    return {"name": name, "file": rel, "local": str(out), "licence": worst, "credit": " + ".join(credits)}

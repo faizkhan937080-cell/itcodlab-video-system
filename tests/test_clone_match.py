@@ -119,3 +119,37 @@ def test_assets_job_keeps_only_commercial_licences(tmp_path, monkeypatch):
     assert [k["licence"] for k in rep[0]["kept"]] == ["cc0", "by"]
     assert rep[0]["sheet"] and (tmp_path / rep[0]["sheet"]).exists()
     assert len(st.idx) == 2 and all(e["file"].startswith(library.BASE + "/image/dark-room/") for e in st.idx)
+
+
+def test_derive_builds_a_plate_from_library_pictures(tmp_path):
+    from PIL import Image
+    from scripts import assets_job
+
+    src = tmp_path / "lamp.jpg"
+    Image.new("RGB", (400, 300), (250, 230, 190)).save(src)
+
+    class S:
+        def __init__(self):
+            self.idx = [{"id": "image-dark-room-1", "type": "image", "name": "dark-room-1", "tags": [], "file": "assets/library/image/dark-room/1.jpg", "licence": "by", "credit": "Lamp by A"}]
+            self.files = {}
+
+        def fetch(self, rel, dest):
+            Image.open(src).save(dest)
+
+        def put_file(self, p, rel):
+            self.files[rel] = p
+
+        def read_json(self, rel):
+            return self.idx
+
+        def put_json(self, rel, d, versioned=True):
+            self.idx = d
+
+        def put_text(self, *a, **k):
+            pass
+    st = S()
+    d = assets_job.derive(st, {"name": "plate test", "w": 108, "h": 192, "bg": "#141210",
+                               "layers": [{"file": "assets/library/image/dark-room/1.jpg", "x": 0.15, "y": 0.6, "w": 0.4, "blur": 6, "feather": 4}]}, tmp_path)
+    im = Image.open(d["local"])
+    assert im.size == (108, 192) and d["licence"] == "by" and "Lamp by A" in d["credit"]
+    assert im.getpixel((16, 115))[0] > 120 and im.getpixel((100, 10))[0] < 40
