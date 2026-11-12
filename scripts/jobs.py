@@ -241,7 +241,10 @@ class Worker:
                 except Exception as e:  # noqa: BLE001
                     log(f"self-update skipped: {e}")
             n0 = stages_started()
+            tp = time.time()
             res = self.process_once()
+            if time.time() - tp > 15 or last is None:   # how slow is one look at the queue (poll latency)
+                log(f"queue pass {time.time() - tp:.0f}s, {len(res or [])} open job(s)")
             if stages_started() > n0:       # a measured stage (render, analysis, ...) ran inside this call
                 worked = True
             if res != last:
