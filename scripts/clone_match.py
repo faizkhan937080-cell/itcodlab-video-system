@@ -163,12 +163,15 @@ def score(ref_bgr, out_bgr):
     return {"colour": round(colour, 3), "layout": round(layout, 3), "structure": round(structure, 3), "total": round(total, 3)}
 
 
-def _shot_times(s, n=2):
+def _shot_times(s, step=1.0):
+    """Frame-by-frame pairs (Faiz 2026-11-12): one pair about every `step` seconds of the shot, the reference time
+    moving at the same rate as the shot map (ref time warped linearly onto output time)."""
     a, b = s["out"]
     c, d = s["ref"]
+    n = max(1, int(round((b - a) / step)))
     out = []
     for k in range(n):
-        f = (k + 1) / (n + 1)
+        f = (k + 0.5) / n
         out.append((round(a + (b - a) * f, 2), round(c + (d - c) * f, 2)))
     return out
 
@@ -182,7 +185,7 @@ def match(out_video, ref_video, clone, out_dir, lim=None):
     co, cr = cv2.VideoCapture(str(out_video)), cv2.VideoCapture(str(ref_video))
     rows = []
     for s in sorted(clone.get("shots") or [], key=lambda x: x["out"][0]):
-        for to, tr in _shot_times(s, 1 if s["out"][1] - s["out"][0] < 2 else 2):
+        for to, tr in _shot_times(s):
             fo, fr = _read(co, to), _read(cr, tr)
             if fo is None or fr is None:
                 rows.append({"out_t": to, "ref_t": tr, "what": s.get("what", ""), "error": "frame not readable", "total": 0.0})
