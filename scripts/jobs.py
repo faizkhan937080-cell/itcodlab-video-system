@@ -237,7 +237,9 @@ class Worker:
             return self.step_style(job, st)
         if job.get("type") == "assets":
             return self.step_assets(job, st)
-        self.set_status(st, job, "NEEDS_INPUT", f"unknown job type: {job.get('type')}")
+        # a job type this (older) code does not know yet: wait for the next run on newer code, never dead-end it
+        if st.get("note") != f"waiting for code that knows job type {job.get('type')}":
+            self.set_status(st, job, "QUEUED", f"waiting for code that knows job type {job.get('type')}")
         return False
 
     def _ensure_local_source(self, st, wd):
