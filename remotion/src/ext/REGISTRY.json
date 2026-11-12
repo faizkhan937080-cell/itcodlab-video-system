@@ -381,15 +381,17 @@
   "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
   "licence": "own replica of the reference look",
   "commit": "",
-  "title": "brand-kit.md mono card with typed lines",
+  "title": "brand-kit.md mono card with typed lines (+ References column, step header)",
   "files": [
    "clones/DfMQ7zqkuxO/RefDoc.tsx"
   ],
   "ref_times": [
    87.4,
-   92.0
+   92.0,
+   51.3,
+   54.1
   ],
-  "sha256": "0db284294b5dac1a",
+  "sha256": "356872d5595e3709",
   "deps": []
  },
  "nt-title": {
@@ -490,6 +492,41 @@
    46.7
   ],
   "sha256": "38e04fabaa0a31a0",
+  "deps": []
+ },
+ "nt-cards": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "storyboard browser: title, pills, hero, beat cards with Approve/Reject",
+  "files": [
+   "clones/DfMQ7zqkuxO/RefCards.tsx"
+  ],
+  "ref_times": [
+   72.6,
+   79.5
+  ],
+  "sha256": "0f3606cf3ba3a990",
+  "deps": []
+ },
+ "nt-shade": {
+  "source": "clone:DfMQ7zqkuxO",
+  "url": "creators/*/reel-DfMQ7zqkuxO/collage_ref_*.jpg",
+  "licence": "own replica of the reference look",
+  "commit": "",
+  "title": "punch-in fall-off to black around the lit face",
+  "files": [
+   "clones/DfMQ7zqkuxO/Shade.tsx"
+  ],
+  "ref_times": [
+   11.6,
+   27.3,
+   48.5,
+   80.5,
+   98.9
+  ],
+  "sha256": "31667fe94c784e1b",
   "deps": []
  }
 }
