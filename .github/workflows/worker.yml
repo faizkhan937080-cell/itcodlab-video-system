@@ -50,7 +50,7 @@ jobs:
           echo "ready=false" >> "$GITHUB_OUTPUT"
           if [ "${{ github.event_name }}" = "schedule" ]; then echo "::notice::RCLONE_TOKEN not set yet; skipping"; exit 0; fi
           echo "::error::Secret RCLONE_TOKEN is missing (see docs/HOSTING.md step 4)"; exit 1
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: steps.chk.outputs.ready == 'true'
         timeout-minutes: 5
         with:
