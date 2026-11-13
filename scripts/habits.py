@@ -55,6 +55,11 @@ def survey(root=ROOT):
                 long.append(f"{p.relative_to(root)}({n})")
     if long:
         out.append("rule/memory file over 60 lines: " + ", ".join(long[:4]) + " | fix: split or condense")
+    from . import tripwire
+    h = tripwire.current_halt()
+    if h:
+        out.append(f"HALT {h['reason']}: {h.get('detail', '')} | fix: ./run learn / repair tracking, then ./run halt clear")
+    out += [("rule gap: " + x + " | fix: add the enforcer (guard/test/worker) or fix the reference") for x in tripwire.verify_registry()[:2]]
     dirty = _git("status", "--porcelain")
     if dirty:
         out.append(f"{len(dirty.splitlines())} uncommitted file(s) | fix: commit+push after the full test, then ./run story")

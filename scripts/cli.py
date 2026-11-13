@@ -197,6 +197,55 @@ def cmd_test(a):
     return run_tests(a.files)
 
 
+def cmd_learn(a):
+    from . import tripwire
+    tripwire.add_lesson(a.text, a.rule_id, a.enforcer)
+    try:
+        tripwire.clear_halt(_storage(), reason="learning_needed")
+    except Exception:  # noqa: BLE001
+        pass
+    print("lesson saved" + (f" + rule {a.rule_id} registered ({a.enforcer})" if a.rule_id else ""))
+    return 0
+
+
+def cmd_halt(a):
+    from . import tripwire
+    h = tripwire.current_halt()
+    if a.what == "status" or not h:
+        print(json.dumps(h) if h else "no halt")
+        return 0
+    if h["reason"] == "learning_needed":
+        print("learning_needed clears only through `./run learn ...`")
+        return 1
+    from . import costs
+    if not (costs.LOCAL.exists() and any(costs.LOCAL.glob("*.json"))) and not costs.load_rows(_storage()):
+        print("tracking still has no cost row: repair it first")
+        return 1
+    tripwire.clear_halt(_storage())
+    print("halt cleared")
+    return 0
+
+
+def cmd_rules(a):
+    from . import tripwire
+    for r in tripwire.load_rules():
+        print(f"{r['id']} | {r.get('enforcer')} | {r['rule'][:90]}")
+    for p in tripwire.verify_registry():
+        print("GAP " + p)
+    return 0
+
+
+def cmd_scope(a):
+    from . import tripwire
+    if a.what == "set":
+        tripwire.set_scope(a.paths, a.hours)
+        print(f"scope set for {a.hours} h: {', '.join(a.paths)}")
+    else:
+        tripwire.clear_scope()
+        print("scope cleared")
+    return 0
+
+
 def cmd_guard_install(a):
     from .habits import install_global_hook
     ch = install_global_hook()
@@ -1028,6 +1077,21 @@ def build_parser():
     s = sub.add_parser("test", help="run tests; full suite is skipped when already green for this exact tree")
     s.add_argument("files", nargs="*")
     s.set_defaults(fn=cmd_test)
+    s = sub.add_parser("learn", help="feed ONE lesson 'M: .. | C: .. | R: ..' (clears a learning halt); --rule-id registers it as a rule")
+    s.add_argument("text")
+    s.add_argument("--rule-id")
+    s.add_argument("--enforcer", default="none:", help="guard:<text> | test:<text> | worker:<text> | check:<text> | none:")
+    s.set_defaults(fn=cmd_learn)
+    s = sub.add_parser("halt", help="status | clear (tracking_failed only, after the cost row is written)")
+    s.add_argument("what", choices=["status", "clear"], nargs="?", default="status")
+    s.set_defaults(fn=cmd_halt)
+    s = sub.add_parser("rules", help="written rules with their enforcer; GAP lines = written but not enforced")
+    s.set_defaults(fn=cmd_rules)
+    s = sub.add_parser("scope", help="limit Write/Edit to given paths for N hours (wrong-track guard)")
+    s.add_argument("what", choices=["set", "clear"])
+    s.add_argument("paths", nargs="*")
+    s.add_argument("--hours", type=float, default=6)
+    s.set_defaults(fn=cmd_scope)
     s = sub.add_parser("guard-install", help="make the guard + survey hooks active from any folder (~/.claude/settings.json)")
     s.set_defaults(fn=cmd_guard_install)
     s = sub.add_parser("learn-yt", help="worker only: YouTube learning videos -> Drive research/youtube-learning/")

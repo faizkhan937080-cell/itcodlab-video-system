@@ -278,7 +278,7 @@ def test_render_failure_retries_then_fails(drive, tmp_path, monkeypatch):
     approve(drive, "rn3", 4, 1, "Y")
     seen = [w.process_once()[0][1] for _ in range(3)]  # attempts 1, 2 retry; attempt 3 > max_retries
     assert seen == ["RENDERING_PREVIEW", "RENDERING_PREVIEW", "FAILED"]
-    assert w.process_once() == []  # terminal: never retried again
+    assert w.process_once() == [("_halt", "HALT")]  # terminal: never retried, and no new job until the lesson is fed
     assert "remotion exploded" in drive.read_json("jobs/state/rn3.json")["error_tail"]
 
 

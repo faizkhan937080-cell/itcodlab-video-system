@@ -1,0 +1,98 @@
+[
+ {
+  "id": "no_heavy_tools_by_claude",
+  "rule": "Claude never runs ffmpeg/yt-dlp/whisper/rclone/curl/remotion; scripts do",
+  "enforcer": "guard:FENCE: heavy",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "no_delete_from_shell",
+  "rule": "No deleting from Claude's shell; only approved scrap via Drive trash",
+  "enforcer": "guard:BARRIER: no deleting",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "no_secrets_in_commands_or_files",
+  "rule": "Secrets never go into commands or files",
+  "enforcer": "guard:a secret (token/key",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "big_files_not_in_chat",
+  "rule": "Big files go to Drive by script, never into chat",
+  "enforcer": "guard:Big files go to Drive",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "rule_files_max_60_lines",
+  "rule": "Every rule, lesson and memory file stays under 60 lines",
+  "enforcer": "check:MAX_RULE_LINES",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "protocol_before_render",
+  "rule": "Look before sending, reference record, sample first; worker refuses plans without them",
+  "enforcer": "worker:check_plan",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "grade_default_on",
+  "rule": "Colour grade is automatic unless Faiz turns it off",
+  "enforcer": "worker:check_plan",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "tracking_required",
+  "rule": "Every job step writes a cost row; a missing row halts the system",
+  "enforcer": "worker:record_checked",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "learning_required",
+  "rule": "A FAILED job halts new work until the lesson is fed (./run learn)",
+  "enforcer": "worker:halt_for_failed_job",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "stay_in_scope",
+  "rule": "Write/Edit outside the task's scope paths is blocked while a scope is set",
+  "enforcer": "guard:check_scope",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "no_repeat_approval",
+  "rule": "Once Faiz approved something, never ask for it again",
+  "enforcer": "none:",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "numbers_in_words",
+  "rule": "Every number in replies to Faiz is written in words",
+  "enforcer": "none:",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "answer_before_work",
+  "rule": "Answer Faiz's question first, then start work",
+  "enforcer": "none:",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "reminder_when_waiting",
+  "rule": "Every wait gets a reminder sized to the task",
+  "enforcer": "none:",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "free_tools_default",
+  "rule": "Free tools by default; paid or trials only on his command",
+  "enforcer": "none:",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "tripwire_feed",
+  "rule": "every hard rule is in config/rules.json with an enforcer; no cost row or no lesson after a FAILED job = HALT",
+  "enforcer": "test:test_missing_cost_row_halts",
+  "added": "2026-11-13"
+ }
+]

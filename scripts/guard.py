@@ -9,6 +9,7 @@ import time
 from pathlib import Path
 
 from .mem import has_secret
+from . import tripwire
 
 LOG = Path.home() / ".cache" / "itcod" / "guard.log"
 TEXT_EXT = {".py", ".md", ".json", ".jsonl", ".log", ".txt", ".csv", ".tsx", ".ts", ".js", ".yml", ".yaml", ".sh", ".html"}
@@ -52,6 +53,9 @@ def _strip_quotes(cmd):
 
 
 def check_bash(cmd):
+    halted = tripwire.check_halt_bash(cmd)
+    if halted:
+        return halted
     if has_secret(cmd):
         return "BARRIER: a secret (token/key/card number) is in this command. Never put secrets in commands."
     flat = _strip_quotes(_strip_heredocs(cmd))
@@ -130,7 +134,9 @@ def main():
     if tool == "Bash":
         reason = check_bash(inp.get("command", ""))
     elif tool in ("Write", "Edit"):
-        reason = check_write(inp.get("content") or inp.get("new_string") or "")
+        reason = (check_write(inp.get("content") or inp.get("new_string") or "")
+                  or tripwire.check_halt_write(inp.get("file_path"))
+                  or tripwire.check_scope(inp.get("file_path")))
     elif tool == "Read":
         reason = check_read(inp.get("file_path", ""), inp.get("offset") is not None or inp.get("limit") is not None)
     elif tool == "SendUserFile":

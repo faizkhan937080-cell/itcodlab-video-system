@@ -72,3 +72,17 @@ def drive(tmp_path, monkeypatch):
     monkeypatch.setenv("ITCOD_DRIVE_ROOT", str(root))
     from scripts.storage import Storage
     return Storage(root=str(root))
+
+
+import pytest as _pytest
+
+
+@_pytest.fixture(autouse=True)
+def _tripwire_isolated(tmp_path, monkeypatch):
+    """Tests never touch the real halt/scope files in ~/.cache/itcod (a test job FAILED once and halted the real system)."""
+    from scripts import tripwire
+    d = tmp_path / "itcod_cache"
+    d.mkdir()
+    monkeypatch.setattr(tripwire, "CACHE", d)
+    monkeypatch.setattr(tripwire, "HALT", d / "halt.json")
+    monkeypatch.setattr(tripwire, "SCOPE", d / "scope.json")

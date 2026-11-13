@@ -127,11 +127,17 @@ class Worker:
         try:  # a failed step still cost time: record it so retries show up in the price
             from . import costs
             from .common import stage_times
-            costs.record(self.storage, job["id"], f"{stage}_failed", stages=stage_times(reset=True),
-                         extra={"failed": True, "attempt": n, "error": st["error_tail"][-160:]})
+            from . import tripwire
+            tripwire.record_checked(self.storage, job["id"], f"{stage}_failed", stages=stage_times(reset=True),
+                                    extra={"failed": True, "attempt": n, "error": st["error_tail"][-160:]})
         except Exception:  # noqa: BLE001
             pass
         if n > self.lim["jobs"]["max_retries"]:
+            try:
+                from . import tripwire
+                tripwire.halt_for_failed_job(job["id"], stage, self.storage)
+            except Exception:  # noqa: BLE001
+                pass
             self.set_status(st, job, terminal, terminal_note or f"{stage} failed {n} times. See error_tail.")
         else:
             self.save(st, job)
@@ -173,6 +179,11 @@ class Worker:
             states = self.storage.list_meta("jobs/state")
         except Exception:  # noqa: BLE001
             states = None
+        from . import tripwire
+        _h = tripwire.worker_halt_listed(self, states)   # reads _halt.json only when the listing shows it changed
+        if _h:  # tracking or learning feed is broken: no new job until it is fixed (Faiz 2026-11-14)
+            log(f"HALT ({_h}): not taking new jobs")
+            return [("_halt", "HALT")]
 
         def cached(rel, mt):
             hit = cache.get(rel)
@@ -433,7 +444,8 @@ class Worker:
                     for k, v in stage_times(reset=True).items():
                         stg[k] = round(stg.get(k, 0) + v, 1)
                     inf = res.get("info", {})
-                    costs.record(self.storage, jid, "analysis", stages=stg, extra={
+                    from . import tripwire
+                    tripwire.record_checked(self.storage, jid, "analysis", stages=stg, extra={
                         "wall_s": round(time.time() - _t0, 1), "mode": job["mode"], "bulk": bulk,
                         "resources": _costs.resources_since(_m0), "queue_s": _costs.queue_s(job.get("created", "")),
                         "attempt": st["attempts"].get("analyze", 0) + 1,
@@ -957,7 +969,8 @@ class Worker:
             try:  # cost/time ledger (never blocks the job)
                 from . import costs
                 pr_ = chk.get("probe", {})
-                costs.record(self.storage, job["id"], f"render_{quality}", stages=_stage_times(reset=True),
+                from . import tripwire
+                tripwire.record_checked(self.storage, job["id"], f"render_{quality}", stages=_stage_times(reset=True),
                              media={"duration_s": pr_.get("duration_s") or pr_.get("duration"), "width": pr_.get("width"),
                                     "height": pr_.get("height"), "fps": pr_.get("fps")},
                              extra={"output_bytes": out.stat().st_size if out.exists() else None, "quality": quality})
