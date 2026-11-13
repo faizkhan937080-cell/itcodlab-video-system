@@ -10,7 +10,7 @@
     "@remotion/captions": "^4.0.541",
     "@remotion/cli": "^4.0.0",
     "@remotion/google-fonts": "^4.0.541",
-    "@remotion/layout-utils": "^4.0.541",
+    "@remotion/layout-utils": "^4.0.542",
     "@remotion/lottie": "^4.0.541",
     "@remotion/media-utils": "^4.0.541",
     "culori": "^4.0.2",
