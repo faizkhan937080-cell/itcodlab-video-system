@@ -14,6 +14,13 @@ def _no_real_review_push(monkeypatch):
     monkeypatch.setenv("ITCOD_NO_REVIEW", "1")
 
 
+@pytest.fixture(autouse=True)
+def _no_fake_cost_rows(monkeypatch, tmp_path):
+    """Tests must never write fake rows into the real costs/local folder (they poisoned estimates once)."""
+    from scripts import costs
+    monkeypatch.setattr(costs, "LOCAL", tmp_path / "costs_local")
+
+
 @pytest.fixture(scope="session")
 def test_video(tmp_path_factory):
     """24 s portrait video: A B A B (repeats), a dissolve, a hard cut and a pan, plus a 120 BPM click track."""

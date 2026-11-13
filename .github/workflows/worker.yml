@@ -182,6 +182,13 @@ jobs:
           JOB=$(git log -1 --format=%B | sed -n 's/.*\[kaggle-compare:\([A-Za-z0-9_.-]*\)\].*/\1/p' | head -1)
           [ -n "$JOB" ] || { echo "no job id in the wake message"; exit 1; }
           ./run kaggle-compare --job "$JOB" | tail -5
+      - name: Cost summary (real measured rows from Drive; Claude reads this from the run log, never guesses)
+        if: steps.chk.outputs.ready == 'true'
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          for k in analysis render_preview render_final; do echo "COST60 $k $(./run cost estimate --seconds 60 --kind $k | tr -d '\n ')"; done
+          echo "COSTREPORT $(./run cost report | tr -d '\n ')"
       - name: Work until nothing is left to do
         if: steps.chk.outputs.ready == 'true'
         timeout-minutes: 330

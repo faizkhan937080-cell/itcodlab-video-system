@@ -184,7 +184,15 @@ def load_rows(storage=None):
             pass
     if LOCAL.exists():
         rows += [json.loads(p.read_text(encoding="utf-8")) for p in sorted(LOCAL.glob("*.json"))]
-    return rows
+    return [r for r in rows if _real(r)]
+
+
+def _real(r):
+    """A row counts only if something was really timed (test/fake rows have 0 s or a 1x1 video)."""
+    m = r.get("media") or {}
+    if r.get("failed"):
+        return True
+    return (r.get("total_s") or 0) > 0 and (m.get("width") or 2) > 1
 
 
 def _per_media_s(rows, kind=None, machine_name=None):

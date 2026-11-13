@@ -711,6 +711,8 @@ def cmd_cost(a):
         print("saved: " + str(p))
         return 0
     rows = costs.load_rows(stg)
+    if stg is None:
+        print("WARNING: Drive not connected here, real cost rows NOT read. Real numbers: worker log step 'Cost summary' (gh run view --log).", file=sys.stderr)
     if a.what == "report":
         print(json.dumps(costs.report(rows), ensure_ascii=False, indent=1))
         return 0
