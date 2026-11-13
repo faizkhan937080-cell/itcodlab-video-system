@@ -15,4 +15,4 @@ pyloudnorm
 praat-parselmouth
 kaggle>=1.8.0
 six  # the kaggle CLI imports it but does not declare it
-kokoro-onnx>=0.4  # voiceover (Kokoro-82M, Apache-2.0); model files from GitHub releases, cached
+kokoro-onnx>=0.4.7  # voiceover (Kokoro-82M, Apache-2.0); model files from GitHub releases, cached
