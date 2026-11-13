@@ -137,10 +137,31 @@ GEM_SCREEN = (
     "Facts only.")
 
 
+def _post_busy_ok(model, key, body, timeout=900):
+    """Like describe._post, but HTTP 503 (Gemini 'overloaded, try later') does not start the hours-long host
+    cooldown: on 2026-11-13 one 503 blocked all six videos twice. Gap between calls and every other signal stay."""
+    import json as _json
+    import urllib.error
+    import urllib.request
+    from .describe import URL
+    from .netguard import guard
+    g = guard()
+    g.before("gemini")
+    req = urllib.request.Request(URL.format(model=model), data=_json.dumps(body).encode(),
+                                 headers={"Content-Type": "application/json", "x-goog-api-key": key})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return _json.loads(r.read().decode())
+    except urllib.error.HTTPError as e:
+        if e.code != 503:
+            g.after("gemini", e.code, str(e))
+        raise
+
+
 def gemini_watch(url, prompt, low_res=True):
     """Google's own Gemini API reads a public YouTube link itself (official feature; our machine never contacts
     YouTube). Used when YouTube blocks the worker."""
-    from .describe import _post, get_key
+    from .describe import get_key
     import time
     import urllib.error
     key = get_key()
@@ -154,7 +175,7 @@ def gemini_watch(url, prompt, low_res=True):
         for attempt in range(3):
             try:
                 with stage("learn_gemini"):
-                    res = _post(model, key, body, timeout=900)
+                    res = _post_busy_ok(model, key, body)
                 try:
                     from . import costs
                     um = res.get("usageMetadata", {})
@@ -166,7 +187,10 @@ def gemini_watch(url, prompt, low_res=True):
                 return model, "".join(p.get("text", "") for p in parts)
             except urllib.error.HTTPError as e:
                 last = f"{model} HTTP {e.code}: {e.read().decode(errors='ignore')[:300]}"
-                if e.code == 429:
+                log(f"gemini {last[:200]}")
+                if e.code == 503:      # "model overloaded": Google says try again later; not a block
+                    time.sleep(90 * (attempt + 1))
+                elif e.code == 429:
                     time.sleep(60 * (attempt + 1))
                 elif e.code in (400, 403, 404):
                     break
