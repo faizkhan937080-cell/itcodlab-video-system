@@ -160,6 +160,14 @@ def cmd_render_local(a):
     return 0 if res.get("ok") else 1
 
 
+def cmd_learn_yt(a):
+    """Worker only: description, chapters and spoken words of YouTube videos Faiz gives for learning."""
+    from . import yt_learn
+    urls = [ln.strip() for ln in Path(a.file).read_text(encoding="utf-8").splitlines() if ln.strip() and not ln.startswith("#")]
+    res = yt_learn.run(urls, _storage())
+    return 0 if all("error" not in r for r in res) else 1
+
+
 def cmd_bench_render(a):
     """Speed test of Remotion concurrency on a real plan from Drive, with an identical-frames proof."""
     from . import bench_render
@@ -1020,6 +1028,9 @@ def build_parser():
     s.set_defaults(fn=cmd_test)
     s = sub.add_parser("guard-install", help="make the guard + survey hooks active from any folder (~/.claude/settings.json)")
     s.set_defaults(fn=cmd_guard_install)
+    s = sub.add_parser("learn-yt", help="worker only: YouTube learning videos -> Drive research/youtube-learning/")
+    s.add_argument("--file", default="trigger/yt_learn.txt")
+    s.set_defaults(fn=cmd_learn_yt)
     s = sub.add_parser("bench-render", help="worker only: Remotion concurrency speed test with identical-frame proof")
     s.add_argument("--plan", required=True, help="Drive path of a scene plan, e.g. jobs/plans/<job>-v3.json")
     s.add_argument("--frames", default="0-299")

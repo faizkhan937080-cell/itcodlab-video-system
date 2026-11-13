@@ -152,6 +152,11 @@ jobs:
           rclone lsf "$ITCOD_RCLONE_REMOTE" --max-depth 1 | head -20
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           if [ -n "$INSTAGRAM_COOKIES" ]; then printf '%s' "$INSTAGRAM_COOKIES" > "$RUNNER_TEMP/cookies.txt"; echo "ITCOD_COOKIES=$RUNNER_TEMP/cookies.txt" >> "$GITHUB_ENV"; fi
+      - name: YouTube learning videos (only when the wake message has [yt-learn]; links in trigger/yt_learn.txt)
+        if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[yt-learn]')
+        continue-on-error: true
+        timeout-minutes: 120
+        run: ./run learn-yt --file trigger/yt_learn.txt | tail -40
       - name: Render speed test (only when the wake message has [bench-render:<Drive plan path>]; report to Drive costs/compare/)
         if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[bench-render:')
         continue-on-error: true

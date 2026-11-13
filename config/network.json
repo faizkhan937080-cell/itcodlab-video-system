@@ -121,6 +121,22 @@
         6,
         24
       ]
+    },
+    "youtube": {
+      "match": [
+        "youtube.com",
+        "youtu.be",
+        "googlevideo.com",
+        "ytimg.com"
+      ],
+      "min_gap_s": 10,
+      "jitter_s": 5,
+      "daily_max": 40,
+      "cooldown_h": [
+        2,
+        12,
+        48
+      ]
     }
   },
   "block_signals": [
