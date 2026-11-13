@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: projects/11609431528/locations/global/workloadIdentityPools/github-pool/providers/github
