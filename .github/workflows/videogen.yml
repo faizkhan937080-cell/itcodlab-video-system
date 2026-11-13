@@ -51,7 +51,7 @@ jobs:
       - name: Give git push rights for the review branch
         run: git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
       - name: Restore finished face-swap pieces (resume, never start from 0)
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: work/faceswap-cache
           key: faceswap-cache-${{ github.run_id }}
@@ -63,7 +63,7 @@ jobs:
           for f in $FILES; do [ -f "$f" ] && ./run videogen-run "$f" | tail -40; done
       - name: Keep finished face-swap pieces for the next run
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: work/faceswap-cache
           key: faceswap-cache-${{ github.run_id }}
