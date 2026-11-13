@@ -64,3 +64,33 @@ def test_sound_key_ignores_graphics():
     assert rc.audio_key(PLAN, EXTRA) == rc.audio_key(p, EXTRA)
     p["scenes"][0]["props"]["src"] = "y.mp4"
     assert rc.audio_key(PLAN, EXTRA) != rc.audio_key(p, EXTRA)
+
+
+def test_missing_neighbour_pieces_render_in_one_call(tmp_path, monkeypatch):
+    import subprocess
+    calls = []
+
+    def fake_remotion(args, timeout):
+        calls.append(args)
+        out = args[0]
+        fr = [a for a in args if a.startswith("--frames=")]
+        if fr:
+            a, b = map(int, fr[0].split("=")[1].split("-"))
+            from pathlib import Path
+            for i in range(a, b + 1):
+                (Path(out) / f"element-{i:04d}.png").write_bytes(b"x%d" % i)
+        else:
+            open(out, "wb").write(b"aac")
+    monkeypatch.setattr(rc, "_remotion", fake_remotion)
+    monkeypatch.setattr(rc, "CACHE", tmp_path / "cache")
+    monkeypatch.setattr(rc, "code_hash", lambda: "c")
+    monkeypatch.setattr(rc.subprocess, "run", lambda *a, **k: subprocess.CompletedProcess(a, 0, "", ""))
+    m = {"crf": 18, "pixel_format": "yuv420p", "colorspace": "bt709"}
+    r1 = rc.render("p.json", PLAN, tmp_path / "a.mp4", 0.5, m, 30, 360, 60)
+    assert r1["fresh"] == 3 and len([c for c in calls if any(x.startswith("--frames=") for x in c)]) == 1
+    calls.clear()
+    p = copy.deepcopy(PLAN)
+    p["scenes"][0]["underlays"][2]["props"]["component"] = "z"
+    r2 = rc.render("p.json", p, tmp_path / "b.mp4", 0.5, m, 30, 360, 60)
+    fr = [x for c in calls for x in c if x.startswith("--frames=")]
+    assert r2["fresh"] == 1 and r2["reused"] == 2 and fr == ["--frames=240-359"]

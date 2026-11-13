@@ -111,7 +111,7 @@ def render(props_file, plan, out_path, scale, master, fps, total_frames, timeout
              "crf": master["crf"], "pix": master["pixel_format"]}
     frames_dir = CACHE / "frames"
     t_start = time.time()
-    pieces, fresh = [], 0
+    pieces, todo = [], []
     for a, b in cut_points(plan):
         fa = int(a * fps + 0.5)                    # JS Math.round, like sceneFrames()
         fb = total_frames - 1 if b >= float(plan["scenes"][0]["duration_s"]) else min(int(b * fps + 0.5) - 1, total_frames - 1)
@@ -119,23 +119,39 @@ def render(props_file, plan, out_path, scale, master, fps, total_frames, timeout
             continue
         key = piece_key(plan, a, b, fa, fb, extra)
         d = frames_dir / key
-        n = fb - fa + 1
-        if not (d / "done").exists() or len(list(d.glob("*.png"))) != n:
-            shutil.rmtree(d, ignore_errors=True)
-            tmp = d.with_name("tmp_" + key)   # Remotion: a sequence folder name must have no extension
-            shutil.rmtree(tmp, ignore_errors=True)
-            tmp.mkdir(parents=True)
-            _remotion([str(tmp), f"--props={props_file}", "--sequence", "--image-format=png", f"--frames={fa}-{fb}",
-                       f"--scale={scale}"], timeout_s)
-            got = sorted(tmp.glob("*.png"))
-            if len(got) != n:
-                raise RuntimeError(f"piece {fa}-{fb}: {len(got)} frames, expected {n}")
-            for i, f in enumerate(got):
-                f.rename(tmp / f"{i:06d}.png")
-            (tmp / "done").write_text(key)
-            tmp.rename(d)
-            fresh += 1
+        if not (d / "done").exists() or len(list(d.glob("*.png"))) != fb - fa + 1:
+            todo.append(len(pieces))
         pieces.append((fa, fb, d))
+    # neighbouring missing pieces are rendered in ONE Remotion call (bench 2026-11-12: one call per piece made a
+    # first render 2.3x slower than a normal render), then cut into their pieces
+    runs = []
+    for i in todo:
+        if runs and runs[-1][-1] == i - 1:
+            runs[-1].append(i)
+        else:
+            runs.append([i])
+    for run in runs:
+        fa, fb = pieces[run[0]][0], pieces[run[-1]][1]
+        tmp = frames_dir / f"tmp_run_{fa}_{fb}_{os.getpid()}"   # Remotion: a sequence folder name must have no extension
+        shutil.rmtree(tmp, ignore_errors=True)
+        tmp.mkdir(parents=True)
+        _remotion([str(tmp), f"--props={props_file}", "--sequence", "--image-format=png", f"--frames={fa}-{fb}",
+                   f"--scale={scale}"], timeout_s)
+        got = sorted(tmp.glob("*.png"))
+        if len(got) != fb - fa + 1:
+            raise RuntimeError(f"frames {fa}-{fb}: {len(got)} rendered, expected {fb - fa + 1}")
+        for i in run:
+            pa, pb, d = pieces[i]
+            shutil.rmtree(d, ignore_errors=True)
+            part = d.with_name("tmp_" + d.name)
+            shutil.rmtree(part, ignore_errors=True)
+            part.mkdir(parents=True)
+            for k, f in enumerate(got[pa - fa: pb - fa + 1]):
+                f.rename(part / f"{k:06d}.png")
+            (part / "done").write_text(d.name)
+            part.rename(d)
+        shutil.rmtree(tmp, ignore_errors=True)
+    fresh = len(todo)
     t_frames = time.time() - t_start
     # one audio render per sound fingerprint
     ak = audio_key(plan, extra)
