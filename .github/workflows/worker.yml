@@ -37,6 +37,7 @@ jobs:
       ITCOD_RUN_STARTED: ${{ github.run_started_at }}
       # watchdog: rclone gives up on a stalled transfer instead of hanging (idle timeout, not total time)
       ITCOD_RENDER_CONCURRENCY: ${{ vars.RENDER_CONCURRENCY }}   # set from the bench-render report (identical frames only)
+      PYTHONUNBUFFERED: '1'   # live log lines (a cancelled run used to lose all of them)
       RCLONE_TIMEOUT: 2m
       RCLONE_CONTIMEOUT: 30s
       RCLONE_LOW_LEVEL_RETRIES: '5'
