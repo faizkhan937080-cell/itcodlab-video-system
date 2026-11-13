@@ -124,12 +124,89 @@ def one(url, storage, wd):
     return {"id": vid, "title": rec["title"], "words": rec["words"], "source": source}
 
 
-def run(urls, storage):
+GEM_TRANSCRIPT = (
+    "Write the COMPLETE transcript of everything spoken in this video, word for word, in the language spoken "
+    "(keep Hindi/English as spoken, Latin letters for Hindi). Put a [mm:ss] time mark at the start of every new "
+    "paragraph, about every 20-40 seconds. Do not summarise, do not skip any part, do not add comments.")
+GEM_SCREEN = (
+    "This is a tutorial video. Walk through it in time order and write down, as plain text with [mm:ss] marks, "
+    "EVERYTHING shown on screen that a person would need to repeat the work: every app, website, tool, library, "
+    "GitHub repo, file and folder name, setting, button, command typed, code or config visible, prompt text typed "
+    "into an AI (copy it exactly when readable), templates, skills, before/after results, and the order of the steps. "
+    "Then a section 'TOOLS AND LINKS' listing every tool/product/repo named or shown, with what it is used for. "
+    "Facts only.")
+
+
+def gemini_watch(url, prompt, low_res=True):
+    """Google's own Gemini API reads a public YouTube link itself (official feature; our machine never contacts
+    YouTube). Used when YouTube blocks the worker."""
+    from .describe import _post, get_key
+    import time
+    import urllib.error
+    key = get_key()
+    if not key:
+        raise RuntimeError("no GEMINI_API_KEY")
+    body = {"contents": [{"parts": [{"file_data": {"file_uri": url}}, {"text": prompt}]}],
+            "generationConfig": {"temperature": 0.1, "maxOutputTokens": 65536,
+                                 **({"mediaResolution": "MEDIA_RESOLUTION_LOW"} if low_res else {})}}
+    last = ""
+    for model in ("gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-pro"):
+        for attempt in range(3):
+            try:
+                with stage("learn_gemini"):
+                    res = _post(model, key, body, timeout=900)
+                try:
+                    from . import costs
+                    um = res.get("usageMetadata", {})
+                    costs.add("gemini", calls=1, in_tok=um.get("promptTokenCount", 0),
+                              out_tok=um.get("candidatesTokenCount", 0) + um.get("thoughtsTokenCount", 0), model=model)
+                except Exception:  # noqa: BLE001
+                    pass
+                parts = res["candidates"][0]["content"].get("parts", [])
+                return model, "".join(p.get("text", "") for p in parts)
+            except urllib.error.HTTPError as e:
+                last = f"{model} HTTP {e.code}: {e.read().decode(errors='ignore')[:300]}"
+                if e.code == 429:
+                    time.sleep(60 * (attempt + 1))
+                elif e.code in (400, 403, 404):
+                    break
+            except Exception as e:  # noqa: BLE001
+                last = f"{model} {type(e).__name__}: {str(e)[:200]}"
+                time.sleep(10)
+    raise RuntimeError(last)
+
+
+def one_gemini(url, storage, wd):
+    vid = vid_id(url)
+    clean = f"https://www.youtube.com/watch?v={vid}"
+    m1, spoken = gemini_watch(clean, GEM_TRANSCRIPT)
+    m2, screen = gemini_watch(clean, GEM_SCREEN)
+    rec = {"id": vid, "url": clean, "fetched": now_iso(), "transcript_source": f"gemini:{m1}", "screen_source": f"gemini:{m2}",
+           "transcript": spoken, "screen": screen, "words": len(spoken.split())}
+    storage.put_json(f"research/youtube-learning/{vid}.json", rec)
+    txt = f"# {clean}\n\n## Transcript (Gemini {m1})\n{spoken}\n\n## On screen (Gemini {m2})\n{screen}\n"
+    (wd / f"{vid}.txt").write_text(txt, encoding="utf-8")
+    storage.put_file(wd / f"{vid}.txt", f"research/youtube-learning/{vid}.txt")
+    log(f"learn {vid}: {rec['words']} words via Gemini")
+    return {"id": vid, "words": rec["words"], "source": rec["transcript_source"]}
+
+
+def run(urls, storage, via=None):
     done = []
     with tempfile.TemporaryDirectory(prefix="itcod-learn-") as wd:
         for u in urls:
             try:
-                done.append(one(u, storage, Path(wd)))
+                if via == "gemini":
+                    done.append(one_gemini(u, storage, Path(wd)))
+                    continue
+                try:
+                    done.append(one(u, storage, Path(wd)))
+                except Exception as e:  # noqa: BLE001
+                    if "Sign in" in str(e) or "cooldown" in str(e) or "said stop" in str(e):
+                        log(f"youtube blocked this machine; reading {u} through Gemini instead")
+                        done.append(one_gemini(u, storage, Path(wd)))
+                    else:
+                        raise
             except Exception as e:  # noqa: BLE001
                 log(f"learn failed for {u}: {str(e)[:300]}")
                 done.append({"url": u, "error": str(e)[:300]})

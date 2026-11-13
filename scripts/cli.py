@@ -164,7 +164,7 @@ def cmd_learn_yt(a):
     """Worker only: description, chapters and spoken words of YouTube videos Faiz gives for learning."""
     from . import yt_learn
     urls = [ln.strip() for ln in Path(a.file).read_text(encoding="utf-8").splitlines() if ln.strip() and not ln.startswith("#")]
-    res = yt_learn.run(urls, _storage())
+    res = yt_learn.run(urls, _storage(), via=a.via)
     return 0 if all("error" not in r for r in res) else 1
 
 
@@ -1030,6 +1030,7 @@ def build_parser():
     s.set_defaults(fn=cmd_guard_install)
     s = sub.add_parser("learn-yt", help="worker only: YouTube learning videos -> Drive research/youtube-learning/")
     s.add_argument("--file", default="trigger/yt_learn.txt")
+    s.add_argument("--via", choices=["gemini"], default=None, help="read the videos through Gemini only")
     s.set_defaults(fn=cmd_learn_yt)
     s = sub.add_parser("bench-render", help="worker only: Remotion concurrency speed test with identical-frame proof")
     s.add_argument("--plan", required=True, help="Drive path of a scene plan, e.g. jobs/plans/<job>-v3.json")
