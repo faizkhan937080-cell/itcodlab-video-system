@@ -171,7 +171,7 @@ def gemini_watch(url, prompt, low_res=True):
             "generationConfig": {"temperature": 0.1, "maxOutputTokens": 65536,
                                  **({"mediaResolution": "MEDIA_RESOLUTION_LOW"} if low_res else {})}}
     last = ""
-    for model in ("gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-pro"):
+    for model in ("gemini-flash-latest", "gemini-3.1-pro-preview", "gemini-2.5-flash"):
         for attempt in range(3):
             try:
                 with stage("learn_gemini"):
