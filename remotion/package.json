@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@remotion/captions": "^4.0.541",
-    "@remotion/cli": "^4.0.0",
+    "@remotion/cli": "^4.0.542",
     "@remotion/google-fonts": "^4.0.541",
     "@remotion/layout-utils": "^4.0.541",
     "@remotion/lottie": "^4.0.541",
