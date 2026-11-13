@@ -13,6 +13,6 @@ pytesseract
 pytest
 pyloudnorm
 praat-parselmouth
-kaggle>=1.8.0
+kaggle>=2.2.5
 six  # the kaggle CLI imports it but does not declare it
 kokoro-onnx>=0.4  # voiceover (Kokoro-82M, Apache-2.0); model files from GitHub releases, cached
