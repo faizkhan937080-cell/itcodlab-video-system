@@ -71,7 +71,7 @@ def _asset_paths(node, found):
     elif isinstance(node, list):
         for v in node:
             _asset_paths(v, found)
-    elif isinstance(node, str) and node.startswith(("assets/", "input/", "creators/")):
+    elif isinstance(node, str) and node.startswith(("assets/", "input/", "creators/", "output/footage/", "output/voice/", "output/stills/")):
         found.add(node)
 
 

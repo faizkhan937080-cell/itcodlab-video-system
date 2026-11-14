@@ -7,7 +7,7 @@ import {CaptionDef, CaptionStyle} from '../lib/captions';
 /** Clone mode captions: an OUTSIDE caption component (remocn caption-*), fed word timings in @remotion/captions
  * format, in a Google font. Position (y, as a fraction of height) and props come from the plan. */
 export const ExtCaptions: React.FC<{captions: CaptionDef[]; style: CaptionStyle & Record<string, any>}> = ({captions, style}) => {
-  const {height} = useVideoConfig();
+  const {height, width} = useVideoConfig();
   const C = EXT[style.component ?? ''];
   if (!C) throw new Error(`caption component ${style.component} not in ext/REGISTRY`);
   // every token but the very first starts with a space: tokens of two caption lines can share one page
@@ -25,7 +25,9 @@ export const ExtCaptions: React.FC<{captions: CaptionDef[]; style: CaptionStyle 
   return (
     <AbsoluteFill style={{fontFamily: family}}>
       <YBox yBy={yBy} y={style.y ?? 0.55} height={height}>
-        <C captions={caps} {...(style.props ?? {})} />
+        <div style={{maxWidth: (style.max_width ?? 1) * width, padding: '0 4%'}}>
+          <C captions={caps} {...(style.props ?? {})} />
+        </div>
       </YBox>
     </AbsoluteFill>
   );

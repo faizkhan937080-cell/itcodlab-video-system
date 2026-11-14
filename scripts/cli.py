@@ -404,6 +404,11 @@ def _parallax_run(raw, name, a):
     stg = _storage()
     w, h, fps = int(raw.get("w", 1080)), int(raw.get("h", 1920)), int(raw.get("fps", 30))
     rel = f"output/footage/{name}"
+    for mq in raw.get("music", []):   # background bed from Openverse (cc0 > pdm > by), added to assets/library by name
+        import os
+        from . import library
+        e = library.fetch_from_openverse(stg, mq["query"], "music", mq["name"], mq.get("tags", []), token=os.environ.get("OPENVERSE_TOKEN"))
+        print("MUSIC", json.dumps({"query": mq["query"], "got": (e or {}).get("id"), "path": (e or {}).get("path"), "licence": (e or {}).get("licence")}))
     done = []
     with tempfile.TemporaryDirectory(prefix="itcod-px-") as wd:
         wd = Path(wd)

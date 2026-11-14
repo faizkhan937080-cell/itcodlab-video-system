@@ -625,6 +625,12 @@
         "props": {
           "type": "object",
           "description": "look ext: props passed to the caption component (fontSize, fontWeight, color...)"
+        },
+        "max_width": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 1,
+          "description": "ext look: caption block width, fraction of frame width (wraps to lines)"
         }
       }
     },
