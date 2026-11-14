@@ -516,6 +516,14 @@ def cmd_videogen_run(a):
         if raw.get("peek"):
             return 0
         image = Path(fr["first"])
+    if getattr(a, "smoke", False) or raw.get("mode") in ("image", "parallax") and raw.get("engine", "api") == "api" and not getattr(a, "no_smoke", False):
+        from . import smoke   # Tester: tiny end-to-end check first; a failure stops the long run now
+        ok, why = smoke.run(raw, _storage())
+        print("SMOKE", "OK" if ok else "FAILED", why)
+        if not ok:
+            return 3
+        if getattr(a, "smoke", False):
+            return 0
     if raw.get("mode") == "image" and raw.get("engine") == "api":   # stills on this runner via free image APIs, no Kaggle GPU
         return _stills_api_run(raw, name, a)
     if raw.get("mode") == "parallax":   # 3D camera moves on stills, on this runner (Blender CPU), no Kaggle
@@ -1362,6 +1370,8 @@ def build_parser():
     s.add_argument("--name")
     s.add_argument("--state", help="evaluator state json (needed for gated engines)")
     s.add_argument("--no-upload", action="store_true")
+    s.add_argument("--smoke", action="store_true", help="only the tiny preflight test, nothing saved")
+    s.add_argument("--no-smoke", action="store_true", help="skip the automatic preflight test")
     s.set_defaults(fn=cmd_videogen_run)
 
     s = sub.add_parser("indic-tts-ab", help="Hindi A/B on a free Kaggle GPU (Indic Parler-TTS) -> Drive output/voice-ab/")

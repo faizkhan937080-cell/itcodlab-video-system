@@ -118,5 +118,17 @@
   "rule": "Same review complaint twice is promoted to a rule + lesson",
   "enforcer": "test:test_repeated_review_notes_become_one_rule",
   "added": "2026-11-14"
+ },
+ {
+  "id": "check_service_alive_first",
+  "rule": "Free services change (HF 410, Pollinations 402, Sarvam v2 gone, Kaggle queue): never plan a run on a service without a live test the same day",
+  "enforcer": "test:test_long_jobs_run_smoke_first",
+  "added": "2026-11-15"
+ },
+ {
+  "id": "smoke_before_long_run",
+  "rule": "scripts/smoke.py runs before every runner-side long job; fail stops it",
+  "enforcer": "test:test_long_jobs_run_smoke_first",
+  "added": "2026-11-14"
  }
 ]
