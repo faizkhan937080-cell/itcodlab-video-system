@@ -453,7 +453,7 @@ def _parallax_run(raw, name, a):
             print("CLIP", json.dumps({"id": sc["id"], **rep}))
             if not raw.get("test") and not a.no_upload:
                 stg.ensure_dir(rel)
-                stg.put_file(out, f"{rel}/{sc['id']}.mp4")
+                stg.put_file(out, f"{rel}/{sc['id']}{raw.get('tag', '')}.mp4")
             done.append(sc["id"])
         contact_sheet(sheet, max_tiles=min(10, len(list(sheet.glob("*.png")))))
         (sheet / "collage.jpg").rename(sheet / "collage_parallax.jpg")

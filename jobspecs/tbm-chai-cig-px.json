@@ -4,7 +4,7 @@
  "scenes": [
   {
    "id": "v1",
-   "image": "s1n",
+   "image": "s1c",
    "seconds": 7.65,
    "move": "push"
   },
@@ -52,7 +52,7 @@
   },
   {
    "id": "v8",
-   "image": "s1",
+   "image": "s1c",
    "seconds": 4.638,
    "move": "push"
   }
@@ -68,6 +68,7 @@
  ],
  "only": [
   "v1",
-  "v3"
- ]
+  "v8"
+ ],
+ "tag": "_c1"
 }

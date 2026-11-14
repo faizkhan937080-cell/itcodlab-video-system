@@ -45,8 +45,12 @@
   {
    "id": "s3n",
    "prompt": "tiny dark brown tar and black ash specks sticking onto wet glossy pink tissue, mucus droplets, specks embedded in slime, macro medical 3D render, inside the human body, wet pink tissue, soft volumetric light, ultra detailed, no text"
+  },
+  {
+   "id": "s1c",
+   "prompt": "a lit cigarette with a glowing orange ember and curling grey smoke, next to a steaming white cup of hot tea, both clearly visible, close-up, dark moody macro 3D render, glossy, soft volumetric light, ultra detailed, no text"
   }
  ],
- "rev": 8,
+ "rev": 9,
  "after_parallax": "jobspecs/tbm-chai-cig-px.json"
 }
