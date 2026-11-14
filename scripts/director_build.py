@@ -9,20 +9,22 @@ CAPTION_LOOK = {"look": "ext", "component": "caption-dim-progress", "font": "Mon
 
 
 def captions_from(transcript):
-    """One caption per spoken sentence part, with word times (Whisper times when present, else spread by letters)."""
+    """One caption per spoken sentence part. Word times come from anchors (same tokenizer), so a display word
+    like "you're" or "sixty-five" that anchors splits into pieces still gets the right start/end."""
+    from .anchors import norm
     words = words_from_transcript(transcript)
     caps, i = [], 0
     for seg in transcript["segments"]:
-        n = len([w for w in seg["text"].replace("...", " ").split() if any(ch.isalnum() for ch in w)])
-        toks = seg["text"].split()
-        ws = words[i:i + n]
-        i += n
-        if not ws:
-            continue
-        shown = [t for t in toks if any(ch.isalnum() for ch in t)]
-        caps.append({"text": seg["text"], "start_s": ws[0]["start"], "end_s": ws[-1]["end"],
-                     "words": [{"text": shown[k] if k < len(shown) else w["w"], "start_s": w["start"], "end_s": w["end"]}
-                               for k, w in enumerate(ws)]})
+        toks = [t for t in seg["text"].split() if norm(t)]
+        shown = []
+        for t in toks:
+            n = len(norm(t))
+            ws = words[i:i + n]
+            i += n
+            if ws:
+                shown.append({"text": t, "start_s": ws[0]["start"], "end_s": ws[-1]["end"]})
+        if shown:
+            caps.append({"text": seg["text"], "start_s": shown[0]["start_s"], "end_s": shown[-1]["end_s"], "words": shown})
     return caps
 
 

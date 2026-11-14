@@ -161,6 +161,16 @@ def cmd_render_local(a):
     return 0 if res.get("ok") else 1
 
 
+def cmd_sample_render(a):
+    """Runner: render the first seconds of a plan + frames sheet to branch review (nothing saved to Drive)."""
+    from . import sample_render
+    spec = json.loads(Path(a.spec).read_text(encoding="utf-8"))
+    spec["plan_file"] = str(Path(a.spec).parent / spec["plan"])
+    res = sample_render.run(spec, _storage())
+    print(json.dumps(res, indent=2, default=str))
+    return 0 if res.get("ok") else 1
+
+
 def cmd_learn_yt(a):
     """Worker only: description, chapters and spoken words of YouTube videos Faiz gives for learning."""
     from . import yt_learn
@@ -1282,6 +1292,10 @@ def build_parser():
     s.add_argument("--saw", required=True)
     s.add_argument("--out")
     s.set_defaults(fn=cmd_look_ok)
+
+    s = sub.add_parser("sample-render", help="runner: first seconds of a plan -> frames sheet on branch review")
+    s.add_argument("spec")
+    s.set_defaults(fn=cmd_sample_render)
 
     s = sub.add_parser("render-local", help="render a scene plan locally")
     s.add_argument("--plan", required=True)
