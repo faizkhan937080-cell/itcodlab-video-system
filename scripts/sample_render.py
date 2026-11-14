@@ -60,6 +60,7 @@ def run(spec, storage, log=print):
     pack = wd / "pack"
     pack.mkdir()
     (pack / "collage_frames.jpg").write_bytes(sheet.read_bytes())
+    (pack / "video.mp4").write_bytes(out.read_bytes())   # small preview, so Faiz can watch it
     pub = review.publish(pack, f"sample-{name}")
     log("REVIEW " + json.dumps(pub))
     return {"ok": bool(res.get("ok")), "check": {k: res.get(k) for k in ("loudness", "safe_zone") if k in res}, "review": pub}
