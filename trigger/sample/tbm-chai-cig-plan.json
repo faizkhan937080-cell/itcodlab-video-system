@@ -10,7 +10,7 @@
    "duration_s": 6.46,
    "template": "video",
    "props": {
-    "src": "output/footage/tbm-chai-cig-px/v1.mp4",
+    "src": "output/footage/tbm-chai-cig-px/v1_v2.mp4",
     "muted": true,
     "fit": "cover"
    },
@@ -36,7 +36,7 @@
    "duration_s": 5.088,
    "template": "video",
    "props": {
-    "src": "output/footage/tbm-chai-cig-px/v3.mp4",
+    "src": "output/footage/tbm-chai-cig-px/v3_v2.mp4",
     "muted": true,
     "fit": "cover"
    },
