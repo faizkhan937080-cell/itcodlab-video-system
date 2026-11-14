@@ -15,6 +15,9 @@ permissions:
 concurrency:
   group: videogen-${{ github.event.inputs.spec || github.sha }}
   cancel-in-progress: false
+defaults:
+  run:
+    shell: bash   # bash with -eo pipefail: a failed job behind "| tail" must show red
 jobs:
   videogen:
     runs-on: ubuntu-latest

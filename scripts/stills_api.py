@@ -56,7 +56,8 @@ def _lightning(prompt, w, h, seed):
     return buf.getvalue()
 
 
-def make(spec, out_dir, log=print):
+def make(spec, out_dir, log=print, fetch=None, put=None):
+    """fetch(name, dest)->bool pulls a finished file from Drive (resume); put(path) saves each file the moment it exists (never lose work)."""
     import subprocess
     import sys
     try:
@@ -72,13 +73,20 @@ def make(spec, out_dir, log=print):
     rep = {}
     for i, p in enumerate(spec["prompts"]):
         img = out / f"img_{p['id']}.png"
+        for nm in (img.name, f"depth_{p['id']}.png"):
+            if fetch and not (out / nm).exists() and fetch(nm, out / nm):
+                log(f"RESUME {nm} from Drive")
         if not img.exists():
             raw, eng = one(p["prompt"], w, h, seed + i)
             Image.open(io.BytesIO(raw)).convert("RGB").save(img)
             rep[p["id"]] = eng
             log(f"STILL {p['id']} {eng}")
+            if put:
+                put(img)
         dep = out / f"depth_{p['id']}.png"
         if not dep.exists():
             parallax3d.depth_map(img, dep)
+            if put:
+                put(dep)
     (out / "engine.json").write_text(json.dumps(rep, indent=1))
     return rep

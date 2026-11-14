@@ -15,6 +15,9 @@ permissions:
 concurrency:
   group: voice
   cancel-in-progress: false
+defaults:
+  run:
+    shell: bash   # bash with -eo pipefail: a failed job behind "| tail" must show red
 jobs:
   voice:
     runs-on: ubuntu-latest

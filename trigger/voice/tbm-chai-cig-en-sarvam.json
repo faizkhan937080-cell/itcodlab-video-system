@@ -55,5 +55,11 @@
    "style": "Friendly and light, with a small smile",
    "pause_after_s": 0.6
   }
- ]
+ ],
+ "fallback": [
+  "google"
+ ],
+ "fallback_voices": {
+  "google": "en-IN-Chirp3-HD-Charon"
+ }
 }

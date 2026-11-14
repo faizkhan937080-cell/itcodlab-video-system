@@ -453,13 +453,22 @@ def _stills_api_run(raw, name, a):
     stg = _storage()
     with tempfile.TemporaryDirectory(prefix="itcod-stills-") as wd:
         wd = Path(wd)
+        rel = f"output/stills/{name}"
+
+        def _fetch(nm, dest):   # resume: a finished picture in Drive is never made twice
+            try:
+                stg.fetch(f"{rel}/{nm}", dest)
+                return dest.exists() and dest.stat().st_size > 0
+            except Exception:  # noqa: BLE001
+                return False
+
+        def _put(path):   # each file goes to Drive the moment it exists
+            if not a.no_upload:
+                stg.ensure_dir(rel)
+                stg.put_file(path, f"{rel}/{path.name}")
         with stage("stills_api"):
-            rep = stills_api.make(raw, wd / "st")
+            rep = stills_api.make(raw, wd / "st", fetch=_fetch, put=_put)
         print("ENGINES", json.dumps(rep))
-        if not a.no_upload:   # upload first: the 35-min CPU work must never be lost to a collage bug
-            stg.ensure_dir(f"output/stills/{name}")
-            for f in sorted((wd / "st").glob("*")):
-                stg.put_file(f, f"output/stills/{name}/{f.name}")
         sheet = wd / "sheet"
         sheet.mkdir()
         for f in sorted((wd / "st").glob("img_*.png")):

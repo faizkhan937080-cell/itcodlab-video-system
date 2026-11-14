@@ -18,6 +18,9 @@ permissions:
 concurrency:
   group: worker
   cancel-in-progress: false
+defaults:
+  run:
+    shell: bash   # bash with -eo pipefail: a failed job behind "| tail" must show red
 jobs:
   work:
     # repo variable WORKER_RUNS_ON = ["self-hosted","itcod"] moves the worker to our own VM (no minute limit); unset = GitHub's free runner

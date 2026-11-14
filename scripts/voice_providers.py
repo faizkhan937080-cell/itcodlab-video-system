@@ -282,6 +282,31 @@ def _month_used(provider):
         return 0
 
 
+class Chain:
+    """Auto-fallback (big-company pattern): the script's "fallback": ["google", ...] are tried in order when the main engine fails
+    mid-run (429, 400, deprecated model, host paused). "fallback_voices": {"google": "en-IN-Chirp3-HD-Charon"} sets their voices.
+    Which engine spoke each segment is kept in .used (the report must say so: a different voice = a different sound)."""
+
+    def __init__(self, engines, script):
+        self.engines, self.script, self.used = engines, script, []
+        self.name = engines[0].name
+
+    def speak(self, text, seg, script, vs):
+        errs = []
+        for i, eng in enumerate(self.engines):
+            fv = (script.get("fallback_voices") or {}).get(eng.name)
+            s2, v2 = ({**seg}, {**vs}) if i == 0 else ({k: v for k, v in seg.items() if k != "voice"}, {**vs, "voice": fv})
+            if i and fv:
+                s2["voice"] = fv
+            try:
+                out = eng.speak(text, s2, script, v2)
+                self.used.append(eng.name)
+                return out
+            except Exception as e:  # noqa: BLE001  (any engine failure -> next one; all failed -> one clear error)
+                errs.append(f"{eng.name}: {type(e).__name__} {str(e)[:100]}")
+        raise VoiceUnavailable("every voice engine failed -> " + " | ".join(errs))
+
+
 def open_engine(script, chars=0):
     """-> (engine, voice settings). Default = free realistic engines (google Chirp 3 HD).
     Paid engines, and anything past a free quota, need "allow_paid": true in the script (Faiz's command)."""
@@ -299,7 +324,9 @@ def open_engine(script, chars=0):
             errs.append(f"{name}: free monthly quota would be exceeded")
             continue
         try:
-            return ENGINES[name](script), vs
+            eng = ENGINES[name](script)
+            fb = [ENGINES[n](script) for n in script.get("fallback", []) if n in ENGINES and n != name and n not in PAID]
+            return (Chain([eng] + fb, script) if fb else eng), vs
         except VoiceUnavailable as e:
             errs.append(f"{name}: {e}")
     raise VoiceUnavailable("no free voice engine could start -> " + " | ".join(errs))
