@@ -28,7 +28,8 @@ def digest():
     return hashlib.sha256(protocol_text().replace("\r\n", "\n").strip().encode("utf-8")).hexdigest()[:12]
 
 
-def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, grade_off_reason=None, sample_skip=None):
+def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, grade_off_reason=None, sample_skip=None,
+          director=None, beats_file=None):
     """Add the protocol block to a plan (the CLI prints the protocol text first)."""
     plan = json.loads(json.dumps(plan))
     blk = {"digest": digest(), "kind": kind, "reference": reference}
@@ -40,6 +41,9 @@ def stamp(plan, kind, reference="none", reference_reason="", sample_job=None, gr
         blk["grade_off_reason"] = grade_off_reason
     if sample_skip:
         blk["sample_skip"] = sample_skip
+    if director:   # Director plans carry the approved beats table (scripts/beats.py)
+        blk["director"] = director
+        blk["beats_file"] = beats_file or ""
     clone = plan.pop("_clone", None)   # clone plans carry their shot map in "_clone" until stamped
     plan.pop("_ref_record", None)
     if clone:
@@ -114,6 +118,19 @@ def check_plan(plan, storage, lim=None):
     if (plan.get("grade") or {}).get("mode") == "off" and len(str(b.get("grade_off_reason", ""))) < 8:
         errs.append("protocol: plan.grade.mode is 'off'. Grading is automatic by default (rulebooks/13-grade.md); 'off' only when Faiz said so "
                     "-> stamp with --grade-off-reason '<what Faiz said>', or remove plan.grade.")
+    if b.get("director"):   # Director plan: beats table approved by Faiz and unchanged, and the final gates pass (Faiz 2026-11-14)
+        from . import beats as _beats, gates as _gates
+        try:
+            bd = storage.read_json(b.get("beats_file") or "")
+        except Exception:  # noqa: BLE001
+            bd = None
+        if not bd:
+            errs.append("protocol: Director plan needs protocol.beats_file (the approved beats table on Drive).")
+        elif not _beats.is_approved(bd):
+            errs.append("protocol: the beats table is not approved by Faiz, or it was changed after his Y. Show the table, get Y, then `./run beats approve`.")
+        gv = _gates.verdict(_gates.plan_gates(plan))
+        if gv["verdict"] == "BLOCK":
+            errs.append("protocol: gates BLOCK this plan: " + "; ".join(str(x) for x in gv["why"][:3]))
     if b.get("clone"):
         from . import clone_match
         errs += clone_match.check_plan(plan, plan_total_s(plan), lim)

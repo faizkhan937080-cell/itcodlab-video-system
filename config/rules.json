@@ -94,5 +94,29 @@
   "rule": "every hard rule is in config/rules.json with an enforcer; no cost row or no lesson after a FAILED job = HALT",
   "enforcer": "test:test_missing_cost_row_halts",
   "added": "2026-11-13"
+ },
+ {
+  "id": "beats_need_approval",
+  "rule": "Plan is BLOCKED unless beats table is approved (sha) and unchanged",
+  "enforcer": "worker:check_plan",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "gates_must_deliver",
+  "rule": "Director plan needs gates verdict DELIVER; BLOCK is fixed in the plan, never by lowering a gate",
+  "enforcer": "worker:gates.verdict",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "style_in_numbers",
+  "rule": "Reference style is measured numbers (30 fps profile); unmeasured parts are reported, never guessed",
+  "enforcer": "test:test_director_asks_only_what_is_missing_and_never_guesses",
+  "added": "2026-11-14"
+ },
+ {
+  "id": "repeat_complaint_becomes_rule",
+  "rule": "Same review complaint twice is promoted to a rule + lesson",
+  "enforcer": "test:test_repeated_review_notes_become_one_rule",
+  "added": "2026-11-14"
  }
 ]

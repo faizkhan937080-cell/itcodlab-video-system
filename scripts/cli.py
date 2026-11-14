@@ -108,7 +108,8 @@ def cmd_plan_stamp(a):
     print(protocol.protocol_text())
     print("-" * 60)
     plan = json.loads(Path(a.plan).read_text(encoding="utf-8"))
-    out = protocol.stamp(plan, a.kind, a.reference, a.reason or "", a.sample_job, a.grade_off_reason, a.sample_skip)
+    out = protocol.stamp(plan, a.kind, a.reference, a.reason or "", a.sample_job, a.grade_off_reason, a.sample_skip,
+                         a.director, a.beats_file)
     errs = []
     if a.kind == "sample" and protocol.plan_total_s(out) > 8.01:
         errs.append(f"a sample is at most 8 s; this plan is {protocol.plan_total_s(out):.1f} s")
@@ -243,6 +244,83 @@ def cmd_scope(a):
     else:
         tripwire.clear_scope()
         print("scope cleared")
+    return 0
+
+
+def _read(path):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def cmd_director(a):
+    from . import director
+    card = director.brief_card(a.topic, a.ref, a.keep.split(",") if a.keep else None, length_s=a.length, language=a.language)
+    prof = _read(a.profile) if a.profile else None
+    print(director.dumps({"card": card, **director.plan_brief(card, prof)}))
+    return 0
+
+
+def cmd_profile(a):
+    from . import director
+    g = lambda p: _read(p) if p else None  # noqa: E731
+    prof = director.build_profile(a.ref, g(a.style), g(a.script), g(a.voice), g(a.motion30), g(a.sound))
+    if a.out:
+        Path(a.out).write_text(director.dumps(prof), encoding="utf-8")
+    else:
+        director.save_profile(_storage(), prof)
+    print(f"profile {a.ref}: parts {sorted(prof['parts'])} not measured {prof['missing']}")
+    return 0
+
+
+def cmd_beats(a):
+    from . import anchors, beats
+    doc = _read(a.beats)
+    if a.what == "approve":
+        beats.approve(doc)
+        Path(a.beats).write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"approved sha {doc['approved']['sha']} (any later change cancels it)")
+        return 0
+    words = anchors.words_from_transcript(_read(a.transcript))
+    if a.what == "table":
+        print(beats.table(doc, words))
+        return 0
+    errs = beats.validate(doc, words)
+    for e in errs:
+        print("PROBLEM:", e)
+    print("beats: OK" if not errs else f"{len(errs)} problem(s)")
+    return 1 if errs else 0
+
+
+def cmd_gates(a):
+    from . import gates
+    plan = _read(a.plan)
+    found = gates.plan_gates(plan) + (_read(a.qa).get("findings", []) if a.qa else [])
+    v = gates.verdict(found)
+    print(json.dumps(v, ensure_ascii=False))
+    return 0 if v["verdict"] == "DELIVER" else 1
+
+
+def cmd_notes(a):
+    from . import notes, tripwire
+    if a.what == "add":
+        notes.add(a.job, a.text, a.t)
+        print("note saved")
+        return 0
+    groups = notes.digest(min_repeat=a.min_repeat)
+    for i, g in enumerate(groups):
+        print(f"{i}: x{g['count']} jobs {g['jobs']} | {g['examples'][0]}")
+    if a.what == "promote" and groups:
+        g = groups[a.index]
+        tripwire.add_lesson(notes.lesson_line(g), rule_id=f"note_{g['key'].split()[0]}", enforcer="none:")
+        print(f"promoted group {a.index} to a lesson + rule (shows as GAP until an enforcer exists)")
+    return 0
+
+
+def cmd_ref_measure(a):
+    from . import ref_measure
+    out = ref_measure.measure(a.video, 30.0, a.max_s)
+    Path(a.out).write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
+    c = out["camera"]
+    print(f"measured {out['duration_s']} s at 30 fps: cuts {len(out['hard_cuts'])}, camera moving {c['moving_pct']} % (slow {c['slow_pct']} %), dark floor {out['dark_floor_p1']}")
     return 0
 
 
@@ -1054,6 +1132,8 @@ def build_parser():
     s.add_argument("--sample-job")
     s.add_argument("--grade-off-reason", help="only if plan.grade.mode is off: what Faiz said (grading is automatic by default)")
     s.add_argument("--sample-skip", help="full plan without a sample: Faiz's own words in chat asking to skip the sample")
+    s.add_argument("--director", help="Director brief id: the plan must then carry the approved beats table")
+    s.add_argument("--beats-file", help="Drive path of the approved beats json (with --director)")
     s.set_defaults(fn=cmd_plan_stamp)
 
     s = sub.add_parser("look-ok", help="record that I LOOKED at the frame collage of a preview/final")
@@ -1092,6 +1172,42 @@ def build_parser():
     s.add_argument("paths", nargs="*")
     s.add_argument("--hours", type=float, default=6)
     s.set_defaults(fn=cmd_scope)
+    s = sub.add_parser("director", help="brief card from a small clue + frozen set from the saved profile (or the questions to ask Faiz)")
+    s.add_argument("--topic", default="")
+    s.add_argument("--ref")
+    s.add_argument("--keep", help="comma list: tone,motion,voice,script_formula,colour,sound")
+    s.add_argument("--length", type=int, default=30)
+    s.add_argument("--language", default="hinglish")
+    s.add_argument("--profile", help="profile json (from `profile`)")
+    s.set_defaults(fn=cmd_director)
+    s = sub.add_parser("profile", help="build + save the Tone/Style profile of a reference from its measured records")
+    s.add_argument("--ref", required=True)
+    for k in ("style", "script", "voice", "motion30", "sound"):
+        s.add_argument("--" + k)
+    s.add_argument("--out", help="write here instead of Drive profiles/")
+    s.set_defaults(fn=cmd_profile)
+    s = sub.add_parser("beats", help="table | check | approve a beats file (approve only after Faiz's Y in chat)")
+    s.add_argument("what", choices=["table", "check", "approve"])
+    s.add_argument("--beats", required=True)
+    s.add_argument("--transcript")
+    s.set_defaults(fn=cmd_beats)
+    s = sub.add_parser("gates", help="final gates on a plan (+ qa findings): DELIVER or BLOCK")
+    s.add_argument("--plan", required=True)
+    s.add_argument("--qa")
+    s.set_defaults(fn=cmd_gates)
+    s = sub.add_parser("notes", help="review notes: add | digest | promote (a repeated note becomes a rule)")
+    s.add_argument("what", choices=["add", "digest", "promote"])
+    s.add_argument("--job")
+    s.add_argument("--text")
+    s.add_argument("--t", type=float)
+    s.add_argument("--min-repeat", type=int, default=2)
+    s.add_argument("--index", type=int, default=0)
+    s.set_defaults(fn=cmd_notes)
+    s = sub.add_parser("ref-measure", help="worker only: measure a reference at 30 fps (numbers: camera, cuts, light, colour)")
+    s.add_argument("--video", required=True)
+    s.add_argument("--out", required=True)
+    s.add_argument("--max-s", type=float)
+    s.set_defaults(fn=cmd_ref_measure)
     s = sub.add_parser("guard-install", help="make the guard + survey hooks active from any folder (~/.claude/settings.json)")
     s.set_defaults(fn=cmd_guard_install)
     s = sub.add_parser("learn-yt", help="worker only: YouTube learning videos -> Drive research/youtube-learning/")
