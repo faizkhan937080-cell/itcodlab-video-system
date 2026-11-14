@@ -9,7 +9,7 @@
   "dependencies": {
     "@react-three/fiber": "^8.17.10",
     "@remotion/captions": "^4.0.541",
-    "@remotion/cli": "^4.0.0",
+    "@remotion/cli": "^4.0.543",
     "@remotion/effects": "4.0.541",
     "@remotion/google-fonts": "^4.0.541",
     "@remotion/layout-utils": "^4.0.541",
