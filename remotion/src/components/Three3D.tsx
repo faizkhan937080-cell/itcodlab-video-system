@@ -58,7 +58,7 @@ export const Three3D: React.FC<ThreeProps> = ({seed = 3}) => {
   const t = frame / fps;
   const prog = frame / Math.max(1, durationInFrames - 1);
   const flick = 1 + Math.sin(t * 17) * 0.12 + Math.sin(t * 31) * 0.08;
-  const cam: [number, number, number] = [-1.6 + prog * 2.4, 1.7 - prog * 0.35, 6.6 - prog * 1.3];
+  const cam: [number, number, number] = [-1.2 + prog * 2.0, 1.6 - prog * 0.3, 7.2 - prog * 1.4];
   const cup = useMemo(() => cupProfile(), []);
   const sau = useMemo(() => saucerProfile(), []);
   const ember: [number, number, number] = [1.44, 0.09, 0.9];
@@ -99,7 +99,7 @@ export const Three3D: React.FC<ThreeProps> = ({seed = 3}) => {
 const Rig: React.FC<{pos: [number, number, number]}> = ({pos}) => {
   const {camera} = useThree();
   camera.position.set(pos[0], pos[1], pos[2]);
-  camera.lookAt(0.45, 0.95, 0.3);
+  camera.lookAt(0.8, 0.75, 0.5);
   camera.updateProjectionMatrix();
   return null;
 };
