@@ -456,17 +456,17 @@ def _stills_api_run(raw, name, a):
         with stage("stills_api"):
             rep = stills_api.make(raw, wd / "st")
         print("ENGINES", json.dumps(rep))
-        sheet = wd / "sheet"
-        sheet.mkdir()
-        for f in sorted((wd / "st").glob("img_*.png")):
-            (sheet / f.name).write_bytes(f.read_bytes())
-        contact_sheet(sheet, max_tiles=min(10, len(list(sheet.glob("*.png")))))
-        (sheet / "collage.jpg").rename(sheet / "collage_images.jpg")
-        print("REVIEW", json.dumps(review.publish(sheet, f"stills-{name}")))
-        if not a.no_upload:
+        if not a.no_upload:   # upload first: the 35-min CPU work must never be lost to a collage bug
             stg.ensure_dir(f"output/stills/{name}")
             for f in sorted((wd / "st").glob("*")):
                 stg.put_file(f, f"output/stills/{name}/{f.name}")
+        sheet = wd / "sheet"
+        sheet.mkdir()
+        for f in sorted((wd / "st").glob("img_*.png")):
+            (sheet / f"f_{f.stem[4:]}.png").write_bytes(f.read_bytes())
+        contact_sheet(sheet, max_tiles=min(10, len(list(sheet.glob("f_*.png")))))
+        (sheet / "collage.jpg").rename(sheet / "collage_images.jpg")
+        print("REVIEW", json.dumps(review.publish(sheet, f"stills-{name}")))
     if raw.get("after_parallax"):
         px = json.loads(Path(raw["after_parallax"]).read_text(encoding="utf-8"))
         return _parallax_run(px, Path(raw["after_parallax"]).stem, a)
