@@ -201,7 +201,7 @@ def run(spec, image, out_dir, poll_s=20, timeout_s=None):
                         "kernel_log_tail": kg._clean(lt)[-2500:]}
             res = json.loads(rf.read_text(encoding="utf-8"))
             res["kaggle_wall_s"] = round(time.time() - t0)
-            for im in sorted(outdir.glob("img_*.png")):   # stills mode: keep every finished image, even on a partial run
+            for im in sorted(list(outdir.glob("img_*.png")) + list(outdir.glob("depth_*.png"))):   # stills mode: keep every finished image, even on a partial run
                 Path(out_dir).mkdir(parents=True, exist_ok=True)
                 shutil.copy(im, Path(out_dir) / im.name)
             vid = outdir / "video.mp4"

@@ -481,7 +481,7 @@ def cmd_videogen_run(a):
                     stg = _storage()
                     rel = f"output/stills/{name}"
                     stg.ensure_dir(rel)
-                    for im in imgs:
+                    for im in imgs + sorted(Path(wd).glob("depth_*.png")):
                         stg.put_file(im, f"{rel}/{im.name}")
                     print(f"uploaded {len(imgs)} stills to Drive {rel}")
             return 0 if res.get("ok") else 1

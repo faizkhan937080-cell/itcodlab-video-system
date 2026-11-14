@@ -77,6 +77,21 @@ try:
         img.save("/kaggle/working/" + name)
         res["images"].append({"id": item["id"], "file": name, "s": round(time.time() - t, 1), "dtype": str(dtype)})
         dump()
+    try:   # depth maps for the 3D parallax move (Depth Anything V2 Small, Apache-2.0)
+        del pipe; torch.cuda.empty_cache()
+        from PIL import Image
+        from transformers import pipeline as hfpipe
+        t = time.time()
+        dp = hfpipe("depth-estimation", model="depth-anything/Depth-Anything-V2-Small-hf", device=0)
+        for it in res["images"]:
+            im = Image.open("/kaggle/working/" + it["file"]).convert("RGB")
+            d = dp(im)["predicted_depth"].squeeze().float().cpu().numpy()
+            d = (d - d.min()) / max(1e-6, float(d.max() - d.min()))
+            Image.fromarray((d * 65535).astype("uint16")).resize(im.size, Image.BICUBIC).save("/kaggle/working/depth_" + it["id"] + ".png")
+        res["steps"]["depth_s"] = round(time.time() - t, 1)
+    except Exception:
+        res["steps"]["depth_error"] = traceback.format_exc()[-600:]
+    dump()
     res["peak_vram_gb"] = round(max(torch.cuda.max_memory_allocated(i) for i in range(torch.cuda.device_count())) / 2**30, 1)
     res["ok"] = len(res["images"]) == len(spec["prompts"])
 except Exception:
