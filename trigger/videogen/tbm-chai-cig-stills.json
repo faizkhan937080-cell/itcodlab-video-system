@@ -24,6 +24,10 @@
    "prompt": "long tunnel of the esophagus seen from inside, walls turning darker and redder with rough inflamed patches deeper inside, ominous dim light at the far end, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
   },
   {
+   "id": "s4b",
+   "prompt": "extreme close-up of inflamed raw red patch on the inner wall of the esophagus, rough irritated cells, tiny dark tar specks stuck in glossy mucus, dramatic dim light, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
    "id": "s5",
    "prompt": "inside a large artery near the heart, red blood cells rushing past, artery wall tense and narrowed, pulsing heart muscle fibers visible behind, deep crimson, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
   },
@@ -37,5 +41,5 @@
   }
  ],
  "test": true,
- "rev": 2
+ "rev": 3
 }

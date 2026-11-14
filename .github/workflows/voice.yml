@@ -23,6 +23,7 @@ jobs:
       ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
       RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
       GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
       SCRIPT_IN: ${{ github.event.inputs.script }}
     steps:

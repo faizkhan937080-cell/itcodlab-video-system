@@ -208,7 +208,45 @@ class ElevenLabs:
 
 
 
-ENGINES = {"kokoro": Kokoro, "google": Google, "elevenlabs": ElevenLabs}
+class Gemini:
+    """Gemini TTS (free tier of the Gemini API key). Emotion and pace come from a plain-English style line per segment
+    (seg["style"], e.g. "Whisper, tense, slightly afraid"), so fear / awe / relief are acted, not flat. 24 kHz mono PCM.
+    Prebuilt voices: Charon (calm male narrator), Fenrir (excitable male), Algenib (gravelly male), Kore (female)."""
+    name = "gemini"
+    MODELS = ("gemini-2.5-pro-preview-tts", "gemini-2.5-flash-preview-tts")
+
+    def __init__(self, script):
+        self.key = _key("GEMINI_API_KEY", "free Gemini API key (aistudio.google.com)")
+        self.models = list(script.get("tts_models") or self.MODELS)
+
+    def speak(self, text, seg, script, vs):
+        import urllib.error
+        voice = seg.get("voice") or vs.get("voice") or "Charon"
+        if "-" in voice:            # a Cloud TTS name slipped in: use the default narrator
+            voice = "Charon"
+        style = seg.get("style") or script.get("style") or ""
+        prompt = f"{style.rstrip('.:')}: {text}" if style else text
+        body = {"contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {"responseModalities": ["AUDIO"],
+                                     "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}
+        last = ""
+        for m in self.models:
+            try:
+                out = _post("gemini", f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent",
+                            {"x-goog-api-key": self.key}, body, timeout=180)
+                part = json.loads(out)["candidates"][0]["content"]["parts"][0]["inlineData"]
+                pcm = np.frombuffer(base64.b64decode(part["data"]), dtype="<i2").astype(np.float32) / 32768.0
+                return pcm, 24000
+            except urllib.error.HTTPError as e:
+                last = f"{m} HTTP {e.code}"
+                if e.code not in (400, 403, 404, 429, 500, 503):
+                    raise
+            except (KeyError, IndexError, ValueError) as e:
+                last = f"{m} no audio ({type(e).__name__})"
+        raise VoiceUnavailable(f"gemini tts failed on every model: {last}")
+
+
+ENGINES = {"kokoro": Kokoro, "google": Google, "elevenlabs": ElevenLabs, "gemini": Gemini}
 
 
 def _month_used(provider):
