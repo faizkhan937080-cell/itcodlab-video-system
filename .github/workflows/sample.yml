@@ -29,6 +29,8 @@ jobs:
       RCLONE_TPSLIMIT: '6'
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -62,5 +64,5 @@ jobs:
         timeout-minutes: 30
         run: |
           SPEC="${{ github.event.inputs.spec }}"
-          [ -n "$SPEC" ] || SPEC=$(ls -t trigger/sample/*-sample.json | head -1)
+          [ -n "$SPEC" ] || SPEC=$(git diff --name-only HEAD~1 HEAD -- 'trigger/sample/*-sample.json' | head -1); [ -n "$SPEC" ] || SPEC=$(ls -t trigger/sample/*-sample.json | head -1)
           ITCOD_RENDER_CONCURRENCY=$(( $(nproc) / 2 + 1 )) ./run sample-render "$SPEC" | tail -30
