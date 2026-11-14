@@ -32,10 +32,22 @@ def trim_plan(plan, seconds):
     return p
 
 
+def ensure_music(plan, storage, log=print):
+    """A music file the library does not have is made by scripts/ambient.py and added by name (never stops the run)."""
+    from . import ambient
+    for a in plan.get("audio", []):
+        if a.get("role") == "music" and not storage.exists(a["src"]):
+            with tempfile.TemporaryDirectory() as td:
+                f = ambient.make(Path(td) / "bed.mp3", 60)
+                storage.put_file(f, a["src"], versioned=False)
+            log(f"MUSIC missing in library -> made own dark ambient bed at {a['src']}")
+
+
 def run(spec, storage, log=print):
     from . import render, review
     plan = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
     sec = float(spec.get("seconds", 6.5))
+    ensure_music(plan, storage, log)
     p = trim_plan(plan, sec)
     name = spec["name"]
     wd = Path(tempfile.mkdtemp(prefix="itcod-sample-"))

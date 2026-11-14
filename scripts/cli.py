@@ -171,6 +171,13 @@ def cmd_sample_render(a):
     return 0 if res.get("ok") else 1
 
 
+def cmd_ci(a):
+    """One line about a workflow run; waits inside the script (zero tokens while waiting)."""
+    from . import ci_brief
+    print(ci_brief.brief(a.workflow, a.repo, wait_min=a.wait))
+    return 0
+
+
 def cmd_learn_yt(a):
     """Worker only: description, chapters and spoken words of YouTube videos Faiz gives for learning."""
     from . import yt_learn
@@ -1292,6 +1299,12 @@ def build_parser():
     s.add_argument("--saw", required=True)
     s.add_argument("--out")
     s.set_defaults(fn=cmd_look_ok)
+
+    s = sub.add_parser("ci", help="token saver: wait for the newest run of a workflow, print one line (+20 log lines if failed)")
+    s.add_argument("workflow")
+    s.add_argument("--wait", type=int, default=0, help="minutes to wait inside the script")
+    s.add_argument("--repo", default="faizkhan937080-cell/itcodlab-video-system")
+    s.set_defaults(fn=cmd_ci)
 
     s = sub.add_parser("sample-render", help="runner: first seconds of a plan -> frames sheet on branch review")
     s.add_argument("spec")
