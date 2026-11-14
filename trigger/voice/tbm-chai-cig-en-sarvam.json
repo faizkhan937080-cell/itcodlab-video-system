@@ -1,7 +1,7 @@
 {
  "provider": "sarvam",
  "lang": "en-IN",
- "voice": "abhilash",
+ "voice": "shubh",
  "speed": 1.0,
  "target_lufs": -14,
  "lead_in_s": 0.2,

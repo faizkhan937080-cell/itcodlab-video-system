@@ -253,17 +253,16 @@ class Sarvam:
 
     def __init__(self, script):
         self.key = _key("SARVAM_API_KEY", "Sarvam AI API key (dashboard.sarvam.ai)")
-        self.model = script.get("model_id", "bulbul:v2")
+        self.model = script.get("model_id", "bulbul:v3")
 
     def speak(self, text, seg, script, vs):
         import soundfile as sf
-        voice = seg.get("voice") or vs.get("voice") or "abhilash"
+        voice = seg.get("voice") or vs.get("voice") or "shubh"
         lang = script.get("lang") or "en-IN"
         if lang in ("en-US", "en"):
             lang = "en-IN"
         body = {"text": text, "target_language_code": lang, "speaker": voice, "model": self.model,
-                "pace": float(seg.get("speed", script.get("speed", 1.0))), "speech_sample_rate": 24000,
-                "enable_preprocessing": True}
+                "pace": float(seg.get("speed", script.get("speed", 1.0))), "speech_sample_rate": 24000}
         import urllib.error
         try:
             out = _post("sarvam", "https://api.sarvam.ai/text-to-speech", {"api-subscription-key": self.key}, body, timeout=120)
