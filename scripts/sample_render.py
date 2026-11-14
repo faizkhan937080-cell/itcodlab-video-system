@@ -39,7 +39,7 @@ def ensure_music(plan, storage, log=print):
         if a.get("role") == "music" and not storage.exists(a["src"]):
             with tempfile.TemporaryDirectory() as td:
                 f = ambient.make(Path(td) / "bed.mp3", 60)
-                storage.put_file(f, a["src"], versioned=False)
+                storage.put_file(f, a["src"])
             log(f"MUSIC missing in library -> made own dark ambient bed at {a['src']}")
 
 
