@@ -482,6 +482,12 @@ def _stills_api_run(raw, name, a):
     return 0
 
 
+def cmd_health(a):
+    """Checker: which free services are alive today (run on the runner: ./run health)."""
+    from . import health
+    return health.main()
+
+
 def cmd_videogen_run(a):
     """Worker side of a footage job: gate the engine, run it on a Kaggle GPU, upload the clip to Drive output/footage/<name>/."""
     import tempfile
@@ -1382,6 +1388,9 @@ def build_parser():
     s.add_argument("--smoke", action="store_true", help="only the tiny preflight test, nothing saved")
     s.add_argument("--no-smoke", action="store_true", help="skip the automatic preflight test")
     s.set_defaults(fn=cmd_videogen_run)
+
+    s = sub.add_parser("health", help="checker: which free services (voice, image, GPU) are alive today")
+    s.set_defaults(fn=cmd_health)
 
     s = sub.add_parser("indic-tts-ab", help="Hindi A/B on a free Kaggle GPU (Indic Parler-TTS) -> Drive output/voice-ab/")
     s.add_argument("script")
