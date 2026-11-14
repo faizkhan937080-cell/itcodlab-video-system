@@ -213,7 +213,7 @@ class Gemini:
     (seg["style"], e.g. "Whisper, tense, slightly afraid"), so fear / awe / relief are acted, not flat. 24 kHz mono PCM.
     Prebuilt voices: Charon (calm male narrator), Fenrir (excitable male), Algenib (gravelly male), Kore (female)."""
     name = "gemini"
-    MODELS = ("gemini-2.5-pro-preview-tts", "gemini-2.5-flash-preview-tts")
+    MODELS = ("gemini-2.5-flash-preview-tts", "gemini-3.1-flash-tts-preview")   # free tier has flash TTS; pro TTS gave 429 (no free quota)
 
     def __init__(self, script):
         self.key = _key("GEMINI_API_KEY", "free Gemini API key (aistudio.google.com)")
