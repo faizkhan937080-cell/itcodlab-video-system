@@ -264,7 +264,11 @@ class Sarvam:
         body = {"text": text, "target_language_code": lang, "speaker": voice, "model": self.model,
                 "pace": float(seg.get("speed", script.get("speed", 1.0))), "speech_sample_rate": 24000,
                 "enable_preprocessing": True}
-        out = _post("sarvam", "https://api.sarvam.ai/text-to-speech", {"api-subscription-key": self.key}, body, timeout=120)
+        import urllib.error
+        try:
+            out = _post("sarvam", "https://api.sarvam.ai/text-to-speech", {"api-subscription-key": self.key}, body, timeout=120)
+        except urllib.error.HTTPError as e:
+            raise VoiceUnavailable(f"sarvam HTTP {e.code}: {e.read().decode('utf-8', 'replace')[:300]}") from e
         y, sr = sf.read(io.BytesIO(base64.b64decode(json.loads(out)["audios"][0])), dtype="float32")
         return (y if y.ndim == 1 else y.mean(axis=1)), sr
 
