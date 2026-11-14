@@ -443,6 +443,36 @@ def _parallax_run(raw, name, a):
     return 0
 
 
+def _stills_api_run(raw, name, a):
+    """Stills (free image API) + CPU depth maps -> Drive output/stills/<name>/, collage -> review branch.
+    "after_parallax": "<spec path>" chains the 3D clips right after, in the same job."""
+    import tempfile
+    from . import review, stills_api
+    from .blender3d import contact_sheet
+    from .common import stage
+    stg = _storage()
+    with tempfile.TemporaryDirectory(prefix="itcod-stills-") as wd:
+        wd = Path(wd)
+        with stage("stills_api"):
+            rep = stills_api.make(raw, wd / "st")
+        print("ENGINES", json.dumps(rep))
+        sheet = wd / "sheet"
+        sheet.mkdir()
+        for f in sorted((wd / "st").glob("img_*.png")):
+            (sheet / f.name).write_bytes(f.read_bytes())
+        contact_sheet(sheet, max_tiles=min(10, len(list(sheet.glob("*.png")))))
+        (sheet / "collage.jpg").rename(sheet / "collage_images.jpg")
+        print("REVIEW", json.dumps(review.publish(sheet, f"stills-{name}")))
+        if not a.no_upload:
+            stg.ensure_dir(f"output/stills/{name}")
+            for f in sorted((wd / "st").glob("*")):
+                stg.put_file(f, f"output/stills/{name}/{f.name}")
+    if raw.get("after_parallax"):
+        px = json.loads(Path(raw["after_parallax"]).read_text(encoding="utf-8"))
+        return _parallax_run(px, Path(raw["after_parallax"]).stem, a)
+    return 0
+
+
 def cmd_videogen_run(a):
     """Worker side of a footage job: gate the engine, run it on a Kaggle GPU, upload the clip to Drive output/footage/<name>/."""
     import tempfile
@@ -486,6 +516,8 @@ def cmd_videogen_run(a):
         if raw.get("peek"):
             return 0
         image = Path(fr["first"])
+    if raw.get("mode") == "image" and raw.get("engine") == "api":   # stills on this runner via free image APIs, no Kaggle GPU
+        return _stills_api_run(raw, name, a)
     if raw.get("mode") == "parallax":   # 3D camera moves on stills, on this runner (Blender CPU), no Kaggle
         return _parallax_run(raw, name, a)
     spec = videogen.build_spec(raw, image)

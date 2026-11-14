@@ -1,11 +1,10 @@
 {
  "mode": "image",
- "engine": "flux",
+ "engine": "api",
  "width": 864,
  "height": 1536,
  "steps": 4,
  "seed": 11,
- "account": 1,
  "prompts": [
   {
    "id": "s1",
@@ -40,5 +39,6 @@
    "prompt": "healthy calm pink tunnel of the esophagus, smooth clean moist lining, soft bright warm light at the end of the tunnel, gentle cool air wisp, peaceful, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
   }
  ],
- "rev": 4
+ "rev": 5,
+ "after_parallax": "jobspecs/tbm-chai-cig-px.json"
 }

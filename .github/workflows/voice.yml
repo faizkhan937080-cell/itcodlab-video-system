@@ -24,6 +24,7 @@ jobs:
       RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
       GOOGLE_TTS_KEY: ${{ secrets.GOOGLE_TTS_KEY }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
       ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
       SCRIPT_IN: ${{ github.event.inputs.script }}
     steps:

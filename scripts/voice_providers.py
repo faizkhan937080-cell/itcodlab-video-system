@@ -246,7 +246,30 @@ class Gemini:
         raise VoiceUnavailable(f"gemini tts failed on every model: {last}")
 
 
-ENGINES = {"kokoro": Kokoro, "google": Google, "elevenlabs": ElevenLabs, "gemini": Gemini}
+class Sarvam:
+    """Sarvam Bulbul (Indian voices, en-IN / hi-IN). Rs100 free credit is Faiz-approved as a trial; paid top-up only on his explicit allow.
+    Key SARVAM_API_KEY in GitHub Secrets. Text max ~1500 chars per call (script segments are short). Output wav, base64."""
+    name = "sarvam"
+
+    def __init__(self, script):
+        self.key = _key("SARVAM_API_KEY", "Sarvam AI API key (dashboard.sarvam.ai)")
+        self.model = script.get("model_id", "bulbul:v2")
+
+    def speak(self, text, seg, script, vs):
+        import soundfile as sf
+        voice = seg.get("voice") or vs.get("voice") or "abhilash"
+        lang = script.get("lang") or "en-IN"
+        if lang in ("en-US", "en"):
+            lang = "en-IN"
+        body = {"text": text, "target_language_code": lang, "speaker": voice, "model": self.model,
+                "pace": float(seg.get("speed", script.get("speed", 1.0))), "speech_sample_rate": 24000,
+                "enable_preprocessing": True}
+        out = _post("sarvam", "https://api.sarvam.ai/text-to-speech", {"api-subscription-key": self.key}, body, timeout=120)
+        y, sr = sf.read(io.BytesIO(base64.b64decode(json.loads(out)["audios"][0])), dtype="float32")
+        return (y if y.ndim == 1 else y.mean(axis=1)), sr
+
+
+ENGINES = {"kokoro": Kokoro, "google": Google, "elevenlabs": ElevenLabs, "gemini": Gemini, "sarvam": Sarvam}
 
 
 def _month_used(provider):

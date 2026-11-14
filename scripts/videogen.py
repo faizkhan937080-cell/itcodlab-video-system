@@ -23,7 +23,7 @@ class EngineBlocked(RuntimeError):
 
 def gate(spec, eval_state=None):
     eng = spec.get("engine", "wan")
-    if eng in ("wan", "ltx", "flux"):   # flux = FLUX.1-schnell stills (Apache-2.0), free Kaggle GPU
+    if eng in ("wan", "ltx", "flux", "api"):   # flux = FLUX.1-schnell stills (Apache-2.0), free Kaggle GPU
         return eng
     if eng == "minimax":
         if not (eval_state or {}).get("minimax_approved"):

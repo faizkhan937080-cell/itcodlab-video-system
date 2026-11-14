@@ -1,0 +1,69 @@
+{
+ "mode": "parallax",
+ "stills": "output/stills/tbm-chai-cig-stills",
+ "scenes": [
+  {
+   "id": "v1",
+   "image": "s1",
+   "seconds": 7.65,
+   "move": "push"
+  },
+  {
+   "id": "v2",
+   "image": "s2",
+   "seconds": 6.001,
+   "move": "push_drift"
+  },
+  {
+   "id": "v3",
+   "image": "s3",
+   "seconds": 5.489,
+   "move": "rise"
+  },
+  {
+   "id": "v4",
+   "image": "s4",
+   "seconds": 3.376,
+   "move": "push"
+  },
+  {
+   "id": "v4b",
+   "image": "s4b",
+   "seconds": 5.641,
+   "move": "orbit"
+  },
+  {
+   "id": "v5",
+   "image": "s5",
+   "seconds": 8.538,
+   "move": "push_drift"
+  },
+  {
+   "id": "v6",
+   "image": "s6",
+   "seconds": 7.577,
+   "move": "orbit"
+  },
+  {
+   "id": "v7",
+   "image": "s7",
+   "seconds": 7.09,
+   "move": "pull"
+  },
+  {
+   "id": "v8",
+   "image": "s1",
+   "seconds": 4.638,
+   "move": "push"
+  }
+ ],
+ "w": 1080,
+ "h": 1920,
+ "fps": 30,
+ "music": [
+  {
+   "query": "dark ambient documentary",
+   "name": "tbm-dark-ambient"
+  }
+ ]
+}
