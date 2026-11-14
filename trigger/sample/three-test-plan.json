@@ -1,0 +1,26 @@
+{
+ "title": "3D scene test",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "gl": "swangle",
+ "scenes": [
+  {
+   "id": "t1",
+   "duration_s": 4.0,
+   "template": "three3d",
+   "props": {
+    "shot": "cup_cig",
+    "seed": 3
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  }
+ ],
+ "captions": [],
+ "audio": [],
+ "vignette": 0.22,
+ "grain": false
+}

@@ -11,7 +11,7 @@ export type TransitionDef = {
 export type SceneDef = {
   id: string;
   duration_s: number;
-  template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video'
+  template: 'title' | 'kinetic_text' | 'banner' | 'image' | 'lower_third' | 'video' | 'three3d'
     | 'counter' | 'bar_chart' | 'checklist' | 'split_compare' | 'quote' | 'stroke' | 'paper_cutout' | 'lottie' | 'audio_bars' | 'meme_text' | 'sticker' | 'med' | 'clean_bg' | 'clean_card' | 'nt_bg' | 'nt_card' | 'ext' | 'clone';
   props?: Record<string, any>;
   transition_in?: TransitionDef;

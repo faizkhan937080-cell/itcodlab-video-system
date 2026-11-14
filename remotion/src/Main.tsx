@@ -26,6 +26,7 @@ import {SplitCompare} from './components/SplitCompare';
 import {Stroke} from './components/Stroke';
 import {Title} from './components/Title';
 import {VideoScene} from './components/VideoScene';
+import {Three3D} from './components/Three3D';
 import {easeOut} from './lib/anim';
 import {Colors, DEFAULT_COLORS, OverlayDef, Plan, SceneDef, sceneFrames, totalFrames} from './lib/types';
 import {followAt, zoomAt} from './lib/zoom';
@@ -62,6 +63,8 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           layout={p.layout}
         />
       );
+    case 'three3d':
+      return <Three3D shot={p.shot ?? 'cup_cig'} seed={p.seed} />;
     case 'clean_bg':
       return <CleanBg brand={p.brand} footer={p.footer} />;
     case 'clean_card':
