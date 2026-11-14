@@ -432,6 +432,8 @@ def _parallax_run(raw, name, a):
         sheet = wd / "sheet"
         sheet.mkdir()
         for sc in raw["scenes"]:
+            if raw.get("only") and sc["id"] not in raw["only"]:
+                continue   # redo just these clips (the others are already in Drive)
             img, dep = wd / f"{sc['image']}.png", wd / f"{sc['image']}_d.png"
             if not img.exists():
                 stg.fetch(f"{raw['stills']}/img_{sc['image']}.png", img)

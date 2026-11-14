@@ -1,6 +1,7 @@
 """Stills on the GitHub runner, no GPU, no Kaggle: SDXL base + SDXL-Lightning 4-step on CPU (one engine for every picture = one look; free APIs 410/402 on 14 Nov).
 Depth maps by Depth Anything V2 Small on CPU. Writes img_<id>.png, depth_<id>.png, engine.json (engine_used per picture)."""
 import io
+import re
 import json
 import os
 import urllib.parse
@@ -56,6 +57,24 @@ def _lightning(prompt, w, h, seed):
     return buf.getvalue()
 
 
+CLIP_MAX = 75   # CLIP text encoder keeps 77 tokens (2 are start/end); the rest of a prompt is silently dropped
+
+
+def cut_report(prompt):
+    """-> (tokens, dropped_text). Rough token count (word pieces) so a too-long prompt is SEEN, not silently cut."""
+    toks = re.findall(r"\w+|[^\w\s]", prompt)
+    if len(toks) <= CLIP_MAX:
+        return len(toks), ""
+    words = prompt.split()
+    keep, n = [], 0
+    for w in words:
+        n += len(re.findall(r"\w+|[^\w\s]", w))
+        if n > CLIP_MAX:
+            break
+        keep.append(w)
+    return len(toks), " ".join(words[len(keep):])
+
+
 def make(spec, out_dir, log=print, fetch=None, put=None):
     """fetch(name, dest)->bool pulls a finished file from Drive (resume); put(path) saves each file the moment it exists (never lose work)."""
     import subprocess
@@ -76,6 +95,9 @@ def make(spec, out_dir, log=print, fetch=None, put=None):
         for nm in (img.name, f"depth_{p['id']}.png"):
             if fetch and not (out / nm).exists() and fetch(nm, out / nm):
                 log(f"RESUME {nm} from Drive")
+        n_tok, lost = cut_report(p["prompt"])
+        if lost:
+            log(f"PROMPT_CUT {p['id']}: {n_tok} tokens, CLIP drops: ...{lost[:80]}")
         if not img.exists():
             raw, eng = one(p["prompt"], w, h, seed + i)
             Image.open(io.BytesIO(raw)).convert("RGB").save(img)

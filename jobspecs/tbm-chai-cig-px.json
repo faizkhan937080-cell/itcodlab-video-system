@@ -4,7 +4,7 @@
  "scenes": [
   {
    "id": "v1",
-   "image": "s1",
+   "image": "s1n",
    "seconds": 7.65,
    "move": "push"
   },
@@ -16,7 +16,7 @@
   },
   {
    "id": "v3",
-   "image": "s3",
+   "image": "s3n",
    "seconds": 5.489,
    "move": "rise"
   },
@@ -65,5 +65,9 @@
    "query": "dark ambient documentary",
    "name": "tbm-dark-ambient"
   }
+ ],
+ "only": [
+  "v1",
+  "v3"
  ]
 }

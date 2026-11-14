@@ -37,8 +37,16 @@
   {
    "id": "s7",
    "prompt": "healthy calm pink tunnel of the esophagus, smooth clean moist lining, soft bright warm light at the end of the tunnel, gentle cool air wisp, peaceful, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
+   "id": "s1n",
+   "prompt": "thin white steam and curling grey cigarette smoke twisting together, drifting into a dark fleshy pink tunnel of the mouth and throat, smoke grey, steam white, macro medical 3D render, inside the human body, wet pink tissue, soft volumetric light, ultra detailed, no text"
+  },
+  {
+   "id": "s3n",
+   "prompt": "tiny dark brown tar and black ash specks sticking onto wet glossy pink tissue, mucus droplets, specks embedded in slime, macro medical 3D render, inside the human body, wet pink tissue, soft volumetric light, ultra detailed, no text"
   }
  ],
- "rev": 7,
+ "rev": 8,
  "after_parallax": "jobspecs/tbm-chai-cig-px.json"
 }

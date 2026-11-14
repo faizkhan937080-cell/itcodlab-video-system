@@ -14,3 +14,14 @@ def test_smoke_skips_gpu_queue_modes():
     from scripts import smoke
     ok, why = smoke.run({"mode": "image", "engine": "flux"}, None, log=lambda *a: None)
     assert ok and why == "skipped"
+
+
+def test_new_stills_prompts_fit_clip_and_cut_is_reported():
+    import json
+    from scripts import stills_api
+    long = " ".join(["word"] * 120)
+    assert stills_api.cut_report(long)[1]
+    spec = json.load(open("trigger/videogen/tbm-chai-cig-stills.json"))
+    for p in spec["prompts"]:
+        if p["id"].endswith("n"):
+            assert not stills_api.cut_report(p["prompt"])[1], p["id"]
