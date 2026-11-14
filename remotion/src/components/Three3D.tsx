@@ -37,8 +37,8 @@ const Puff: React.FC<{i: number; t: number; origin: [number, number, number]; co
   const x = origin[0] + Math.sin(a + k * 5.5) * sway * k + Math.sin(t * 0.9 + i) * 0.02;
   const z = origin[2] + Math.cos(a + k * 4.2) * sway * k;
   const y = origin[1] + k * rise;
-  const s = 0.18 + k * grow;
-  const op = Math.sin(Math.PI * Math.min(1, k * 1.15)) * 0.5;
+  const s = 0.1 + k * grow;
+  const op = Math.sin(Math.PI * Math.min(1, k * 1.15)) * 0.3;
   return (
     <sprite position={[x, y, z]} scale={[s, s, s]}>
       <spriteMaterial map={puffTexture()} color={color} transparent opacity={op} depthWrite={false} />
@@ -58,10 +58,10 @@ export const Three3D: React.FC<ThreeProps> = ({seed = 3}) => {
   const t = frame / fps;
   const prog = frame / Math.max(1, durationInFrames - 1);
   const flick = 1 + Math.sin(t * 17) * 0.12 + Math.sin(t * 31) * 0.08;
-  const cam: [number, number, number] = [Math.sin(prog * 1.1 - 0.5) * 2.1, 1.25 - prog * 0.25, 3.4 - prog * 0.9];
+  const cam: [number, number, number] = [-1.6 + prog * 2.4, 1.7 - prog * 0.35, 6.6 - prog * 1.3];
   const cup = useMemo(() => cupProfile(), []);
   const sau = useMemo(() => saucerProfile(), []);
-  const ember: [number, number, number] = [1.18, 0.2, 0.55];
+  const ember: [number, number, number] = [1.44, 0.09, 0.9];
   return (
     <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 38%, #3a2a2c 0%, #140d10 70%)'}}>
       <ThreeCanvas width={width} height={height} camera={{fov: 38, position: cam, near: 0.1, far: 30}} style={{position: 'absolute', inset: 0}}>
@@ -81,15 +81,15 @@ export const Three3D: React.FC<ThreeProps> = ({seed = 3}) => {
         <mesh position={[0, 0.1, 0]}><latheGeometry args={[cup, 64]} /><meshStandardMaterial color="#f6f3ee" roughness={0.16} side={THREE.DoubleSide} /></mesh>
         <mesh position={[0.62, 0.45, 0]} rotation={[0, 0, 0]}><torusGeometry args={[0.2, 0.045, 16, 40, Math.PI]} /><meshStandardMaterial color="#f6f3ee" roughness={0.16} /></mesh>
         <mesh position={[0, 0.66, 0]} rotation={[-Math.PI / 2, 0, 0]}><circleGeometry args={[0.55, 48]} /><meshStandardMaterial color="#b4561c" roughness={0.08} metalness={0.1} emissive="#3a1204" /></mesh>
-        {/* cigarette resting on the saucer: paper, orange filter, glowing ember */}
-        <group position={[0.75, 0.15, 0.55]} rotation={[0, 0.5, Math.PI / 2 - 0.08]}>
-          <mesh position={[0.0, 0, 0]}><cylinderGeometry args={[0.045, 0.045, 1.25, 20]} /><meshStandardMaterial color="#f4f1ea" roughness={0.7} /></mesh>
-          <mesh position={[-0.78, 0, 0]}><cylinderGeometry args={[0.046, 0.046, 0.3, 20]} /><meshStandardMaterial color="#d58a3c" roughness={0.6} /></mesh>
-          <mesh position={[0.64, 0, 0]}><cylinderGeometry args={[0.046, 0.04, 0.06, 20]} /><meshStandardMaterial color="#ff5a14" emissive="#ff4a00" emissiveIntensity={2.2 * flick} roughness={0.9} /></mesh>
+        {/* cigarette lying on the table: paper, orange filter, glowing ember (axis along X, turned by yaw) */}
+        <group position={[0.9, 0.05, 1.2]} rotation={[0, 0.5, 0]}>
+          <mesh position={[0, 0, 0]} rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.05, 0.05, 1.3, 20]} /><meshStandardMaterial color="#f4f1ea" roughness={0.7} /></mesh>
+          <mesh position={[-0.8, 0, 0]} rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.051, 0.051, 0.32, 20]} /><meshStandardMaterial color="#d58a3c" roughness={0.6} /></mesh>
+          <mesh position={[0.66, 0, 0]} rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.05, 0.043, 0.07, 20]} /><meshStandardMaterial color="#ff5a14" emissive="#ff4a00" emissiveIntensity={2.4 * flick} roughness={0.9} /></mesh>
         </group>
         {/* steam from the tea (white), smoke from the cigarette (grey-blue): real moving particles */}
-        {Array.from({length: 70}).map((_, i) => <Puff key={`st${i}`} i={i} t={t} origin={[0, 0.68, 0]} color="#ffffff" life={4.2} rise={1.9} seed={seed} grow={0.9} sway={0.3} />)}
-        {Array.from({length: 90}).map((_, i) => <Puff key={`sm${i}`} i={i + 100} t={t} origin={[1.18, 0.22, 0.55]} color="#9aa3b2" life={5.5} rise={2.8} seed={seed} grow={1.2} sway={0.5} />)}
+        {Array.from({length: 110}).map((_, i) => <Puff key={`st${i}`} i={i} t={t} origin={[0, 0.68, 0]} color="#ffffff" life={4.2} rise={1.7} seed={seed} grow={0.6} sway={0.2} />)}
+        {Array.from({length: 130}).map((_, i) => <Puff key={`sm${i}`} i={i + 100} t={t} origin={[1.46, 0.12, 0.9]} color="#aab2c0" life={4.5} rise={2.6} seed={seed} grow={0.7} sway={0.28} />)}
       </ThreeCanvas>
     </AbsoluteFill>
   );
@@ -99,7 +99,7 @@ export const Three3D: React.FC<ThreeProps> = ({seed = 3}) => {
 const Rig: React.FC<{pos: [number, number, number]}> = ({pos}) => {
   const {camera} = useThree();
   camera.position.set(pos[0], pos[1], pos[2]);
-  camera.lookAt(0.25, 0.75, 0);
+  camera.lookAt(0.45, 0.95, 0.3);
   camera.updateProjectionMatrix();
   return null;
 };
