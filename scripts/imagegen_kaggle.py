@@ -31,8 +31,8 @@ try:
     def load(dtype):
         t = time.time()
         tr = FluxTransformer2DModel.from_single_file(path, quantization_config=GGUFQuantizationConfig(compute_dtype=dtype),
-                                                     torch_dtype=dtype, config="black-forest-labs/FLUX.1-schnell", subfolder="transformer")
-        p = FluxPipeline.from_pretrained("black-forest-labs/FLUX.1-schnell", transformer=tr, torch_dtype=dtype)
+                                                     torch_dtype=dtype, config="black-forest-labs/FLUX.1-schnell", subfolder="transformer", token=tok)
+        p = FluxPipeline.from_pretrained("black-forest-labs/FLUX.1-schnell", transformer=tr, torch_dtype=dtype, token=tok)
         p.enable_model_cpu_offload()
         p.vae.enable_tiling()
         res["steps"]["load_" + str(dtype).split(".")[-1]] = round(time.time() - t, 1)
@@ -41,15 +41,32 @@ try:
     def bad(img):
         a = np.asarray(img).astype("float32")
         return (not np.isfinite(a).all()) or a.std() < 3.0
+    tok = os.environ.get("HF_TOKEN")
     dtype = torch.float16
-    pipe = load(dtype)
+    try:
+        pipe = load(dtype)
+    except Exception:   # FLUX repo gated for this HF account: fall back to SDXL base (OpenRAIL++-M, commercial use allowed, not gated)
+        res["steps"]["flux_load_error"] = traceback.format_exc()[-400:]
+        from diffusers import StableDiffusionXLPipeline
+        t = time.time()
+        pipe = StableDiffusionXLPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16,
+                                                         variant="fp16", use_safetensors=True).to("cuda")
+        pipe.enable_vae_tiling()
+        res["engine_used"] = "sdxl-base-1.0"
+        res["steps"]["load_sdxl"] = round(time.time() - t, 1)
+        spec["steps"], spec["width"], spec["height"] = 30, 768, 1344
+        dump()
     for i, item in enumerate(spec["prompts"]):
         for attempt in range(2):
             t = time.time()
-            img = pipe(item["prompt"], width=int(spec.get("width", 864)), height=int(spec.get("height", 1536)),
-                       num_inference_steps=int(spec.get("steps", 4)), guidance_scale=0.0, max_sequence_length=256,
-                       generator=torch.Generator("cpu").manual_seed(int(spec.get("seed", 7)) + i)).images[0]
-            if bad(img) and dtype == torch.float16:
+            kw = dict(width=int(spec.get("width", 864)), height=int(spec.get("height", 1536)),
+                      num_inference_steps=int(spec.get("steps", 4)), generator=torch.Generator("cpu").manual_seed(int(spec.get("seed", 7)) + i))
+            if res.get("engine_used") == "sdxl-base-1.0":
+                kw.update(guidance_scale=6.0, negative_prompt="text, watermark, cartoon, illustration, blurry, low quality, deformed")
+            else:
+                kw.update(guidance_scale=0.0, max_sequence_length=256)
+            img = pipe(item["prompt"], **kw).images[0]
+            if bad(img) and dtype == torch.float16 and not res.get("engine_used"):
                 res["steps"]["fp16_black"] = item["id"]
                 del pipe; torch.cuda.empty_cache()
                 dtype = torch.bfloat16
