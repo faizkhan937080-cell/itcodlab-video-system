@@ -204,6 +204,8 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=
            f"--scale={scale}"]
     if frames:  # benchmark / part render: only frames a..b (inclusive)
         cmd.append(f"--frames={int(frames[0])}-{int(frames[1])}")
+    if plan.get("gl"):   # @remotion/effects need WebGL in headless Chrome
+        cmd.append(f"--gl={plan['gl']}")
     if concurrency or os.environ.get("ITCOD_RENDER_CONCURRENCY"):
         cmd.append(f"--concurrency={concurrency or os.environ['ITCOD_RENDER_CONCURRENCY']}")
     if os.environ.get("ITCOD_BROWSER"):  # use an installed Chromium instead of downloading one

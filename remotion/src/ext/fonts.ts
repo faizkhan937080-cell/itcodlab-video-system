@@ -3,9 +3,11 @@ import {loadFont as f0} from '@remotion/google-fonts/Inter';
 import {loadFont as f1} from '@remotion/google-fonts/InterTight';
 import {loadFont as f2} from '@remotion/google-fonts/JetBrainsMono';
 import {loadFont as f3} from '@remotion/google-fonts/SpecialElite';
+import {loadFont as f4} from '@remotion/google-fonts/Montserrat';
 export const FONTS: Record<string, string> = {
   'Inter': f0().fontFamily,
   'InterTight': f1().fontFamily,
   'JetBrainsMono': f2().fontFamily,
   'SpecialElite': f3().fontFamily,
+  'Montserrat': f4().fontFamily,
 };

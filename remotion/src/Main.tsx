@@ -40,7 +40,7 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
     case 'banner':
       return <Banner headline={p.headline ?? ''} sub={p.sub} tag={p.tag} colors={colors} />;
     case 'image':
-      return <ImageScene src={p.src} caption={p.caption} colors={colors} />;
+      return <ImageScene src={p.src} caption={p.caption} colors={colors} push={p.push} dust={p.dust} />;
     case 'lower_third':
       return <LowerThird name={p.name ?? ''} role={p.role} colors={colors} />;
     case 'video':
