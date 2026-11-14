@@ -178,6 +178,13 @@ def cmd_ci(a):
     return 0
 
 
+def cmd_tools(a):
+    """Everything we already own, before choosing how to build (inventory)."""
+    from . import inventory
+    print(inventory.render())
+    return 0
+
+
 def cmd_learn_yt(a):
     """Worker only: description, chapters and spoken words of YouTube videos Faiz gives for learning."""
     from . import yt_learn
@@ -1301,6 +1308,9 @@ def build_parser():
     s.add_argument("--saw", required=True)
     s.add_argument("--out")
     s.set_defaults(fn=cmd_look_ok)
+
+    s = sub.add_parser("tools", help="inventory of every tool/model/runner we own (read before building)")
+    s.set_defaults(fn=cmd_tools)
 
     s = sub.add_parser("ci", help="token saver: wait for the newest run of a workflow, print one line (+20 log lines if failed)")
     s.add_argument("workflow")

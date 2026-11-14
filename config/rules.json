@@ -148,5 +148,11 @@
   "rule": "use ./run ci <workflow> --wait N (waits inside the script, prints one line); no repeated gh/timer polling, delete unused timers",
   "enforcer": "C: ./run ci exists and is tested (tests/test_ci_brief.py)",
   "added": "2026-11-14"
+ },
+ {
+  "id": "tools_before_build",
+  "rule": "./run tools before any build; say why an owned tool is skipped; zoom on stills is never called 3D motion graphics",
+  "enforcer": "C: ./run tools exists and is in CLAUDE.md step 0c (tests/test_inventory.py)",
+  "added": "2026-11-14"
  }
 ]
