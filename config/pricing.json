@@ -1,208 +1,215 @@
 {
-  "_note": "Live rates for cost/time estimates. Every block has source + checked date. Re-check before a big decision. Third-party pages are marked (verify).",
+ "_note": "Live rates for cost/time estimates. Every block has source + checked date. Re-check before a big decision. Third-party pages are marked (verify).",
+ "checked": "2026-11-07",
+ "usd_inr": {
+  "value": 95.24,
+  "source": "https://wise.com/gb/currency-converter/usd-to-inr-rate",
+  "checked": "2026-11-07"
+ },
+ "github_actions": {
+  "linux_2core_usd_per_min": 0.006,
+  "included_usd_per_month": {
+   "free": 12,
+   "pro": 18,
+   "team": 18
+  },
+  "plan_now": "free",
+  "billing": "whole minutes per job, rounded up; included amount is money, not minutes ($12 = 2000 Linux 2-core min)",
+  "source": "https://docs.github.com/billing/managing-billing-for-your-products/managing-billing-for-github-actions"
+ },
+ "kaggle": {
+  "price_usd": 0,
+  "gpu": "T4 x2 or P100",
+  "session_max_h": 12,
+  "gpu_hours_per_week_reported": 30,
+  "official": false,
+  "note": "weekly GPU quota is not published by Kaggle; ~30 h/week is user-reported and shows in account settings. Faiz's notebook showed 30 h.",
+  "source": "https://gpuperhour.com/blog/free-cloud-gpus-and-credits (verify)"
+ },
+ "gcp": {
+  "currency": "USD",
+  "credit_left_inr": 28569,
+  "t4_quota_asia_south1": 0,
+  "t4_n1_8vcpu_30gb_asia_south1": {
+   "on_demand_usd_hr": 0.866,
+   "spot_usd_hr": 0.332,
+   "source": "https://www.devzero.io/instances/gcp/n1-t4-1 (verify)"
+  },
+  "l4_g2_standard_4_asia_south1": {
+   "on_demand_usd_hr": 0.7357,
+   "spot_usd_hr": 0.6606,
+   "source": "https://calculator.holori.com/gcp/vm/g2-standard-4/asia-south1 (verify)"
+  },
+  "note": "VM price only; disk, network and idle time are extra. itcod-gpu stops itself after 10 idle min."
+ },
+ "colab": {
+  "free": "limited T4, no published quota, 12 h max session",
+  "pro_usd_month": 9.99,
+  "pro_units": 100,
+  "pro_plus_usd_month": 49.99,
+  "pro_plus_units": 600,
+  "t4_units_per_hour": 1.19,
+  "source": "https://gpuperhour.com/blog/google-colab-alternatives (verify)"
+ },
+ "gemini": {
+  "free_tier": true,
+  "free_tier_note": "limits lower than paid; free-tier content may be used by Google to improve products",
+  "usd_per_mtok": {
+   "gemini-2.5-flash": {
+    "in": 0.3,
+    "out": 2.5
+   },
+   "gemini-2.5-flash-lite": {
+    "in": 0.1,
+    "out": 0.4
+   },
+   "gemini-3.6-flash": {
+    "in": 0.75,
+    "out": 3.75
+   },
+   "gemini-3.8-flash": {
+    "in": 0.75,
+    "out": 3.75
+   },
+   "gemini-3.1-pro-preview": {
+    "in": 2.0,
+    "out": 12.0
+   }
+  },
+  "alias_note": "gemini-flash-latest (used in limits.models) = newest flash; priced here as gemini-3.8-flash. Flash 3.6/3.8 double on 2027-01-01 (in 1.50, out 7.50).",
+  "alias_priced_as": "gemini-3.8-flash",
+  "source": "https://www.morphllm.com/gemini-api-pricing (third party, article checked Google's page 2026-10-25; verify on ai.google.dev)"
+ },
+ "claude": {
+  "plan_now": "Claude Pro (flat monthly; limits are usage, not tokens)",
+  "usd_per_mtok": {
+   "haiku-5.5": {
+    "in": 0.1,
+    "out": 0.5,
+    "in_long": 0.5,
+    "out_long": 2.5,
+    "cache_read": 0.01,
+    "long_over_tokens": 100000
+   },
+   "sonnet-5.5": {
+    "in": 2.0,
+    "out": 10.0,
+    "cache_read": 0.2
+   },
+   "opus-5.5": {
+    "in": 4.0,
+    "out": 20.0
+   },
+   "fable-5.1": {
+    "in": 10.0,
+    "out": 50.0
+   }
+  },
+  "note": "API-equivalent only: on the Pro plan Faiz does not pay per token, he spends limit. Use it to compare plans.",
+  "source": "https://platform.claude.com/docs/en/models/sonnet-5/ ; https://www.aipricing.guru/models/claude-haiku-5-5/ (Haiku verified 2026-11-06)"
+ },
+ "remotion": {
+  "license": "free up to 3 people (Faiz = 1)",
+  "usd": 0
+ },
+ "kokoro_tts": {
+  "license": "Apache-2.0 model (Kokoro-82M), runs on our CPU",
+  "usd": 0,
+  "measured_2026_11_07": "65 s of voice in ~47 s on 2 vCPU (RTF ~0.7)",
+  "source": "https://github.com/thewh1teagle/kokoro-onnx"
+ },
+ "google_tts": {
+  "note": "Cloud TTS, per 1M characters after the monthly free allowance",
+  "free_chars_month": {
+   "standard_wavenet": 4000000,
+   "neural2": 1000000,
+   "chirp3_hd": 1000000
+  },
+  "usd_per_1m_chars": {
+   "standard": 4,
+   "wavenet": 4,
+   "neural2": 16,
+   "chirp3_hd": 30,
+   "instant_custom_voice": 60
+  },
   "checked": "2026-11-07",
-  "usd_inr": {
-    "value": 95.24,
-    "source": "https://wise.com/gb/currency-converter/usd-to-inr-rate",
-    "checked": "2026-11-07"
+  "source": "https://cloud.google.com/text-to-speech/pricing"
+ },
+ "elevenlabs": {
+  "note": "free plan = non-commercial, no cloning; paid = commercial + instant clone",
+  "free_credits_month": 10000,
+  "plans_usd_month_approx": {
+   "starter": 5,
+   "creator": 22
   },
-  "github_actions": {
-    "linux_2core_usd_per_min": 0.006,
-    "included_usd_per_month": {
-      "free": 12,
-      "pro": 18,
-      "team": 18
-    },
-    "plan_now": "free",
-    "billing": "whole minutes per job, rounded up; included amount is money, not minutes ($12 = 2000 Linux 2-core min)",
-    "source": "https://docs.github.com/billing/managing-billing-for-your-products/managing-billing-for-github-actions"
+  "credits_month": {
+   "free": 10000,
+   "starter": 30000,
+   "creator": "~100-120k"
   },
-  "kaggle": {
-    "price_usd": 0,
-    "gpu": "T4 x2 or P100",
-    "session_max_h": 12,
-    "gpu_hours_per_week_reported": 30,
-    "official": false,
-    "note": "weekly GPU quota is not published by Kaggle; ~30 h/week is user-reported and shows in account settings. Faiz's notebook showed 30 h.",
-    "source": "https://gpuperhour.com/blog/free-cloud-gpus-and-credits (verify)"
+  "checked": "2026-11-07",
+  "source": "https://www.costbench.com/software/ai-voice-tools/elevenlabs/ (secondary; confirm on elevenlabs.io)"
+ },
+ "ltx_2_5": {
+  "price_usd": 0,
+  "licence": "LTX-2.x Community License: free under $10M yearly revenue, paid above",
+  "params": "22B",
+  "checked": "2026-11-07",
+  "machine": "free Kaggle T4/P100 via videogen (unproven, first probe pending)",
+  "source": "https://huggingface.co/unsloth/LTX-2.5-FP8"
+ },
+ "minimax_h3": {
+  "price_usd": 0,
+  "licence": "MiniMax H3 Community License: UI must show 'MiniMax H3'; US/EU/UK/Korea excluded; over $20M needs written OK (reported, verify on the model card)",
+  "needs": "~42 GB GPU memory for the smallest working setup (reported); 2K regenerate stage is API-only",
+  "per_min_hosted_usd_artificial_analysis": 4.8,
+  "checked": "2026-11-07",
+  "only_on": "Faiz Y per job",
+  "source": "https://dev.to/routeai_official/minimax-h3-is-open-weight-now-heres-whats-actually-downloadable-vs-api-only-441k"
+ },
+ "veo_3_1": {
+  "currency": "USD",
+  "per_s_standard_720_1080": 0.4,
+  "per_s_standard_4k": 0.6,
+  "per_s_fast_720": 0.1,
+  "per_s_fast_1080": 0.12,
+  "per_s_fast_4k": 0.3,
+  "per_s_lite_720": 0.05,
+  "per_s_lite_1080": 0.08,
+  "clip_s": [
+   4,
+   6,
+   8
+  ],
+  "note": "1080p and 4K clips must be 8 s; audio included; no free tier; billed on success; Vertex AI has indemnity, Gemini API does not",
+  "checked": "2026-11-07",
+  "only_on": "Faiz command + allow_paid",
+  "source": "https://www.layer3labs.io/guides/veo-3-pricing (third party, verify on Google's page)"
+ },
+ "modal": {
+  "currency": "USD",
+  "free_credit_per_month": 30,
+  "plan": "Starter ($0 + compute), no rollover, 10 GPU concurrency",
+  "per_s": {
+   "L4": 0.000222,
+   "L40S": 0.000542,
+   "A100_40GB": 0.000583,
+   "A100_80GB": 0.000694,
+   "H100": 0.001097
   },
-  "gcp": {
-    "currency": "USD",
-    "credit_left_inr": 28569,
-    "t4_quota_asia_south1": 0,
-    "t4_n1_8vcpu_30gb_asia_south1": {
-      "on_demand_usd_hr": 0.866,
-      "spot_usd_hr": 0.332,
-      "source": "https://www.devzero.io/instances/gcp/n1-t4-1 (verify)"
-    },
-    "l4_g2_standard_4_asia_south1": {
-      "on_demand_usd_hr": 0.7357,
-      "spot_usd_hr": 0.6606,
-      "source": "https://calculator.holori.com/gcp/vm/g2-standard-4/asia-south1 (verify)"
-    },
-    "note": "VM price only; disk, network and idle time are extra. itcod-gpu stops itself after 10 idle min."
+  "per_hour_usd": {
+   "L40S": 1.95,
+   "A100_80GB": 2.5
   },
-  "colab": {
-    "free": "limited T4, no published quota, 12 h max session",
-    "pro_usd_month": 9.99,
-    "pro_units": 100,
-    "pro_plus_usd_month": 49.99,
-    "pro_plus_units": 600,
-    "t4_units_per_hour": 1.19,
-    "source": "https://gpuperhour.com/blog/google-colab-alternatives (verify)"
-  },
-  "gemini": {
-    "free_tier": true,
-    "free_tier_note": "limits lower than paid; free-tier content may be used by Google to improve products",
-    "usd_per_mtok": {
-      "gemini-2.5-flash": {
-        "in": 0.3,
-        "out": 2.5
-      },
-      "gemini-2.5-flash-lite": {
-        "in": 0.1,
-        "out": 0.4
-      },
-      "gemini-3.6-flash": {
-        "in": 0.75,
-        "out": 3.75
-      },
-      "gemini-3.8-flash": {
-        "in": 0.75,
-        "out": 3.75
-      },
-      "gemini-3.1-pro-preview": {
-        "in": 2.0,
-        "out": 12.0
-      }
-    },
-    "alias_note": "gemini-flash-latest (used in limits.models) = newest flash; priced here as gemini-3.8-flash. Flash 3.6/3.8 double on 2027-01-01 (in 1.50, out 7.50).",
-    "alias_priced_as": "gemini-3.8-flash",
-    "source": "https://www.morphllm.com/gemini-api-pricing (third party, article checked Google's page 2026-10-25; verify on ai.google.dev)"
-  },
-  "claude": {
-    "plan_now": "Claude Pro (flat monthly; limits are usage, not tokens)",
-    "usd_per_mtok": {
-      "haiku-5.5": {
-        "in": 0.1,
-        "out": 0.5,
-        "in_long": 0.5,
-        "out_long": 2.5,
-        "cache_read": 0.01,
-        "long_over_tokens": 100000
-      },
-      "sonnet-5.5": {
-        "in": 2.0,
-        "out": 10.0,
-        "cache_read": 0.2
-      },
-      "opus-5.5": {
-        "in": 4.0,
-        "out": 20.0
-      },
-      "fable-5.1": {
-        "in": 10.0,
-        "out": 50.0
-      }
-    },
-    "note": "API-equivalent only: on the Pro plan Faiz does not pay per token, he spends limit. Use it to compare plans.",
-    "source": "https://platform.claude.com/docs/en/models/sonnet-5/ ; https://www.aipricing.guru/models/claude-haiku-5-5/ (Haiku verified 2026-11-06)"
-  },
-  "remotion": {
-    "license": "free up to 3 people (Faiz = 1)",
-    "usd": 0
-  },
-  "kokoro_tts": {
-    "license": "Apache-2.0 model (Kokoro-82M), runs on our CPU",
-    "usd": 0,
-    "measured_2026_11_07": "65 s of voice in ~47 s on 2 vCPU (RTF ~0.7)",
-    "source": "https://github.com/thewh1teagle/kokoro-onnx"
-  },
-  "google_tts": {
-    "note": "Cloud TTS, per 1M characters after the monthly free allowance",
-    "free_chars_month": {
-      "standard_wavenet": 4000000,
-      "neural2": 1000000,
-      "chirp3_hd": 1000000
-    },
-    "usd_per_1m_chars": {
-      "standard": 4,
-      "wavenet": 4,
-      "neural2": 16,
-      "chirp3_hd": 30,
-      "instant_custom_voice": 60
-    },
-    "checked": "2026-11-07",
-    "source": "https://cloud.google.com/text-to-speech/pricing"
-  },
-  "elevenlabs": {
-    "note": "free plan = non-commercial, no cloning; paid = commercial + instant clone",
-    "free_credits_month": 10000,
-    "plans_usd_month_approx": {
-      "starter": 5,
-      "creator": 22
-    },
-    "credits_month": {
-      "free": 10000,
-      "starter": 30000,
-      "creator": "~100-120k"
-    },
-    "checked": "2026-11-07",
-    "source": "https://www.costbench.com/software/ai-voice-tools/elevenlabs/ (secondary; confirm on elevenlabs.io)"
-  },
-  "ltx_2_5": {
-    "price_usd": 0,
-    "licence": "LTX-2.x Community License: free under $10M yearly revenue, paid above",
-    "params": "22B",
-    "checked": "2026-11-07",
-    "machine": "free Kaggle T4/P100 via videogen (unproven, first probe pending)",
-    "source": "https://huggingface.co/unsloth/LTX-2.5-FP8"
-  },
-  "minimax_h3": {
-    "price_usd": 0,
-    "licence": "MiniMax H3 Community License: UI must show 'MiniMax H3'; US/EU/UK/Korea excluded; over $20M needs written OK (reported, verify on the model card)",
-    "needs": "~42 GB GPU memory for the smallest working setup (reported); 2K regenerate stage is API-only",
-    "per_min_hosted_usd_artificial_analysis": 4.8,
-    "checked": "2026-11-07",
-    "only_on": "Faiz Y per job",
-    "source": "https://dev.to/routeai_official/minimax-h3-is-open-weight-now-heres-whats-actually-downloadable-vs-api-only-441k"
-  },
-  "veo_3_1": {
-    "currency": "USD",
-    "per_s_standard_720_1080": 0.4,
-    "per_s_standard_4k": 0.6,
-    "per_s_fast_720": 0.1,
-    "per_s_fast_1080": 0.12,
-    "per_s_fast_4k": 0.3,
-    "per_s_lite_720": 0.05,
-    "per_s_lite_1080": 0.08,
-    "clip_s": [
-      4,
-      6,
-      8
-    ],
-    "note": "1080p and 4K clips must be 8 s; audio included; no free tier; billed on success; Vertex AI has indemnity, Gemini API does not",
-    "checked": "2026-11-07",
-    "only_on": "Faiz command + allow_paid",
-    "source": "https://www.layer3labs.io/guides/veo-3-pricing (third party, verify on Google's page)"
-  },
-  "modal": {
-    "currency": "USD",
-    "free_credit_per_month": 30,
-    "plan": "Starter ($0 + compute), no rollover, 10 GPU concurrency",
-    "per_s": {
-      "L4": 0.000222,
-      "L40S": 0.000542,
-      "A100_40GB": 0.000583,
-      "A100_80GB": 0.000694,
-      "H100": 0.001097
-    },
-    "per_hour_usd": {
-      "L40S": 1.95,
-      "A100_80GB": 2.5
-    },
-    "checked": "2026-11-07",
-    "note": "No card = hard stop at the free credit (do not add a card). LTX runs on L40S, MiniMax H3 would need A100-80GB.",
-    "source": "https://modal.com/pricing"
-  }
+  "checked": "2026-11-07",
+  "note": "No card = hard stop at the free credit (do not add a card). LTX runs on L40S, MiniMax H3 would need A100-80GB.",
+  "source": "https://modal.com/pricing"
+ },
+ "flux_schnell": {
+  "engine": "FLUX.1-schnell GGUF Q8 on Kaggle T4",
+  "licence": "Apache-2.0 (commercial use allowed)",
+  "usd_per_image": 0.0,
+  "note": "uses free Kaggle GPU hours (see kaggle); time per image measured in result.json images[].s",
+  "source": "https://huggingface.co/black-forest-labs/FLUX.1-schnell"
+ }
 }

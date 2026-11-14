@@ -23,7 +23,7 @@ class EngineBlocked(RuntimeError):
 
 def gate(spec, eval_state=None):
     eng = spec.get("engine", "wan")
-    if eng in ("wan", "ltx"):
+    if eng in ("wan", "ltx", "flux"):   # flux = FLUX.1-schnell stills (Apache-2.0), free Kaggle GPU
         return eng
     if eng == "minimax":
         if not (eval_state or {}).get("minimax_approved"):
@@ -95,6 +95,10 @@ def build_spec(raw, image=None):
             "width": int(raw.get("width", 768)), "height": int(raw.get("height", 512)), "fps": int(raw.get("fps", 24)),
             "seed": int(raw.get("seed", 1)), "seconds": seconds, "num_frames": frames_for(seconds, int(raw.get("fps", 24)))}
     spec["has_image"] = bool(image)
+    if raw.get("mode") == "image":   # stills per scene (scripts/imagegen_kaggle.py)
+        spec.update(mode="image", engine="flux", prompts=raw["prompts"], width=int(raw.get("width", 864)),
+                    height=int(raw.get("height", 1536)), steps=int(raw.get("steps", 4)), seed=int(raw.get("seed", 7)),
+                    probe=False, timeout_s=int(raw.get("timeout_s", 3600)))
     if raw.get("mode") == "gguf":
         spec["mode"] = "gguf"
         for k in ("gguf_repo", "gguf_file", "gen_budget_s", "offload", "watchdog_s", "upscale", "out_width", "out_height"):
@@ -134,6 +138,9 @@ def prepare(spec, image, work, owner):
     elif spec.get("mode") == "faceswap":
         from .faceswap_kaggle import KERNEL_SRC_FACESWAP
         (kn / "vgen_kernel.py").write_text(KERNEL_SRC_FACESWAP, encoding="utf-8")
+    elif spec.get("mode") == "image":
+        from .imagegen_kaggle import KERNEL_SRC_IMG
+        (kn / "vgen_kernel.py").write_text(KERNEL_SRC_IMG, encoding="utf-8")
     elif spec.get("mode") == "h3":
         from .videogen_h3 import KERNEL_SRC_H3
         (kn / "vgen_kernel.py").write_text(KERNEL_SRC_H3, encoding="utf-8")
@@ -194,6 +201,9 @@ def run(spec, image, out_dir, poll_s=20, timeout_s=None):
                         "kernel_log_tail": kg._clean(lt)[-2500:]}
             res = json.loads(rf.read_text(encoding="utf-8"))
             res["kaggle_wall_s"] = round(time.time() - t0)
+            for im in sorted(outdir.glob("img_*.png")):   # stills mode: keep every finished image, even on a partial run
+                Path(out_dir).mkdir(parents=True, exist_ok=True)
+                shutil.copy(im, Path(out_dir) / im.name)
             vid = outdir / "video.mp4"
             if res.get("ok") and vid.exists() and not res.get("probe"):
                 Path(out_dir).mkdir(parents=True, exist_ok=True)

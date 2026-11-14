@@ -471,6 +471,20 @@ def cmd_videogen_run(a):
             print("RESULT", json.dumps(to_native({k: v for k, v in res.items() if k != "steps"}), ensure_ascii=False)[:400])
         else:
             print(json.dumps(to_native(res), ensure_ascii=False)[:7000])
+        if spec.get("mode") == "image":   # stills: collage -> review branch (Claude looks); originals -> Drive output/stills/<name>/
+            from . import imagegen_kaggle, review
+            imgs = sorted(Path(wd).glob("img_*.png"))
+            if imgs:
+                imagegen_kaggle.collage(wd)
+                print("REVIEW", json.dumps(review.publish(wd, f"stills-{name}")))
+                if not a.no_upload and not raw.get("test"):   # "test": true = only the review branch, never Drive
+                    stg = _storage()
+                    rel = f"output/stills/{name}"
+                    stg.ensure_dir(rel)
+                    for im in imgs:
+                        stg.put_file(im, f"{rel}/{im.name}")
+                    print(f"uploaded {len(imgs)} stills to Drive {rel}")
+            return 0 if res.get("ok") else 1
         vid = Path(wd) / "video.mp4"
         if raw.get("test") and res.get("ok") and vid.exists():   # test clip: Faiz sees it via the review branch, never Drive
             from . import review

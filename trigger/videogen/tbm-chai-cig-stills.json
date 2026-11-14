@@ -1,0 +1,40 @@
+{
+ "mode": "image",
+ "engine": "flux",
+ "width": 864,
+ "height": 1536,
+ "steps": 4,
+ "seed": 11,
+ "account": 1,
+ "prompts": [
+  {
+   "id": "s1",
+   "prompt": "a cup of hot tea steam and a curl of grey cigarette smoke twisting together into one swirl, floating into a dark warm pink fleshy tunnel of the mouth and throat, steam white, smoke grey-blue, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
+   "id": "s2",
+   "prompt": "inside the esophagus food pipe, smooth glistening pink mucosa lining with tiny red blood vessels, a faint orange heat glow and wisps of hot steam pressing on the wall, slightly reddened irritated patches, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
+   "id": "s3",
+   "prompt": "microscopic dark brown tar and ash particles from cigarette smoke settling and sticking onto a wet glossy pink tissue surface, droplets of mucus, particles embedded in the slime, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
+   "id": "s4",
+   "prompt": "long tunnel of the esophagus seen from inside, walls turning darker and redder with rough inflamed patches deeper inside, ominous dim light at the far end, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
+   "id": "s5",
+   "prompt": "inside a large artery near the heart, red blood cells rushing past, artery wall tense and narrowed, pulsing heart muscle fibers visible behind, deep crimson, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
+   "id": "s6",
+   "prompt": "microscopic liver tissue, hexagonal liver cell lobules glowing amber and pink, tiny bright molecules being broken down and dissolving, warm light, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  },
+  {
+   "id": "s7",
+   "prompt": "healthy calm pink tunnel of the esophagus, smooth clean moist lining, soft bright warm light at the end of the tunnel, gentle cool air wisp, peaceful, photorealistic macro medical 3D render, inside the human body, warm pink and deep red wet tissue, glossy mucus film with crisp specular highlights, fine translucent hairs, soft volumetric light, shallow depth of field, cinematic, ultra detailed, vertical 9:16 composition, no text, no labels, no people"
+  }
+ ],
+ "test": true
+}
