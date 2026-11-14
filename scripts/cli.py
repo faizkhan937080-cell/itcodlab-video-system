@@ -315,6 +315,18 @@ def cmd_notes(a):
     return 0
 
 
+def cmd_blender(a):
+    """Free photoreal 3D plate (Blender Cycles, procedural). Measured: seconds per frame go to render_report.json."""
+    from . import blender3d
+    from .common import stage
+    only = [int(x) for x in a.frames.split(",")] if a.frames else None
+    with stage("blender_render"):
+        rep = blender3d.render_sample(a.out, a.seconds, a.w, a.h, 30, a.samples, only, a.seed)
+    print(f"blender: {rep['frames']}/{rep['of']} frames {rep['w']}x{rep['h']} at {rep['samples']} samples, "
+          f"{rep['sec_per_frame']} s/frame, total {rep['total_s']} s -> {a.out}")
+    return 0
+
+
 def cmd_ref_measure(a):
     from . import ref_measure
     out = ref_measure.measure(a.video, 30.0, a.max_s)
@@ -1208,6 +1220,15 @@ def build_parser():
     s.add_argument("--out", required=True)
     s.add_argument("--max-s", type=float)
     s.set_defaults(fn=cmd_ref_measure)
+    s = sub.add_parser("blender", help="free photoreal 3D plate with Blender (procedural organic tunnel look)")
+    s.add_argument("--out", required=True)
+    s.add_argument("--seconds", type=float, default=5.0)
+    s.add_argument("--w", type=int, default=540)
+    s.add_argument("--h", type=int, default=960)
+    s.add_argument("--samples", type=int, default=24)
+    s.add_argument("--frames", help="comma list of frames to render only (test)")
+    s.add_argument("--seed", type=int, default=7)
+    s.set_defaults(fn=cmd_blender)
     s = sub.add_parser("guard-install", help="make the guard + survey hooks active from any folder (~/.claude/settings.json)")
     s.set_defaults(fn=cmd_guard_install)
     s = sub.add_parser("learn-yt", help="worker only: YouTube learning videos -> Drive research/youtube-learning/")
