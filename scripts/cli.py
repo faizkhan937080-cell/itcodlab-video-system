@@ -388,6 +388,56 @@ def cmd_voice_run(a):
     return 0
 
 
+def _parallax_run(raw, name, a):
+    """raw: {"mode": "parallax", "stills": "output/stills/<name>", "scenes": [{"id", "image", "seconds", "move"}], "w", "h", "test"?}
+    Each scene -> <id>.mp4 (H.264, CRF 16) in Drive output/footage/<name>/. Collage of first/mid/last frames -> review branch."""
+    import subprocess
+    import sys
+    import tempfile
+    from . import costs, parallax3d, review
+    from .blender3d import contact_sheet
+    from .common import stage
+    try:
+        import bpy  # noqa: F401
+    except ImportError:
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "bpy==4.5.3"], check=True)
+    stg = _storage()
+    w, h, fps = int(raw.get("w", 1080)), int(raw.get("h", 1920)), int(raw.get("fps", 30))
+    rel = f"output/footage/{name}"
+    done = []
+    with tempfile.TemporaryDirectory(prefix="itcod-px-") as wd:
+        wd = Path(wd)
+        sheet = wd / "sheet"
+        sheet.mkdir()
+        for sc in raw["scenes"]:
+            img, dep = wd / f"{sc['image']}.png", wd / f"{sc['image']}_d.png"
+            if not img.exists():
+                stg.fetch(f"{raw['stills']}/img_{sc['image']}.png", img)
+                stg.fetch(f"{raw['stills']}/depth_{sc['image']}.png", dep)
+            fr = wd / f"fr_{sc['id']}"
+            with stage("parallax_render"):
+                rep = parallax3d.render_clip(img, dep, fr, float(sc["seconds"]), sc.get("move", "push"), w, h, fps,
+                                             float(sc.get("relief", 0.22)))
+            out = wd / f"{sc['id']}.mp4"
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-framerate", str(fps), "-i", str(fr / "f_%04d.png"), "-c:v", "libx264",
+                            "-crf", "16", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-color_primaries", "bt709",
+                            "-color_trc", "bt709", "-colorspace", "bt709", str(out)], check=True)
+            fs = sorted(fr.glob("f_*.png"))
+            for k, f in enumerate((fs[0], fs[len(fs) // 2], fs[-1])):
+                f.rename(sheet / f"f_{sc['id']}_{k}.png")
+            costs.add("parallax", calls=1, frames=rep["frames"], sec_per_frame=rep["sec_per_frame"])
+            print("CLIP", json.dumps({"id": sc["id"], **rep}))
+            if not raw.get("test") and not a.no_upload:
+                stg.ensure_dir(rel)
+                stg.put_file(out, f"{rel}/{sc['id']}.mp4")
+            done.append(sc["id"])
+        contact_sheet(sheet, max_tiles=min(10, len(list(sheet.glob("*.png")))))
+        (sheet / "collage.jpg").rename(sheet / "collage_parallax.jpg")
+        print("REVIEW", json.dumps(review.publish(sheet, f"parallax-{name}")))
+    print(f"parallax: {len(done)} clips -> Drive {rel}")
+    return 0
+
+
 def cmd_videogen_run(a):
     """Worker side of a footage job: gate the engine, run it on a Kaggle GPU, upload the clip to Drive output/footage/<name>/."""
     import tempfile
@@ -431,6 +481,8 @@ def cmd_videogen_run(a):
         if raw.get("peek"):
             return 0
         image = Path(fr["first"])
+    if raw.get("mode") == "parallax":   # 3D camera moves on stills, on this runner (Blender CPU), no Kaggle
+        return _parallax_run(raw, name, a)
     spec = videogen.build_spec(raw, image)
     if spec.get("mode") == "faceswap":   # test: reel video + a face from Drive (input/faces/...), result only to the review branch
         import subprocess
