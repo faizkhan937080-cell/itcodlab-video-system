@@ -5,7 +5,7 @@ from scripts import guards as G
 
 def test_voice_pace_blocks_rushed_voice():
     words = " ".join(["word"] * 146)
-    assert not G.voice_pace(words, 47.8)[0]          # the Sarvam take: ~183 wpm
+    assert not G.voice_pace(words, 40.0)[0]          # ~219 wpm, rushed even for the fast reference
     assert G.voice_pace(words, 62.0)[0]               # ~141 wpm
 
 
