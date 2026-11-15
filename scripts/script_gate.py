@@ -6,9 +6,9 @@ import statistics as st
 
 from .guards import MAX_WPM
 
-DEVICE = re.compile(r"\?|\b(but|until|then|except|instead|yet|never|only|without|why|what happens|here's)\b", re.I)
-NUM = re.compile(r"\b\d[\d,.]*\b|\b(?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|dozen|fifteen|twenty|thirty|forty|fifty|hundred|thousand|million|billion)\b", re.I)
-YOU = re.compile(r"\b(you|your|you're)\b", re.I)
+DEVICE = re.compile(r"\?|\b(but|until|then|except|instead|yet|never|only|without|why|what happens|here's|lekin|par|magar|phir|sirf|bina|kyun|kya|kab|kaise|asli|sabse)\b", re.I)
+NUM = re.compile(r"\b\d[\d,.]*\b|\b(?:two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|dozen|fifteen|twenty|thirty|forty|fifty|hundred|thousand|million|billion|teen|chaar|paanch|chhe|saat|aath|nau|das|dasvaan|aadha|sau|hazaar|lakh)\b", re.I)
+YOU = re.compile(r"\b(you|your|you're|aap|aapne|aapka|aapki|aapke|tum|tumhari)\b", re.I)
 
 
 def _sentences(text):

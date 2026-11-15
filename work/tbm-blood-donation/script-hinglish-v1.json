@@ -1,0 +1,78 @@
+{
+ "text": "Needle bahar nikli, aur aapne abhi aadha litre khoon de diya! Ab body ke andar kya hota hai? Ye aapke khoon ka lagbhag dasvaan hissa hai, par body ghabrati nahi, turant refill mode on kar deti hai! Pehle kuch ghanton mein, tissues se paani kheench kar naso mein bhar diya jaata hai, aur pressure sambhal jaata hai! Khoon ka paani wala hissa, yaani plasma, sirf ek-do din mein poora wapas aa jaata hai. Lekin asli game red cells ka hai. Aapki kidneys dekhti hain ki oxygen thodi kam hui, aur ek hormone chhodti hain, erythropoietin, jo bone marrow ko bolta hai: red cells, tez banao! Chaar se aath hafte mein red cells wapas normal ho jaate hain, par iron bharne mein kai mahine lag sakte hain. Aur sabse badi baat? Aapka ek donation teen logon ki jaan bacha sakta hai: red cells, plasma, aur platelets! Aapne last kab khoon diya tha? Comment karo, aur us dost ko bhejo jo abhi tak darta hai!",
+ "ref": {
+  "available": true,
+  "pass_used": "auto",
+  "coverage_ratio": 0.93,
+  "complete": true,
+  "words": 126,
+  "words_per_min_speaking": 187.4,
+  "words_per_min_overall": 140.7,
+  "speech_ratio": 0.751,
+  "pauses": {
+   "count_gt_0_5s": 8,
+   "mean_s": 1.22,
+   "max_s": 1.86
+  },
+  "sentences": {
+   "count": 10,
+   "words_mean": 12.6,
+   "words_median": 12.5,
+   "words_p90": 16.3
+  },
+  "questions_per_min": 0.0,
+  "exclamations_per_min": 0.0,
+  "numbers_per_min": 0.0,
+  "script_mix": {
+   "devanagari_share": 0.0,
+   "latin_share": 1.0
+  },
+  "second_person_per_100w": 6.35,
+  "first_person_per_100w": 0.0,
+  "fillers_per_100w": 0.0,
+  "cta_words": [],
+  "repeated_phrases": [],
+  "repeated_sentences": [],
+  "unique_sentence_share": 1.0,
+  "hook": {
+   "first_word_s": 0.0,
+   "words_in_first_3s": 10.0,
+   "words_in_first_5s": 16.0,
+   "first_12_words": "The moment the needle comes out your body begins replacing almost half"
+  },
+  "vocabulary_note": "roman",
+  "text": "The moment the needle comes out, your body begins replacing almost half a liter of blood. A typical donation takes about one-tenth of your total blood. Within hours, fluid moves from your tissues into your blood vessels to refill them. The liquid part of your blood, the plasma, is fully replaced within a day or two. Red blood cells take longer. Your kidneys sense the slight drop in oxygen and release a hormone called erythropoietin. It signals your bone marrow to produce red cells faster. In about four to eight weeks, they are back to normal. Replacing the iron those cells carried can take several months. Meanwhile, your donation is separated into red cells, plasma, and platelets and can help up to three different patients."
+ },
+ "facts": [
+  {
+   "number": "dasvaan",
+   "source": "https://www.webmd.com/a-to-z-guides/ss/slideshow-blood-donation-overview"
+  },
+  {
+   "number": "aadha",
+   "source": "https://www.blood.co.uk/the-donation-process/after-your-donation/how-your-body-replaces-blood/"
+  },
+  {
+   "number": "teen",
+   "source": "https://www.lifeservebloodcenter.org/whole-blood/"
+  },
+  {
+   "number": "chaar",
+   "source": "https://stanfordbloodcenter.org/pulse-spring23-what-really-happens-to-your-body-after-you-donate-blood-effects-risks-and-recovery/"
+  },
+  {
+   "number": "aath",
+   "source": "https://stanfordbloodcenter.org/pulse-spring23-what-really-happens-to-your-body-after-you-donate-blood-effects-risks-and-recovery/"
+  }
+ ],
+ "segments": [
+  "Needle bahar nikli, aur aapne abhi aadha litre khoon de diya! Ab body ke andar kya hota hai?",
+  "Ye aapke khoon ka lagbhag dasvaan hissa hai, par body ghabrati nahi, turant refill mode on kar deti hai!",
+  "Pehle kuch ghanton mein, tissues se paani kheench kar naso mein bhar diya jaata hai, aur pressure sambhal jaata hai!",
+  "Khoon ka paani wala hissa, yaani plasma, sirf ek-do din mein poora wapas aa jaata hai.",
+  "Lekin asli game red cells ka hai. Aapki kidneys dekhti hain ki oxygen thodi kam hui, aur ek hormone chhodti hain, erythropoietin, jo bone marrow ko bolta hai: red cells, tez banao!",
+  "Chaar se aath hafte mein red cells wapas normal ho jaate hain, par iron bharne mein kai mahine lag sakte hain.",
+  "Aur sabse badi baat? Aapka ek donation teen logon ki jaan bacha sakta hai: red cells, plasma, aur platelets!",
+  "Aapne last kab khoon diya tha? Comment karo, aur us dost ko bhejo jo abhi tak darta hai!"
+ ]
+}

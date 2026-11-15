@@ -1,0 +1,54 @@
+{
+ "provider": "sarvam",
+ "lang": "hi-IN",
+ "voice": "shubh",
+ "speed": 0.78,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Needle बाहर निकली, और आपने अभी आधा litre खून दे दिया! अब body के अंदर क्या होता है?",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s2",
+   "text": "ये आपके खून का लगभग दसवाँ हिस्सा है, पर body घबराती नहीं, तुरंत refill mode on कर देती है!",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s3",
+   "text": "पहले कुछ घंटों में, tissues से पानी खींचकर नसों में भर दिया जाता है, और pressure संभल जाता है!",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s4",
+   "text": "खून का पानी वाला हिस्सा, यानी plasma, सिर्फ़ एक-दो दिन में पूरा वापस आ जाता है।",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s5",
+   "text": "लेकिन असली game red cells का है। आपकी kidneys देखती हैं कि oxygen थोड़ी कम हुई, और एक hormone छोड़ती हैं, erythropoietin, जो bone marrow को बोलता है: red cells, तेज़ बनाओ!",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s6",
+   "text": "चार से आठ हफ़्ते में red cells वापस normal हो जाते हैं, पर iron भरने में कई महीने लग सकते हैं।",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s7",
+   "text": "और सबसे बड़ी बात? आपका एक donation तीन लोगों की जान बचा सकता है: red cells, plasma, और platelets!",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s8",
+   "text": "आपने last कब खून दिया था? Comment करो, और उस दोस्त को भेजो जो अभी तक डरता है!",
+   "pause_after_s": 0.45
+  }
+ ],
+ "fallback_voices": {
+  "google": "en-IN-Chirp3-HD-Charon"
+ }
+}
