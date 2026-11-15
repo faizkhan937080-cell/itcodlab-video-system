@@ -1,0 +1,1072 @@
+{
+ "title": "Khoon dene ke baad body mein kya hota hai",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "d1",
+   "duration_s": 5.171,
+   "template": "body",
+   "props": {
+    "shot": "needle",
+    "headline": "Aadha litre khoon\nnikal gaya",
+    "headline2": "Ab andar kya\nhota hai?",
+    "turn_at_s": 3.5,
+    "headline_at_s": 0.3
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "d2",
+   "duration_s": 6.412,
+   "template": "body",
+   "props": {
+    "shot": "bag",
+    "headline": "Sirf dasvaan hissa",
+    "headline_at_s": 1.16,
+    "turn_at_s": 4.21,
+    "badge": "Refill mode ON",
+    "badge_at_s": 4.65
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "d3",
+   "duration_s": 5.944,
+   "template": "body",
+   "props": {
+    "shot": "refill",
+    "headline": "Tissues se paani\nnaso mein",
+    "headline_at_s": 1.34,
+    "sub": "Pressure sambhal gaya",
+    "sub_at_s": 4.43
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "d4",
+   "duration_s": 5.403,
+   "template": "body",
+   "props": {
+    "shot": "plasma",
+    "headline": "Plasma: ek-do din",
+    "headline_at_s": 2.12
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "d5",
+   "duration_s": 11.582,
+   "template": "body",
+   "props": {
+    "shot": "epo",
+    "headline": "Kidneys bolti hain:\nred cells, tez banao!",
+    "headline_at_s": 2.6,
+    "turn_at_s": 5.87
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "d6",
+   "duration_s": 5.973,
+   "template": "body",
+   "props": {
+    "shot": "weeks",
+    "headline": "Red cells: 4-8 hafte\nIron: kai mahine",
+    "headline_at_s": 0.12
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "d7",
+   "duration_s": 6.933,
+   "template": "body",
+   "props": {
+    "shot": "three",
+    "headline": "Ek donation,\nteen jaan",
+    "headline_at_s": 1.78,
+    "turn_at_s": 4.76
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "d8",
+   "duration_s": 5.582,
+   "template": "body",
+   "props": {
+    "shot": "friend",
+    "headline": "Us dost ko bhejo\njo abhi tak darta hai",
+    "headline_at_s": 2.93
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  }
+ ],
+ "captions": [
+  {
+   "text": "Needle bahar nikli, aur aapne abhi aadha litre khoon de diya! Ab body ke andar kya hota hai?",
+   "start_s": 0.2,
+   "end_s": 5.046,
+   "words": [
+    {
+     "text": "Needle",
+     "start_s": 0.2,
+     "end_s": 0.604
+    },
+    {
+     "text": "bahar",
+     "start_s": 0.604,
+     "end_s": 0.94
+    },
+    {
+     "text": "nikli,",
+     "start_s": 0.94,
+     "end_s": 1.277
+    },
+    {
+     "text": "aur",
+     "start_s": 1.277,
+     "end_s": 1.479
+    },
+    {
+     "text": "aapne",
+     "start_s": 1.479,
+     "end_s": 1.815
+    },
+    {
+     "text": "abhi",
+     "start_s": 1.815,
+     "end_s": 2.085
+    },
+    {
+     "text": "aadha",
+     "start_s": 2.085,
+     "end_s": 2.421
+    },
+    {
+     "text": "litre",
+     "start_s": 2.421,
+     "end_s": 2.758
+    },
+    {
+     "text": "khoon",
+     "start_s": 2.758,
+     "end_s": 3.094
+    },
+    {
+     "text": "de",
+     "start_s": 3.094,
+     "end_s": 3.229
+    },
+    {
+     "text": "diya!",
+     "start_s": 3.229,
+     "end_s": 3.498
+    },
+    {
+     "text": "Ab",
+     "start_s": 3.498,
+     "end_s": 3.633
+    },
+    {
+     "text": "body",
+     "start_s": 3.633,
+     "end_s": 3.902
+    },
+    {
+     "text": "ke",
+     "start_s": 3.902,
+     "end_s": 4.036
+    },
+    {
+     "text": "andar",
+     "start_s": 4.036,
+     "end_s": 4.373
+    },
+    {
+     "text": "kya",
+     "start_s": 4.373,
+     "end_s": 4.575
+    },
+    {
+     "text": "hota",
+     "start_s": 4.575,
+     "end_s": 4.844
+    },
+    {
+     "text": "hai?",
+     "start_s": 4.844,
+     "end_s": 5.046
+    }
+   ]
+  },
+  {
+   "text": "Ye aapke khoon ka lagbhag dasvaan hissa hai, par body ghabrati nahi, turant refill mode on kar deti hai!",
+   "start_s": 5.296,
+   "end_s": 11.458,
+   "words": [
+    {
+     "text": "Ye",
+     "start_s": 5.296,
+     "end_s": 5.444
+    },
+    {
+     "text": "aapke",
+     "start_s": 5.444,
+     "end_s": 5.816
+    },
+    {
+     "text": "khoon",
+     "start_s": 5.816,
+     "end_s": 6.187
+    },
+    {
+     "text": "ka",
+     "start_s": 6.187,
+     "end_s": 6.335
+    },
+    {
+     "text": "lagbhag",
+     "start_s": 6.335,
+     "end_s": 6.855
+    },
+    {
+     "text": "dasvaan",
+     "start_s": 6.855,
+     "end_s": 7.375
+    },
+    {
+     "text": "hissa",
+     "start_s": 7.375,
+     "end_s": 7.746
+    },
+    {
+     "text": "hai,",
+     "start_s": 7.746,
+     "end_s": 7.969
+    },
+    {
+     "text": "par",
+     "start_s": 7.969,
+     "end_s": 8.191
+    },
+    {
+     "text": "body",
+     "start_s": 8.191,
+     "end_s": 8.488
+    },
+    {
+     "text": "ghabrati",
+     "start_s": 8.488,
+     "end_s": 9.082
+    },
+    {
+     "text": "nahi,",
+     "start_s": 9.082,
+     "end_s": 9.379
+    },
+    {
+     "text": "turant",
+     "start_s": 9.379,
+     "end_s": 9.825
+    },
+    {
+     "text": "refill",
+     "start_s": 9.825,
+     "end_s": 10.27
+    },
+    {
+     "text": "mode",
+     "start_s": 10.27,
+     "end_s": 10.567
+    },
+    {
+     "text": "on",
+     "start_s": 10.567,
+     "end_s": 10.716
+    },
+    {
+     "text": "kar",
+     "start_s": 10.716,
+     "end_s": 10.938
+    },
+    {
+     "text": "deti",
+     "start_s": 10.938,
+     "end_s": 11.235
+    },
+    {
+     "text": "hai!",
+     "start_s": 11.235,
+     "end_s": 11.458
+    }
+   ]
+  },
+  {
+   "text": "Pehle kuch ghanton mein, tissues se paani kheench kar naso mein bhar diya jaata hai, aur pressure sambhal jaata hai!",
+   "start_s": 11.708,
+   "end_s": 17.402,
+   "words": [
+    {
+     "text": "Pehle",
+     "start_s": 11.708,
+     "end_s": 12.011
+    },
+    {
+     "text": "kuch",
+     "start_s": 12.011,
+     "end_s": 12.253
+    },
+    {
+     "text": "ghanton",
+     "start_s": 12.253,
+     "end_s": 12.677
+    },
+    {
+     "text": "mein,",
+     "start_s": 12.677,
+     "end_s": 12.919
+    },
+    {
+     "text": "tissues",
+     "start_s": 12.919,
+     "end_s": 13.344
+    },
+    {
+     "text": "se",
+     "start_s": 13.344,
+     "end_s": 13.465
+    },
+    {
+     "text": "paani",
+     "start_s": 13.465,
+     "end_s": 13.768
+    },
+    {
+     "text": "kheench",
+     "start_s": 13.768,
+     "end_s": 14.192
+    },
+    {
+     "text": "kar",
+     "start_s": 14.192,
+     "end_s": 14.373
+    },
+    {
+     "text": "naso",
+     "start_s": 14.373,
+     "end_s": 14.616
+    },
+    {
+     "text": "mein",
+     "start_s": 14.616,
+     "end_s": 14.858
+    },
+    {
+     "text": "bhar",
+     "start_s": 14.858,
+     "end_s": 15.1
+    },
+    {
+     "text": "diya",
+     "start_s": 15.1,
+     "end_s": 15.342
+    },
+    {
+     "text": "jaata",
+     "start_s": 15.342,
+     "end_s": 15.645
+    },
+    {
+     "text": "hai,",
+     "start_s": 15.645,
+     "end_s": 15.827
+    },
+    {
+     "text": "aur",
+     "start_s": 15.827,
+     "end_s": 16.009
+    },
+    {
+     "text": "pressure",
+     "start_s": 16.009,
+     "end_s": 16.493
+    },
+    {
+     "text": "sambhal",
+     "start_s": 16.493,
+     "end_s": 16.917
+    },
+    {
+     "text": "jaata",
+     "start_s": 16.917,
+     "end_s": 17.22
+    },
+    {
+     "text": "hai!",
+     "start_s": 17.22,
+     "end_s": 17.402
+    }
+   ]
+  },
+  {
+   "text": "Khoon ka paani wala hissa, yaani plasma, sirf ek-do din mein poora wapas aa jaata hai.",
+   "start_s": 17.652,
+   "end_s": 22.805,
+   "words": [
+    {
+     "text": "Khoon",
+     "start_s": 17.652,
+     "end_s": 18.037
+    },
+    {
+     "text": "ka",
+     "start_s": 18.037,
+     "end_s": 18.19
+    },
+    {
+     "text": "paani",
+     "start_s": 18.19,
+     "end_s": 18.575
+    },
+    {
+     "text": "wala",
+     "start_s": 18.575,
+     "end_s": 18.883
+    },
+    {
+     "text": "hissa,",
+     "start_s": 18.883,
+     "end_s": 19.267
+    },
+    {
+     "text": "yaani",
+     "start_s": 19.267,
+     "end_s": 19.652
+    },
+    {
+     "text": "plasma,",
+     "start_s": 19.652,
+     "end_s": 20.113
+    },
+    {
+     "text": "sirf",
+     "start_s": 20.113,
+     "end_s": 20.421
+    },
+    {
+     "text": "ek-do",
+     "start_s": 20.421,
+     "end_s": 20.728
+    },
+    {
+     "text": "din",
+     "start_s": 20.728,
+     "end_s": 20.959
+    },
+    {
+     "text": "mein",
+     "start_s": 20.959,
+     "end_s": 21.267
+    },
+    {
+     "text": "poora",
+     "start_s": 21.267,
+     "end_s": 21.651
+    },
+    {
+     "text": "wapas",
+     "start_s": 21.651,
+     "end_s": 22.036
+    },
+    {
+     "text": "aa",
+     "start_s": 22.036,
+     "end_s": 22.19
+    },
+    {
+     "text": "jaata",
+     "start_s": 22.19,
+     "end_s": 22.574
+    },
+    {
+     "text": "hai.",
+     "start_s": 22.574,
+     "end_s": 22.805
+    }
+   ]
+  },
+  {
+   "text": "Lekin asli game red cells ka hai. Aapki kidneys dekhti hain ki oxygen thodi kam hui, aur ek hormone chhodti hain, erythropoietin, jo bone marrow ko bolta hai: red cells, tez banao!",
+   "start_s": 23.055,
+   "end_s": 34.387,
+   "words": [
+    {
+     "text": "Lekin",
+     "start_s": 23.055,
+     "end_s": 23.454
+    },
+    {
+     "text": "asli",
+     "start_s": 23.454,
+     "end_s": 23.773
+    },
+    {
+     "text": "game",
+     "start_s": 23.773,
+     "end_s": 24.092
+    },
+    {
+     "text": "red",
+     "start_s": 24.092,
+     "end_s": 24.332
+    },
+    {
+     "text": "cells",
+     "start_s": 24.332,
+     "end_s": 24.731
+    },
+    {
+     "text": "ka",
+     "start_s": 24.731,
+     "end_s": 24.89
+    },
+    {
+     "text": "hai.",
+     "start_s": 24.89,
+     "end_s": 25.13
+    },
+    {
+     "text": "Aapki",
+     "start_s": 25.13,
+     "end_s": 25.529
+    },
+    {
+     "text": "kidneys",
+     "start_s": 25.529,
+     "end_s": 26.088
+    },
+    {
+     "text": "dekhti",
+     "start_s": 26.088,
+     "end_s": 26.566
+    },
+    {
+     "text": "hain",
+     "start_s": 26.566,
+     "end_s": 26.886
+    },
+    {
+     "text": "ki",
+     "start_s": 26.886,
+     "end_s": 27.045
+    },
+    {
+     "text": "oxygen",
+     "start_s": 27.045,
+     "end_s": 27.524
+    },
+    {
+     "text": "thodi",
+     "start_s": 27.524,
+     "end_s": 27.923
+    },
+    {
+     "text": "kam",
+     "start_s": 27.923,
+     "end_s": 28.162
+    },
+    {
+     "text": "hui,",
+     "start_s": 28.162,
+     "end_s": 28.402
+    },
+    {
+     "text": "aur",
+     "start_s": 28.402,
+     "end_s": 28.641
+    },
+    {
+     "text": "ek",
+     "start_s": 28.641,
+     "end_s": 28.801
+    },
+    {
+     "text": "hormone",
+     "start_s": 28.801,
+     "end_s": 29.359
+    },
+    {
+     "text": "chhodti",
+     "start_s": 29.359,
+     "end_s": 29.918
+    },
+    {
+     "text": "hain,",
+     "start_s": 29.918,
+     "end_s": 30.237
+    },
+    {
+     "text": "erythropoietin,",
+     "start_s": 30.237,
+     "end_s": 31.354
+    },
+    {
+     "text": "jo",
+     "start_s": 31.354,
+     "end_s": 31.514
+    },
+    {
+     "text": "bone",
+     "start_s": 31.514,
+     "end_s": 31.833
+    },
+    {
+     "text": "marrow",
+     "start_s": 31.833,
+     "end_s": 32.312
+    },
+    {
+     "text": "ko",
+     "start_s": 32.312,
+     "end_s": 32.472
+    },
+    {
+     "text": "bolta",
+     "start_s": 32.472,
+     "end_s": 32.871
+    },
+    {
+     "text": "hai:",
+     "start_s": 32.871,
+     "end_s": 33.11
+    },
+    {
+     "text": "red",
+     "start_s": 33.11,
+     "end_s": 33.35
+    },
+    {
+     "text": "cells,",
+     "start_s": 33.35,
+     "end_s": 33.749
+    },
+    {
+     "text": "tez",
+     "start_s": 33.749,
+     "end_s": 33.988
+    },
+    {
+     "text": "banao!",
+     "start_s": 33.988,
+     "end_s": 34.387
+    }
+   ]
+  },
+  {
+   "text": "Chaar se aath hafte mein red cells wapas normal ho jaate hain, par iron bharne mein kai mahine lag sakte hain.",
+   "start_s": 34.637,
+   "end_s": 40.36,
+   "words": [
+    {
+     "text": "Chaar",
+     "start_s": 34.637,
+     "end_s": 34.962
+    },
+    {
+     "text": "se",
+     "start_s": 34.962,
+     "end_s": 35.092
+    },
+    {
+     "text": "aath",
+     "start_s": 35.092,
+     "end_s": 35.352
+    },
+    {
+     "text": "hafte",
+     "start_s": 35.352,
+     "end_s": 35.678
+    },
+    {
+     "text": "mein",
+     "start_s": 35.678,
+     "end_s": 35.938
+    },
+    {
+     "text": "red",
+     "start_s": 35.938,
+     "end_s": 36.133
+    },
+    {
+     "text": "cells",
+     "start_s": 36.133,
+     "end_s": 36.458
+    },
+    {
+     "text": "wapas",
+     "start_s": 36.458,
+     "end_s": 36.783
+    },
+    {
+     "text": "normal",
+     "start_s": 36.783,
+     "end_s": 37.173
+    },
+    {
+     "text": "ho",
+     "start_s": 37.173,
+     "end_s": 37.303
+    },
+    {
+     "text": "jaate",
+     "start_s": 37.303,
+     "end_s": 37.629
+    },
+    {
+     "text": "hain,",
+     "start_s": 37.629,
+     "end_s": 37.889
+    },
+    {
+     "text": "par",
+     "start_s": 37.889,
+     "end_s": 38.084
+    },
+    {
+     "text": "iron",
+     "start_s": 38.084,
+     "end_s": 38.344
+    },
+    {
+     "text": "bharne",
+     "start_s": 38.344,
+     "end_s": 38.734
+    },
+    {
+     "text": "mein",
+     "start_s": 38.734,
+     "end_s": 38.994
+    },
+    {
+     "text": "kai",
+     "start_s": 38.994,
+     "end_s": 39.189
+    },
+    {
+     "text": "mahine",
+     "start_s": 39.189,
+     "end_s": 39.58
+    },
+    {
+     "text": "lag",
+     "start_s": 39.58,
+     "end_s": 39.775
+    },
+    {
+     "text": "sakte",
+     "start_s": 39.775,
+     "end_s": 40.1
+    },
+    {
+     "text": "hain.",
+     "start_s": 40.1,
+     "end_s": 40.36
+    }
+   ]
+  },
+  {
+   "text": "Aur sabse badi baat? Aapka ek donation teen logon ki jaan bacha sakta hai: red cells, plasma, aur platelets!",
+   "start_s": 40.61,
+   "end_s": 47.293,
+   "words": [
+    {
+     "text": "Aur",
+     "start_s": 40.61,
+     "end_s": 40.846
+    },
+    {
+     "text": "sabse",
+     "start_s": 40.846,
+     "end_s": 41.239
+    },
+    {
+     "text": "badi",
+     "start_s": 41.239,
+     "end_s": 41.553
+    },
+    {
+     "text": "baat?",
+     "start_s": 41.553,
+     "end_s": 41.868
+    },
+    {
+     "text": "Aapka",
+     "start_s": 41.868,
+     "end_s": 42.261
+    },
+    {
+     "text": "ek",
+     "start_s": 42.261,
+     "end_s": 42.418
+    },
+    {
+     "text": "donation",
+     "start_s": 42.418,
+     "end_s": 43.047
+    },
+    {
+     "text": "teen",
+     "start_s": 43.047,
+     "end_s": 43.362
+    },
+    {
+     "text": "logon",
+     "start_s": 43.362,
+     "end_s": 43.755
+    },
+    {
+     "text": "ki",
+     "start_s": 43.755,
+     "end_s": 43.912
+    },
+    {
+     "text": "jaan",
+     "start_s": 43.912,
+     "end_s": 44.227
+    },
+    {
+     "text": "bacha",
+     "start_s": 44.227,
+     "end_s": 44.62
+    },
+    {
+     "text": "sakta",
+     "start_s": 44.62,
+     "end_s": 45.013
+    },
+    {
+     "text": "hai:",
+     "start_s": 45.013,
+     "end_s": 45.249
+    },
+    {
+     "text": "red",
+     "start_s": 45.249,
+     "end_s": 45.485
+    },
+    {
+     "text": "cells,",
+     "start_s": 45.485,
+     "end_s": 45.878
+    },
+    {
+     "text": "plasma,",
+     "start_s": 45.878,
+     "end_s": 46.35
+    },
+    {
+     "text": "aur",
+     "start_s": 46.35,
+     "end_s": 46.585
+    },
+    {
+     "text": "platelets!",
+     "start_s": 46.585,
+     "end_s": 47.293
+    }
+   ]
+  },
+  {
+   "text": "Aapne last kab khoon diya tha? Comment karo, aur us dost ko bhejo jo abhi tak darta hai!",
+   "start_s": 47.543,
+   "end_s": 52.559,
+   "words": [
+    {
+     "text": "Aapne",
+     "start_s": 47.543,
+     "end_s": 47.912
+    },
+    {
+     "text": "last",
+     "start_s": 47.912,
+     "end_s": 48.207
+    },
+    {
+     "text": "kab",
+     "start_s": 48.207,
+     "end_s": 48.428
+    },
+    {
+     "text": "khoon",
+     "start_s": 48.428,
+     "end_s": 48.797
+    },
+    {
+     "text": "diya",
+     "start_s": 48.797,
+     "end_s": 49.092
+    },
+    {
+     "text": "tha?",
+     "start_s": 49.092,
+     "end_s": 49.313
+    },
+    {
+     "text": "Comment",
+     "start_s": 49.313,
+     "end_s": 49.83
+    },
+    {
+     "text": "karo,",
+     "start_s": 49.83,
+     "end_s": 50.125
+    },
+    {
+     "text": "aur",
+     "start_s": 50.125,
+     "end_s": 50.346
+    },
+    {
+     "text": "us",
+     "start_s": 50.346,
+     "end_s": 50.494
+    },
+    {
+     "text": "dost",
+     "start_s": 50.494,
+     "end_s": 50.789
+    },
+    {
+     "text": "ko",
+     "start_s": 50.789,
+     "end_s": 50.936
+    },
+    {
+     "text": "bhejo",
+     "start_s": 50.936,
+     "end_s": 51.305
+    },
+    {
+     "text": "jo",
+     "start_s": 51.305,
+     "end_s": 51.453
+    },
+    {
+     "text": "abhi",
+     "start_s": 51.453,
+     "end_s": 51.748
+    },
+    {
+     "text": "tak",
+     "start_s": 51.748,
+     "end_s": 51.969
+    },
+    {
+     "text": "darta",
+     "start_s": 51.969,
+     "end_s": 52.338
+    },
+    {
+     "text": "hai!",
+     "start_s": 52.338,
+     "end_s": 52.559
+    }
+   ]
+  }
+ ],
+ "caption_style": {
+  "look": "ext",
+  "component": "caption-dim-progress",
+  "font": "Montserrat",
+  "y": 0.8,
+  "max_width": 0.86,
+  "props": {
+   "fontSize": 84,
+   "fontWeight": 600,
+   "color": "#F4EFC6",
+   "dimOpacity": 1,
+   "shadow": true,
+   "combineTokensWithinMilliseconds": 1400
+  }
+ },
+ "audio": [
+  {
+   "src": "output/voice/tbm-blood-fast-e/tbm-blood-fast-e.wav",
+   "at_s": 0,
+   "role": "voice",
+   "volume": 1.0
+  },
+  {
+   "src": "assets/library/music/tbm-dark-ambient.mp3",
+   "at_s": 0,
+   "duration_s": 53.0,
+   "role": "music",
+   "volume": 0.3,
+   "fade_in_s": 1.0,
+   "fade_out_s": 2.0,
+   "duck": [
+    {
+     "from_s": 0.2,
+     "to_s": 5.046,
+     "gain": 0.45
+    },
+    {
+     "from_s": 5.296,
+     "to_s": 11.458,
+     "gain": 0.45
+    },
+    {
+     "from_s": 11.708,
+     "to_s": 17.402,
+     "gain": 0.45
+    },
+    {
+     "from_s": 17.652,
+     "to_s": 22.805,
+     "gain": 0.45
+    },
+    {
+     "from_s": 23.055,
+     "to_s": 34.387,
+     "gain": 0.45
+    },
+    {
+     "from_s": 34.637,
+     "to_s": 40.36,
+     "gain": 0.45
+    },
+    {
+     "from_s": 40.61,
+     "to_s": 47.293,
+     "gain": 0.45
+    },
+    {
+     "from_s": 47.543,
+     "to_s": 52.559,
+     "gain": 0.45
+    }
+   ]
+  }
+ ],
+ "audio_target_lufs": -14,
+ "vignette": 0.22,
+ "grain": false
+}
