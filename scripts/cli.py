@@ -197,6 +197,16 @@ def cmd_gate(a):
         ok, m = g.motion_honest(json.loads(Path(a.file).read_text(encoding="utf-8")), a.faiz_ok)
     elif k == "looked":
         ok, m = (g.record_look(a.file, a.score, a.note) and True, f"recorded look for {a.file}: {a.score}/10") if a.score is not None else g.looked(a.file)
+    elif k == "shots":
+        from . import shotbook
+        d = json.loads(Path(a.file).read_text(encoding="utf-8"))
+        ok, bad = shotbook.validate(d["shots"], d.get("target_s"), d.get("cuts_per_min"))
+        m = "shot book ok" if ok else "; ".join(bad)
+    elif k == "script":
+        from . import script_gate
+        d = json.loads(Path(a.file).read_text(encoding="utf-8"))
+        ok, bad = script_gate.check(d["text"], a.seconds, d["ref"], d.get("facts"))
+        m = "script gate ok" if ok else "; ".join(bad)
     elif k == "waiting":
         g.pending_add(a.file, a.note or a.file); ok, m = True, f"waiting: {a.file}"
     elif k == "approved":
