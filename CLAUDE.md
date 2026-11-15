@@ -8,6 +8,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
 0b. Video work: `rulebooks/23-protocol.md` (look before sending, full reference record, real-clip tests, sample first).
 -1. New container/session? `./run guard-install` once (hooks must fire from any folder). `./run check` is automatic; fix what it prints.
 0c. Before choosing HOW to build anything: `./run tools` (what we own). Skipping an owned tool needs a stated reason; zoom/pan on stills is not motion graphics.
+0d. Before saying a video is ready: `./run gate-check voice|prompts|motion|looked ...` (scripts/guards.py). Style comes from `config/style-cards/<creator>.json`, not from copying the reference.
 0. Run `./run mem brief` (state + index). Before asking Faiz anything: `./run mem find <word>`.
 1. Read `rulebooks/00-core.md` and `lessons/core.md`. Problem that comes back? `lessons/toolbook.md`.
 2. Then read ONLY the rulebook + lessons for your task type:

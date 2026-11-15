@@ -1,0 +1,66 @@
+{
+ "name": "thebrainmaze",
+ "from_ref": "reel-Dfm-f2iDcKc",
+ "look": {
+  "subject_rules": [
+   "always inside the body, macro, organic",
+   "never objects like cups or cigarettes on tables"
+  ],
+  "materials": [
+   "photoreal wet glossy pink-red tissue with fine blood vessels and fine hairs"
+  ],
+  "light": "warm dim light, soft subsurface glow, shallow depth of field",
+  "camera": "close macro lens, slow push-in",
+  "smoke_or_fx": "thin translucent grey wisps of smoke curling through the passage",
+  "finish": "medical CGI, ultra detailed",
+  "never": [
+   "cartoon",
+   "flat colours",
+   "text",
+   "logo",
+   "hands",
+   "people faces",
+   "objects on a table"
+  ]
+ },
+ "palette": [
+  "#9D564F",
+  "#703833",
+  "#874B46",
+  "#93534F",
+  "#464F53",
+  "#99544D"
+ ],
+ "brightness_mean": 0.375,
+ "cut_rhythm": {
+  "cuts_per_min": 5.86,
+  "transitions": {
+   "hard_cut": 14
+  }
+ },
+ "motion": {
+  "slow": 6,
+  "static": 8,
+  "medium": 1
+ },
+ "captions": {
+  "font": "cream, two lines, centred, y=0.77, dark outline, sans",
+  "logo": "TBM brain logo top-left with white vertical line",
+  "counter": "big yellow count-up number for stats"
+ },
+ "script": {
+  "wpm_speaking": 163.3,
+  "person": "second",
+  "questions": false,
+  "cta": false
+ },
+ "voice": {
+  "wpm_target": 163,
+  "expressiveness": "very expressive"
+ },
+ "sound": {
+  "bpm": 78.3,
+  "lufs": -18.2,
+  "voice_over_music_lu": 7.8
+ }
+}

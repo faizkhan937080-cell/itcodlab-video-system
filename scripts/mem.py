@@ -124,4 +124,11 @@ def brief():
         p = MEM / name
         if p.exists():
             parts.append(p.read_text(encoding="utf-8").rstrip())
+    try:
+        from .guards import brief_lines
+        extra = brief_lines()
+        if extra:
+            parts.append("\n".join(extra))
+    except Exception:   # noqa: BLE001  (a broken ledger must never stop the brief)
+        pass
     return "\n\n".join(parts)

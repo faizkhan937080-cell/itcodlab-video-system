@@ -98,6 +98,8 @@ def make(spec, out_dir, log=print, fetch=None, put=None):
         n_tok, lost = cut_report(p["prompt"])
         if lost:
             log(f"PROMPT_CUT {p['id']}: {n_tok} tokens, CLIP drops: ...{lost[:80]}")
+            if not img.exists() and not spec.get("allow_cut"):
+                raise ValueError(f"prompt {p['id']} is {n_tok} tokens: the model would drop the end ({lost[:60]}...). Shorten it (guards.prompts_fit)")
         if not img.exists():
             raw, eng = one(p["prompt"], w, h, seed + i)
             Image.open(io.BytesIO(raw)).convert("RGB").save(img)

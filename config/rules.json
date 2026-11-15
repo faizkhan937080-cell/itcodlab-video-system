@@ -154,5 +154,35 @@
   "rule": "./run tools before any build; say why an owned tool is skipped; zoom on stills is never called 3D motion graphics",
   "enforcer": "C: ./run tools exists and is in CLAUDE.md step 0c (tests/test_inventory.py)",
   "added": "2026-11-14"
+ },
+ {
+  "id": "voice_intelligible",
+  "rule": "./run gate-check voice <script.txt> --seconds N blocks above 165 wpm",
+  "enforcer": "C: guards.voice_pace (tests/test_guards.py)",
+  "added": "2026-11-15"
+ },
+ {
+  "id": "prompts_fit_model",
+  "rule": "stills_api raises on a cut prompt; style_card.shot_prompt writes subject-first prompts that fit",
+  "enforcer": "C: guards.prompts_fit + stills_api raise (tests/test_guards.py)",
+  "added": "2026-11-15"
+ },
+ {
+  "id": "no_poor_output",
+  "rule": "./run gate-check looked <job> --score N after Checker looked; below 7 of 10 = not delivered; motion claim check",
+  "enforcer": "C: guards.looked + guards.motion_honest (tests/test_guards.py)",
+  "added": "2026-11-15"
+ },
+ {
+  "id": "gates_never_stall",
+  "rule": "./run gate-check waiting|approved <key>; mem brief prints WAITING/STALLED and ALREADY APPROVED",
+  "enforcer": "C: guards.pending/approved + mem brief (tests/test_guards.py)",
+  "added": "2026-11-15"
+ },
+ {
+  "id": "style_not_copy",
+  "rule": "config/style-cards/<creator>.json = style rules; new topics built from the card via style_card.shot_prompt, reference copy only when Faiz says clone",
+  "enforcer": "C: style_card.shot_prompt (tests/test_guards.py)",
+  "added": "2026-11-15"
  }
 ]

@@ -185,6 +185,28 @@ def cmd_tools(a):
     return 0
 
 
+def cmd_gate(a):
+    """Repeat-proofing checks. gate-check <kind> ... | looked | waiting | approved"""
+    from . import guards as g
+    k = a.kind
+    if k == "voice":
+        ok, m = g.voice_pace(Path(a.file).read_text(encoding="utf-8"), a.seconds)
+    elif k == "prompts":
+        ok, m = g.prompts_fit(json.loads(Path(a.file).read_text(encoding="utf-8"))["prompts"])
+    elif k == "motion":
+        ok, m = g.motion_honest(json.loads(Path(a.file).read_text(encoding="utf-8")), a.faiz_ok)
+    elif k == "looked":
+        ok, m = (g.record_look(a.file, a.score, a.note) and True, f"recorded look for {a.file}: {a.score}/10") if a.score is not None else g.looked(a.file)
+    elif k == "waiting":
+        g.pending_add(a.file, a.note or a.file); ok, m = True, f"waiting: {a.file}"
+    elif k == "approved":
+        g.approved_add(a.file, a.note or a.file); ok, m = True, f"approved (never ask again): {a.file}"
+    else:
+        ok, m = False, "unknown kind"
+    print(("OK " if ok else "BLOCKED ") + m)
+    return 0 if ok else 3
+
+
 def cmd_learn_yt(a):
     """Worker only: description, chapters and spoken words of YouTube videos Faiz gives for learning."""
     from . import yt_learn
@@ -1308,6 +1330,15 @@ def build_parser():
     s.add_argument("--saw", required=True)
     s.add_argument("--out")
     s.set_defaults(fn=cmd_look_ok)
+
+    s = sub.add_parser("gate-check", help="repeat-proofing: voice | prompts | motion | looked | waiting | approved")
+    s.add_argument("kind")
+    s.add_argument("file", help="file or key")
+    s.add_argument("--seconds", type=float, default=0)
+    s.add_argument("--score", type=int)
+    s.add_argument("--note", default="")
+    s.add_argument("--faiz-ok", action="store_true")
+    s.set_defaults(fn=cmd_gate)
 
     s = sub.add_parser("tools", help="inventory of every tool/model/runner we own (read before building)")
     s.set_defaults(fn=cmd_tools)
