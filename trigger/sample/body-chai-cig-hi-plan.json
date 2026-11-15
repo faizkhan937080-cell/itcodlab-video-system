@@ -1,0 +1,1093 @@
+{
+ "title": "Chai + cigarette: andar kya hota hai",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "b1",
+   "duration_s": 9.46,
+   "template": "body",
+   "props": {
+    "shot": "hook",
+    "headline": "Chai + Cigarette",
+    "headline2": "Andar kya\nhota hai?",
+    "turn_at_s": 5.49
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b2",
+   "duration_s": 8.146,
+   "template": "body",
+   "props": {
+    "shot": "scald",
+    "headline": "Bahut garam chai\nlining jala deti hai",
+    "headline_at_s": 4.36
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b3",
+   "duration_s": 6.529,
+   "template": "body",
+   "props": {
+    "shot": "smoke_settle",
+    "headline": "Dhuan zakhm par\nbaith jaata hai",
+    "headline_at_s": 4.98
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b4",
+   "duration_s": 11.199,
+   "template": "body",
+   "props": {
+    "shot": "study",
+    "big": "4,00,000+",
+    "count_to": 400000,
+    "count_suffix": "+",
+    "locale": "en-IN",
+    "big_at_s": 0.22,
+    "turn_at_s": 8.86,
+    "labels": [
+     "Dono aadat nahi",
+     "Bahut garam chai + roz smoking"
+    ],
+    "headline": "Cancer ka risk\nlagbhag double",
+    "headline_at_s": 8.86
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b5",
+   "duration_s": 8.658,
+   "template": "body",
+   "props": {
+    "shot": "heart",
+    "headline": "Dil par\ndouble jhatka",
+    "headline_at_s": 6.27,
+    "chips": [
+     {
+      "text": "Nicotine: pulse ↑",
+      "at_s": 1.19
+     },
+     {
+      "text": "Caffeine: BP ↑",
+      "at_s": 3.35
+     }
+    ]
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b6",
+   "duration_s": 7.787,
+   "template": "body",
+   "props": {
+    "shot": "liver",
+    "headline": "Asli jaal",
+    "headline_at_s": 0.78,
+    "turn_at_s": 5.23,
+    "sub": "Smoker ka caffeine jaldi khatm",
+    "sub_at_s": 3.09
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b7",
+   "duration_s": 8.303,
+   "template": "body",
+   "props": {
+    "shot": "cool",
+    "headline": "Chai thandi karo.\nCigarette chhodo.",
+    "headline_at_s": 2.21,
+    "turn_at_s": 4.02,
+    "labels": [
+     "Thandi hone do"
+    ],
+    "badge": "Food pipe theek hone lagti hai",
+    "badge_at_s": 5.28
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b8",
+   "duration_s": 4.118,
+   "template": "body",
+   "props": {
+    "shot": "end",
+    "headline": "Us dost ko bhejo\njo dono karta hai",
+    "headline_at_s": 0.3
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  }
+ ],
+ "captions": [
+  {
+   "text": "Chai ki ek chuski. Cigarette ka ek kash. Aapko lagta hai aap relax kar rahe ho... lekin body ke andar, chupchaap kuch galat ho raha hai.",
+   "start_s": 0.2,
+   "end_s": 9.21,
+   "words": [
+    {
+     "text": "Chai",
+     "start_s": 0.2,
+     "end_s": 0.547
+    },
+    {
+     "text": "ki",
+     "start_s": 0.547,
+     "end_s": 0.72
+    },
+    {
+     "text": "ek",
+     "start_s": 0.72,
+     "end_s": 0.893
+    },
+    {
+     "text": "chuski.",
+     "start_s": 0.893,
+     "end_s": 1.413
+    },
+    {
+     "text": "Cigarette",
+     "start_s": 1.413,
+     "end_s": 2.193
+    },
+    {
+     "text": "ka",
+     "start_s": 2.193,
+     "end_s": 2.366
+    },
+    {
+     "text": "ek",
+     "start_s": 2.366,
+     "end_s": 2.539
+    },
+    {
+     "text": "kash.",
+     "start_s": 2.539,
+     "end_s": 2.886
+    },
+    {
+     "text": "Aapko",
+     "start_s": 2.886,
+     "end_s": 3.319
+    },
+    {
+     "text": "lagta",
+     "start_s": 3.319,
+     "end_s": 3.752
+    },
+    {
+     "text": "hai",
+     "start_s": 3.752,
+     "end_s": 4.012
+    },
+    {
+     "text": "aap",
+     "start_s": 4.012,
+     "end_s": 4.272
+    },
+    {
+     "text": "relax",
+     "start_s": 4.272,
+     "end_s": 4.705
+    },
+    {
+     "text": "kar",
+     "start_s": 4.705,
+     "end_s": 4.965
+    },
+    {
+     "text": "rahe",
+     "start_s": 4.965,
+     "end_s": 5.311
+    },
+    {
+     "text": "ho...",
+     "start_s": 5.311,
+     "end_s": 5.485
+    },
+    {
+     "text": "lekin",
+     "start_s": 5.485,
+     "end_s": 5.918
+    },
+    {
+     "text": "body",
+     "start_s": 5.918,
+     "end_s": 6.264
+    },
+    {
+     "text": "ke",
+     "start_s": 6.264,
+     "end_s": 6.438
+    },
+    {
+     "text": "andar,",
+     "start_s": 6.438,
+     "end_s": 6.871
+    },
+    {
+     "text": "chupchaap",
+     "start_s": 6.871,
+     "end_s": 7.651
+    },
+    {
+     "text": "kuch",
+     "start_s": 7.651,
+     "end_s": 7.997
+    },
+    {
+     "text": "galat",
+     "start_s": 7.997,
+     "end_s": 8.43
+    },
+    {
+     "text": "ho",
+     "start_s": 8.43,
+     "end_s": 8.604
+    },
+    {
+     "text": "raha",
+     "start_s": 8.604,
+     "end_s": 8.95
+    },
+    {
+     "text": "hai.",
+     "start_s": 8.95,
+     "end_s": 9.21
+    }
+   ]
+  },
+  {
+   "text": "Painsath degree se zyada garam chai sirf gala nahi sekti. Wo aapki food pipe ki nazuk lining ko jala deti hai.",
+   "start_s": 9.71,
+   "end_s": 17.406,
+   "words": [
+    {
+     "text": "Painsath",
+     "start_s": 9.71,
+     "end_s": 10.41
+    },
+    {
+     "text": "degree",
+     "start_s": 10.41,
+     "end_s": 10.934
+    },
+    {
+     "text": "se",
+     "start_s": 10.934,
+     "end_s": 11.109
+    },
+    {
+     "text": "zyada",
+     "start_s": 11.109,
+     "end_s": 11.547
+    },
+    {
+     "text": "garam",
+     "start_s": 11.547,
+     "end_s": 11.984
+    },
+    {
+     "text": "chai",
+     "start_s": 11.984,
+     "end_s": 12.334
+    },
+    {
+     "text": "sirf",
+     "start_s": 12.334,
+     "end_s": 12.683
+    },
+    {
+     "text": "gala",
+     "start_s": 12.683,
+     "end_s": 13.033
+    },
+    {
+     "text": "nahi",
+     "start_s": 13.033,
+     "end_s": 13.383
+    },
+    {
+     "text": "sekti.",
+     "start_s": 13.383,
+     "end_s": 13.82
+    },
+    {
+     "text": "Wo",
+     "start_s": 13.82,
+     "end_s": 13.995
+    },
+    {
+     "text": "aapki",
+     "start_s": 13.995,
+     "end_s": 14.433
+    },
+    {
+     "text": "food",
+     "start_s": 14.433,
+     "end_s": 14.782
+    },
+    {
+     "text": "pipe",
+     "start_s": 14.782,
+     "end_s": 15.132
+    },
+    {
+     "text": "ki",
+     "start_s": 15.132,
+     "end_s": 15.307
+    },
+    {
+     "text": "nazuk",
+     "start_s": 15.307,
+     "end_s": 15.744
+    },
+    {
+     "text": "lining",
+     "start_s": 15.744,
+     "end_s": 16.269
+    },
+    {
+     "text": "ko",
+     "start_s": 16.269,
+     "end_s": 16.444
+    },
+    {
+     "text": "jala",
+     "start_s": 16.444,
+     "end_s": 16.794
+    },
+    {
+     "text": "deti",
+     "start_s": 16.794,
+     "end_s": 17.144
+    },
+    {
+     "text": "hai.",
+     "start_s": 17.144,
+     "end_s": 17.406
+    }
+   ]
+  },
+  {
+   "text": "Aur theek usi waqt, dhuan aata hai... aur usi zakhmi parat par baith jaata hai.",
+   "start_s": 17.806,
+   "end_s": 23.91,
+   "words": [
+    {
+     "text": "Aur",
+     "start_s": 17.806,
+     "end_s": 18.111
+    },
+    {
+     "text": "theek",
+     "start_s": 18.111,
+     "end_s": 18.62
+    },
+    {
+     "text": "usi",
+     "start_s": 18.62,
+     "end_s": 18.925
+    },
+    {
+     "text": "waqt,",
+     "start_s": 18.925,
+     "end_s": 19.332
+    },
+    {
+     "text": "dhuan",
+     "start_s": 19.332,
+     "end_s": 19.841
+    },
+    {
+     "text": "aata",
+     "start_s": 19.841,
+     "end_s": 20.248
+    },
+    {
+     "text": "hai...",
+     "start_s": 20.248,
+     "end_s": 20.553
+    },
+    {
+     "text": "aur",
+     "start_s": 20.553,
+     "end_s": 20.858
+    },
+    {
+     "text": "usi",
+     "start_s": 20.858,
+     "end_s": 21.163
+    },
+    {
+     "text": "zakhmi",
+     "start_s": 21.163,
+     "end_s": 21.774
+    },
+    {
+     "text": "parat",
+     "start_s": 21.774,
+     "end_s": 22.282
+    },
+    {
+     "text": "par",
+     "start_s": 22.282,
+     "end_s": 22.587
+    },
+    {
+     "text": "baith",
+     "start_s": 22.587,
+     "end_s": 23.096
+    },
+    {
+     "text": "jaata",
+     "start_s": 23.096,
+     "end_s": 23.605
+    },
+    {
+     "text": "hai.",
+     "start_s": 23.605,
+     "end_s": 23.91
+    }
+   ]
+  },
+  {
+   "text": "Chaar lakh se zyada logon par hui ek study mein ye mila. Bahut garam chai, aur roz ki smoking, food pipe ke cancer ka risk lagbhag double kar deti hai.",
+   "start_s": 24.36,
+   "end_s": 35.084,
+   "words": [
+    {
+     "text": "Chaar",
+     "start_s": 24.36,
+     "end_s": 24.814
+    },
+    {
+     "text": "lakh",
+     "start_s": 24.814,
+     "end_s": 25.178
+    },
+    {
+     "text": "se",
+     "start_s": 25.178,
+     "end_s": 25.36
+    },
+    {
+     "text": "zyada",
+     "start_s": 25.36,
+     "end_s": 25.814
+    },
+    {
+     "text": "logon",
+     "start_s": 25.814,
+     "end_s": 26.269
+    },
+    {
+     "text": "par",
+     "start_s": 26.269,
+     "end_s": 26.541
+    },
+    {
+     "text": "hui",
+     "start_s": 26.541,
+     "end_s": 26.814
+    },
+    {
+     "text": "ek",
+     "start_s": 26.814,
+     "end_s": 26.996
+    },
+    {
+     "text": "study",
+     "start_s": 26.996,
+     "end_s": 27.45
+    },
+    {
+     "text": "mein",
+     "start_s": 27.45,
+     "end_s": 27.813
+    },
+    {
+     "text": "ye",
+     "start_s": 27.813,
+     "end_s": 27.995
+    },
+    {
+     "text": "mila.",
+     "start_s": 27.995,
+     "end_s": 28.359
+    },
+    {
+     "text": "Bahut",
+     "start_s": 28.359,
+     "end_s": 28.813
+    },
+    {
+     "text": "garam",
+     "start_s": 28.813,
+     "end_s": 29.268
+    },
+    {
+     "text": "chai,",
+     "start_s": 29.268,
+     "end_s": 29.631
+    },
+    {
+     "text": "aur",
+     "start_s": 29.631,
+     "end_s": 29.904
+    },
+    {
+     "text": "roz",
+     "start_s": 29.904,
+     "end_s": 30.176
+    },
+    {
+     "text": "ki",
+     "start_s": 30.176,
+     "end_s": 30.358
+    },
+    {
+     "text": "smoking,",
+     "start_s": 30.358,
+     "end_s": 30.994
+    },
+    {
+     "text": "food",
+     "start_s": 30.994,
+     "end_s": 31.358
+    },
+    {
+     "text": "pipe",
+     "start_s": 31.358,
+     "end_s": 31.721
+    },
+    {
+     "text": "ke",
+     "start_s": 31.721,
+     "end_s": 31.903
+    },
+    {
+     "text": "cancer",
+     "start_s": 31.903,
+     "end_s": 32.448
+    },
+    {
+     "text": "ka",
+     "start_s": 32.448,
+     "end_s": 32.63
+    },
+    {
+     "text": "risk",
+     "start_s": 32.63,
+     "end_s": 32.994
+    },
+    {
+     "text": "lagbhag",
+     "start_s": 32.994,
+     "end_s": 33.63
+    },
+    {
+     "text": "double",
+     "start_s": 33.63,
+     "end_s": 34.175
+    },
+    {
+     "text": "kar",
+     "start_s": 34.175,
+     "end_s": 34.448
+    },
+    {
+     "text": "deti",
+     "start_s": 34.448,
+     "end_s": 34.811
+    },
+    {
+     "text": "hai.",
+     "start_s": 34.811,
+     "end_s": 35.084
+    }
+   ]
+  },
+  {
+   "text": "Ab aapka dil. Nicotine pulse badhata hai. Caffeine blood pressure badhata hai. Dono saath, to double jhatka.",
+   "start_s": 35.584,
+   "end_s": 43.767,
+   "words": [
+    {
+     "text": "Ab",
+     "start_s": 35.584,
+     "end_s": 35.772
+    },
+    {
+     "text": "aapka",
+     "start_s": 35.772,
+     "end_s": 36.242
+    },
+    {
+     "text": "dil.",
+     "start_s": 36.242,
+     "end_s": 36.525
+    },
+    {
+     "text": "Nicotine",
+     "start_s": 36.525,
+     "end_s": 37.277
+    },
+    {
+     "text": "pulse",
+     "start_s": 37.277,
+     "end_s": 37.747
+    },
+    {
+     "text": "badhata",
+     "start_s": 37.747,
+     "end_s": 38.406
+    },
+    {
+     "text": "hai.",
+     "start_s": 38.406,
+     "end_s": 38.688
+    },
+    {
+     "text": "Caffeine",
+     "start_s": 38.688,
+     "end_s": 39.44
+    },
+    {
+     "text": "blood",
+     "start_s": 39.44,
+     "end_s": 39.911
+    },
+    {
+     "text": "pressure",
+     "start_s": 39.911,
+     "end_s": 40.663
+    },
+    {
+     "text": "badhata",
+     "start_s": 40.663,
+     "end_s": 41.322
+    },
+    {
+     "text": "hai.",
+     "start_s": 41.322,
+     "end_s": 41.604
+    },
+    {
+     "text": "Dono",
+     "start_s": 41.604,
+     "end_s": 41.98
+    },
+    {
+     "text": "saath,",
+     "start_s": 41.98,
+     "end_s": 42.45
+    },
+    {
+     "text": "to",
+     "start_s": 42.45,
+     "end_s": 42.638
+    },
+    {
+     "text": "double",
+     "start_s": 42.638,
+     "end_s": 43.203
+    },
+    {
+     "text": "jhatka.",
+     "start_s": 43.203,
+     "end_s": 43.767
+    }
+   ]
+  },
+  {
+   "text": "Aur asli jaal ye hai. Dhuan liver ko caffeine jaldi khatm karna sikha deta hai, isliye smoker ko cup pe cup chahiye.",
+   "start_s": 44.217,
+   "end_s": 51.529,
+   "words": [
+    {
+     "text": "Aur",
+     "start_s": 44.217,
+     "end_s": 44.455
+    },
+    {
+     "text": "asli",
+     "start_s": 44.455,
+     "end_s": 44.773
+    },
+    {
+     "text": "jaal",
+     "start_s": 44.773,
+     "end_s": 45.091
+    },
+    {
+     "text": "ye",
+     "start_s": 45.091,
+     "end_s": 45.25
+    },
+    {
+     "text": "hai.",
+     "start_s": 45.25,
+     "end_s": 45.489
+    },
+    {
+     "text": "Dhuan",
+     "start_s": 45.489,
+     "end_s": 45.886
+    },
+    {
+     "text": "liver",
+     "start_s": 45.886,
+     "end_s": 46.283
+    },
+    {
+     "text": "ko",
+     "start_s": 46.283,
+     "end_s": 46.442
+    },
+    {
+     "text": "caffeine",
+     "start_s": 46.442,
+     "end_s": 47.078
+    },
+    {
+     "text": "jaldi",
+     "start_s": 47.078,
+     "end_s": 47.476
+    },
+    {
+     "text": "khatm",
+     "start_s": 47.476,
+     "end_s": 47.873
+    },
+    {
+     "text": "karna",
+     "start_s": 47.873,
+     "end_s": 48.27
+    },
+    {
+     "text": "sikha",
+     "start_s": 48.27,
+     "end_s": 48.668
+    },
+    {
+     "text": "deta",
+     "start_s": 48.668,
+     "end_s": 48.986
+    },
+    {
+     "text": "hai,",
+     "start_s": 48.986,
+     "end_s": 49.224
+    },
+    {
+     "text": "isliye",
+     "start_s": 49.224,
+     "end_s": 49.701
+    },
+    {
+     "text": "smoker",
+     "start_s": 49.701,
+     "end_s": 50.178
+    },
+    {
+     "text": "ko",
+     "start_s": 50.178,
+     "end_s": 50.337
+    },
+    {
+     "text": "cup",
+     "start_s": 50.337,
+     "end_s": 50.575
+    },
+    {
+     "text": "pe",
+     "start_s": 50.575,
+     "end_s": 50.734
+    },
+    {
+     "text": "cup",
+     "start_s": 50.734,
+     "end_s": 50.973
+    },
+    {
+     "text": "chahiye.",
+     "start_s": 50.973,
+     "end_s": 51.529
+    }
+   ]
+  },
+  {
+   "text": "Chai chhodne ki zaroorat nahi. Bas thodi thandi hone do, aur cigarette chhod do. Aapki food pipe chupchaap thank you bolegi.",
+   "start_s": 52.029,
+   "end_s": 59.882,
+   "words": [
+    {
+     "text": "Chai",
+     "start_s": 52.029,
+     "end_s": 52.343
+    },
+    {
+     "text": "chhodne",
+     "start_s": 52.343,
+     "end_s": 52.893
+    },
+    {
+     "text": "ki",
+     "start_s": 52.893,
+     "end_s": 53.05
+    },
+    {
+     "text": "zaroorat",
+     "start_s": 53.05,
+     "end_s": 53.678
+    },
+    {
+     "text": "nahi.",
+     "start_s": 53.678,
+     "end_s": 53.992
+    },
+    {
+     "text": "Bas",
+     "start_s": 53.992,
+     "end_s": 54.228
+    },
+    {
+     "text": "thodi",
+     "start_s": 54.228,
+     "end_s": 54.62
+    },
+    {
+     "text": "thandi",
+     "start_s": 54.62,
+     "end_s": 55.092
+    },
+    {
+     "text": "hone",
+     "start_s": 55.092,
+     "end_s": 55.406
+    },
+    {
+     "text": "do,",
+     "start_s": 55.406,
+     "end_s": 55.563
+    },
+    {
+     "text": "aur",
+     "start_s": 55.563,
+     "end_s": 55.798
+    },
+    {
+     "text": "cigarette",
+     "start_s": 55.798,
+     "end_s": 56.505
+    },
+    {
+     "text": "chhod",
+     "start_s": 56.505,
+     "end_s": 56.898
+    },
+    {
+     "text": "do.",
+     "start_s": 56.898,
+     "end_s": 57.055
+    },
+    {
+     "text": "Aapki",
+     "start_s": 57.055,
+     "end_s": 57.448
+    },
+    {
+     "text": "food",
+     "start_s": 57.448,
+     "end_s": 57.762
+    },
+    {
+     "text": "pipe",
+     "start_s": 57.762,
+     "end_s": 58.076
+    },
+    {
+     "text": "chupchaap",
+     "start_s": 58.076,
+     "end_s": 58.783
+    },
+    {
+     "text": "thank",
+     "start_s": 58.783,
+     "end_s": 59.175
+    },
+    {
+     "text": "you",
+     "start_s": 59.175,
+     "end_s": 59.411
+    },
+    {
+     "text": "bolegi.",
+     "start_s": 59.411,
+     "end_s": 59.882
+    }
+   ]
+  },
+  {
+   "text": "Ye us dost ko bhejo jo hamesha dono saath karta hai.",
+   "start_s": 60.282,
+   "end_s": 63.594,
+   "words": [
+    {
+     "text": "Ye",
+     "start_s": 60.282,
+     "end_s": 60.444
+    },
+    {
+     "text": "us",
+     "start_s": 60.444,
+     "end_s": 60.605
+    },
+    {
+     "text": "dost",
+     "start_s": 60.605,
+     "end_s": 60.928
+    },
+    {
+     "text": "ko",
+     "start_s": 60.928,
+     "end_s": 61.09
+    },
+    {
+     "text": "bhejo",
+     "start_s": 61.09,
+     "end_s": 61.494
+    },
+    {
+     "text": "jo",
+     "start_s": 61.494,
+     "end_s": 61.655
+    },
+    {
+     "text": "hamesha",
+     "start_s": 61.655,
+     "end_s": 62.221
+    },
+    {
+     "text": "dono",
+     "start_s": 62.221,
+     "end_s": 62.544
+    },
+    {
+     "text": "saath",
+     "start_s": 62.544,
+     "end_s": 62.948
+    },
+    {
+     "text": "karta",
+     "start_s": 62.948,
+     "end_s": 63.352
+    },
+    {
+     "text": "hai.",
+     "start_s": 63.352,
+     "end_s": 63.594
+    }
+   ]
+  }
+ ],
+ "caption_style": {
+  "look": "ext",
+  "component": "caption-dim-progress",
+  "font": "Montserrat",
+  "y": 0.8,
+  "max_width": 0.86,
+  "props": {
+   "fontSize": 84,
+   "fontWeight": 600,
+   "color": "#F4EFC6",
+   "dimOpacity": 1,
+   "shadow": true,
+   "combineTokensWithinMilliseconds": 1400
+  }
+ },
+ "audio": [
+  {
+   "src": "output/voice/tbm-chai-cig-hinglish-slow/tbm-chai-cig-hinglish-slow.wav",
+   "at_s": 0,
+   "role": "voice",
+   "volume": 1.0
+  },
+  {
+   "src": "assets/library/music/tbm-dark-ambient.mp3",
+   "at_s": 0,
+   "duration_s": 64.2,
+   "role": "music",
+   "volume": 0.3,
+   "fade_in_s": 1.0,
+   "fade_out_s": 2.0,
+   "duck": [
+    {
+     "from_s": 0.2,
+     "to_s": 9.21,
+     "gain": 0.45
+    },
+    {
+     "from_s": 9.71,
+     "to_s": 17.406,
+     "gain": 0.45
+    },
+    {
+     "from_s": 17.806,
+     "to_s": 23.91,
+     "gain": 0.45
+    },
+    {
+     "from_s": 24.36,
+     "to_s": 35.084,
+     "gain": 0.45
+    },
+    {
+     "from_s": 35.584,
+     "to_s": 43.767,
+     "gain": 0.45
+    },
+    {
+     "from_s": 44.217,
+     "to_s": 51.529,
+     "gain": 0.45
+    },
+    {
+     "from_s": 52.029,
+     "to_s": 59.882,
+     "gain": 0.45
+    },
+    {
+     "from_s": 60.282,
+     "to_s": 63.594,
+     "gain": 0.45
+    }
+   ]
+  }
+ ],
+ "audio_target_lufs": -14,
+ "vignette": 0.22,
+ "grain": false
+}

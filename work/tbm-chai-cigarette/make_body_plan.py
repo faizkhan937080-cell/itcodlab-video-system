@@ -7,16 +7,18 @@ sys.path.insert(0, ".")
 from scripts.anchors import words_from_transcript  # noqa: E402
 from scripts.director_build import captions_from  # noqa: E402
 
-VOICE = "tbm-chai-cig-en-slow"
-SEG = [(0.2, 7.837, "A sip of tea. A drag of smoke. You think you're relaxing... but inside your body, something is quietly going wrong."),
-       (8.337, 15.046, "Tea hotter than sixty-five degrees doesn't just warm your throat. It scalds the delicate lining of your food pipe."),
-       (15.446, 20.594, "And at that exact moment, the smoke arrives... and settles right onto that wounded layer."),
-       (21.044, 30.232, "A study of over four hundred thousand people found it. Burning hot tea, plus daily smoking, nearly doubled the risk of esophageal cancer."),
-       (30.732, 38.328, "Now, your heart. Nicotine pushes your pulse up. Caffeine pushes your blood pressure up. Together, the hits stack."),
-       (38.778, 46.514, "And here's the trap. Smoke trains your liver to burn through caffeine faster, so smokers crave cup after cup."),
-       (47.014, 53.373, "You don't have to quit tea. Just let it cool, and drop the cigarette. Your food pipe will quietly thank you."),
-       (53.773, 56.513, "Send this to the one friend who always does both.")]
-END = 57.1
+VOICE = "tbm-chai-cig-hinglish-slow"
+T = [(0.2, 9.21), (9.71, 17.406), (17.806, 23.91), (24.36, 35.084), (35.584, 43.767), (44.217, 51.529), (52.029, 59.882), (60.282, 63.594)]
+TXT = ["Chai ki ek chuski. Cigarette ka ek kash. Aapko lagta hai aap relax kar rahe ho... lekin body ke andar, chupchaap kuch galat ho raha hai.",
+       "Painsath degree se zyada garam chai sirf gala nahi sekti. Wo aapki food pipe ki nazuk lining ko jala deti hai.",
+       "Aur theek usi waqt, dhuan aata hai... aur usi zakhmi parat par baith jaata hai.",
+       "Chaar lakh se zyada logon par hui ek study mein ye mila. Bahut garam chai, aur roz ki smoking, food pipe ke cancer ka risk lagbhag double kar deti hai.",
+       "Ab aapka dil. Nicotine pulse badhata hai. Caffeine blood pressure badhata hai. Dono saath, to double jhatka.",
+       "Aur asli jaal ye hai. Dhuan liver ko caffeine jaldi khatm karna sikha deta hai, isliye smoker ko cup pe cup chahiye.",
+       "Chai chhodne ki zaroorat nahi. Bas thodi thandi hone do, aur cigarette chhod do. Aapki food pipe chupchaap thank you bolegi.",
+       "Ye us dost ko bhejo jo hamesha dono saath karta hai."]
+SEG = [(a, b, t) for (a, b), t in zip(T, TXT)]
+END = 64.2
 tr = {"available": True, "segments": [{"start": a, "end": b, "text": t} for a, b, t in SEG]}
 words = words_from_transcript(tr)
 starts = [0.0] + [round((SEG[i][0] + SEG[i - 1][1]) / 2, 3) for i in range(1, len(SEG))] + [END]
@@ -34,23 +36,23 @@ def at(i, word, nth=1):
 
 
 P = [
-    {"shot": "hook", "headline": "Tea + Cigarette", "headline2": "What happens\ninside you?", "turn_at_s": at(0, "but")},
-    {"shot": "scald", "headline": "Too hot.\nIt burns the lining.", "headline_at_s": at(1, "it")},
-    {"shot": "smoke_settle", "headline": "Smoke lands\non the wound", "headline_at_s": at(2, "settles")},
-    {"shot": "study", "big": "400,000+", "count_to": 400000, "count_suffix": "+", "big_at_s": at(3, "four"), "turn_at_s": at(3, "nearly"),
-     "headline": "Nearly double\nthe cancer risk", "headline_at_s": at(3, "nearly")},
-    {"shot": "heart", "headline": "Your heart takes\nboth hits", "headline_at_s": at(4, "together"),
+    {"shot": "hook", "headline": "Chai + Cigarette", "headline2": "Andar kya\nhota hai?", "turn_at_s": at(0, "lekin")},
+    {"shot": "scald", "headline": "Bahut garam chai\nlining jala deti hai", "headline_at_s": at(1, "wo")},
+    {"shot": "smoke_settle", "headline": "Dhuan zakhm par\nbaith jaata hai", "headline_at_s": at(2, "baith")},
+    {"shot": "study", "big": "4,00,000+", "count_to": 400000, "count_suffix": "+", "locale": "en-IN", "big_at_s": at(3, "chaar"), "turn_at_s": at(3, "lagbhag"),
+     "labels": ["Dono aadat nahi", "Bahut garam chai + roz smoking"], "headline": "Cancer ka risk\nlagbhag double", "headline_at_s": at(3, "lagbhag")},
+    {"shot": "heart", "headline": "Dil par\ndouble jhatka", "headline_at_s": at(4, "dono"),
      "chips": [{"text": "Nicotine: pulse ↑", "at_s": at(4, "nicotine")}, {"text": "Caffeine: BP ↑", "at_s": at(4, "caffeine")}]},
-    {"shot": "liver", "headline": "The craving trap", "headline_at_s": at(5, "trap"), "turn_at_s": at(5, "so"),
-     "sub": "Smokers burn caffeine faster", "sub_at_s": at(5, "burn")},
-    {"shot": "cool", "headline": "Let it cool.\nDrop the cigarette.", "headline_at_s": at(6, "just"), "turn_at_s": at(6, "drop"),
-     "badge": "Your food pipe heals", "badge_at_s": at(6, "your")},
-    {"shot": "end", "headline": "Send this to\nthat one friend", "headline_at_s": 0.3},
+    {"shot": "liver", "headline": "Asli jaal", "headline_at_s": at(5, "jaal"), "turn_at_s": at(5, "isliye"),
+     "sub": "Smoker ka caffeine jaldi khatm", "sub_at_s": at(5, "jaldi")},
+    {"shot": "cool", "headline": "Chai thandi karo.\nCigarette chhodo.", "headline_at_s": at(6, "bas"), "turn_at_s": at(6, "cigarette"),
+     "labels": ["Thandi hone do"], "badge": "Food pipe theek hone lagti hai", "badge_at_s": at(6, "aapki")},
+    {"shot": "end", "headline": "Us dost ko bhejo\njo dono karta hai", "headline_at_s": 0.3},
 ]
 scenes = [{"id": f"b{i + 1}", "duration_s": round(starts[i + 1] - starts[i], 3), "template": "body", "props": p,
            "transition_in": {"type": "cut"}} for i, p in enumerate(P)]
 plan = {
-    "title": "Tea + cigarette: what happens inside", "fps": 30, "orientation": "portrait", "width": 1080, "height": 1920,
+    "title": "Chai + cigarette: andar kya hota hai", "fps": 30, "orientation": "portrait", "width": 1080, "height": 1920,
     "scenes": scenes, "captions": captions_from(tr),
     "caption_style": {"look": "ext", "component": "caption-dim-progress", "font": "Montserrat", "y": 0.8, "max_width": 0.86,
                       "props": {"fontSize": 84, "fontWeight": 600, "color": "#F4EFC6", "dimOpacity": 1, "shadow": True, "combineTokensWithinMilliseconds": 1400}},
@@ -59,6 +61,6 @@ plan = {
                "duck": [{"from_s": a, "to_s": b, "gain": 0.45} for a, b, _ in SEG]}],
     "audio_target_lufs": -14, "vignette": 0.22, "grain": False,
 }
-out = Path("trigger/sample/body-chai-cig-plan.json")
+out = Path("trigger/sample/body-chai-cig-hi-plan.json")
 out.write_text(json.dumps(plan, indent=1, ensure_ascii=False), encoding="utf-8")
 print(out, [s["duration_s"] for s in scenes], P[0]["turn_at_s"])

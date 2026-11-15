@@ -129,18 +129,18 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
     const grow = ramp(t, p.turn_at_s ?? 3.2, (p.turn_at_s ?? 3.2) + 1.2);
     return (
       <>
-        {Array.from({length: 12 * 20}, (_, i) => {
+        {Array.from({length: 9 * 20}, (_, i) => {
           const cx = 112 + (i % 20) * 45, cy = 470 + Math.floor(i / 20) * 34;
           const on = random(`p${i}`) < fill;
           const risk = on && random(`r${i}`) < grow * 0.42;
           return <circle key={i} cx={cx} cy={cy} r={11} fill={risk ? B.hurt : on ? C.arrow : '#5B4337'} opacity={on ? 0.95 : 0.5} />;
         })}
         <g opacity={ramp(t, (p.turn_at_s ?? 3.2) - 0.3, p.turn_at_s ?? 3.2)}>
-          <rect x={112} y={884} width={300} height={54} rx={27} fill="#E9D9C6" />
-          <rect x={112} y={978} width={300 + 300 * grow} height={54} rx={27} fill={B.hurt} />
-          <text x={112} y={874} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Neither habit</text>
-          <text x={112} y={968} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Burning-hot tea + daily smoking</text>
-          <text x={440 + 300 * grow} y={1026} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
+          <rect x={112} y={812} width={300} height={54} rx={27} fill="#E9D9C6" />
+          <rect x={112} y={926} width={300 + 300 * grow} height={54} rx={27} fill={B.hurt} />
+          <text x={112} y={798} fontFamily={FONT} fontWeight={700} fontSize={34} fill="#F3DCC2">{p.labels?.[0] ?? "Neither habit"}</text>
+          <text x={112} y={912} fontFamily={FONT} fontWeight={700} fontSize={34} fill="#F3DCC2">{p.labels?.[1] ?? "Burning-hot tea + daily smoking"}</text>
+          <text x={440 + 300 * grow} y={974} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
         </g>
       </>
     );
@@ -206,7 +206,7 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
         <circle cx={300} cy={600} r={340} fill={`url(#${id}-glow)`} opacity={0.18} />
         <Steam id={id} x={300} y={420} t={t} amount={1 - cool * 0.85} w={170} />
         <ChaiGlass id={id} x={300} y={610} s={1.2} hot={1 - cool} />
-        <Thermo x={520} y={390} h={380} level={lerp(0.92, 0.42, cool)} label="Let it cool" cold={cool} />
+        <Thermo x={520} y={390} h={380} level={lerp(0.92, 0.42, cool)} label={p.labels?.[0] ?? "Let it cool"} cold={cool} />
         <g opacity={1 - heal}>
           <Smoke id={id} x={690} y={690} t={t} seed="cool" power={1 - cross} rise={300} count={30} />
           <Cigarette id={id} x={850} y={630 + drop * drop * 620} rot={-18 + drop * 70} glow={0.4 * (1 - cross)} opacity={1 - drop} />

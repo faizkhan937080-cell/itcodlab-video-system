@@ -21,6 +21,8 @@ export type BodyProps = {
   big_at_s?: number;
   count_to?: number; // study: yellow count-up number
   count_suffix?: string;
+  labels?: string[]; // study: two bar labels; cool: thermometer label
+  locale?: string;
   badge?: string;
   badge_at_s?: number;
 };
@@ -280,7 +282,7 @@ export const BodyScene: React.FC<BodyProps> = (p) => {
       {p.big ? (
         <div style={{position: 'absolute', left: 0, right: 0, top: 300 * u, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 132 * u, color: C.arrow,
           opacity: ramp(t, p.big_at_s ?? 0, (p.big_at_s ?? 0) + 0.3), textShadow: `0 ${6 * u}px ${30 * u}px rgba(0,0,0,0.9)`, letterSpacing: -2 * u}}>
-          {p.count_to !== undefined ? `${Math.round(p.count_to * ramp(t, p.big_at_s ?? 0, (p.big_at_s ?? 0) + 1.6)).toLocaleString('en-US')}${p.count_suffix ?? ''}` : p.big}
+          {p.count_to !== undefined ? `${Math.round(p.count_to * ramp(t, p.big_at_s ?? 0, (p.big_at_s ?? 0) + 1.6)).toLocaleString(p.locale ?? 'en-US')}${p.count_suffix ?? ''}` : p.big}
         </div>
       ) : null}
       {p.badge ? <Pill text={p.badge} x={540} y={1170} t={t} at={p.badge_at_s ?? 0} u={u} color={B.good} /> : null}
