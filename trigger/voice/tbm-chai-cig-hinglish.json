@@ -1,0 +1,62 @@
+{
+ "provider": "sarvam",
+ "lang": "hi-IN",
+ "voice": "shubh",
+ "speed": 0.92,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "segments": [
+  {
+   "id": "s1",
+   "text": "चाय की एक चुस्की। सिगरेट का एक कश। आपको लगता है आप relax कर रहे हो... लेकिन body के अंदर, चुपचाप कुछ गलत हो रहा है।",
+   "style": "Speak in a low, tense documentary voice, almost a whisper, slightly afraid, building suspense",
+   "pause_after_s": 0.5
+  },
+  {
+   "id": "s2",
+   "text": "पैंसठ डिग्री से ज़्यादा गरम चाय सिर्फ़ गला नहीं सेकती। वो आपकी food pipe की नाज़ुक lining को जला देती है।",
+   "style": "Serious and concerned, lean on the word scalds",
+   "pause_after_s": 0.4
+  },
+  {
+   "id": "s3",
+   "text": "और ठीक उसी वक़्त, धुआँ आता है... और उसी ज़ख़्मी परत पर बैठ जाता है।",
+   "style": "Slow and ominous, a hint of dread",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s4",
+   "text": "चार लाख से ज़्यादा लोगों पर हुई एक study में ये मिला। बहुत गरम चाय, और रोज़ की smoking, food pipe के cancer का risk लगभग double कर देती है।",
+   "style": "Grave and fearful, short pause before nearly doubled",
+   "pause_after_s": 0.5
+  },
+  {
+   "id": "s5",
+   "text": "अब आपका दिल। Nicotine pulse बढ़ाता है। Caffeine blood pressure बढ़ाता है। दोनों साथ, तो double झटका।",
+   "style": "Urgent and tense, a little faster",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s6",
+   "text": "और असली जाल ये है। धुआँ liver को caffeine जल्दी ख़त्म करना सिखा देता है, इसलिए smoker को cup पे cup चाहिए।",
+   "style": "Intrigued, like revealing a secret, slightly sinister",
+   "pause_after_s": 0.5
+  },
+  {
+   "id": "s7",
+   "text": "चाय छोड़ने की ज़रूरत नहीं। बस थोड़ी ठंडी होने दो, और सिगरेट छोड़ दो। आपकी food pipe चुपचाप thank you बोलेगी।",
+   "style": "Warm, calm relief, gentle and reassuring",
+   "pause_after_s": 0.4
+  },
+  {
+   "id": "s8",
+   "text": "ये उस दोस्त को भेजो जो हमेशा दोनों साथ करता है।",
+   "style": "Friendly and light, with a small smile",
+   "pause_after_s": 0.6
+  }
+ ],
+ "fallback_voices": {
+  "google": "en-IN-Chirp3-HD-Charon"
+ }
+}
