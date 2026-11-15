@@ -5,7 +5,7 @@ import React from 'react';
 import {AbsoluteFill, interpolate, random, useCurrentFrame, useVideoConfig, Easing} from 'remotion';
 import {easeOut, unit} from '../lib/anim';
 
-type P = {x: number; y: number};
+export type P = {x: number; y: number};
 type Chip = {text: string; at_s: number};
 export type MedProps = {
   shot: 'kidney_hero' | 'intro' | 'scope_path' | 'laser' | 'clearance' | 'stent' | 'big_stone' | 'factors' | 'staged' | 'end';
@@ -24,7 +24,7 @@ export type MedProps = {
   role?: string;
 };
 
-const C = {
+export const C = {
   bg0: '#1B1517', bg1: '#4A3226', bg2: '#6B3F2B',
   cortex0: '#C9775B', cortex1: '#8E4632', capsule: '#E3A58A',
   pyr0: '#B5523F', pyr1: '#6E2A22',
@@ -36,29 +36,29 @@ const C = {
 };
 
 // ---------- small maths ----------
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const bez = (p0: P, p1: P, p2: P, p3: P, t: number): P => {
+export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+export const bez = (p0: P, p1: P, p2: P, p3: P, t: number): P => {
   const u = 1 - t;
   return {
     x: u * u * u * p0.x + 3 * u * u * t * p1.x + 3 * u * t * t * p2.x + t * t * t * p3.x,
     y: u * u * u * p0.y + 3 * u * u * t * p1.y + 3 * u * t * t * p2.y + t * t * t * p3.y,
   };
 };
-type Seg = [P, P, P, P];
-const pathD = (segs: Seg[]) =>
+export type Seg = [P, P, P, P];
+export const pathD = (segs: Seg[]) =>
   `M ${segs[0][0].x} ${segs[0][0].y} ` + segs.map((s) => `C ${s[1].x} ${s[1].y} ${s[2].x} ${s[2].y} ${s[3].x} ${s[3].y}`).join(' ');
-const along = (segs: Seg[], t: number): P => {
+export const along = (segs: Seg[], t: number): P => {
   const n = segs.length;
   const k = Math.min(n - 1, Math.floor(Math.max(0, Math.min(0.9999, t)) * n));
   return bez(...segs[k], Math.max(0, Math.min(1, t * n - k)));
 };
-const angleAt = (segs: Seg[], t: number) => {
+export const angleAt = (segs: Seg[], t: number) => {
   const a = along(segs, Math.max(0, t - 0.004));
   const b = along(segs, Math.min(1, t + 0.004));
   return (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
 };
-const sec = (frame: number, fps: number) => frame / fps;
-const ramp = (t: number, a: number, b: number) =>
+export const sec = (frame: number, fps: number) => frame / fps;
+export const ramp = (t: number, a: number, b: number) =>
   interpolate(t, [a, b], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
 
 // ---------- urinary tract layout (scene space) ----------
@@ -86,7 +86,7 @@ const pyrGeo = (a: number) => {
   return {base, apex, n};
 };
 
-const Defs: React.FC<{id: string}> = ({id}) => (
+export const Defs: React.FC<{id: string}> = ({id}) => (
   <defs>
     <radialGradient id={`${id}-bg`} cx="50%" cy="38%" r="75%">
       <stop offset="0%" stopColor={C.bg2} />
@@ -134,7 +134,7 @@ const Defs: React.FC<{id: string}> = ({id}) => (
 );
 
 /** Out-of-focus body behind everything: warm gradient, blurred vessels and organs, drifting bokeh. */
-const Backdrop: React.FC<{id: string; t: number; seed: string; tint?: string}> = ({id, t, seed, tint}) => {
+export const Backdrop: React.FC<{id: string; t: number; seed: string; tint?: string}> = ({id, t, seed, tint}) => {
   const vessels = Array.from({length: 5}, (_, i) => {
     const x0 = random(`${seed}v${i}x`) * 1080;
     const red = i % 3 !== 2;
@@ -281,7 +281,7 @@ const Ureter: React.FC<{glow?: number}> = ({glow = 1}) => (
 );
 
 /** Thick yellow arrows flowing along a path (direction +1 = path order, -1 = reverse). */
-const FlowArrows: React.FC<{segs: Seg[]; t: number; dir?: 1 | -1; count?: number; size?: number; from?: number; to?: number; appear?: number}> = ({
+export const FlowArrows: React.FC<{segs: Seg[]; t: number; dir?: 1 | -1; count?: number; size?: number; from?: number; to?: number; appear?: number}> = ({
   segs, t, dir = 1, count = 5, size = 46, from = 0.05, to = 0.95, appear = 1,
 }) => (
   <g opacity={appear}>
@@ -342,8 +342,8 @@ const Stent: React.FC<{prog: number}> = ({prog}) => {
 };
 
 // ---------- text ----------
-const FONT = '"Inter Display", Inter, "Helvetica Neue", Arial, sans-serif';
-const Headline: React.FC<{text?: string; at: number; t: number; u: number}> = ({text, at, t, u}) => {
+export const FONT = '"Inter Display", Inter, "Helvetica Neue", Arial, sans-serif';
+export const Headline: React.FC<{text?: string; at: number; t: number; u: number}> = ({text, at, t, u}) => {
   if (!text) return null;
   const k = ramp(t, at, at + 0.35);
   return (
@@ -360,7 +360,7 @@ const Headline: React.FC<{text?: string; at: number; t: number; u: number}> = ({
   );
 };
 
-const Pill: React.FC<{text: string; x: number; y: number; t: number; at: number; u: number; color?: string; dark?: boolean}> = ({text, x, y, t, at, u, color = C.arrow, dark = true}) => {
+export const Pill: React.FC<{text: string; x: number; y: number; t: number; at: number; u: number; color?: string; dark?: boolean}> = ({text, x, y, t, at, u, color = C.arrow, dark = true}) => {
   const k = ramp(t, at, at + 0.3);
   if (k <= 0) return null;
   return (

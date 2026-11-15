@@ -1,0 +1,1000 @@
+{
+ "title": "Tea + cigarette: what happens inside",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "b1",
+   "duration_s": 8.087,
+   "template": "body",
+   "props": {
+    "shot": "hook",
+    "headline": "Tea + Cigarette",
+    "headline2": "What happens\ninside you?",
+    "turn_at_s": 3.89
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b2",
+   "duration_s": 7.159,
+   "template": "body",
+   "props": {
+    "shot": "scald",
+    "headline": "Too hot.\nIt burns the lining.",
+    "headline_at_s": 4.12
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b3",
+   "duration_s": 5.573,
+   "template": "body",
+   "props": {
+    "shot": "smoke_settle",
+    "headline": "Smoke lands\non the wound",
+    "headline_at_s": 2.99
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b4",
+   "duration_s": 9.663,
+   "template": "body",
+   "props": {
+    "shot": "study",
+    "big": "400,000+",
+    "count_to": 400000,
+    "count_suffix": "+",
+    "big_at_s": 1.22,
+    "turn_at_s": 6.27,
+    "headline": "Nearly double\nthe cancer risk",
+    "headline_at_s": 6.27
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b5",
+   "duration_s": 8.071,
+   "template": "body",
+   "props": {
+    "shot": "heart",
+    "headline": "Your heart takes\nboth hits",
+    "headline_at_s": 6.16,
+    "chips": [
+     {
+      "text": "Nicotine: pulse ↑",
+      "at_s": 1.26
+     },
+     {
+      "text": "Caffeine: BP ↑",
+      "at_s": 3.37
+     }
+    ]
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b6",
+   "duration_s": 8.211,
+   "template": "body",
+   "props": {
+    "shot": "liver",
+    "headline": "The craving trap",
+    "headline_at_s": 1.2,
+    "turn_at_s": 5.74,
+    "sub": "Smokers burn caffeine faster",
+    "sub_at_s": 3.52
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b7",
+   "duration_s": 6.809,
+   "template": "body",
+   "props": {
+    "shot": "cool",
+    "headline": "Let it cool.\nDrop the cigarette.",
+    "headline_at_s": 1.78,
+    "turn_at_s": 3.01,
+    "badge": "Your food pipe heals",
+    "badge_at_s": 4.23
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "b8",
+   "duration_s": 3.527,
+   "template": "body",
+   "props": {
+    "shot": "end",
+    "headline": "Send this to\nthat one friend",
+    "headline_at_s": 0.3
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  }
+ ],
+ "captions": [
+  {
+   "text": "A sip of tea. A drag of smoke. You think you're relaxing... but inside your body, something is quietly going wrong.",
+   "start_s": 0.2,
+   "end_s": 7.837,
+   "words": [
+    {
+     "text": "A",
+     "start_s": 0.2,
+     "end_s": 0.288
+    },
+    {
+     "text": "sip",
+     "start_s": 0.288,
+     "end_s": 0.551
+    },
+    {
+     "text": "of",
+     "start_s": 0.551,
+     "end_s": 0.727
+    },
+    {
+     "text": "tea.",
+     "start_s": 0.727,
+     "end_s": 0.99
+    },
+    {
+     "text": "A",
+     "start_s": 0.99,
+     "end_s": 1.078
+    },
+    {
+     "text": "drag",
+     "start_s": 1.078,
+     "end_s": 1.429
+    },
+    {
+     "text": "of",
+     "start_s": 1.429,
+     "end_s": 1.605
+    },
+    {
+     "text": "smoke.",
+     "start_s": 1.605,
+     "end_s": 2.043
+    },
+    {
+     "text": "You",
+     "start_s": 2.043,
+     "end_s": 2.307
+    },
+    {
+     "text": "think",
+     "start_s": 2.307,
+     "end_s": 2.746
+    },
+    {
+     "text": "you're",
+     "start_s": 2.746,
+     "end_s": 3.185
+    },
+    {
+     "text": "relaxing...",
+     "start_s": 3.185,
+     "end_s": 3.887
+    },
+    {
+     "text": "but",
+     "start_s": 3.887,
+     "end_s": 4.15
+    },
+    {
+     "text": "inside",
+     "start_s": 4.15,
+     "end_s": 4.677
+    },
+    {
+     "text": "your",
+     "start_s": 4.677,
+     "end_s": 5.028
+    },
+    {
+     "text": "body,",
+     "start_s": 5.028,
+     "end_s": 5.379
+    },
+    {
+     "text": "something",
+     "start_s": 5.379,
+     "end_s": 6.169
+    },
+    {
+     "text": "is",
+     "start_s": 6.169,
+     "end_s": 6.345
+    },
+    {
+     "text": "quietly",
+     "start_s": 6.345,
+     "end_s": 6.959
+    },
+    {
+     "text": "going",
+     "start_s": 6.959,
+     "end_s": 7.398
+    },
+    {
+     "text": "wrong.",
+     "start_s": 7.398,
+     "end_s": 7.837
+    }
+   ]
+  },
+  {
+   "text": "Tea hotter than sixty-five degrees doesn't just warm your throat. It scalds the delicate lining of your food pipe.",
+   "start_s": 8.337,
+   "end_s": 15.046,
+   "words": [
+    {
+     "text": "Tea",
+     "start_s": 8.337,
+     "end_s": 8.556
+    },
+    {
+     "text": "hotter",
+     "start_s": 8.556,
+     "end_s": 8.993
+    },
+    {
+     "text": "than",
+     "start_s": 8.993,
+     "end_s": 9.285
+    },
+    {
+     "text": "sixty-five",
+     "start_s": 9.285,
+     "end_s": 9.941
+    },
+    {
+     "text": "degrees",
+     "start_s": 9.941,
+     "end_s": 10.452
+    },
+    {
+     "text": "doesn't",
+     "start_s": 10.452,
+     "end_s": 10.889
+    },
+    {
+     "text": "just",
+     "start_s": 10.889,
+     "end_s": 11.181
+    },
+    {
+     "text": "warm",
+     "start_s": 11.181,
+     "end_s": 11.473
+    },
+    {
+     "text": "your",
+     "start_s": 11.473,
+     "end_s": 11.764
+    },
+    {
+     "text": "throat.",
+     "start_s": 11.764,
+     "end_s": 12.202
+    },
+    {
+     "text": "It",
+     "start_s": 12.202,
+     "end_s": 12.348
+    },
+    {
+     "text": "scalds",
+     "start_s": 12.348,
+     "end_s": 12.785
+    },
+    {
+     "text": "the",
+     "start_s": 12.785,
+     "end_s": 13.004
+    },
+    {
+     "text": "delicate",
+     "start_s": 13.004,
+     "end_s": 13.588
+    },
+    {
+     "text": "lining",
+     "start_s": 13.588,
+     "end_s": 14.025
+    },
+    {
+     "text": "of",
+     "start_s": 14.025,
+     "end_s": 14.171
+    },
+    {
+     "text": "your",
+     "start_s": 14.171,
+     "end_s": 14.463
+    },
+    {
+     "text": "food",
+     "start_s": 14.463,
+     "end_s": 14.754
+    },
+    {
+     "text": "pipe.",
+     "start_s": 14.754,
+     "end_s": 15.046
+    }
+   ]
+  },
+  {
+   "text": "And at that exact moment, the smoke arrives... and settles right onto that wounded layer.",
+   "start_s": 15.446,
+   "end_s": 20.594,
+   "words": [
+    {
+     "text": "And",
+     "start_s": 15.446,
+     "end_s": 15.667
+    },
+    {
+     "text": "at",
+     "start_s": 15.667,
+     "end_s": 15.814
+    },
+    {
+     "text": "that",
+     "start_s": 15.814,
+     "end_s": 16.108
+    },
+    {
+     "text": "exact",
+     "start_s": 16.108,
+     "end_s": 16.476
+    },
+    {
+     "text": "moment,",
+     "start_s": 16.476,
+     "end_s": 16.917
+    },
+    {
+     "text": "the",
+     "start_s": 16.917,
+     "end_s": 17.137
+    },
+    {
+     "text": "smoke",
+     "start_s": 17.137,
+     "end_s": 17.505
+    },
+    {
+     "text": "arrives...",
+     "start_s": 17.505,
+     "end_s": 18.02
+    },
+    {
+     "text": "and",
+     "start_s": 18.02,
+     "end_s": 18.241
+    },
+    {
+     "text": "settles",
+     "start_s": 18.241,
+     "end_s": 18.755
+    },
+    {
+     "text": "right",
+     "start_s": 18.755,
+     "end_s": 19.123
+    },
+    {
+     "text": "onto",
+     "start_s": 19.123,
+     "end_s": 19.417
+    },
+    {
+     "text": "that",
+     "start_s": 19.417,
+     "end_s": 19.711
+    },
+    {
+     "text": "wounded",
+     "start_s": 19.711,
+     "end_s": 20.226
+    },
+    {
+     "text": "layer.",
+     "start_s": 20.226,
+     "end_s": 20.594
+    }
+   ]
+  },
+  {
+   "text": "A study of over four hundred thousand people found it. Burning hot tea, plus daily smoking, nearly doubled the risk of esophageal cancer.",
+   "start_s": 21.044,
+   "end_s": 30.232,
+   "words": [
+    {
+     "text": "A",
+     "start_s": 21.044,
+     "end_s": 21.127
+    },
+    {
+     "text": "study",
+     "start_s": 21.127,
+     "end_s": 21.541
+    },
+    {
+     "text": "of",
+     "start_s": 21.541,
+     "end_s": 21.706
+    },
+    {
+     "text": "over",
+     "start_s": 21.706,
+     "end_s": 22.037
+    },
+    {
+     "text": "four",
+     "start_s": 22.037,
+     "end_s": 22.368
+    },
+    {
+     "text": "hundred",
+     "start_s": 22.368,
+     "end_s": 22.948
+    },
+    {
+     "text": "thousand",
+     "start_s": 22.948,
+     "end_s": 23.61
+    },
+    {
+     "text": "people",
+     "start_s": 23.61,
+     "end_s": 24.107
+    },
+    {
+     "text": "found",
+     "start_s": 24.107,
+     "end_s": 24.521
+    },
+    {
+     "text": "it.",
+     "start_s": 24.521,
+     "end_s": 24.686
+    },
+    {
+     "text": "Burning",
+     "start_s": 24.686,
+     "end_s": 25.266
+    },
+    {
+     "text": "hot",
+     "start_s": 25.266,
+     "end_s": 25.514
+    },
+    {
+     "text": "tea,",
+     "start_s": 25.514,
+     "end_s": 25.762
+    },
+    {
+     "text": "plus",
+     "start_s": 25.762,
+     "end_s": 26.093
+    },
+    {
+     "text": "daily",
+     "start_s": 26.093,
+     "end_s": 26.507
+    },
+    {
+     "text": "smoking,",
+     "start_s": 26.507,
+     "end_s": 27.087
+    },
+    {
+     "text": "nearly",
+     "start_s": 27.087,
+     "end_s": 27.583
+    },
+    {
+     "text": "doubled",
+     "start_s": 27.583,
+     "end_s": 28.163
+    },
+    {
+     "text": "the",
+     "start_s": 28.163,
+     "end_s": 28.411
+    },
+    {
+     "text": "risk",
+     "start_s": 28.411,
+     "end_s": 28.742
+    },
+    {
+     "text": "of",
+     "start_s": 28.742,
+     "end_s": 28.908
+    },
+    {
+     "text": "esophageal",
+     "start_s": 28.908,
+     "end_s": 29.735
+    },
+    {
+     "text": "cancer.",
+     "start_s": 29.735,
+     "end_s": 30.232
+    }
+   ]
+  },
+  {
+   "text": "Now, your heart. Nicotine pushes your pulse up. Caffeine pushes your blood pressure up. Together, the hits stack.",
+   "start_s": 30.732,
+   "end_s": 38.328,
+   "words": [
+    {
+     "text": "Now,",
+     "start_s": 30.732,
+     "end_s": 30.985
+    },
+    {
+     "text": "your",
+     "start_s": 30.985,
+     "end_s": 31.323
+    },
+    {
+     "text": "heart.",
+     "start_s": 31.323,
+     "end_s": 31.745
+    },
+    {
+     "text": "Nicotine",
+     "start_s": 31.745,
+     "end_s": 32.42
+    },
+    {
+     "text": "pushes",
+     "start_s": 32.42,
+     "end_s": 32.926
+    },
+    {
+     "text": "your",
+     "start_s": 32.926,
+     "end_s": 33.264
+    },
+    {
+     "text": "pulse",
+     "start_s": 33.264,
+     "end_s": 33.686
+    },
+    {
+     "text": "up.",
+     "start_s": 33.686,
+     "end_s": 33.855
+    },
+    {
+     "text": "Caffeine",
+     "start_s": 33.855,
+     "end_s": 34.53
+    },
+    {
+     "text": "pushes",
+     "start_s": 34.53,
+     "end_s": 35.036
+    },
+    {
+     "text": "your",
+     "start_s": 35.036,
+     "end_s": 35.374
+    },
+    {
+     "text": "blood",
+     "start_s": 35.374,
+     "end_s": 35.796
+    },
+    {
+     "text": "pressure",
+     "start_s": 35.796,
+     "end_s": 36.471
+    },
+    {
+     "text": "up.",
+     "start_s": 36.471,
+     "end_s": 36.64
+    },
+    {
+     "text": "Together,",
+     "start_s": 36.64,
+     "end_s": 37.315
+    },
+    {
+     "text": "the",
+     "start_s": 37.315,
+     "end_s": 37.568
+    },
+    {
+     "text": "hits",
+     "start_s": 37.568,
+     "end_s": 37.906
+    },
+    {
+     "text": "stack.",
+     "start_s": 37.906,
+     "end_s": 38.328
+    }
+   ]
+  },
+  {
+   "text": "And here's the trap. Smoke trains your liver to burn through caffeine faster, so smokers crave cup after cup.",
+   "start_s": 38.778,
+   "end_s": 46.514,
+   "words": [
+    {
+     "text": "And",
+     "start_s": 38.778,
+     "end_s": 39.045
+    },
+    {
+     "text": "here's",
+     "start_s": 39.045,
+     "end_s": 39.489
+    },
+    {
+     "text": "the",
+     "start_s": 39.489,
+     "end_s": 39.756
+    },
+    {
+     "text": "trap.",
+     "start_s": 39.756,
+     "end_s": 40.112
+    },
+    {
+     "text": "Smoke",
+     "start_s": 40.112,
+     "end_s": 40.556
+    },
+    {
+     "text": "trains",
+     "start_s": 40.556,
+     "end_s": 41.09
+    },
+    {
+     "text": "your",
+     "start_s": 41.09,
+     "end_s": 41.446
+    },
+    {
+     "text": "liver",
+     "start_s": 41.446,
+     "end_s": 41.89
+    },
+    {
+     "text": "to",
+     "start_s": 41.89,
+     "end_s": 42.068
+    },
+    {
+     "text": "burn",
+     "start_s": 42.068,
+     "end_s": 42.424
+    },
+    {
+     "text": "through",
+     "start_s": 42.424,
+     "end_s": 43.046
+    },
+    {
+     "text": "caffeine",
+     "start_s": 43.046,
+     "end_s": 43.757
+    },
+    {
+     "text": "faster,",
+     "start_s": 43.757,
+     "end_s": 44.291
+    },
+    {
+     "text": "so",
+     "start_s": 44.291,
+     "end_s": 44.469
+    },
+    {
+     "text": "smokers",
+     "start_s": 44.469,
+     "end_s": 45.091
+    },
+    {
+     "text": "crave",
+     "start_s": 45.091,
+     "end_s": 45.536
+    },
+    {
+     "text": "cup",
+     "start_s": 45.536,
+     "end_s": 45.803
+    },
+    {
+     "text": "after",
+     "start_s": 45.803,
+     "end_s": 46.247
+    },
+    {
+     "text": "cup.",
+     "start_s": 46.247,
+     "end_s": 46.514
+    }
+   ]
+  },
+  {
+   "text": "You don't have to quit tea. Just let it cool, and drop the cigarette. Your food pipe will quietly thank you.",
+   "start_s": 47.014,
+   "end_s": 53.373,
+   "words": [
+    {
+     "text": "You",
+     "start_s": 47.014,
+     "end_s": 47.244
+    },
+    {
+     "text": "don't",
+     "start_s": 47.244,
+     "end_s": 47.55
+    },
+    {
+     "text": "have",
+     "start_s": 47.55,
+     "end_s": 47.857
+    },
+    {
+     "text": "to",
+     "start_s": 47.857,
+     "end_s": 48.01
+    },
+    {
+     "text": "quit",
+     "start_s": 48.01,
+     "end_s": 48.316
+    },
+    {
+     "text": "tea.",
+     "start_s": 48.316,
+     "end_s": 48.546
+    },
+    {
+     "text": "Just",
+     "start_s": 48.546,
+     "end_s": 48.853
+    },
+    {
+     "text": "let",
+     "start_s": 48.853,
+     "end_s": 49.083
+    },
+    {
+     "text": "it",
+     "start_s": 49.083,
+     "end_s": 49.236
+    },
+    {
+     "text": "cool,",
+     "start_s": 49.236,
+     "end_s": 49.542
+    },
+    {
+     "text": "and",
+     "start_s": 49.542,
+     "end_s": 49.772
+    },
+    {
+     "text": "drop",
+     "start_s": 49.772,
+     "end_s": 50.079
+    },
+    {
+     "text": "the",
+     "start_s": 50.079,
+     "end_s": 50.308
+    },
+    {
+     "text": "cigarette.",
+     "start_s": 50.308,
+     "end_s": 50.998
+    },
+    {
+     "text": "Your",
+     "start_s": 50.998,
+     "end_s": 51.304
+    },
+    {
+     "text": "food",
+     "start_s": 51.304,
+     "end_s": 51.611
+    },
+    {
+     "text": "pipe",
+     "start_s": 51.611,
+     "end_s": 51.917
+    },
+    {
+     "text": "will",
+     "start_s": 51.917,
+     "end_s": 52.224
+    },
+    {
+     "text": "quietly",
+     "start_s": 52.224,
+     "end_s": 52.76
+    },
+    {
+     "text": "thank",
+     "start_s": 52.76,
+     "end_s": 53.143
+    },
+    {
+     "text": "you.",
+     "start_s": 53.143,
+     "end_s": 53.373
+    }
+   ]
+  },
+  {
+   "text": "Send this to the one friend who always does both.",
+   "start_s": 53.773,
+   "end_s": 56.513,
+   "words": [
+    {
+     "text": "Send",
+     "start_s": 53.773,
+     "end_s": 54.054
+    },
+    {
+     "text": "this",
+     "start_s": 54.054,
+     "end_s": 54.335
+    },
+    {
+     "text": "to",
+     "start_s": 54.335,
+     "end_s": 54.476
+    },
+    {
+     "text": "the",
+     "start_s": 54.476,
+     "end_s": 54.686
+    },
+    {
+     "text": "one",
+     "start_s": 54.686,
+     "end_s": 54.897
+    },
+    {
+     "text": "friend",
+     "start_s": 54.897,
+     "end_s": 55.319
+    },
+    {
+     "text": "who",
+     "start_s": 55.319,
+     "end_s": 55.529
+    },
+    {
+     "text": "always",
+     "start_s": 55.529,
+     "end_s": 55.951
+    },
+    {
+     "text": "does",
+     "start_s": 55.951,
+     "end_s": 56.232
+    },
+    {
+     "text": "both.",
+     "start_s": 56.232,
+     "end_s": 56.513
+    }
+   ]
+  }
+ ],
+ "caption_style": {
+  "look": "ext",
+  "component": "caption-dim-progress",
+  "font": "Montserrat",
+  "y": 0.78,
+  "max_width": 0.86,
+  "props": {
+   "fontSize": 54,
+   "fontWeight": 600,
+   "color": "#F4EFC6",
+   "dimOpacity": 1,
+   "shadow": true,
+   "combineTokensWithinMilliseconds": 1400
+  }
+ },
+ "audio": [
+  {
+   "src": "output/voice/tbm-chai-cig-en-slow/tbm-chai-cig-en-slow.wav",
+   "at_s": 0,
+   "role": "voice",
+   "volume": 1.0
+  },
+  {
+   "src": "assets/library/music/tbm-dark-ambient.mp3",
+   "at_s": 0,
+   "duration_s": 57.1,
+   "role": "music",
+   "volume": 0.3,
+   "fade_in_s": 1.0,
+   "fade_out_s": 2.0,
+   "duck": [
+    {
+     "from_s": 0.2,
+     "to_s": 7.837,
+     "gain": 0.45
+    },
+    {
+     "from_s": 8.337,
+     "to_s": 15.046,
+     "gain": 0.45
+    },
+    {
+     "from_s": 15.446,
+     "to_s": 20.594,
+     "gain": 0.45
+    },
+    {
+     "from_s": 21.044,
+     "to_s": 30.232,
+     "gain": 0.45
+    },
+    {
+     "from_s": 30.732,
+     "to_s": 38.328,
+     "gain": 0.45
+    },
+    {
+     "from_s": 38.778,
+     "to_s": 46.514,
+     "gain": 0.45
+    },
+    {
+     "from_s": 47.014,
+     "to_s": 53.373,
+     "gain": 0.45
+    },
+    {
+     "from_s": 53.773,
+     "to_s": 56.513,
+     "gain": 0.45
+    }
+   ]
+  }
+ ],
+ "audio_target_lufs": -14,
+ "vignette": 0.22,
+ "grain": false
+}

@@ -15,6 +15,7 @@ import {ImageScene} from './components/ImageScene';
 import {KineticText} from './components/KineticText';
 import {AudioBars} from './components/AudioBars';
 import {MedScene} from './components/MedScene';
+import {BodyScene} from './components/BodyScene';
 import {MemeFx} from './components/MemeFx';
 import {MemeText} from './components/MemeText';
 import {Sticker} from './components/Sticker';
@@ -114,6 +115,8 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <Sticker text={p.text ?? ''} x={p.x} y={p.y} size={p.size} rotateDeg={p.rotate_deg} />;
     case 'med':
       return <MedScene {...(p as any)} />;
+    case 'body':
+      return <BodyScene {...(p as any)} />;
     default:
       return null;
   }
