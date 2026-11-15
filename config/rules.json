@@ -184,5 +184,17 @@
   "rule": "config/style-cards/<creator>.json = style rules; new topics built from the card via style_card.shot_prompt, reference copy only when Faiz says clone",
   "enforcer": "C: style_card.shot_prompt (tests/test_guards.py)",
   "added": "2026-11-15"
+ },
+ {
+  "id": "micro_shot_prompts",
+  "rule": "./run gate-check shots <shotbook.json> blocks any shot missing subject/detail/material/light/lens/camera/fx/caption or repeating another; shotbook.micro_prompt writes the prompt",
+  "enforcer": "C: shotbook.validate + micro_prompt (tests/test_shotbook_scriptgate.py)",
+  "added": "2026-11-15"
+ },
+ {
+  "id": "script_gate_measured",
+  "rule": "./run gate-check script <file> --seconds N compares with the creator's measured profile; every number needs a source in facts",
+  "enforcer": "C: script_gate.check (tests/test_shotbook_scriptgate.py)",
+  "added": "2026-11-15"
  }
 ]
