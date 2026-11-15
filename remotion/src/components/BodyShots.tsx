@@ -87,7 +87,7 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
           return y < front ? <path key={i} d={`M ${TX - 50 + (i % 4) * 34} ${y} v 70`} stroke="#FFE1A8" strokeWidth={7} strokeLinecap="round" opacity={0.45} /> : null;
         })}
         <Steam id={id} x={TX} y={Math.min(front, 900)} t={t} amount={ramp(t, 0.8, 1.6) * 0.9} w={300} />
-        <Thermo x={935} y={330} h={470} level={lerp(0.3, 0.92, ramp(t, 0.4, 2.2))} label="65°C+" />
+        <Thermo x={912} y={330} h={470} level={lerp(0.3, 0.92, ramp(t, 0.4, 2.2))} label="65°C+" />
       </>
     );
   }

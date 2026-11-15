@@ -343,13 +343,13 @@ const Stent: React.FC<{prog: number}> = ({prog}) => {
 
 // ---------- text ----------
 export const FONT = '"Inter Display", Inter, "Helvetica Neue", Arial, sans-serif';
-export const Headline: React.FC<{text?: string; at: number; t: number; u: number}> = ({text, at, t, u}) => {
+export const Headline: React.FC<{text?: string; at: number; t: number; u: number; top?: number}> = ({text, at, t, u, top = 975}) => {
   if (!text) return null;
   const k = ramp(t, at, at + 0.35);
   return (
     <div
       style={{
-        position: 'absolute', left: 60 * u, right: 60 * u, top: 975 * u, textAlign: 'center',
+        position: 'absolute', left: 60 * u, right: 60 * u, top: top * u, textAlign: 'center',
         color: C.white, fontFamily: FONT, fontWeight: 900, fontSize: 92 * u, lineHeight: 1.04, letterSpacing: -1 * u,
         textShadow: `0 ${6 * u}px ${26 * u}px rgba(0,0,0,0.85), 0 0 ${4 * u}px rgba(0,0,0,0.6)`,
         whiteSpace: 'pre-line', opacity: k, transform: `translateY(${(1 - k) * 40 * u}px)`,

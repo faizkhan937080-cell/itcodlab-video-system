@@ -924,10 +924,10 @@
   "look": "ext",
   "component": "caption-dim-progress",
   "font": "Montserrat",
-  "y": 0.78,
+  "y": 0.8,
   "max_width": 0.86,
   "props": {
-   "fontSize": 54,
+   "fontSize": 84,
    "fontWeight": 600,
    "color": "#F4EFC6",
    "dimOpacity": 1,

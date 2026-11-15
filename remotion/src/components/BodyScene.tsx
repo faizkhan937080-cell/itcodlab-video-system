@@ -69,6 +69,13 @@ export const BodyDefs: React.FC<{id: string}> = ({id}) => (
       <stop offset="0%" stopColor={B.hurt} stopOpacity="0.95" />
       <stop offset="100%" stopColor={B.hurt} stopOpacity="0" />
     </radialGradient>
+    <linearGradient id={`${id}-fadeg`} x1="0" y1="0" x2="0" y2="1" gradientUnits="userSpaceOnUse">
+      <stop offset="0.44" stopColor="#FFF" />
+      <stop offset="0.535" stopColor="#000" />
+    </linearGradient>
+    <mask id={`${id}-fade`} maskUnits="userSpaceOnUse" x="0" y="0" width="1080" height="1920">
+      <rect x="0" y="0" width="1080" height="1920" fill={`url(#${id}-fadeg)`} />
+    </mask>
     <linearGradient id={`${id}-body`} x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stopColor="#3A2622" />
       <stop offset="100%" stopColor="#1A1113" />
@@ -91,16 +98,16 @@ export const Steam: React.FC<{id: string; x: number; y: number; t: number; amoun
 
 /** Curling cigarette smoke from a point. Puffs are born over time, rise, widen, curl and fade. `power` scales the amount. */
 export const Smoke: React.FC<{id: string; x: number; y: number; t: number; seed: string; power?: number; count?: number; rise?: number; lean?: number}> = ({
-  id, x, y, t, seed, power = 1, count = 46, rise = 250, lean = 0,
+  id, x, y, t, seed, power = 1, count = 90, rise = 250, lean = 0,
 }) => (
   <g filter={`url(#${id}-blur-mid)`}>
     {Array.from({length: count}, (_, i) => {
       const life = 2.6 + random(`${seed}l${i}`) * 1.6;
       const age = ((t + random(`${seed}o${i}`) * life) % life) / life;
-      const curl = Math.sin(age * 5 + random(`${seed}c${i}`) * 6.28) * (26 + 90 * age);
+      const curl = Math.sin(age * 4 + t * 0.8 + random(`${seed}c${i}`) * 2.2) * (8 + 110 * age * age);
       const px = x + curl + lean * age * 220 + (random(`${seed}x${i}`) - 0.5) * 20;
       const py = y - age * rise * (0.8 + random(`${seed}y${i}`) * 0.5);
-      return <circle key={i} cx={px} cy={py} r={10 + age * 54} fill={B.smoke} opacity={0.2 * power * Math.sin(Math.min(1, age * 1.15) * Math.PI)} />;
+      return <circle key={i} cx={px} cy={py} r={7 + age * 46} fill={B.smoke} opacity={0.15 * power * Math.sin(Math.min(1, age * 1.1) * Math.PI)} />;
     })}
   </g>
 );
@@ -171,7 +178,7 @@ export const Torso: React.FC<{id: string; t: number; appear?: number; pipe?: num
 }) => {
   const pulse = 1 + 0.06 * Math.max(0, Math.sin(t * Math.PI * 2 * beat)) ** 6;
   return (
-    <g opacity={appear}>
+    <g opacity={appear} mask={`url(#${id}-fade)`}>
       <g filter={`url(#${id}-shadow)`}>
         <path d={TORSO_D} fill={`url(#${id}-body)`} opacity={0.92} />
         <path d={HEAD_D} fill={`url(#${id}-body)`} opacity={0.92} />
@@ -263,23 +270,23 @@ export const BodyScene: React.FC<BodyProps> = (p) => {
         <Defs id={id} />
         <BodyDefs id={id} />
         <Backdrop id={id} t={t} seed={p.shot} />
-        <g transform={`translate(540 640) scale(${push}) translate(-540 -640)`}>{art}</g>
+        <g transform={`translate(540 760) scale(${1.12 * push}) translate(-540 -640)`}>{art}</g>
       </svg>
       {(p.chips ?? []).map((c, i) => {
-        const pos = [[262, 250], [818, 250], [262, 905], [818, 905]][i % 4];
+        const pos = [[272, 215], [808, 215], [272, 1130], [808, 1130]][i % 4];
         return <Pill key={i} text={c.text} x={pos[0]} y={pos[1]} t={t} at={c.at_s} u={u} />;
       })}
       {p.big ? (
-        <div style={{position: 'absolute', left: 0, right: 0, top: 250 * u, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 132 * u, color: C.arrow,
+        <div style={{position: 'absolute', left: 0, right: 0, top: 300 * u, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 132 * u, color: C.arrow,
           opacity: ramp(t, p.big_at_s ?? 0, (p.big_at_s ?? 0) + 0.3), textShadow: `0 ${6 * u}px ${30 * u}px rgba(0,0,0,0.9)`, letterSpacing: -2 * u}}>
           {p.count_to !== undefined ? `${Math.round(p.count_to * ramp(t, p.big_at_s ?? 0, (p.big_at_s ?? 0) + 1.6)).toLocaleString('en-US')}${p.count_suffix ?? ''}` : p.big}
         </div>
       ) : null}
-      {p.badge ? <Pill text={p.badge} x={540} y={900} t={t} at={p.badge_at_s ?? 0} u={u} color={B.good} /> : null}
-      <div style={{opacity: 1 - swap}}><Headline text={p.headline} at={H} t={t} u={u} /></div>
-      {two ? <div style={{opacity: swap}}><Headline text={p.headline2} at={turn} t={t} u={u} /></div> : null}
+      {p.badge ? <Pill text={p.badge} x={540} y={1170} t={t} at={p.badge_at_s ?? 0} u={u} color={B.good} /> : null}
+      <div style={{opacity: 1 - swap}}><Headline text={p.headline} at={H} t={t} u={u} top={1240} /></div>
+      {two ? <div style={{opacity: swap}}><Headline text={p.headline2} at={turn} t={t} u={u} top={1240} /></div> : null}
       {p.sub ? (
-        <div style={{position: 'absolute', left: 80 * u, right: 80 * u, top: 1190 * u, textAlign: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 44 * u, color: '#F3DCC2',
+        <div style={{position: 'absolute', left: 80 * u, right: 80 * u, top: 1360 * u, textAlign: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 44 * u, color: '#F3DCC2',
           opacity: ramp(t, p.sub_at_s ?? H + 0.4, (p.sub_at_s ?? H + 0.4) + 0.3), textShadow: `0 ${4 * u}px ${18 * u}px rgba(0,0,0,0.9)`}}>
           {p.sub}
         </div>
