@@ -61,6 +61,8 @@ def run(spec, storage, log=print):
     pack.mkdir()
     (pack / "collage_frames.jpg").write_bytes(sheet.read_bytes())
     (pack / "video.mp4").write_bytes(out.read_bytes())   # small preview, so Faiz can watch it
+    for i, rp in enumerate(spec.get("ref_paths", []), 1):   # reference collages from Drive, so Claude can compare side by side
+        storage.fetch(rp, pack / f"collage_ref_{i:02d}.jpg")
     pub = review.publish(pack, f"sample-{name}")
     log("REVIEW " + json.dumps(pub))
     return {"ok": bool(res.get("ok")), "check": {k: res.get(k) for k in ("loudness", "safe_zone") if k in res}, "review": pub}
