@@ -2,7 +2,7 @@
  "provider": "sarvam",
  "lang": "hi-IN",
  "voice": "shubh",
- "speed": 0.92,
+ "speed": 0.78,
  "target_lufs": -14,
  "lead_in_s": 0.2,
  "lexicon": {},
