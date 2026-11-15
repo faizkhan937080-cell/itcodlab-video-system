@@ -63,7 +63,7 @@ const needle = (t: number, id: string) => {
         {txt(760, 400, 'ADHA LITRE', 40, '#F4EFC6')}
         <Rbc x={760} y={690} r={64} rot={-18} />
       </g>
-      {txt(820, 250, `${(0.4 * ease((t - 1.0) / 2.6)).toFixed(1)} L`, 112, YEL, 'middle', 900)}
+      {txt(820, 250, `${(0.5 * ease((t - 1.0) / 2.6)).toFixed(1)} L`, 112, YEL, 'middle', 900)}
     </>
   );
 };
@@ -192,7 +192,7 @@ const epo = (t: number, id: string, turn: number) => {
         const x0 = 540 + (i % 2 ? 150 : -150), x = lerp(x0, 540, q) + Math.sin(q * 6 + i) * 24;
         return <g key={i} transform={`translate(${x} ${lerp(260, 640, q)})`} opacity={1 - q * 0.2}><circle r={13} fill={EPO} /><circle r={5} fill="#FFFFFF" opacity={0.7} /></g>;
       })}
-      {travel > 0 ? txt(780, 440, 'ERYTHROPOIETIN', 34, EPO, 'start') : null}
+      {travel > 0 ? txt(560, 450, 'ERYTHROPOIETIN', 32, EPO, 'start') : null}
       <g transform="translate(540 760)">
         <rect x={-300} y={-70} width={600} height={140} rx={70} fill="#E8D2B0" stroke="#FFF1D8" strokeWidth={6} />
         <rect x={-270} y={-44} width={540} height={88} rx={44} fill="#8E2A30" />
@@ -233,7 +233,7 @@ const weeks = (t: number) => {
 const three = (t: number, id: string, turn: number) => {
   const split = ease((t - turn) / 1.4);
   const parts = [{x: 230, c: BLOOD0, n: 'RED CELLS'}, {x: 540, c: PLASMA, n: 'PLASMA'}, {x: 850, c: '#F0E6D0', n: 'PLATELETS'}];
-  const lives = Math.round(3 * ease((t - turn - 1.4) / 1.6));
+  const lives = Math.round(3 * ease((t - 0.8) / 1.2));
   return (
     <>
       <g transform={`translate(540 ${lerp(300, 180, split)}) scale(${lerp(1, 0.55, split)})`} opacity={1 - split * 0.5}>
@@ -257,7 +257,7 @@ const three = (t: number, id: string, turn: number) => {
           </g>
         );
       })}
-      {txt(540, 40, `${lives} JAAN`, 76, YEL, 'middle', 900)}
+      {txt(540, 110, `${lives} JAAN`, 76, YEL, 'middle', 900)}
     </>
   );
 };
