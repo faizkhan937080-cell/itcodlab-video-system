@@ -9,7 +9,7 @@ import type {BodyProps} from './BodyScene';
 const TX = 470; // macro tube centre
 const wall = (side: -1 | 1, half: number, t: number, wob = 14) => {
   const pts: string[] = [];
-  for (let y = -80; y <= 1120; y += 40) pts.push(`${TX + side * (half + Math.sin(y * 0.011 + t * 1.3 + (side > 0 ? 1.4 : 0)) * wob)} ${y}`);
+  for (let y = -80; y <= 1560; y += 40) pts.push(`${TX + side * (half + Math.sin(y * 0.011 + t * 1.3 + (side > 0 ? 1.4 : 0)) * wob)} ${y}`);
   return pts;
 };
 const band = (side: -1 | 1, a: number, b: number, t: number) => `M ${wall(side, a, t).join(' L ')} L ${wall(side, b, t).reverse().join(' L ')} Z`;
@@ -22,7 +22,7 @@ const Tube: React.FC<{id: string; t: number; heat?: number; heatY?: number}> = (
       <path d={band(-1, 196, 320, t)} fill="#8A3F34" />
       <path d={band(1, 196, 320, t)} fill="#8A3F34" />
     </g>
-    {Array.from({length: 15}, (_, i) => {
+    {Array.from({length: 21}, (_, i) => {
       const y = -60 + i * 80 + ((t * 14) % 80);
       return <path key={i} d={`M ${TX - 318} ${y} q 60 22 120 0 M ${TX + 198} ${y} q 60 22 120 0`} stroke="#5E231E" strokeWidth={7} fill="none" opacity={0.55} />;
     })}
@@ -73,9 +73,9 @@ const Bust: React.FC<{id: string; x: number; y: number; s?: number; lit?: number
 
 export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode => {
   if (p.shot === 'scald') {
-    const front = ramp(t, 0.3, 2.0) * 1250 - 80;
+    const front = ramp(t, 0.3, 2.2) * 1700 - 80;
     const sw = (y: number, k: number) => 104 + Math.sin(y * 0.02 - t * 5 + k) * 12;
-    const ys = Array.from({length: 32}, (_, i) => -80 + i * 40).filter((y) => y <= front);
+    const ys = Array.from({length: 44}, (_, i) => -80 + i * 40).filter((y) => y <= front);
     const stream = ys.length > 1 ? `M ${ys.map((y) => `${TX - sw(y, 0)} ${y}`).join(' L ')} L ${TX} ${front + 60} L ${ys.slice().reverse().map((y) => `${TX + sw(y, 2)} ${y}`).join(' L ')} Z` : '';
     return (
       <>
@@ -83,7 +83,7 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
         {stream ? <path d={stream} fill={`url(#${id}-tea)`} opacity={0.96} /> : null}
         {stream ? <path d={stream} fill={B.teaHot} opacity={0.25 + 0.1 * Math.sin(t * 8)} filter={`url(#${id}-blur-mid)`} /> : null}
         {Array.from({length: 12}, (_, i) => {
-          const y = ((t * 520 + i * 110) % 1250) - 80;
+          const y = ((t * 520 + i * 140) % 1650) - 80;
           return y < front ? <path key={i} d={`M ${TX - 50 + (i % 4) * 34} ${y} v 70`} stroke="#FFE1A8" strokeWidth={7} strokeLinecap="round" opacity={0.45} /> : null;
         })}
         <Steam id={id} x={TX} y={Math.min(front, 900)} t={t} amount={ramp(t, 0.8, 1.6) * 0.9} w={300} />
@@ -136,11 +136,11 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
           return <circle key={i} cx={cx} cy={cy} r={11} fill={risk ? B.hurt : on ? C.arrow : '#5B4337'} opacity={on ? 0.95 : 0.5} />;
         })}
         <g opacity={ramp(t, (p.turn_at_s ?? 3.2) - 0.3, p.turn_at_s ?? 3.2)}>
-          <rect x={112} y={690} width={300} height={54} rx={27} fill="#E9D9C6" />
-          <rect x={112} y={770} width={300 + 300 * grow} height={54} rx={27} fill={B.hurt} />
-          <text x={112} y={676} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Neither habit</text>
-          <text x={112} y={872} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Burning-hot tea + daily smoking</text>
-          <text x={440 + 300 * grow} y={814} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
+          <rect x={112} y={930} width={300} height={54} rx={27} fill="#E9D9C6" />
+          <rect x={112} y={1040} width={300 + 300 * grow} height={54} rx={27} fill={B.hurt} />
+          <text x={112} y={916} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Neither habit</text>
+          <text x={112} y={1026} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Burning-hot tea + daily smoking</text>
+          <text x={440 + 300 * grow} y={1088} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
         </g>
       </>
     );
@@ -192,7 +192,7 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
           const px = lerp(feed[0][0].x, 430 + random(`lx${i}`) * 240, a), py = lerp(300, 470 + random(`ly${i}`) * 150, a * a) + Math.sin(a * 9 + i) * 14;
           return <circle key={i} cx={px} cy={py} r={13} fill="#8A4A16" stroke="#F3C27A" strokeWidth={4} />;
         })}
-        {Array.from({length: 4}, (_, i) => (i < cups ? <ChaiGlass key={i} id={`${id}c${i}`} x={225 + i * 210} y={860} s={0.36 * ramp(t, (p.turn_at_s ?? 2.6) + i * 0.6, (p.turn_at_s ?? 2.6) + i * 0.6 + 0.25)} /> : null))}
+        {Array.from({length: 4}, (_, i) => (i < cups ? <ChaiGlass key={i} id={`${id}c${i}`} x={225 + i * 210} y={930} s={0.52 * ramp(t, (p.turn_at_s ?? 2.6) + i * 0.6, (p.turn_at_s ?? 2.6) + i * 0.6 + 0.25)} /> : null))}
       </>
     );
   }
@@ -216,7 +216,7 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
             <path d={`M 980 500 L ${980 - 260 * cross} ${500 + 260 * cross}`} />
           </g>
         </g>
-        <g transform="translate(470 250) scale(0.62)" opacity={heal}>
+        <g transform="translate(560 300) scale(0.56)" opacity={heal}>
           <circle cx={540} cy={640} r={420} fill={B.good} opacity={0.12 + 0.05 * Math.sin(t * 3)} filter={`url(#${id}-blur-far)`} />
           <Torso id={id} t={t} hurt={0} heart={0.5} />
           <path d="M 540 392 C 540 440 536 520 540 600 C 544 700 548 770 572 842" stroke={B.good} strokeWidth={44} fill="none" strokeLinecap="round" opacity={0.45 + 0.2 * Math.sin(t * 4)} filter={`url(#${id}-soft)`} />
