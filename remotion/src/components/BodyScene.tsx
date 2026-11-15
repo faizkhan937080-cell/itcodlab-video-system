@@ -9,7 +9,7 @@ import type {Seg} from './MedScene';
 import {shotArt} from './BodyShots';
 
 export type BodyProps = {
-  shot: 'hook' | 'scald' | 'smoke_settle' | 'study' | 'heart' | 'liver' | 'cool' | 'end';
+  shot: 'hook' | 'scald' | 'smoke_settle' | 'study' | 'heart' | 'liver' | 'cool' | 'end' | 'needle' | 'bag' | 'refill' | 'plasma' | 'epo' | 'weeks' | 'three' | 'friend';
   headline?: string;
   headline_at_s?: number;
   headline2?: string; // replaces the headline at turn_at_s
