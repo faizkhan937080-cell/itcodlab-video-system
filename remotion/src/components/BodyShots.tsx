@@ -136,11 +136,11 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
           return <circle key={i} cx={cx} cy={cy} r={11} fill={risk ? B.hurt : on ? C.arrow : '#5B4337'} opacity={on ? 0.95 : 0.5} />;
         })}
         <g opacity={ramp(t, (p.turn_at_s ?? 3.2) - 0.3, p.turn_at_s ?? 3.2)}>
-          <rect x={112} y={930} width={300} height={54} rx={27} fill="#E9D9C6" />
-          <rect x={112} y={1040} width={300 + 300 * grow} height={54} rx={27} fill={B.hurt} />
-          <text x={112} y={916} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Neither habit</text>
-          <text x={112} y={1026} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Burning-hot tea + daily smoking</text>
-          <text x={440 + 300 * grow} y={1088} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
+          <rect x={112} y={884} width={300} height={54} rx={27} fill="#E9D9C6" />
+          <rect x={112} y={978} width={300 + 300 * grow} height={54} rx={27} fill={B.hurt} />
+          <text x={112} y={874} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Neither habit</text>
+          <text x={112} y={968} fontFamily={FONT} fontWeight={700} fontSize={32} fill="#F3DCC2">Burning-hot tea + daily smoking</text>
+          <text x={440 + 300 * grow} y={1026} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
         </g>
       </>
     );
@@ -172,7 +172,6 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
   if (p.shot === 'liver') {
     const speed = 0.5 + 0.9 * ramp(t, 0.8, 4.5); // caffeine is cleared faster and faster
     const feed: Seg[] = [[{x: -40, y: 300}, {x: 160, y: 300}, {x: 250, y: 420}, {x: 420, y: 500}]];
-    const cups = Math.floor(ramp(t, p.turn_at_s ?? 2.6, (p.turn_at_s ?? 2.6) + 2.4) * 4 + 0.001);
     return (
       <>
         <circle cx={540} cy={540} r={360} fill={`url(#${id}-ember)`} opacity={0.1 + 0.14 * ramp(t, 0.8, 3) * (0.7 + 0.3 * Math.sin(t * 11))} />
@@ -192,7 +191,7 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
           const px = lerp(feed[0][0].x, 430 + random(`lx${i}`) * 240, a), py = lerp(300, 470 + random(`ly${i}`) * 150, a * a) + Math.sin(a * 9 + i) * 14;
           return <circle key={i} cx={px} cy={py} r={13} fill="#8A4A16" stroke="#F3C27A" strokeWidth={4} />;
         })}
-        {Array.from({length: 4}, (_, i) => (i < cups ? <ChaiGlass key={i} id={`${id}c${i}`} x={225 + i * 210} y={930} s={0.52 * ramp(t, (p.turn_at_s ?? 2.6) + i * 0.6, (p.turn_at_s ?? 2.6) + i * 0.6 + 0.25)} /> : null))}
+        {Array.from({length: 4}, (_, i) => { const k = ramp(t, (p.turn_at_s ?? 2.6) + i * 0.45, (p.turn_at_s ?? 2.6) + i * 0.45 + 0.25); return k > 0 ? <ChaiGlass key={i} id={`${id}c${i}`} x={225 + i * 210} y={930} s={0.52 * k} /> : null; })}
       </>
     );
   }

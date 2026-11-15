@@ -272,6 +272,7 @@ export const BodyScene: React.FC<BodyProps> = (p) => {
         <Backdrop id={id} t={t} seed={p.shot} />
         <g transform={`translate(540 760) scale(${1.12 * push}) translate(-540 -640)`}>{art}</g>
       </svg>
+      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(14,9,10,0) 54%, rgba(14,9,10,0.72) 68%, rgba(14,9,10,0.86) 100%)'}} />
       {(p.chips ?? []).map((c, i) => {
         const pos = [[272, 215], [808, 215], [272, 1130], [808, 1130]][i % 4];
         return <Pill key={i} text={c.text} x={pos[0]} y={pos[1]} t={t} at={c.at_s} u={u} />;
