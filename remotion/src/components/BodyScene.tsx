@@ -69,7 +69,7 @@ export const BodyDefs: React.FC<{id: string}> = ({id}) => (
       <stop offset="0%" stopColor={B.hurt} stopOpacity="0.95" />
       <stop offset="100%" stopColor={B.hurt} stopOpacity="0" />
     </radialGradient>
-    <linearGradient id={`${id}-fadeg`} x1="0" y1="0" x2="0" y2="1" gradientUnits="userSpaceOnUse">
+    <linearGradient id={`${id}-fadeg`} x1="0" y1="0" x2="0" y2="1920" gradientUnits="userSpaceOnUse">
       <stop offset="0.44" stopColor="#FFF" />
       <stop offset="0.535" stopColor="#000" />
     </linearGradient>
