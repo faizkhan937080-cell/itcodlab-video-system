@@ -20,7 +20,7 @@ defaults:
 jobs:
   sample:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     env:
       ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
       RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
@@ -61,7 +61,7 @@ jobs:
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git config user.name itcod-worker; git config user.email worker@users.noreply.github.com
       - name: Sample render
-        timeout-minutes: 30
+        timeout-minutes: 80
         run: |
           SPEC="${{ github.event.inputs.spec }}"
           [ -n "$SPEC" ] || SPEC=$(git diff --name-only HEAD~1 HEAD -- 'trigger/sample/*-sample.json' | head -1); [ -n "$SPEC" ] || SPEC=$(ls -t trigger/sample/*-sample.json | head -1)

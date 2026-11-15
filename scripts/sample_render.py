@@ -48,11 +48,17 @@ def run(spec, storage, log=print):
     plan = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
     sec = float(spec.get("seconds", 6.5))
     ensure_music(plan, storage, log)
-    p = trim_plan(plan, sec)
+    final = spec.get("quality") == "final"   # full plan, full size, -14 LUFS, delivered to Drive (Faiz's Y)
+    p = plan if final else trim_plan(plan, sec)
     name = spec["name"]
     wd = Path(tempfile.mkdtemp(prefix="itcod-sample-"))
     out = wd / f"{name}-sample.mp4"
-    res = render.render_plan(p, "preview", str(out), storage=storage)
+    res = render.render_plan(p, "final" if final else "preview", str(out), storage=storage)
+    if final and res.get("ok"):
+        from . import finish
+        res["loudness"] = finish.normalize_loudness(str(out), -14.0, wd)
+        res["drive"] = storage.put_file(out, spec["deliver"])
+        log(f"FINAL delivered to {spec['deliver']}")
     log(f"SAMPLE render ok={res.get('ok')} {sec}s")
     times = spec.get("times") or [round(sec * k / 7, 2) for k in range(1, 7)]
     sheet = wd / "frames.jpg"

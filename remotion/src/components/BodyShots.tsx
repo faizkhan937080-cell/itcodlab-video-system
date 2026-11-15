@@ -130,17 +130,17 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
     return (
       <>
         {Array.from({length: 9 * 20}, (_, i) => {
-          const cx = 112 + (i % 20) * 45, cy = 470 + Math.floor(i / 20) * 34;
+          const cx = 112 + (i % 20) * 45, cy = 400 + Math.floor(i / 20) * 34;
           const on = random(`p${i}`) < fill;
           const risk = on && random(`r${i}`) < grow * 0.42;
           return <circle key={i} cx={cx} cy={cy} r={11} fill={risk ? B.hurt : on ? C.arrow : '#5B4337'} opacity={on ? 0.95 : 0.5} />;
         })}
         <g opacity={ramp(t, (p.turn_at_s ?? 3.2) - 0.3, p.turn_at_s ?? 3.2)}>
-          <rect x={112} y={812} width={300} height={54} rx={27} fill="#E9D9C6" />
-          <rect x={112} y={926} width={300 + 300 * grow} height={54} rx={27} fill={B.hurt} />
-          <text x={112} y={798} fontFamily={FONT} fontWeight={700} fontSize={34} fill="#F3DCC2">{p.labels?.[0] ?? "Neither habit"}</text>
-          <text x={112} y={912} fontFamily={FONT} fontWeight={700} fontSize={34} fill="#F3DCC2">{p.labels?.[1] ?? "Burning-hot tea + daily smoking"}</text>
-          <text x={440 + 300 * grow} y={974} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
+          <rect x={112} y={730} width={300} height={40} rx={20} fill="#E9D9C6" />
+          <rect x={112} y={820} width={300 + 300 * grow} height={40} rx={20} fill={B.hurt} />
+          <text x={112} y={718} fontFamily={FONT} fontWeight={700} fontSize={34} fill="#F3DCC2">{p.labels?.[0] ?? "Neither habit"}</text>
+          <text x={112} y={808} fontFamily={FONT} fontWeight={700} fontSize={34} fill="#F3DCC2">{p.labels?.[1] ?? "Burning-hot tea + daily smoking"}</text>
+          <text x={440 + 300 * grow} y={856} fontFamily={FONT} fontWeight={900} fontSize={64} fill={C.arrow} opacity={grow}>≈2×</text>
         </g>
       </>
     );
