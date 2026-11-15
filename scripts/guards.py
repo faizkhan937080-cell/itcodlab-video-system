@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 WORK = ROOT / "work"
 MEM = ROOT / "memory"
-MAX_WPM = 165   # reference thebrainmaze speaks 163 wpm; faster than this is not clearly intelligible
+MAX_WPM = 195   # follows the reference: thebrainmaze reels speak 163-187 wpm; Faiz asked for faster, energetic (2026-11-16)
 MIN_STYLE_SCORE = 7   # Checker's 0-10 score of "looks like the style card"
 
 

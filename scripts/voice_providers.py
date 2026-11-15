@@ -263,6 +263,9 @@ class Sarvam:
             lang = "en-IN"
         body = {"text": text, "target_language_code": lang, "speaker": voice, "model": self.model,
                 "pace": float(seg.get("speed", script.get("speed", 1.0))), "speech_sample_rate": 24000}
+        temp = seg.get("temperature", script.get("temperature"))
+        if temp is not None and self.model.startswith("bulbul:v3"):
+            body["temperature"] = float(temp)  # higher = livelier, more varied delivery (default 0.6)
         import urllib.error
         try:
             out = _post("sarvam", "https://api.sarvam.ai/text-to-speech", {"api-subscription-key": self.key}, body, timeout=120)
