@@ -1,0 +1,59 @@
+{
+ "provider": "gemini",
+ "lang": "en-IN",
+ "voice": "Charon",
+ "speed": 1.0,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "segments": [
+  {
+   "id": "s1",
+   "text": "A sip of tea. A drag of smoke. You think you're relaxing... but inside your body, something is quietly going wrong.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Speak in a low, tense documentary voice, almost a whisper, slightly afraid, building suspense",
+   "pause_after_s": 0.5
+  },
+  {
+   "id": "s2",
+   "text": "Tea hotter than sixty-five degrees doesn't just warm your throat. It scalds the delicate lining of your food pipe.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Serious and concerned, lean on the word scalds",
+   "pause_after_s": 0.4
+  },
+  {
+   "id": "s3",
+   "text": "And at that exact moment, the smoke arrives... and settles right onto that wounded layer.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Slow and ominous, a hint of dread",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s4",
+   "text": "A study of over four hundred thousand people found it. Burning hot tea, plus daily smoking, nearly doubled the risk of esophageal cancer.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Grave and fearful, short pause before nearly doubled",
+   "pause_after_s": 0.5
+  },
+  {
+   "id": "s5",
+   "text": "Now, your heart. Nicotine pushes your pulse up. Caffeine pushes your blood pressure up. Together, the hits stack.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Urgent and tense, a little faster",
+   "pause_after_s": 0.45
+  },
+  {
+   "id": "s6",
+   "text": "And here's the trap. Smoke trains your liver to burn through caffeine faster, so smokers crave cup after cup.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Intrigued, like revealing a secret, slightly sinister",
+   "pause_after_s": 0.5
+  },
+  {
+   "id": "s7",
+   "text": "You don't have to quit tea. Just let it cool, and drop the cigarette. Your food pipe will quietly thank you.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Warm, calm relief, gentle and reassuring",
+   "pause_after_s": 0.4
+  },
+  {
+   "id": "s8",
+   "text": "Send this to the one friend who always does both.",
+   "style": "Indian English accent, clear unhurried pace, every word easy to understand. Friendly and light, with a small smile",
+   "pause_after_s": 0.6
+  }
+ ]
+}
