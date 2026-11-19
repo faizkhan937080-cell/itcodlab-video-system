@@ -207,6 +207,14 @@ def cmd_gate(a):
         d = json.loads(Path(a.file).read_text(encoding="utf-8"))
         ok, bad = script_gate.check(d["text"], a.seconds, d["ref"], d.get("facts"))
         m = "script gate ok" if ok else "; ".join(bad)
+    elif k == "cost":
+        from . import costs
+        try:
+            stg = _storage()
+        except Exception:  # noqa: BLE001
+            stg = None
+        ok = costs.job_has_row(a.file, stg)
+        m = f"cost row exists for {a.file}" if ok else f"NO cost row for {a.file}: job is not finished until its time + tokens are measured (./run cost backfill, or fix the job's costs.track)"
     elif k == "waiting":
         g.pending_add(a.file, a.note or a.file); ok, m = True, f"waiting: {a.file}"
     elif k == "approved":
@@ -425,11 +433,13 @@ def cmd_voice_run(a):
     from .common import stage, to_native
     script = json.loads(Path(a.script).read_text(encoding="utf-8"))
     name = a.name or Path(a.script).stem
-    with tempfile.TemporaryDirectory(prefix="itcod-voice-") as wd:
+    _stg = None if a.no_upload else _storage()
+    with costs.track(_stg, name, "voice", media={}, extra={"segments": len(script.get("segments", []))}) as _trk, tempfile.TemporaryDirectory(prefix="itcod-voice-") as wd:
         wav, js = Path(wd) / f"{name}.wav", Path(wd) / f"{name}.json"
         with stage("tts"):
             res = tts.synth(script, wav, js)
         costs.add("tts", calls=len(script["segments"]), audio_s=res["duration_s"], words=res["words"], chars=res.get("chars", 0), engine=res["engine"])
+        _trk.media.update(duration_s=res["duration_s"])
         if a.no_upload:   # test runs: nothing goes to Drive (rule: tests never save)
             print(json.dumps(to_native({k: v for k, v in res.items() if k != "segments"}), ensure_ascii=False))
             print("test run: not uploaded")
@@ -1033,6 +1043,16 @@ def cmd_cost(a):
         p = costs.record(stg, a.job, "claude", stages={}, extra={"note": a.note or "tokens are Claude's own estimate"})
         print("saved: " + str(p))
         return 0
+    if a.what == "claude-auto":   # Stop hook: reads {"session_id", "transcript_path"} from stdin; silent, never fails the hook
+        try:
+            h = json.loads(sys.stdin.read() or "{}")
+            costs.record_claude_session(stg, h.get("session_id", "x"), h.get("transcript_path", ""))
+        except Exception:  # noqa: BLE001
+            pass
+        return 0
+    if a.what == "backfill":
+        print(f"backfilled {costs.backfill_github(a.repo)} row(s) from GitHub runs into costs/local")
+        return 0
     rows = costs.load_rows(stg)
     if stg is None:
         print("WARNING: Drive not connected here, real cost rows NOT read. Real numbers: worker log step 'Cost summary' (gh run view --log).", file=sys.stderr)
@@ -1206,7 +1226,7 @@ def build_parser():
     s.set_defaults(fn=cmd_tts)
 
     s = sub.add_parser("cost", help="time + cost data: report | estimate --seconds N | claude --job J --model M --tin N --tout N")
-    s.add_argument("what", choices=["report", "estimate", "claude"])
+    s.add_argument("what", choices=["report", "estimate", "claude", "claude-auto", "backfill"])
     s.add_argument("--seconds", type=float, default=60.0, help="reel length for estimate")
     s.add_argument("--kind", default="analysis", help="analysis | render_preview | render_final")
     s.add_argument("--machine", default=None, help="github-ubuntu-2core | gcp-gpu-vm | local")
@@ -1215,6 +1235,7 @@ def build_parser():
     s.add_argument("--tin", type=int, default=0)
     s.add_argument("--tout", type=int, default=0)
     s.add_argument("--note", default="")
+    s.add_argument("--repo", default="faizkhan937080-cell/itcodlab-video-system")
     s.set_defaults(fn=cmd_cost)
 
     s = sub.add_parser("security", help="secrets, workflows, guard-file integrity (+ --net: per-host counters and cooldowns)")

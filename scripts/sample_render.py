@@ -56,17 +56,30 @@ def ensure_sfx(plan, storage, log=print):
 
 
 def run(spec, storage, log=print):
+    from . import costs
+    plan0 = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
+    final0 = spec.get("quality") == "final"
+    media = {"duration_s": float(spec.get("seconds", 6.5)), "width": 2160 if final0 else plan0.get("width", 1080), "height": 3840 if final0 else plan0.get("height", 1920), "fps": plan0.get("fps", 30)}
+    extra = {"scenes": len(plan0.get("scenes", [])), "audio_items": len(plan0.get("audio", [])), "voice_s": next((a.get("duration_s") for a in plan0.get("audio", []) if a.get("role") == "voice"), None)}
+    with costs.track(storage, spec["name"], "render_final" if final0 else "render_preview", media=media, extra=extra):
+        return _run(spec, storage, log)
+
+
+def _run(spec, storage, log=print):
     from . import render, review
+    from .common import stage
     plan = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
     sec = float(spec.get("seconds", 6.5))
-    ensure_music(plan, storage, log)
-    ensure_sfx(plan, storage, log)
+    with stage("assets"):
+        ensure_music(plan, storage, log)
+        ensure_sfx(plan, storage, log)
     final = spec.get("quality") == "final"   # full plan, full size, -14 LUFS, delivered to Drive (Faiz's Y)
     p = plan if final else trim_plan(plan, sec)
     name = spec["name"]
     wd = Path(tempfile.mkdtemp(prefix="itcod-sample-"))
     out = wd / f"{name}-sample.mp4"
-    res = render.render_plan(p, "final" if final else "preview", str(out), storage=storage)
+    with stage("render"):
+        res = render.render_plan(p, "final" if final else "preview", str(out), storage=storage)
     if final and res.get("ok"):
         from . import finish
         res["loudness"] = finish.normalize_loudness(str(out), -14.0, wd)
@@ -75,13 +88,15 @@ def run(spec, storage, log=print):
     log(f"SAMPLE render ok={res.get('ok')} {sec}s")
     times = spec.get("times") or [round(sec * k / 7, 2) for k in range(1, 7)]
     sheet = wd / "frames.jpg"
-    render.contact_sheet(str(out), times, str(sheet), cols=3)
+    with stage("collage"):
+        render.contact_sheet(str(out), times, str(sheet), cols=3)
     pack = wd / "pack"
     pack.mkdir()
     (pack / "collage_frames.jpg").write_bytes(sheet.read_bytes())
     (pack / "video.mp4").write_bytes(out.read_bytes())   # small preview, so Faiz can watch it
     for i, rp in enumerate(spec.get("ref_paths", []), 1):   # reference collages from Drive, so Claude can compare side by side
         storage.fetch(rp, pack / f"collage_ref_{i:02d}.jpg")
-    pub = review.publish(pack, f"sample-{name}")
+    with stage("review_publish"):
+        pub = review.publish(pack, f"sample-{name}")
     log("REVIEW " + json.dumps(pub))
     return {"ok": bool(res.get("ok")), "check": {k: res.get(k) for k in ("loudness", "safe_zone") if k in res}, "review": pub}

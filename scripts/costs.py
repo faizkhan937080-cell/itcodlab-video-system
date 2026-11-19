@@ -152,11 +152,11 @@ def build_row(job_id, kind, media=None, stages=None, extra=None):
     return to_native(row)
 
 
-def record(storage, job_id, kind, media=None, stages=None, extra=None):
+def record(storage, job_id, kind, media=None, stages=None, extra=None, name=None):
     """Write one row. Drive first, local file as fallback. Returns the path or None. Never raises."""
     try:
         row = build_row(job_id, kind, media, stages, extra)
-        name = f"{job_id}__{kind}__{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}.json"
+        name = name or f"{job_id}__{kind}__{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}.json"
         if storage is not None:
             try:
                 storage.ensure_dir("costs/jobs")
@@ -190,7 +190,7 @@ def load_rows(storage=None):
 def _real(r):
     """A row counts only if something was really timed (test/fake rows have 0 s or a 1x1 video)."""
     m = r.get("media") or {}
-    if r.get("failed"):
+    if r.get("failed") or r.get("kind") == "claude":
         return True
     return (r.get("total_s") or 0) > 0 and (m.get("width") or 2) > 1
 
@@ -249,8 +249,126 @@ def report(rows, pr=None):
                     "median_cpu_util_pct": round(st.median([r["resources"]["cpu_util_pct"] for r in rs if r.get("resources")]), 1) if any(r.get("resources") for r in rs) else None,
                     "max_peak_rss_mb": max([r["resources"]["peak_rss_mb"] or 0 for r in rs if r.get("resources")], default=None),
                     "stage_s_per_media_min": {s: round(st.median(v) * 60, 1) for s, v in per.items()}}
-    return {"rows": len(rows), "month": month,
-            "github_actions": {"minutes_counted_this_month": gh_min, "usd_gross": round(gh_min * pr["github_actions"]["linux_2core_usd_per_min"], 2),
-                               "included_usd": inc, "left_usd": round(inc - gh_min * pr["github_actions"]["linux_2core_usd_per_min"], 2)},
+    gh_usd = gh_min * pr["github_actions"]["linux_2core_usd_per_min"]
+    cl = [r["usage"]["claude"] for r in rows if r.get("kind") == "claude" and r.get("usage", {}).get("claude")]
+    claude = {"sessions": len(cl), "in_tok": sum(x.get("in_tok", 0) for x in cl), "out_tok": sum(x.get("out_tok", 0) for x in cl),
+              "cache_read_tok": sum(x.get("cache_read_tok", 0) for x in cl), "exact_rows": sum(1 for x in cl if not x.get("estimated")),
+              "limit_pct": "not exposed by Anthropic: only tokens + API-equivalent USD are known"}
+    return {"rows": len(rows), "month": month, "claude": claude,
+            "github_actions": {"minutes_counted_this_month": gh_min, "usd_gross": round(gh_usd, 2), "pct_of_included": round(100 * gh_usd / inc, 2) if inc else None,
+                               "included_usd": inc, "left_usd": round(inc - gh_usd, 2)},
             "kaggle_gpu_hours_used_total": round(kg_h, 2), "kaggle_weekly_quota_h_reported": pr["kaggle"]["gpu_hours_per_week_reported"],
             "kinds": kinds}
+
+
+class track:
+    """Context manager: every job that renders or speaks writes ONE cost row, even when it fails. Never raises.
+        with costs.track(storage, "spicy2", "render_preview", media={...}) as t: ...   # stage("x") blocks inside become row stages
+    Remember the rule: no row = the job is not finished (gate-check cost <job>)."""
+
+    def __init__(self, storage, job_id, kind, media=None, extra=None):
+        self.storage, self.job, self.kind, self.media, self.extra = storage, job_id, kind, media or {}, dict(extra or {})
+        self.path = None
+
+    def __enter__(self):
+        from .common import stage_times
+        stage_times(reset=True)
+        self._m = mark()
+        return self
+
+    def __exit__(self, et, ev, tb):
+        from .common import stage_times
+        st_ = stage_times(reset=True)
+        if not st_:  # nothing wrapped in stage(): still time the whole block
+            st_ = {"total": round(time.time() - self._m["wall"], 1)}
+        extra = {**self.extra, "resources": resources_since(self._m)}
+        if et is not None:
+            extra.update(failed=True, error=et.__name__)
+        self.path = record(self.storage, self.job, self.kind, media=self.media, stages=st_, extra=extra)
+        return False
+
+
+def job_has_row(job_id, storage=None):
+    """True when a measured cost row exists for this job (Drive when connected, else costs/local)."""
+    return any(r.get("job") == job_id and r.get("kind") != "claude" for r in load_rows(storage))
+
+
+def claude_from_transcript(path):
+    """Exact Claude tokens of one session, summed from its transcript file (usage blocks). Returns {model: {...}} or {}."""
+    out = {}
+    try:
+        for ln in open(path, encoding="utf-8"):
+            try:
+                m = (json.loads(ln) or {}).get("message")
+            except ValueError:
+                continue
+            u = m.get("usage") if isinstance(m, dict) else None
+            if not u:
+                continue
+            d = out.setdefault(m.get("model", "unknown"), {"in_tok": 0, "out_tok": 0, "cache_read_tok": 0, "cache_write_tok": 0, "calls": 0})
+            d["in_tok"] += u.get("input_tokens", 0)
+            d["out_tok"] += u.get("output_tokens", 0)
+            d["cache_read_tok"] += u.get("cache_read_input_tokens", 0)
+            d["cache_write_tok"] += u.get("cache_creation_input_tokens", 0)
+            d["calls"] += 1
+    except OSError:
+        return {}
+    return out
+
+
+def record_claude_session(storage, session_id, transcript_path):
+    """Stop-hook target: one row per Claude session (overwritten as the session grows), tokens per model. Never raises."""
+    by = claude_from_transcript(transcript_path)
+    if not by:
+        return None
+    top = max(by, key=lambda k: by[k]["in_tok"] + by[k]["out_tok"])
+    tot = {k: sum(v[k] for v in by.values()) for k in ("in_tok", "out_tok", "cache_read_tok", "cache_write_tok", "calls")}
+    with _LOCK:
+        _USE["claude"] = {**tot, "model": top, "estimated": False, "by_model": by}
+    return record(storage, f"session-{str(session_id)[:8]}", "claude", extra={"note": "exact tokens from the session transcript"},
+                  name=f"session-{str(session_id)[:8]}__claude__total.json")
+
+
+def backfill_github(repo, limit=40):
+    """Rebuild render/voice rows from past GitHub Actions runs (real measured seconds), so estimates exist even when no row was written.
+    Writes to costs/local; skips runs already written. Returns the number of rows added."""
+    import re
+    import subprocess
+
+    def gh(args):
+        p = subprocess.run(["gh", "api", *args], capture_output=True, text=True, timeout=120)
+        return p.stdout if p.returncode == 0 else ""
+
+    LOCAL.mkdir(parents=True, exist_ok=True)
+    have = {p.name for p in LOCAL.glob("*.json")}
+    added = 0
+    for wf, kind_default in (("sample.yml", "render_preview"), ("voice.yml", "voice")):
+        runs = json.loads(gh([f"repos/{repo}/actions/workflows/{wf}/runs?per_page={limit}&status=completed"]) or "{}").get("workflow_runs", [])
+        for r in runs:
+            nm = f"gh{r['id']}__{kind_default}__backfill.json"
+            if nm in have or r.get("conclusion") != "success":
+                continue
+            jobs = json.loads(gh([f"repos/{repo}/actions/runs/{r['id']}/jobs"]) or "{}").get("jobs", [])
+            if not jobs:
+                continue
+            steps = {s["name"]: s for s in jobs[0].get("steps", []) if s.get("started_at") and s.get("completed_at")}
+            main = next((s for n, s in steps.items() if n.startswith(("Sample render", "Voice", "Synth"))), None)
+            if not main:
+                continue
+            f = lambda s: time.mktime(time.strptime(s, "%Y-%m-%dT%H:%M:%SZ"))  # noqa: E731
+            sec = f(main["completed_at"]) - f(main["started_at"])
+            setup = f(jobs[0]["completed_at"]) - f(jobs[0]["started_at"]) - sec
+            media, kind = {}, kind_default
+            if wf == "sample.yml":
+                log_txt = gh([f"repos/{repo}/actions/jobs/{jobs[0]['id']}/logs"])
+                m = re.search(r"SAMPLE render ok=\w+ ([\d.]+)s", log_txt or "")
+                kind = "render_final" if "FINAL delivered" in (log_txt or "") else "render_preview"
+                if not m:
+                    continue
+                media = {"duration_s": float(m.group(1)), "width": 2160 if kind == "render_final" else 1080, "height": 3840 if kind == "render_final" else 1920, "fps": 30}
+            row = build_row(f"gh{r['id']}", kind, media, {"setup": round(setup, 1), "render" if wf == "sample.yml" else "tts": round(sec, 1)},
+                            {"at": r["created_at"], "basis": f"backfilled from GitHub run {r['id']} ({r.get('display_title', '')[:40]})"})
+            row["machine"] = {"name": "github-ubuntu-2core", "cpus": 2, "kaggle_gpu": False}
+            (LOCAL / f"gh{r['id']}__{kind}__backfill.json").write_text(json.dumps(row, ensure_ascii=False, indent=1), encoding="utf-8")
+            added += 1
+    return added

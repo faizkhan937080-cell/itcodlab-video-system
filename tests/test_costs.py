@@ -91,3 +91,21 @@ def test_setup_info_reads_run_start_and_step_times(tmp_path, monkeypatch):
     monkeypatch.setenv("ITCOD_RUN_STARTED", time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now - 200)))
     info = costs.setup_info()
     assert 195 <= info["run_to_worker_s"] <= 205 and info["setup_steps_s"] == {"system_tools": 40, "virus_scanner": 75}
+
+
+def test_track_writes_row_even_on_failure(tmp_path):
+    from scripts import costs
+    try:
+        with costs.track(None, "t-job", "render_preview", media={"duration_s": 5}):
+            raise ValueError("boom")
+    except ValueError:
+        pass
+    assert costs.job_has_row("t-job")
+
+
+def test_claude_transcript_tokens(tmp_path):
+    import json
+    from scripts import costs
+    f = tmp_path / "s.jsonl"
+    f.write_text(json.dumps({"message": {"model": "m", "usage": {"input_tokens": 3, "output_tokens": 4, "cache_read_input_tokens": 5}}}) + "\n")
+    assert costs.claude_from_transcript(str(f))["m"]["out_tok"] == 4
