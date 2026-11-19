@@ -179,9 +179,9 @@ const hook = (p: BodyProps, id: string, t: number) => {
   return (
     <>
       <Tongue id={id} y0={560} t={t} />
-      <Chili id={id} x={lerp(300, 330, drop)} y={lerp(-80, 250 + bob, drop)} s={1.45} rot={lerp(-40, -8, drop)} />
+      <Chili id={id} x={lerp(260, 290, drop)} y={lerp(-60, 260 + bob, drop)} s={1.05} rot={lerp(-40, -8, drop)} />
       <Beacon id={id} x={800} y={230} t={t} s={1.15} on={ramp(t, 0.9, 1.3)} />
-      {txt(540, 120, 'FIRE ALARM?!', 96, YEL, 'middle', 900)}
+      {txt(540, 150, 'FIRE ALARM?!', 84, YEL, 'middle', 900)}
     </>
   );
 };
@@ -195,8 +195,8 @@ const sensor = (p: BodyProps, id: string, t: number) => {
     <>
       <rect x={100} y={0} width={880} height={380} fill="#C98A7A" opacity={0.18} />
       <rect x={100} y={500} width={880} height={400} fill="#1B0F2B" opacity={0.55} />
-      {txt(150, 60, 'ZABAAN KI SURFACE', 34, '#F3DCC2', 'start')}
-      {txt(150, 560, 'NERVE KE ANDAR', 34, '#BFA8FF', 'start')}
+      {txt(150, 70, 'ZABAAN KI SURFACE', 28, '#F3DCC2', 'start')}
+      {txt(150, 560, 'NERVE KE ANDAR', 28, '#BFA8FF', 'start')}
       {heads.map((x, i) => !gap(x) && (
         <g key={i}>
           <path d={`M ${x} 400 v 40 M ${x + 10} 400 v 36`} stroke="#C98A5A" strokeWidth={6} strokeLinecap="round" />
@@ -247,14 +247,14 @@ const degree = (p: BodyProps, id: string, t: number) => {
           </g>
         ))}
         <path d={`M -90 ${y43} H 150`} stroke={YEL} strokeWidth={7} strokeDasharray="18 12" />
-        <path d={`M -80 ${y25} h -80`} stroke="#9EDCFF" strokeWidth={5} />
-        {txt(-170, y25 + 12, 'MIRCHI', 30, '#9EDCFF', 'end', 800)}
+        <path d={`M -80 ${y25} h -30`} stroke="#9EDCFF" strokeWidth={5} />
+        {txt(-118, y25 + 10, 'MIRCHI', 26, '#9EDCFF', 'end', 800)}
       </g>
       <Beacon id={id} x={650} y={y43 + 20} t={t} s={0.8} on={ramp(t, 2.0, 2.4)} />
       {txt(760, 190, `${cnt}°C`, 128, YEL, 'middle', 900)}
       {txt(760, 250, 'ALARM LINE', 44, '#F4EFC6', 'middle', 800)}
       <Chili id={id} x={640} y={y25 + 60} s={0.5} rot={-6} />
-      {ramp(t, 2.4, 2.8) > 0 && txt(780, y25 - 10, 'GARMI NAHI. FIR BHI ALARM!', 34, '#FFB0A6', 'middle', 800)}
+      {ramp(t, 2.4, 2.8) > 0 && <>{txt(780, y25 - 40, 'GARMI NAHI,', 32, '#FFB0A6', 'middle', 800)}{txt(780, y25 - 4, 'FIR BHI ALARM!', 32, '#FFB0A6', 'middle', 800)}</>}
     </>
   );
 };
@@ -264,7 +264,7 @@ const panic = (p: BodyProps, id: string, t: number) => {
   return (
     <>
       <Brain id={id} x={540} y={250} s={0.95} red={1} t={t} />
-      {txt(540, 40, 'AAG! AAG! AAG!', 70, '#FF6A5A', 'middle', 900)}
+      {txt(540, 60, 'AAG! AAG! AAG!', 56, '#FF6A5A', 'middle', 900)}
       {[-1, 1].map((s) => (
         <path key={s} d={`M ${540 + s * 300} 250 C ${540 + s * 360} 250 ${540 + s * 380} 280 ${540 + s * 390} 340`} stroke="#FF6A5A" strokeWidth={9} strokeLinecap="round" strokeDasharray="6 18" strokeDashoffset={-t * 100} fill="none" />
       ))}
@@ -380,18 +380,18 @@ const milk = (p: BodyProps, id: string, t: number) => {
 };
 
 const endc = (p: BodyProps, id: string, t: number) => {
-  const comments = ['Level 10!', 'Mild bolo, extra daalo', 'Doodh pilao bhai', 'Main toh sab khata hoon'];
+  const comments = ['Level 10!', 'Mild bolo, extra', 'Doodh pilao bhai', 'Sab khata hoon'];
   return (
     <>
-      <Chili id={id} x={230} y={300} s={1.5} rot={-12} />
+      <Chili id={id} x={170} y={420} s={1.0} rot={-12} />
       {comments.map((c, i) => {
         const st = 0.5 + i * 0.7, q = ease((t - st) / 0.5);
         const y = lerp(880, 120 + i * 190, q);
         return (
           <g key={i} opacity={q}>
-            <rect x={lerp(500, 440, q)} y={y} width={500} height={110} rx={55} fill="#F4EFC6" />
-            <circle cx={lerp(500, 440, q) + 55} cy={y + 55} r={34} fill={['#E5332A', '#FF8A1F', '#7BE38B', '#8FD3FF'][i]} />
-            {txt(lerp(500, 440, q) + 110, y + 70, c, 40, '#2B1A12', 'start', 800)}
+            <rect x={lerp(540, 480, q)} y={y} width={420} height={110} rx={55} fill="#F4EFC6" />
+            <circle cx={lerp(540, 480, q) + 55} cy={y + 55} r={34} fill={['#E5332A', '#FF8A1F', '#7BE38B', '#8FD3FF'][i]} />
+            {txt(lerp(540, 480, q) + 105, y + 68, c, 34, '#2B1A12', 'start', 800)}
           </g>
         );
       })}

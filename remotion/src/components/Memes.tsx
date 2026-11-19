@@ -31,7 +31,7 @@ export const MemeLayer: React.FC<{memes?: Meme[]; t: number; u: number}> = ({mem
         return (
           <AbsoluteFill key={i} style={{opacity: fade}}>
             <AbsoluteFill style={{background: 'rgba(0,0,0,0.55)'}} />
-            <div style={{position: 'absolute', left: 0, right: 0, top: 640 * u, ...big(u, 230, '#FFFFFF', ''), transform: `scale(${s}) rotate(-4deg)`}}>{m.text ?? 'BRUH.'}</div>
+            <div style={{position: 'absolute', left: 0, right: 0, top: 640 * u, ...big(u, (m.text ?? 'BRUH.').length > 7 ? 130 : 230, '#FFFFFF', ''), transform: `scale(${s}) rotate(-4deg)`}}>{m.text ?? 'BRUH.'}</div>
             <div style={{position: 'absolute', left: 0, right: 0, top: 930 * u, ...big(u, 66, '#FFE066', ''), transform: `scale(${slam(Math.min(1, q * 1.4))})`}}>{m.sub ?? '(aag toh lagi hi nahi)'}</div>
           </AbsoluteFill>
         );
@@ -63,8 +63,8 @@ export const MemeLayer: React.FC<{memes?: Meme[]; t: number; u: number}> = ({mem
         return (
           <AbsoluteFill key={i} style={{opacity: fade}}>
             <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 42%, rgba(255,215,90,0.55), rgba(0,0,0,0.55) 70%)'}} />
-            <div style={{position: 'absolute', left: 0, right: 0, top: 600 * u, ...big(u, 190, '#FFE066', ''), transform: `scale(${s})`}}>{m.text ?? 'AURA +1000'}</div>
-            <div style={{position: 'absolute', left: 0, right: 0, top: 880 * u, ...big(u, 66, '#FFFFFF', '')}}>{m.sub ?? 'sahi jawab'}</div>
+            <div style={{position: 'absolute', left: 0, right: 0, top: 600 * u, ...big(u, 128, '#FFE066', ''), transform: `scale(${s})`}}>{m.text ?? 'AURA +1000'}</div>
+            <div style={{position: 'absolute', left: 0, right: 0, top: 800 * u, ...big(u, 60, '#FFFFFF', '')}}>{m.sub ?? 'sahi jawab'}</div>
           </AbsoluteFill>
         );
       }
