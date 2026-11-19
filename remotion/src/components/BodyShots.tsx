@@ -6,6 +6,7 @@ import type {Seg} from './MedScene';
 import {B, ChaiGlass, Cigarette, HEART_D, LIVER_D, Smoke, Steam, Torso} from './BodyScene';
 import type {BodyProps} from './BodyScene';
 import {donateArt} from './DonateShots';
+import {spicyArt} from './SpicyShots';
 
 const TX = 470; // macro tube centre
 const wall = (side: -1 | 1, half: number, t: number, wob = 14) => {
@@ -75,6 +76,8 @@ const Bust: React.FC<{id: string; x: number; y: number; s?: number; lit?: number
 export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode => {
   const d = donateArt(p, id, t);
   if (d !== undefined) return d;
+  const sp = spicyArt(p, id, t);
+  if (sp !== undefined) return sp;
   if (p.shot === 'scald') {
     const front = ramp(t, 0.3, 2.2) * 1700 - 80;
     const sw = (y: number, k: number) => 104 + Math.sin(y * 0.02 - t * 5 + k) * 12;

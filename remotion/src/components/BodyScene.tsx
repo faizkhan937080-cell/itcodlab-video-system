@@ -7,9 +7,12 @@ import {unit} from '../lib/anim';
 import {C, Defs, Backdrop, Headline, Pill, FONT, ramp, sec, along, lerp} from './MedScene';
 import type {Seg} from './MedScene';
 import {shotArt} from './BodyShots';
+import {RealDefs} from './SpicyShots';
+import {MemeLayer, shakeAt} from './Memes';
+import type {Meme} from './Memes';
 
 export type BodyProps = {
-  shot: 'hook' | 'scald' | 'smoke_settle' | 'study' | 'heart' | 'liver' | 'cool' | 'end' | 'needle' | 'bag' | 'refill' | 'plasma' | 'epo' | 'weeks' | 'three' | 'friend';
+  shot: 'hook' | 'scald' | 'smoke_settle' | 'study' | 'heart' | 'liver' | 'cool' | 'end' | 'needle' | 'bag' | 'refill' | 'plasma' | 'epo' | 'weeks' | 'three' | 'friend' | 'sp_hook' | 'sp_sensor' | 'sp_degree' | 'sp_panic' | 'sp_endorphin' | 'sp_water' | 'sp_milk' | 'sp_end';
   headline?: string;
   headline_at_s?: number;
   headline2?: string; // replaces the headline at turn_at_s
@@ -25,6 +28,8 @@ export type BodyProps = {
   locale?: string;
   badge?: string;
   badge_at_s?: number;
+  real?: boolean; // realistic upgrade: lit/textured materials, grain, bloom
+  memes?: Meme[];
 };
 
 export const B = {
@@ -267,14 +272,23 @@ export const BodyScene: React.FC<BodyProps> = (p) => {
   const two = p.headline2 !== undefined;
   const swap = two ? ramp(t, turn - 0.1, turn + 0.25) : 0;
   return (
-    <AbsoluteFill style={{backgroundColor: C.bg0}}>
+    <AbsoluteFill style={{backgroundColor: C.bg0, transform: `translate(${shakeAt(p.memes, t).x * u}px, ${shakeAt(p.memes, t).y * u}px)`}}>
       <svg viewBox="0 0 1080 1920" width={width} height={height} preserveAspectRatio="xMidYMid slice" style={{position: 'absolute', inset: 0}}>
         <Defs id={id} />
         <BodyDefs id={id} />
+        <RealDefs id={id} />
         <Backdrop id={id} t={t} seed={p.shot} />
         <g transform={`translate(540 760) scale(${1.12 * push}) translate(-540 -640)`}>{art}</g>
       </svg>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(14,9,10,0) 54%, rgba(14,9,10,0.72) 68%, rgba(14,9,10,0.86) 100%)'}} />
+      {p.real ? (
+        <>
+          <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 42%, rgba(255,214,170,0.10), rgba(0,0,0,0) 55%, rgba(0,0,0,0.42) 100%)', mixBlendMode: 'normal'}} />
+          <svg viewBox="0 0 1080 1920" width={width} height={height} preserveAspectRatio="xMidYMid slice" style={{position: 'absolute', inset: 0, mixBlendMode: 'overlay', opacity: 0.55}}>
+            <rect width="1080" height="1920" filter={`url(#${id}-grain)`} />
+          </svg>
+        </>
+      ) : null}
       {(p.chips ?? []).map((c, i) => {
         const pos = [[272, 215], [808, 215], [272, 1130], [808, 1130]][i % 4];
         return <Pill key={i} text={c.text} x={pos[0]} y={pos[1]} t={t} at={c.at_s} u={u} />;
@@ -294,6 +308,7 @@ export const BodyScene: React.FC<BodyProps> = (p) => {
           {p.sub}
         </div>
       ) : null}
+      <MemeLayer memes={p.memes} t={t} u={u} />
     </AbsoluteFill>
   );
 };

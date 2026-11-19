@@ -43,11 +43,24 @@ def ensure_music(plan, storage, log=print):
             log(f"MUSIC missing in library -> made own dark ambient bed at {a['src']}")
 
 
+def ensure_sfx(plan, storage, log=print):
+    """Meme sound effects the library lacks are made by scripts/sfx_synth.py (own, licence-free) and added by name."""
+    from . import sfx_synth
+    for a in plan.get("audio", []):
+        if a.get("role") == "sfx":
+            name = Path(a["src"]).stem
+            if name in sfx_synth.RECIPES and not storage.exists(a["src"]):
+                with tempfile.TemporaryDirectory() as td:
+                    storage.put_file(sfx_synth.make(name, Path(td) / f"{name}.wav"), a["src"])
+                log(f"SFX {name} missing in library -> made own and added at {a['src']}")
+
+
 def run(spec, storage, log=print):
     from . import render, review
     plan = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
     sec = float(spec.get("seconds", 6.5))
     ensure_music(plan, storage, log)
+    ensure_sfx(plan, storage, log)
     final = spec.get("quality") == "final"   # full plan, full size, -14 LUFS, delivered to Drive (Faiz's Y)
     p = plan if final else trim_plan(plan, sec)
     name = spec["name"]
