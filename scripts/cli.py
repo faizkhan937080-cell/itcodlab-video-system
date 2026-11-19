@@ -161,6 +161,16 @@ def cmd_render_local(a):
     return 0 if res.get("ok") else 1
 
 
+def cmd_clipcut(a):
+    from . import clipcut, review
+    spec = json.loads(Path(a.spec).read_text(encoding="utf-8"))
+    out = Path("work") / f"clipcut-{spec['name']}"
+    res = clipcut.subs(spec, out)
+    print(json.dumps(review.publish(out, f"clipcut-{spec['name']}"), ensure_ascii=False))
+    print(f"videos read: {sum(1 for r in res if 'lines' in r)}/{len(res)}; errors: {[r.get('error','')[:80] for r in res if 'error' in r]}")
+    return 0
+
+
 def cmd_sample_render(a):
     """Runner: render the first seconds of a plan + frames sheet to branch review (nothing saved to Drive)."""
     from . import sample_render
@@ -1380,6 +1390,10 @@ def build_parser():
     s.add_argument("--repo", default="faizkhan937080-cell/itcodlab-video-system")
     s.set_defaults(fn=cmd_ci)
 
+    s = sub.add_parser("clipcut", help="runner: clip-and-text reels (phase subs: read subtitles of YouTube links -> branch review)")
+    s.add_argument("phase", choices=["subs"])
+    s.add_argument("spec")
+    s.set_defaults(fn=cmd_clipcut)
     s = sub.add_parser("sample-render", help="runner: first seconds of a plan -> frames sheet on branch review")
     s.add_argument("spec")
     s.set_defaults(fn=cmd_sample_render)

@@ -1,0 +1,60 @@
+# Sample first (rulebook 23): first seconds of a plan -> preview render -> frames sheet on branch `review`. Nothing saved to Drive.
+name: clipcut
+on:
+  push:
+    branches: [main]
+    paths: ['trigger/clipcut/*-subs.json']
+  workflow_dispatch:
+    inputs:
+      spec:
+        description: 'spec file'
+        default: 'trigger/clipcut/overthink-subs.json'
+permissions:
+  contents: write
+concurrency:
+  group: clipcut
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash
+jobs:
+  clipcut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
+      RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
+      PYTHONUNBUFFERED: '1'
+      RCLONE_TIMEOUT: 2m
+      RCLONE_TPSLIMIT: '6'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: System tools (background)
+        run: nohup bash .github/scripts/apt_bg.sh > /tmp/apt_bg.log 2>&1 &
+      - name: Python packages
+        run: |
+          python -m venv ~/venv
+          ~/venv/bin/pip install -q --prefer-binary -r requirements.txt
+          echo "$HOME/venv/bin" >> "$GITHUB_PATH"
+      - name: Wait for system tools
+        run: |
+          for i in $(seq 1 330); do [ -f /tmp/itcod/tools.done ] && break; sleep 2; done
+          [ "$(cat /tmp/itcod/tools.done 2>/dev/null)" = "ok" ] || { echo "system tools missing"; exit 1; }
+      - name: Connect Drive and GitHub
+        run: |
+          mkdir -p ~/.config/rclone
+          printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git config user.name itcod-worker; git config user.email worker@users.noreply.github.com
+      - name: Clipcut subs
+        timeout-minutes: 20
+        run: |
+          SPEC="${{ github.event.inputs.spec }}"
+          [ -n "$SPEC" ] || SPEC=$(ls -t trigger/clipcut/*-subs.json | head -1)
+          ./run clipcut subs "$SPEC" | tail -20
