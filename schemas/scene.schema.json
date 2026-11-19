@@ -432,7 +432,7 @@
     },
     "audio": {
       "type": "array",
-      "maxItems": 12,
+      "maxItems": 40,
       "items": {
         "type": "object",
         "required": [
