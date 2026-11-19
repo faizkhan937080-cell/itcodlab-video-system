@@ -1,0 +1,55 @@
+{
+ "provider": "sarvam",
+ "lang": "hi-IN",
+ "voice": "rahul",
+ "speed": 1.08,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "segments": [
+  {
+   "id": "s1",
+   "text": "रुको रुको! आपने एक मिर्ची खाई, और body ने पूरा fire alarm बजा दिया, पर आग तो लगी ही नहीं। ये हो क्या रहा है?",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s2",
+   "text": "मिर्ची में होता है capsaicin, जो ज़बान के heat sensor में ऐसे fit होता है, जैसे ताले में चाबी!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s3",
+   "text": "ये sensor तभी बजता है जब चीज़ तैंतालीस degree से ज़्यादा गर्म हो। पर मिर्ची ने गर्मी दी ही नहीं, बस sensor को बेवकूफ़ बनाया!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s4",
+   "text": "अब brain का हाल सुनो: आग, आग, आग! पसीना आता है, आँखों से पानी, नाक बहने लगती है, क्योंकि body को लगता है आप जल रहे हो!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s5",
+   "text": "लेकिन plot twist, brain endorphin छोड़ता है, यानी natural painkiller। इसलिए तीखा खाने के बाद अजीब सा मज़ा आता है!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s6",
+   "text": "अब पानी मत पीना, क्योंकि capsaicin तेल जैसा है। पानी उसे बहाता नहीं, बस पूरे मुँह में फैला देता है।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s7",
+   "text": "दूध या दही पियो, क्योंकि उनमें casein होता है, जो capsaicin को sensor से खींचकर हटा देता है, जैसे साबुन grease को।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s8",
+   "text": "तो बोलो, आप कितनी तीखी खाते हो? Comment में level बताओ, और उस दोस्त को भेजो जो mild बोलकर extra मिर्ची माँगता है!",
+   "pause_after_s": 0.25
+  }
+ ],
+ "fallback_voices": {
+  "google": "en-IN-Chirp3-HD-Charon"
+ },
+ "temperature": 1.0
+}
