@@ -1,7 +1,7 @@
 // Skills testing video: one part per skill, each drawn with that skill's own method. Every motion is driven by useCurrentFrame (no useFrame).
 // Honesty rule: a part that cannot run says NOT TESTED + reason on screen. The skill name stays on screen for the whole part.
 import React from 'react';
-import {AbsoluteFill, Solid, interpolate, random, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Sequence, Solid, interpolate, random, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
 import {Lottie} from '@remotion/lottie';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
@@ -307,34 +307,32 @@ const LightLeakBeat: React.FC<{n: number}> = ({n}) => {
     </AbsoluteFill>
   );
 };
-const Combo: React.FC<{t: number; n: number; beatLen: number; beatStatus: ('tested' | 'not_tested')[]}> = ({t, beatLen, beatStatus}) => {
-  const {fps} = useVideoConfig();
+const Combo: React.FC<{t: number; n: number; beatLen: number; beatStatus: ('tested' | 'not_tested')[]}> = ({n, beatLen, beatStatus}) => {
   const width = 1080, height = 1920;
-  const beat = Math.min(3, Math.floor(t / (beatLen / fps)));
-  const f = Math.round(t * fps) - beat * beatLen;
   const half = Math.round((beatLen + 12) / 2);
+  const dur = (i: number) => (i === 3 ? n - 3 * beatLen : beatLen);
   return (
     <AbsoluteFill style={{background: '#101018'}}>
-      {beat === 0 ? (
+      <Sequence from={0} durationInFrames={beatLen}>
         <AbsoluteFill style={{background: '#FFF4D6', alignItems: 'center', justifyContent: 'center'}}>
           <Lottie animationData={LOTTIE} loop style={{width: 900, height: 900}} />
         </AbsoluteFill>
-      ) : null}
-      {beat === 1 ? (
+      </Sequence>
+      <Sequence from={beatLen} durationInFrames={beatLen}>
         <TransitionSeries>
           <TransitionSeries.Sequence durationInFrames={half}><Card c1="#FF7A59" c2="#FFC145" label="Scene A" /></TransitionSeries.Sequence>
           <TransitionSeries.Transition presentation={slide({direction: 'from-right'})} timing={linearTiming({durationInFrames: 12})} />
           <TransitionSeries.Sequence durationInFrames={half}><Card c1="#2B6FED" c2="#8E7DFF" label="Scene B" /></TransitionSeries.Sequence>
         </TransitionSeries>
-      ) : null}
-      {beat === 2 ? <LightLeakBeat n={beatLen} /> : null}
-      {beat === 3 ? (
+      </Sequence>
+      <Sequence from={2 * beatLen} durationInFrames={beatLen}><LightLeakBeat n={beatLen} /></Sequence>
+      <Sequence from={3 * beatLen} durationInFrames={dur(3)}>
         <AbsoluteFill style={{background: '#0E1424'}}>
           {beatStatus[3] === 'tested' ? (
             <HtmlInCanvasMotionBlur width={width} height={height} samples={10} shutterAngle={270}><MovingBox /></HtmlInCanvasMotionBlur>
           ) : <MovingBox />}
         </AbsoluteFill>
-      ) : null}
+      </Sequence>
     </AbsoluteFill>
   );
 };
