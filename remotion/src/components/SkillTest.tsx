@@ -238,14 +238,14 @@ const Remotion3D: React.FC<{t: number}> = ({t}) => {
   const {width, height} = useVideoConfig();
   return (
   <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 40%, #243B6B 0%, #070B18 75%)'}}>
-    <ThreeCanvas width={width} height={height} camera={{fov: 40, position: [0, 0.6, 7.5], near: 0.1, far: 40}} style={{position: 'absolute', inset: 0}}>
+    <ThreeCanvas width={width} height={height} camera={{fov: 40, position: [0, 0.8, 14], near: 0.1, far: 40}} style={{position: 'absolute', inset: 0}}>
       <ambientLight intensity={0.35} />
       <directionalLight position={[5, 5, 5]} intensity={1.0} />
       <pointLight position={[Math.cos(t * 1.4) * 4, 2, Math.sin(t * 1.4) * 4 + 1]} intensity={80} color="#FF7AC8" />
       <pointLight position={[-Math.cos(t * 1.1) * 4, -1, 3]} intensity={60} color="#5BD0FF" />
       <mesh rotation={[t * 0.8, t * 1.1, 0]} position={[0, 0.3, 0]}>
         <boxGeometry args={[2, 2, 2]} />
-        <meshStandardMaterial color="#9FB7FF" metalness={0.85} roughness={0.22} />
+        <meshStandardMaterial color="#C9D6FF" metalness={0.6} roughness={0.3} emissive="#2B3F8F" emissiveIntensity={0.35} />
       </mesh>
       <mesh rotation={[-t * 0.5, t * 0.7, 0]} position={[0, 0.3, 0]}>
         <icosahedronGeometry args={[2.1, 1]} />
