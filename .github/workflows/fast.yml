@@ -27,7 +27,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        part: [0, 1, 2, 3, 4, 5, 6, 7, audio]
+        part: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
       - uses: actions/checkout@v4
         with:

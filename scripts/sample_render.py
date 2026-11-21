@@ -94,11 +94,8 @@ def shard(spec, storage, part, parts, outdir, log=print):
     outdir = Path(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     q = "final" if final else "preview"
-    if part == "audio":
-        res = render.render_plan(p, q, str(outdir / "audio.aac"), storage=storage, audio_only=True)
-    else:
-        rng = shard_ranges(total_frames(p), parts)[int(part)]
-        res = render.render_plan(p, q, str(outdir / f"part{int(part):02d}.mp4"), storage=storage, frames=rng, muted=True)
+    rng = shard_ranges(total_frames(p), parts)[int(part)]   # each piece keeps its own sound; join glues the sound sample-exactly
+    res = render.render_plan(p, q, str(outdir / f"part{int(part):02d}.mp4"), storage=storage, frames=rng)
     log(f"SHARD {part}/{parts} ok={res.get('ok')}")
     return res
 
@@ -117,18 +114,26 @@ def _glue(spec, parts_dir, log):
     import subprocess
     pd = Path(parts_dir)
     vids = sorted(pd.rglob("part*.mp4"))
-    aud = next(iter(pd.rglob("audio.aac")), None)
-    if not vids or aud is None:
-        raise RuntimeError(f"join: {len(vids)} video pieces, audio {'ok' if aud else 'MISSING'}")
+    if not vids:
+        raise RuntimeError("join: no video pieces")
     wd = Path(tempfile.mkdtemp(prefix="itcod-join-"))
-    lst = wd / "list.txt"
-    lst.write_text("".join(f"file '{v.resolve()}'\n" for v in vids), encoding="utf-8")
+
+    def ff(*args):
+        r = subprocess.run(["ffmpeg", "-y", "-v", "error", *args], capture_output=True, text=True)
+        if r.returncode != 0:
+            raise RuntimeError("join failed:\n" + (r.stderr or "")[-600:])
+    wavs = []
+    for i, v in enumerate(vids):   # sound of every piece -> PCM (no AAC joins), then one clean AAC encode
+        w = wd / f"a{i:02d}.wav"
+        ff("-i", str(v), "-vn", "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le", str(w))
+        wavs.append(w)
+    (wd / "v.txt").write_text("".join(f"file '{v.resolve()}'\n" for v in vids), encoding="utf-8")
+    (wd / "a.txt").write_text("".join(f"file '{w}'\n" for w in wavs), encoding="utf-8")
+    ff("-f", "concat", "-safe", "0", "-i", str(wd / "a.txt"), "-c:a", "aac", "-b:a", "192k", str(wd / "audio.m4a"))
     out = wd / f"{spec['name']}-sample.mp4"
-    r = subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", str(lst), "-i", str(aud), "-map", "0:v:0", "-map", "1:a:0",
-                        "-c:v", "copy", "-c:a", "copy", "-shortest", "-movflags", "+faststart", str(out)], capture_output=True, text=True)
-    if r.returncode != 0 or not out.exists():
-        raise RuntimeError("join failed:\n" + (r.stderr or "")[-600:])
-    log(f"joined {len(vids)} pieces + audio")
+    ff("-f", "concat", "-safe", "0", "-i", str(wd / "v.txt"), "-i", str(wd / "audio.m4a"), "-map", "0:v:0", "-map", "1:a:0",
+       "-c:v", "copy", "-c:a", "copy", "-shortest", "-movflags", "+faststart", str(out))
+    log(f"joined {len(vids)} pieces")
     return out
 
 
