@@ -7,6 +7,7 @@ import {B, ChaiGlass, Cigarette, HEART_D, LIVER_D, Smoke, Steam, Torso} from './
 import type {BodyProps} from './BodyScene';
 import {donateArt} from './DonateShots';
 import {spicyArt} from './SpicyShots';
+import {coldArt} from './ColdShots';
 
 const TX = 470; // macro tube centre
 const wall = (side: -1 | 1, half: number, t: number, wob = 14) => {
@@ -78,6 +79,8 @@ export const shotArt = (p: BodyProps, id: string, t: number): React.ReactNode =>
   if (d !== undefined) return d;
   const sp = spicyArt(p, id, t);
   if (sp !== undefined) return sp;
+  const co = coldArt(p, id, t);
+  if (co !== undefined) return co;
   if (p.shot === 'scald') {
     const front = ramp(t, 0.3, 2.2) * 1700 - 80;
     const sw = (y: number, k: number) => 104 + Math.sin(y * 0.02 - t * 5 + k) * 12;

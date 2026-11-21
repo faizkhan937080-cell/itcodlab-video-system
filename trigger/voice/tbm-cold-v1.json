@@ -1,0 +1,55 @@
+{
+ "provider": "sarvam",
+ "lang": "hi-IN",
+ "voice": "aditya",
+ "speed": 1.08,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "fallback_voices": {
+  "google": "en-IN-Chirp3-HD-Charon"
+ },
+ "temperature": 1.0,
+ "segments": [
+  {
+   "id": "s1",
+   "text": "रुको रुको, ठंड में आपका bladder बार-बार क्यों भर जाता है? पानी तो कम पिया, फिर भी सुसु, ये कैसा scene है?",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s2",
+   "text": "ठंड में body एक ही काम करती है, गर्मी बचाओ। तो हाथ और पैर की नसें सिकुड़ जाती हैं, और खून अंदर भाग जाता है।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s3",
+   "text": "अब अंदर खून ज़्यादा और जगह कम, तो pressure ऊपर, और body को लगता है, भाई, पानी ज़्यादा हो गया!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s4",
+   "text": "Kidney को order मिलता है: ADH बंद करो, ये वही hormone है जो पानी रोकता है। तो पानी छनना शुरू, इसको कहते हैं cold diuresis!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s5",
+   "text": "बस फिर क्या, bladder जल्दी भरता है, और आप meeting के बीच में: भाई, एक मिनट!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s6",
+   "text": "ऊपर से ठंड में चाय पे चाय, तो सुसु की line और लंबी!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s7",
+   "text": "पर पानी पीना मत छोड़ो, क्योंकि ठंड में प्यास कम लगती है, पर body का पानी फिर भी जाता है। और layers पहनो, गर्म रहना ही हल है!",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s8",
+   "text": "तो बोलो, आपका bladder कितने बजे का alarm लगाता है? उस दोस्त को भेजो, जो हर घंटे bathroom जाता है!",
+   "pause_after_s": 0.25
+  }
+ ]
+}
