@@ -77,9 +77,10 @@ const CartoonStreet: React.FC<{t: number}> = ({t}) => {
   const bob = Math.abs(Math.sin(t * 8)) * 0.1;
   const camX = Math.sin(t * 0.7) * 1.6;
   return (
-    <ThreeCanvas width={width} height={height} camera={{fov: 42, position: [camX, 1.7, 5.6], near: 0.1, far: 60}} style={{position: 'absolute', inset: 0}}>
+    <ThreeCanvas width={width} height={height} camera={{fov: 42, position: [camX, 2.4, 8.6], near: 0.1, far: 60}} style={{position: 'absolute', inset: 0}}>
       <CamLook x={camX} />
-      <fog attach="fog" args={['#8FD8FF', 12, 24]} />
+      <color attach="background" args={['#8FD8FF']} />
+      <fog attach="fog" args={['#8FD8FF', 14, 28]} />
       <ambientLight intensity={1.1} />
       <directionalLight position={[4, 8, 5]} intensity={1.5} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -8]}><planeGeometry args={[40, 40]} /><meshToonMaterial color="#79D36B" /></mesh>
@@ -125,7 +126,7 @@ const CamLook: React.FC<{x: number}> = ({x}) => {
   // keeps the camera aimed at the character each frame (frame-driven: x comes from the frame)
   const {camera} = useThree();
   camera.position.x = x;
-  camera.lookAt(0, 1.0, 0);
+  camera.lookAt(0, 1.2, 0);
   return null;
 };
 
