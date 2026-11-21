@@ -12,7 +12,7 @@
     "@remotion/cli": "^4.0.0",
     "@remotion/effects": "4.0.541",
     "@remotion/google-fonts": "^4.0.541",
-    "@remotion/layout-utils": "^4.0.541",
+    "@remotion/layout-utils": "^4.0.545",
     "@remotion/lottie": "^4.0.541",
     "@remotion/media-utils": "^4.0.541",
     "@remotion/motion-blur": "^4.0.541",
