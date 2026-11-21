@@ -1,0 +1,182 @@
+{
+ "title": "Skills testing video",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "s1",
+   "duration_s": 9.906,
+   "template": "skilltest",
+   "props": {
+    "part": 1,
+    "name": "claude-animated-shorts",
+    "status": "tested",
+    "note": "3D cartoon: rangeen sheher, kali outline (three.js + Remotion)"
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "s2",
+   "duration_s": 5.807,
+   "template": "skilltest",
+   "props": {
+    "part": 2,
+    "name": "claude-blender-skills",
+    "status": "not_tested",
+    "reason": [
+     "Is machine par Blender install nahi hai.",
+     "Isliye Blender ka koi shot nahi bana.",
+     "Nakli shot nahi dikhaya."
+    ]
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "s3",
+   "duration_s": 7.041,
+   "template": "skilltest",
+   "props": {
+    "part": 3,
+    "name": "stickman-video-director",
+    "status": "tested",
+    "note": "Code Engine B1: saaf lakeeron wala stickman"
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "s4",
+   "duration_s": 7.156,
+   "template": "skilltest",
+   "props": {
+    "part": 4,
+    "name": "rossark-motion-skill",
+    "status": "tested",
+    "note": "Patte apne jod par hilte hain, dheere aur shaant"
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "s5",
+   "duration_s": 6.511,
+   "template": "skilltest",
+   "props": {
+    "part": 5,
+    "name": "Remotion 3D (3d.md)",
+    "status": "tested",
+    "note": "ThreeCanvas + lights, sab kuch frame se chalta hai"
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "s6",
+   "duration_s": 8.447,
+   "template": "skilltest",
+   "props": {
+    "part": 6,
+    "name": "lottie + transitions + light-leaks + motion-blur",
+    "status": "tested",
+    "beats": [
+     "Lottie",
+     "Transitions",
+     "Light leaks",
+     "Motion blur"
+    ],
+    "beat_status": [
+     "tested",
+     "tested",
+     "tested",
+     "tested"
+    ],
+    "note": "Remotion ke chaar packages"
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  },
+  {
+   "id": "s7",
+   "duration_s": 7.732,
+   "template": "skilltest",
+   "props": {
+    "part": 7,
+    "name": "viral-hooks-skill",
+    "status": "tested",
+    "hook": "Agar aap ab bhi still photo par zoom karte hain, to RUK JAIYE.",
+    "note": "Hook formula se bani, script ki line"
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  }
+ ],
+ "captions": [],
+ "audio": [
+  {
+   "src": "output/voice/tbm-skilltest-v1/tbm-skilltest-v1.wav",
+   "at_s": 0,
+   "role": "voice",
+   "volume": 1.0
+  },
+  {
+   "src": "assets/library/music/tbm-dark-ambient.mp3",
+   "at_s": 0,
+   "duration_s": 52.6,
+   "role": "music",
+   "volume": 0.15,
+   "fade_in_s": 1.0,
+   "fade_out_s": 2.0,
+   "duck": [
+    {
+     "from_s": 0.2,
+     "to_s": 9.781,
+     "gain": 0.45
+    },
+    {
+     "from_s": 10.031,
+     "to_s": 15.588,
+     "gain": 0.45
+    },
+    {
+     "from_s": 15.838,
+     "to_s": 22.629,
+     "gain": 0.45
+    },
+    {
+     "from_s": 22.879,
+     "to_s": 29.785,
+     "gain": 0.45
+    },
+    {
+     "from_s": 30.035,
+     "to_s": 36.296,
+     "gain": 0.45
+    },
+    {
+     "from_s": 36.546,
+     "to_s": 44.743,
+     "gain": 0.45
+    },
+    {
+     "from_s": 44.993,
+     "to_s": 52.081,
+     "gain": 0.45
+    }
+   ]
+  }
+ ],
+ "audio_target_lufs": -14,
+ "vignette": 0.0,
+ "grain": false
+}

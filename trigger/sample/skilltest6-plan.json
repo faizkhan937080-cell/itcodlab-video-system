@@ -1,0 +1,40 @@
+{
+ "title": "skilltest part 6",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "s1",
+   "duration_s": 8.447,
+   "template": "skilltest",
+   "props": {
+    "part": 6,
+    "name": "lottie + transitions + light-leaks + motion-blur",
+    "status": "tested",
+    "beats": [
+     "Lottie",
+     "Transitions",
+     "Light leaks",
+     "Motion blur"
+    ],
+    "beat_status": [
+     "tested",
+     "tested",
+     "tested",
+     "tested"
+    ],
+    "note": "Remotion ke chaar packages"
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  }
+ ],
+ "captions": [],
+ "audio": [],
+ "audio_target_lufs": -14,
+ "vignette": 0.0,
+ "grain": false
+}

@@ -28,6 +28,7 @@ import {Stroke} from './components/Stroke';
 import {Title} from './components/Title';
 import {VideoScene} from './components/VideoScene';
 import {Three3D} from './components/Three3D';
+import {SkillTest} from './components/SkillTest';
 import {easeOut} from './lib/anim';
 import {Colors, DEFAULT_COLORS, OverlayDef, Plan, SceneDef, sceneFrames, totalFrames} from './lib/types';
 import {followAt, zoomAt} from './lib/zoom';
@@ -115,6 +116,8 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <Sticker text={p.text ?? ''} x={p.x} y={p.y} size={p.size} rotateDeg={p.rotate_deg} />;
     case 'med':
       return <MedScene {...(p as any)} />;
+    case 'skilltest':
+      return <SkillTest {...(p as any)} />;
     case 'body':
       return <BodyScene {...(p as any)} />;
     default:

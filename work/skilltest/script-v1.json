@@ -1,0 +1,77 @@
+{
+ "text": "Kya aap jaante hain? Yeh claude animated shorts skill ka hissa hai, jahan cartoon kirdar rangeen duniya mein chalta hai. Ab claude blender skills ki baari hai, par is machine par blender nahi chalta, isliye test nahi hua. Yeh stickman video director skill hai, jisme saaf lakeeron wala stickman haath hilata hai. Ab rossark motion skill, jo drawing mein jaan daalti hai, jahan paudha hawa mein jhoomta hai. Yeh Remotion thri D skill hai, jahan asli cube ghoomta hai aur roshni uspar padti hai. Ab lottie, transitions, light leaks aur motion blur, Remotion ki yeh skills baari baari se dikhti hain. Aakhri hissa viral hooks skill ka hai: agar aap ab bhi still photo par zoom karte hain, to ruk jaiye.",
+ "ref": {
+  "available": true,
+  "pass_used": "auto",
+  "coverage_ratio": 0.93,
+  "complete": true,
+  "words": 126,
+  "words_per_min_speaking": 187.4,
+  "words_per_min_overall": 140.7,
+  "speech_ratio": 0.751,
+  "pauses": {
+   "count_gt_0_5s": 8,
+   "mean_s": 1.22,
+   "max_s": 1.86
+  },
+  "sentences": {
+   "count": 10,
+   "words_mean": 12.6,
+   "words_median": 12.5,
+   "words_p90": 16.3
+  },
+  "questions_per_min": 0.0,
+  "exclamations_per_min": 0.0,
+  "numbers_per_min": 0.0,
+  "script_mix": {
+   "devanagari_share": 0.0,
+   "latin_share": 1.0
+  },
+  "second_person_per_100w": 6.35,
+  "first_person_per_100w": 0.0,
+  "fillers_per_100w": 0.0,
+  "cta_words": [],
+  "repeated_phrases": [],
+  "repeated_sentences": [],
+  "unique_sentence_share": 1.0,
+  "hook": {
+   "first_word_s": 0.0,
+   "words_in_first_3s": 10.0,
+   "words_in_first_5s": 16.0,
+   "first_12_words": "The moment the needle comes out your body begins replacing almost half"
+  },
+  "vocabulary_note": "roman",
+  "text": "The moment the needle comes out, your body begins replacing almost half a liter of blood. A typical donation takes about one-tenth of your total blood. Within hours, fluid moves from your tissues into your blood vessels to refill them. The liquid part of your blood, the plasma, is fully replaced within a day or two. Red blood cells take longer. Your kidneys sense the slight drop in oxygen and release a hormone called erythropoietin. It signals your bone marrow to produce red cells faster. In about four to eight weeks, they are back to normal. Replacing the iron those cells carried can take several months. Meanwhile, your donation is separated into red cells, plasma, and platelets and can help up to three different patients."
+ },
+ "facts": [],
+ "segments": [
+  {
+   "id": "s1",
+   "text": "Kya aap jaante hain? Yeh claude animated shorts skill ka hissa hai, jahan cartoon kirdar rangeen duniya mein chalta hai."
+  },
+  {
+   "id": "s2",
+   "text": "Ab claude blender skills ki baari hai, par is machine par blender nahi chalta, isliye test nahi hua."
+  },
+  {
+   "id": "s3",
+   "text": "Yeh stickman video director skill hai, jisme saaf lakeeron wala stickman haath hilata hai."
+  },
+  {
+   "id": "s4",
+   "text": "Ab rossark motion skill, jo drawing mein jaan daalti hai, jahan paudha hawa mein jhoomta hai."
+  },
+  {
+   "id": "s5",
+   "text": "Yeh Remotion thri D skill hai, jahan asli cube ghoomta hai aur roshni uspar padti hai."
+  },
+  {
+   "id": "s6",
+   "text": "Ab lottie, transitions, light leaks aur motion blur, Remotion ki yeh skills baari baari se dikhti hain."
+  },
+  {
+   "id": "s7",
+   "text": "Aakhri hissa viral hooks skill ka hai: agar aap ab bhi still photo par zoom karte hain, to ruk jaiye."
+  }
+ ]
+}
