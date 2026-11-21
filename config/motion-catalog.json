@@ -103,6 +103,12 @@
  ],
  "sound": [
   {
+   "use": "any sound effect from words (boing, whoosh, impact, ui click, cartoon), CPU, no network",
+   "from": "earshot (worker package): python -m earshot make \"<words>\" -o file.wav; catalogue: python -m earshot sounds",
+   "guide": "remotion/vendor-skills/ext/earshot/docs/SFX.md, motion-sfx-techniques.md",
+   "note": "run on the worker via a script, not by Claude; listening commands need the listen extra (not installed)"
+  },
+  {
    "use": "sound effects: boom ding siren scratch buzzer pop whoosh",
    "from": "scripts/sfx_synth.py (assets/library/sfx on Drive); Openverse via ./run sfx for others"
   },
@@ -116,6 +122,11 @@
   }
  ],
  "process": [
+  {
+   "use": "topic idea, script shape, captions/CTA, Reels checks",
+   "from": "remotion/vendor-skills/ext/content-skills/{viral-short-form-ideas,viral-short-form,viral-instagram-reels,viral-captions-and-ctas}/SKILL.md",
+   "note": "when: step 1-2 of every video (topic + script); then hooks + ./run gate-check script"
+  },
   {
    "use": "hook for the script (100 formulas)",
    "from": "remotion/vendor-skills/ext/viral-hooks-skill/hooks-database.md",

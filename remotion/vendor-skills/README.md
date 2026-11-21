@@ -23,3 +23,10 @@ Source: https://github.com/rediumvex/viral-hooks-skill @ e26b339, MIT. Copied: S
 
 # ext/claude-video-watch (2026-11-21)
 Source: https://github.com/bradautomates/claude-video @ 03ceb42, MIT. Copied: SKILL.md + LICENSE only, as REFERENCE. Do NOT run it: it downloads with yt-dlp and sends video to Gemini, which breaks our hard rules. Our own analysis worker does this job.
+
+# ext/content-skills (2026-11-21)
+Source: https://github.com/vyralcontent/content-skills @ 349e495, MIT. Copied: all 7 skills (viral-short-form, viral-short-form-ideas, viral-hooks, viral-instagram-reels, viral-youtube-shorts, viral-tiktok-content, viral-captions-and-ctas), md only. Scanned: no network/exec/injection text. Use: topic ideas, script shape, hooks, captions/CTA, Reels-specific checks.
+
+# ext/earshot (2026-11-21) + Python package on the worker
+Source: https://github.com/Leonxlnx/earshot @ 7a7f7c5, MIT. Docs copied (README, commands, SFX/MAKE/LIMITS/INTEGRATION, motion-sfx). Package pinned in requirements.txt, core only.
+Scan: runs ffmpeg via subprocess for audio (expected); llm.py can upload audio to Gemini ONLY if a key + that command is used (we never call it); listening models download from Hugging Face only with the `listen` extra (not installed). No eval/exec/pickle. Tested: `python -m earshot make "short cartoon boing"` -> 0.59 s, 48 kHz, -14 LUFS.

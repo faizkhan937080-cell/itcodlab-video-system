@@ -16,3 +16,4 @@ praat-parselmouth
 kaggle>=1.8.0
 six  # the kaggle CLI imports it but does not declare it
 kokoro-onnx>=0.4  # voiceover (Kokoro-82M, Apache-2.0); model files from GitHub releases, cached
+earshot @ git+https://github.com/Leonxlnx/earshot@7a7f7c5  # SFX from words, CPU, no network (MIT); core only, listen extra NOT installed (it would download models)
