@@ -1,0 +1,50 @@
+{
+ "provider": "sarvam",
+ "lang": "hi-IN",
+ "voice": "rahul",
+ "speed": 0.9,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "fallback_voices": {
+  "google": "en-IN-Chirp3-HD-Charon"
+ },
+ "temperature": 1.0,
+ "segments": [
+  {
+   "id": "s1",
+   "text": "क्या आप जानते हैं? यह हिस्सा claude animated shorts skill का है, जहाँ कार्टून किरदार रंगीन दुनिया में चलता है।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s2",
+   "text": "अब claude blender skills की बारी है, पर इस मशीन पर blender नहीं चलता, इसलिए टेस्ट नहीं हुआ।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s3",
+   "text": "यह stickman video director skill है, जिसमें साफ़ लकीरों वाला स्टिकमैन हाथ हिलाता है।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s4",
+   "text": "अब rossark motion skill, जो ड्रॉइंग में जान डालती है, जहाँ पौधा हवा में झूमता है।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s5",
+   "text": "यह Remotion three D skill है, जहाँ असली क्यूब घूमता है और रोशनी उस पर पड़ती है।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s6",
+   "text": "अब lottie, transitions, light leaks और motion blur, ये चारों Remotion की skills बारी बारी से दिखती हैं।",
+   "pause_after_s": 0.25
+  },
+  {
+   "id": "s7",
+   "text": "आख़िरी हिस्सा viral hooks skill का है: अगर आप अब भी स्टिल फ़ोटो पर ज़ूम करते हैं, तो रुक जाइए।",
+   "pause_after_s": 0.25
+  }
+ ]
+}
