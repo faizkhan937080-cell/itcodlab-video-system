@@ -72,11 +72,12 @@ const Toon: React.FC<{g: React.ReactNode; color: string; pos?: V3; rot?: V3; sca
 );
 const HOUSE = ['#FF7A59', '#FFC145', '#5BC0EB', '#9BC53D', '#E55CA7', '#8E7DFF'];
 const CartoonStreet: React.FC<{t: number}> = ({t}) => {
+  const {width, height} = useVideoConfig();
   const swing = Math.sin(t * 8) * 0.6;
   const bob = Math.abs(Math.sin(t * 8)) * 0.1;
   const camX = Math.sin(t * 0.7) * 1.6;
   return (
-    <ThreeCanvas width={1080} height={1920} camera={{fov: 42, position: [camX, 1.7, 5.6], near: 0.1, far: 60}} style={{position: 'absolute', inset: 0}}>
+    <ThreeCanvas width={width} height={height} camera={{fov: 42, position: [camX, 1.7, 5.6], near: 0.1, far: 60}} style={{position: 'absolute', inset: 0}}>
       <CamLook x={camX} />
       <fog attach="fog" args={['#8FD8FF', 12, 24]} />
       <ambientLight intensity={1.1} />
@@ -135,7 +136,7 @@ const BlenderCard: React.FC<{t: number; reason: string[]}> = ({t, reason}) => {
   const shake = t > 0.55 && t < 0.85 ? Math.sin(t * 90) * 9 : 0;
   return (
     <AbsoluteFill style={{background: 'radial-gradient(circle at 50% 45%, #2A1F3D 0%, #0B0814 75%)'}}>
-      <div style={{position: 'absolute', left: 140, right: 140, top: 520, height: 520, border: '6px dashed #7A6AA8', borderRadius: 24, opacity: 0.7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT, color: '#7A6AA8', fontSize: 40, fontWeight: 800}}>
+      <div style={{position: 'absolute', left: 140, right: 140, top: 520, height: 520, border: '6px dashed #7A6AA8', borderRadius: 24, opacity: 0.7, display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 30, boxSizing: 'border-box', fontFamily: FONT, color: '#7A6AA8', fontSize: 40, fontWeight: 800}}>
         yahan Blender ka shot aata
       </div>
       <div style={{position: 'absolute', left: 0, right: 0, top: 640, textAlign: 'center', transform: `translateX(${shake}px) rotate(-8deg) scale(${scale})`, opacity: q, fontFamily: FONT, fontWeight: 900, fontSize: 150, color: '#FF3B30', textShadow: '0 0 30px #FF3B30', WebkitTextStroke: '4px #fff'}}>
@@ -232,9 +233,11 @@ const LivingPlant: React.FC<{t: number}> = ({t}) => {
 };
 
 // ---------- 5. Remotion 3D (remotion-markup/3d.md): ThreeCanvas + lights, all driven by useCurrentFrame ----------
-const Remotion3D: React.FC<{t: number}> = ({t}) => (
+const Remotion3D: React.FC<{t: number}> = ({t}) => {
+  const {width, height} = useVideoConfig();
+  return (
   <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 40%, #243B6B 0%, #070B18 75%)'}}>
-    <ThreeCanvas width={1080} height={1920} camera={{fov: 40, position: [0, 0.6, 7.5], near: 0.1, far: 40}} style={{position: 'absolute', inset: 0}}>
+    <ThreeCanvas width={width} height={height} camera={{fov: 40, position: [0, 0.6, 7.5], near: 0.1, far: 40}} style={{position: 'absolute', inset: 0}}>
       <ambientLight intensity={0.35} />
       <directionalLight position={[5, 5, 5]} intensity={1.0} />
       <pointLight position={[Math.cos(t * 1.4) * 4, 2, Math.sin(t * 1.4) * 4 + 1]} intensity={80} color="#FF7AC8" />
@@ -262,7 +265,8 @@ const Remotion3D: React.FC<{t: number}> = ({t}) => (
       </mesh>
     </ThreeCanvas>
   </AbsoluteFill>
-);
+  );
+};
 
 // ---------- 6. Lottie / transitions / light leaks / motion blur (Remotion) ----------
 const kf = (frames: [number, number[]][]) => ({
@@ -289,13 +293,12 @@ const Card: React.FC<{c1: string; c2: string; label: string}> = ({c1, c2, label}
 );
 const MovingBox: React.FC = () => {
   const f = useCurrentFrame();
-  const {width} = useVideoConfig();
-  const x = ((f * 38) % (width + 400)) - 200;
+  const x = ((f * 38) % (1080 + 400)) - 200;
   return <div style={{position: 'absolute', left: x, top: 780, width: 260, height: 260, borderRadius: 40, background: '#FF5D5D', boxShadow: '0 0 40px #FF5D5D'}} />;
 };
 const LightLeakBeat: React.FC<{n: number}> = ({n}) => {
   const f = useCurrentFrame();
-  const {width, height} = useVideoConfig();
+  const width = 1080, height = 1920;
   return (
     <AbsoluteFill>
       <Card c1="#1B2A49" c2="#3E1F47" label="Light leak" />
@@ -304,7 +307,8 @@ const LightLeakBeat: React.FC<{n: number}> = ({n}) => {
   );
 };
 const Combo: React.FC<{t: number; n: number; beatLen: number; beatStatus: ('tested' | 'not_tested')[]}> = ({t, beatLen, beatStatus}) => {
-  const {fps, width, height} = useVideoConfig();
+  const {fps} = useVideoConfig();
+  const width = 1080, height = 1920;
   const beat = Math.min(3, Math.floor(t / (beatLen / fps)));
   const f = Math.round(t * fps) - beat * beatLen;
   const half = Math.round((beatLen + 12) / 2);
@@ -360,7 +364,11 @@ const HookLine: React.FC<{t: number; text: string}> = ({t, text}) => {
 
 export const SkillTest: React.FC<SkillTestProps> = (p) => {
   const frame = useCurrentFrame();
-  const {fps, durationInFrames} = useVideoConfig();
+  const {fps, durationInFrames, width: cw} = useVideoConfig();
+  const sc = cw / 1080;
+  const Scaled: React.FC<{children: React.ReactNode}> = ({children}) => (
+    <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transform: `scale(${sc})`, transformOrigin: '0 0'}}>{children}</div>
+  );
   const t = frame / fps;
   const beatLen = Math.floor(durationInFrames / 4);
   const beat = p.part === 6 ? Math.min(3, Math.floor(frame / beatLen)) : undefined;
@@ -372,10 +380,11 @@ export const SkillTest: React.FC<SkillTestProps> = (p) => {
   else if (p.part === 5) body = <Remotion3D t={t} />;
   else if (p.part === 6) body = <Combo t={t} n={durationInFrames} beatLen={beatLen} beatStatus={p.beat_status ?? ['tested', 'tested', 'tested', 'tested']} />;
   else if (p.part === 7) body = <HookLine t={t} text={p.hook ?? ''} />;
+  const is3d = p.part === 1 || p.part === 5;
   return (
     <AbsoluteFill>
-      {body}
-      <Overlay {...p} t={t} beat={beat} />
+      {is3d ? body : <Scaled>{body}</Scaled>}
+      <Scaled><Overlay {...p} t={t} beat={beat} /></Scaled>
     </AbsoluteFill>
   );
 };

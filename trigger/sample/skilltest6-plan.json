@@ -33,7 +33,54 @@
   }
  ],
  "captions": [],
- "audio": [],
+ "audio": [
+  {
+   "src": "assets/library/music/tbm-dark-ambient.mp3",
+   "at_s": 0,
+   "duration_s": 52.6,
+   "role": "music",
+   "volume": 0.15,
+   "fade_in_s": 1.0,
+   "fade_out_s": 2.0,
+   "duck": [
+    {
+     "from_s": 0.2,
+     "to_s": 9.781,
+     "gain": 0.45
+    },
+    {
+     "from_s": 10.031,
+     "to_s": 15.588,
+     "gain": 0.45
+    },
+    {
+     "from_s": 15.838,
+     "to_s": 22.629,
+     "gain": 0.45
+    },
+    {
+     "from_s": 22.879,
+     "to_s": 29.785,
+     "gain": 0.45
+    },
+    {
+     "from_s": 30.035,
+     "to_s": 36.296,
+     "gain": 0.45
+    },
+    {
+     "from_s": 36.546,
+     "to_s": 44.743,
+     "gain": 0.45
+    },
+    {
+     "from_s": 44.993,
+     "to_s": 52.081,
+     "gain": 0.45
+    }
+   ]
+  }
+ ],
  "audio_target_lufs": -14,
  "vignette": 0.0,
  "grain": false
