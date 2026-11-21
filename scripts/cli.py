@@ -223,8 +223,14 @@ def cmd_gate(a):
             stg = _storage()
         except Exception:  # noqa: BLE001
             stg = None
+        costs.record_claude_session(stg, "gate", "")   # count Claude tokens now: a job is not finished without them
         ok = costs.job_has_row(a.file, stg)
-        m = f"cost row exists for {a.file}" if ok else f"NO cost row for {a.file}: job is not finished until its time + tokens are measured (./run cost backfill, or fix the job's costs.track)"
+        cok, cmsg = costs.claude_status(stg)
+        if ok and not cok:
+            ok, m = False, cmsg
+            print(("BLOCKED ") + m)
+            return 3
+        m = f"cost row exists for {a.file}; {cmsg}" if ok else f"NO cost row for {a.file}: job is not finished until its time + tokens are measured (./run cost backfill, or fix the job's costs.track)"
     elif k == "waiting":
         g.pending_add(a.file, a.note or a.file); ok, m = True, f"waiting: {a.file}"
     elif k == "approved":
@@ -1055,10 +1061,10 @@ def cmd_cost(a):
         return 0
     if a.what == "claude-auto":   # Stop hook: reads {"session_id", "transcript_path"} from stdin; silent, never fails the hook
         try:
-            h = json.loads(sys.stdin.read() or "{}")
+            h = json.loads(sys.stdin.read() or "{}") if not sys.stdin.isatty() else {}
             costs.record_claude_session(stg, h.get("session_id", "x"), h.get("transcript_path", ""))
-        except Exception:  # noqa: BLE001
-            pass
+        except Exception as e:  # noqa: BLE001
+            costs._hook_log(f"claude-auto failed: {type(e).__name__}: {e}")
         return 0
     if a.what == "backfill":
         print(f"backfilled {costs.backfill_github(a.repo)} row(s) from GitHub runs into costs/local")

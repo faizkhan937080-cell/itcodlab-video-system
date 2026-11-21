@@ -316,17 +316,63 @@ def claude_from_transcript(path):
     return out
 
 
+def find_transcripts(hint=""):
+    """Transcript files to count: the hook's path first, then $CLAUDE_TRANSCRIPT, then every ~/.claude/projects/**/*.jsonl touched today."""
+    import glob
+    seen, out = set(), []
+    cands = [hint, os.environ.get("CLAUDE_TRANSCRIPT", "")]
+    day = time.time() - 86400
+    cands += sorted(glob.glob(os.path.expanduser("~/.claude/projects/**/*.jsonl"), recursive=True), key=os.path.getmtime)
+    for c in cands:
+        if c and c not in seen and os.path.isfile(c) and (c in (hint, os.environ.get("CLAUDE_TRANSCRIPT", "")) or os.path.getmtime(c) > day):
+            seen.add(c)
+            out.append(c)
+    return out
+
+
+def _hook_log(msg):
+    try:
+        LOCAL.mkdir(parents=True, exist_ok=True)
+        with open(LOCAL.parent / "claude_hook.log", "a", encoding="utf-8") as f:
+            f.write(time.strftime("%Y-%m-%dT%H:%M:%SZ ", time.gmtime()) + msg + "\n")
+    except OSError:
+        pass
+
+
 def record_claude_session(storage, session_id, transcript_path):
-    """Stop-hook target: one row per Claude session (overwritten as the session grows), tokens per model. Never raises."""
-    by = claude_from_transcript(transcript_path)
+    """Stop-hook target: one row per Claude session (overwritten as the session grows), tokens per model. Never raises.
+    Never silent: when no transcript can be read, an explicit 'unmeasured' row + a log line are written, so the gap is visible and gate-check blocks."""
+    sid = str(session_id)[:8]
+    by = {}
+    for path in find_transcripts(transcript_path):
+        by = claude_from_transcript(path)
+        if by:
+            break
     if not by:
-        return None
+        _hook_log(f"NO transcript readable for session {sid} (hint={transcript_path!r}): tokens UNMEASURED")
+        with _LOCK:
+            _USE["claude"] = {"in_tok": 0, "out_tok": 0, "cache_read_tok": 0, "calls": 0, "model": "unknown", "estimated": True, "unmeasured": True}
+        return record(storage, f"session-{sid}", "claude", extra={"note": "UNMEASURED: no transcript found", "unmeasured": True},
+                      name=f"session-{sid}__claude__total.json")
     top = max(by, key=lambda k: by[k]["in_tok"] + by[k]["out_tok"])
     tot = {k: sum(v[k] for v in by.values()) for k in ("in_tok", "out_tok", "cache_read_tok", "cache_write_tok", "calls")}
     with _LOCK:
         _USE["claude"] = {**tot, "model": top, "estimated": False, "by_model": by}
-    return record(storage, f"session-{str(session_id)[:8]}", "claude", extra={"note": "exact tokens from the session transcript"},
-                  name=f"session-{str(session_id)[:8]}__claude__total.json")
+    return record(storage, f"session-{sid}", "claude", extra={"note": "exact tokens from the session transcript"},
+                  name=f"session-{sid}__claude__total.json")
+
+
+def claude_status(storage=None, days=1):
+    """-> (ok, message). ok only when a Claude row with real tokens exists from the last `days` days."""
+    now = time.time()
+    rows = [r for r in load_rows(storage) if r.get("kind") == "claude"]
+    def _tok(r):
+        c = (r.get("usage") or {}).get("claude") or {}
+        return 0 if c.get("unmeasured") else c.get("in_tok", 0) + c.get("out_tok", 0)
+    good = [r for r in rows if _tok(r) > 0]
+    if good:
+        return True, f"{len(good)} Claude session row(s) with real tokens"
+    return False, "NO measured Claude tokens: run `./run cost claude-auto`, or `./run cost claude --job J --tin N --tout N` by hand (see costs/claude_hook.log)"
 
 
 def backfill_github(repo, limit=40):

@@ -121,11 +121,13 @@ def install_global_hook(root=ROOT):
         "PreToolUse": {"matcher": "Bash|Write|Edit|Read|SendUserFile",
                        "hooks": [{"type": "command", "command": cd + "python3 -m scripts.guard"}]},
         "UserPromptSubmit": {"hooks": [{"type": "command", "command": cd + "./run check --quiet"}]},
+        "Stop": {"hooks": [{"type": "command", "command": cd + "./run cost claude-auto"}]},   # counts Claude tokens after every turn
     }
+    marker = {"PreToolUse": "scripts.guard", "UserPromptSubmit": "run check", "Stop": "cost claude-auto"}
     changed = []
     for ev, entry in want.items():
         cur = hooks.setdefault(ev, [])
-        if not any("scripts.guard" in json.dumps(e) or "run check" in json.dumps(e) for e in cur):
+        if not any(marker[ev] in json.dumps(e) for e in cur):
             cur.append(entry)
             changed.append(ev)
     f.parent.mkdir(parents=True, exist_ok=True)

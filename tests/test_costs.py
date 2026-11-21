@@ -109,3 +109,23 @@ def test_claude_transcript_tokens(tmp_path):
     f = tmp_path / "s.jsonl"
     f.write_text(json.dumps({"message": {"model": "m", "usage": {"input_tokens": 3, "output_tokens": 4, "cache_read_input_tokens": 5}}}) + "\n")
     assert costs.claude_from_transcript(str(f))["m"]["out_tok"] == 4
+
+
+def test_claude_unmeasured_is_loud_and_blocks(tmp_path, monkeypatch):
+    from scripts import costs
+    monkeypatch.setattr(costs, "LOCAL", tmp_path / "local")
+    monkeypatch.setattr(costs, "find_transcripts", lambda hint="": [])
+    costs.record_claude_session(None, "abc12345", "")
+    ok, msg = costs.claude_status(None)
+    assert not ok and "NO measured Claude tokens" in msg
+    assert (tmp_path / "claude_hook.log").exists()
+
+
+def test_claude_measured_passes(tmp_path, monkeypatch):
+    import json
+    from scripts import costs
+    monkeypatch.setattr(costs, "LOCAL", tmp_path / "local")
+    t = tmp_path / "t.jsonl"
+    t.write_text(json.dumps({"message": {"model": "m", "usage": {"input_tokens": 5, "output_tokens": 7}}}) + "\n")
+    costs.record_claude_session(None, "abc12345", str(t))
+    assert costs.claude_status(None)[0]
