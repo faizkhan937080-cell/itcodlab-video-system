@@ -79,6 +79,10 @@
  ],
  "attention": [
   {
+   "use": "believable life in drawn things: blinks, breathing, head tilt, landing, fabric, fire, plants",
+   "from": "remotion/vendor-skills/ext/rossark-motion-skill/SKILL.md + MOTION.md (curves); templates are React Native/Swift reference"
+  },
+  {
    "use": "meme beats: bruh, panic, wrong, aura, siren",
    "from": "Memes.tsx / MemeFx.tsx / MemeText.tsx (plan props.memes)",
    "note": "max one per scene"
@@ -111,6 +115,11 @@
   }
  ],
  "process": [
+  {
+   "use": "hook for the script (100 formulas)",
+   "from": "remotion/vendor-skills/ext/viral-hooks-skill/hooks-database.md",
+   "note": "then ./run gate-check script"
+  },
   {
    "use": "script then gate",
    "from": "./run gate-check script (pace, hook, sentence length, source for every number)"

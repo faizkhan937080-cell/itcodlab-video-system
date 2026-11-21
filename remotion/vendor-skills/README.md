@@ -14,3 +14,12 @@ Source: https://github.com/mromidev/claude-blender-skills @ 567116b, MIT. Copied
 
 # ext/stickman-video-director (2026-11-21)
 Source: https://github.com/kaomei/stickman-video-director @ 9431d37, MIT. Copied: LICENSE, SKILL.md, references/*.md. NOT copied: assets/ (audio library, images; 800 MB), docs, translations. Use: 2D stickman / rubber-hose / pixel styles; Mode A writes prompts for AI video models (paid, not for us), Mode B = Code Engine (code-built 2D video) is the one to read. Some guidance is in Chinese. Its paid-model and paid-narration steps do not apply: free tools only.
+
+# ext/rossark-motion-skill (2026-11-21)
+Source: https://github.com/rossark0/rossark-motion-skill @ 9b20964, MIT. Copied: SKILL.md, MOTION.md, README, LICENSE, templates/ (React Native + SwiftUI motion code, reference only). NOT copied: demo gifs/mp4/swift, tools/*.sh|py. Use: believable motion for drawn things (blinks, breathing, head tilt, landing, fabric, fire, plants) -> apply the same curves in our Remotion shots.
+
+# ext/viral-hooks-skill (2026-11-21)
+Source: https://github.com/rediumvex/viral-hooks-skill @ e26b339, MIT. Copied: SKILL.md, hooks-database.md (100 hook formulas), README, LICENSE. Use: pick the hook for every script; then our script gate still decides.
+
+# ext/claude-video-watch (2026-11-21)
+Source: https://github.com/bradautomates/claude-video @ 03ceb42, MIT. Copied: SKILL.md + LICENSE only, as REFERENCE. Do NOT run it: it downloads with yt-dlp and sends video to Gemini, which breaks our hard rules. Our own analysis worker does this job.
