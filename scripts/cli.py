@@ -210,6 +210,13 @@ def cmd_ci(a):
     return 0
 
 
+def cmd_catalog(a):
+    """Director's menu: where each motion graphic / sound / voice comes from."""
+    from . import catalog
+    print(catalog.show(a.word))
+    return 0
+
+
 def cmd_tools(a):
     """Everything we already own, before choosing how to build (inventory)."""
     from . import inventory
@@ -1422,6 +1429,9 @@ def build_parser():
     s.add_argument("phase", choices=["subs"])
     s.add_argument("spec")
     s.set_defaults(fn=cmd_clipcut)
+    s = sub.add_parser("catalog", help="director menu: where each motion graphic / sound / voice comes from")
+    s.add_argument("word", nargs="?", default="")
+    s.set_defaults(fn=cmd_catalog)
     s = sub.add_parser("sample-shard", help="runner: one parallel piece of a render (--part N | audio)")
     s.add_argument("spec"); s.add_argument("--part", required=True); s.add_argument("--parts", type=int, default=8); s.add_argument("--out", required=True)
     s.set_defaults(fn=cmd_sample_shard)

@@ -1,0 +1,117 @@
+{
+ "_note": "Director's menu: WHERE each kind of motion graphic / asset comes from. `./run catalog [word]` prints it. Order = preference. Free only.",
+ "real_3d": [
+  {
+   "use": "3D objects that move by themselves (smoke, steam, camera glide, particles)",
+   "from": "remotion/src/components/Three3D.tsx (@remotion/three, three, @react-three/fiber)",
+   "guide": "remotion/vendor-skills/remotion-markup/3d.md",
+   "note": "only shot 'cup_cig' exists; add a new shot in this file for a new 3D scene"
+  },
+  {
+   "use": "3D cartoon-world story short (characters in a three.js world, gliding camera, depth of field, ink outlines)",
+   "from": "remotion/vendor-skills/ext/claude-animated-shorts/SKILL.md + STYLE_BIBLE.md (MIT, vendored 2026-11-21)",
+   "note": "read the pipeline there, build with Three3D.tsx; its own user rules (no captions, English) do not apply to us"
+  },
+  {
+   "use": "photoreal 3D plate (Cycles, CPU)",
+   "from": "./run blender (scripts/blender3d.py)",
+   "note": "slow on free runner; use for one hero shot"
+  }
+ ],
+ "explainer_shots": [
+  {
+   "use": "body / health explainer, realistic lit SVG",
+   "from": "BodyScene.tsx + BodyShots.tsx + SpicyShots.tsx (RealDefs filters)",
+   "note": "flat if overused; mix with real_3d"
+  },
+  {
+   "use": "cold / bladder style set",
+   "from": "ColdShots.tsx (co_* shots)"
+  },
+  {
+   "use": "sleep / bed / brain / monkey set",
+   "from": "JerkShots.tsx (je_* shots)"
+  },
+  {
+   "use": "blood donation set",
+   "from": "DonateShots.tsx"
+  }
+ ],
+ "text_and_data": [
+  {
+   "use": "captions word by word",
+   "from": "remocn: caption-active-pop, caption-word-pop, caption-dim-progress, caption-weight, caption-core (ExtCaptions.tsx)"
+  },
+  {
+   "use": "counter, bar chart, checklist, split compare, quote",
+   "from": "Counter.tsx, BarChart.tsx, Checklist.tsx, SplitCompare.tsx, Quote.tsx"
+  },
+  {
+   "use": "kinetic title, lower third, banner, sticker",
+   "from": "KineticText.tsx, Title.tsx, LowerThird.tsx, Banner.tsx, Sticker.tsx"
+  },
+  {
+   "use": "stroke / paper cutout look",
+   "from": "Stroke.tsx, PaperCutout.tsx"
+  },
+  {
+   "use": "phone / chat / UI mock",
+   "from": "remocn: chat-flow, message-bubble, ai-prompt-flow, toast, spinner, typing-indicator, cursor, button, input, checkbox, skeleton; own nt-* (Nt.tsx)"
+  },
+  {
+   "use": "icons",
+   "from": "fluent-icons (remotion/src/ext/fluent)"
+  },
+  {
+   "use": "fonts",
+   "from": "remotion/src/ext/fonts.ts, FONTS.json, config/google_fonts.json"
+  }
+ ],
+ "attention": [
+  {
+   "use": "meme beats: bruh, panic, wrong, aura, siren",
+   "from": "Memes.tsx / MemeFx.tsx / MemeText.tsx (plan props.memes)",
+   "note": "max one per scene"
+  },
+  {
+   "use": "transitions, light leaks, motion blur",
+   "from": "remotion/vendor-skills/remotion-markup/transitions.md, light-leaks.md, motion-blur.md"
+  },
+  {
+   "use": "colour, glow, vignette, grain",
+   "from": "@remotion/effects; effects.md, color-correction.md; plan vignette/grain; ./run grade"
+  },
+  {
+   "use": "lottie animation",
+   "from": "LottieScene.tsx; lottie.md"
+  }
+ ],
+ "sound": [
+  {
+   "use": "sound effects: boom ding siren scratch buzzer pop whoosh",
+   "from": "scripts/sfx_synth.py (assets/library/sfx on Drive); Openverse via ./run sfx for others"
+  },
+  {
+   "use": "music bed",
+   "from": "assets/library/music/tbm-dark-ambient.mp3 (Drive); ./run library for others"
+  },
+  {
+   "use": "voice (Hinglish, Sarvam bulbul:v3)",
+   "from": "trigger/voice/<name>.json; speakers rahul, aditya, shubh (pick a different one per video); speed 0.95 to 1.0, never above 200 wpm"
+  }
+ ],
+ "process": [
+  {
+   "use": "script then gate",
+   "from": "./run gate-check script (pace, hook, sentence length, source for every number)"
+  },
+  {
+   "use": "render fast",
+   "from": ".github/workflows/fast.yml (8 pieces in parallel, ~10 min for 52 s)"
+  },
+  {
+   "use": "look, score, cost, send",
+   "from": "review-fetch, gate-check looked/cost, SendUserFile; score >= 7 or say the flaws"
+  }
+ ]
+}
