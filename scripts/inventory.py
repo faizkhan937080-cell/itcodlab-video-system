@@ -18,7 +18,7 @@ def facts():
     pk = _json("remotion/package.json") or {}
     deps = sorted(k for k in {**pk.get("dependencies", {}), **pk.get("devDependencies", {})} if k.startswith("@remotion/") or k in ("three", "lottie-web", "@react-three/fiber"))
     reg = _json("remotion/src/ext/REGISTRY.json") or {}
-    skills = sorted(p.name for p in (ROOT / "remotion" / "vendor-skills").glob("remotion-*")) if (ROOT / "remotion" / "vendor-skills").exists() else []
+    skills = (sorted(p.name for p in (ROOT / "remotion" / "vendor-skills").glob("remotion-*")) + sorted("ext/" + p.name for p in (ROOT / "remotion" / "vendor-skills" / "ext").glob("*"))) if (ROOT / "remotion" / "vendor-skills").exists() else []
     vg = (ROOT / "scripts" / "videogen.py").read_text(encoding="utf-8", errors="ignore")
     models = re.findall(r'"(\w+)": "([\w./-]+)"', vg.split("MODEL =")[1].split("\n")[0]) if "MODEL =" in vg else []
     secrets = sorted({m for f in (ROOT / ".github" / "workflows").glob("*.yml") for m in re.findall(r"secrets\.([A-Z0-9_]+)", f.read_text(encoding="utf-8"))} - {"GITHUB_TOKEN"})
