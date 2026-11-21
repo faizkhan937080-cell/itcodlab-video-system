@@ -9,6 +9,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
 -1. New container/session? `./run guard-install` once (hooks must fire from any folder). `./run check` is automatic; fix what it prints.
 0c. Before choosing HOW to build anything: `./run tools` (what we own). Skipping an owned tool needs a stated reason; zoom/pan on stills is not motion graphics.
 0d. Before saying a video is ready: `./run gate-check voice|prompts|motion|shots|script|looked ...` (scripts/guards.py). Style comes from `config/style-cards/<creator>.json`, not from copying the reference.
+0e. SHARED CHAT LOG (all chats, all bots): at start `./run sync read` (what other chats did). After any decision / install / state change / problem+solution: `./run sync add <chat-name> <text>`. Not chatter or brainstorming. No `./run`? read/append brain repo `sync/<date>.md` by hand, same line format.
 0. Run `./run mem brief` (state + index). Before asking Faiz anything: `./run mem find <word>`.
 1. Read `rulebooks/00-core.md` and `lessons/core.md`. Problem that comes back? `lessons/toolbook.md`.
 2. Then read ONLY the rulebook + lessons for your task type:

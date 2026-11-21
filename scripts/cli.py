@@ -916,6 +916,22 @@ def cmd_approve(a):
     return 0
 
 
+def cmd_sync(a):
+    from . import chatsync
+    if a.action == "read":
+        print(chatsync.read(int(a.words[0]) if a.words else 40))
+    elif a.action == "nudge":
+        print(chatsync.nudge())
+    else:
+        if len(a.words) < 2:
+            print("usage: sync add <chat> <text..>")
+            return 1
+        ok, msg = chatsync.add(a.words[0], " ".join(a.words[1:]))
+        print(msg)
+        return 0 if ok else 1
+    return 0
+
+
 def cmd_mem(a):
     from . import mem
     if a.action == "brief":
@@ -1233,6 +1249,11 @@ def build_parser():
     s.add_argument("words", nargs="*")
     s.add_argument("--keys", default="")
     s.set_defaults(fn=cmd_mem)
+
+    s = sub.add_parser("sync", help="shared chat log across all chats: read | add <chat> <text> | nudge")
+    s.add_argument("action", choices=["read", "add", "nudge"])
+    s.add_argument("words", nargs="*")
+    s.set_defaults(fn=cmd_sync)
 
     s = sub.add_parser("sfx", help="add SFX to a scene plan (Openverse, commercial licences only, number-checked)")
     s.add_argument("--plan", required=True)
