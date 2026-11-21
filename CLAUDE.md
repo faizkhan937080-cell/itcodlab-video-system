@@ -9,7 +9,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
 -1. New container/session? `./run guard-install` once (hooks must fire from any folder). `./run check` is automatic; fix what it prints.
 0c. Before choosing HOW to build anything: `./run tools` (what we own). Skipping an owned tool needs a stated reason; zoom/pan on stills is not motion graphics.
 0d. Before saying a video is ready: `./run gate-check voice|prompts|motion|shots|script|looked ...` (scripts/guards.py). Style comes from `config/style-cards/<creator>.json`, not from copying the reference.
-0e. SHARED CHAT LOG (all chats, all bots): at start `./run sync read` (what other chats did). After any decision / install / state change / problem+solution: `./run sync add <chat-name> <text>`. Not chatter or brainstorming. No `./run`? read/append brain repo `sync/<date>.md` by hand, same line format.
+0e. SHARED CHAT LOG: start `./run sync read`; after any decision/install/state change/fix `./run sync add <chat> <text>` (not chatter). No `./run`? use brain repo `sync/<date>.md`.
 0. Run `./run mem brief` (state + index). Before asking Faiz anything: `./run mem find <word>`.
 1. Read `rulebooks/00-core.md` and `lessons/core.md`. Problem that comes back? `lessons/toolbook.md`.
 2. Then read ONLY the rulebook + lessons for your task type:
@@ -28,8 +28,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
    - voice (realistic, cloning, consent) -> `20-voice.md`
    - after EVERY generation (evaluator), footage engines LTX/MiniMax/Veo -> `21-evaluator.md`
    - copyright / licence alerts, YouTube + Reels policies, memes, trending audio -> `18-platform-copyright.md`
-   - "director" command = whole video run by `.claude/agents/director.md`; where motion graphics come from: `./run catalog`
-   - Director, beats table, gates, profile, motion graphics, Remotion skills/effects -> `24-director.md`
+   - Director (whole video run by `.claude/agents/director.md`), beats table, gates, motion graphics (`./run catalog`), Remotion skills -> `24-director.md`
 3. Every step that saves, adds or renders needs approval: `rulebooks/04-approvals.md`.
 3a. After writing any job, approval or candidate: `./run wake` (starts the no-PC worker). Hosting: `rulebooks/11-hosting.md`.
 3c. Roles: `.claude/agents/` senior-developer (builds with gate/resume/fallback/truth), checker (smoke before, look after; "ready" only after it looked), director (creative). Use unasked.
