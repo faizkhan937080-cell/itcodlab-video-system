@@ -181,6 +181,28 @@ def cmd_sample_render(a):
     return 0 if res.get("ok") else 1
 
 
+def _spec_of(path):
+    spec = json.loads(Path(path).read_text(encoding="utf-8"))
+    spec["plan_file"] = str(Path(path).parent / spec["plan"])
+    return spec
+
+
+def cmd_sample_shard(a):
+    """Runner (parallel render): one piece of the video, or the sound (--part audio)."""
+    from . import sample_render
+    res = sample_render.shard(_spec_of(a.spec), _storage(), a.part, a.parts, a.out)
+    print(json.dumps(res, default=str))
+    return 0 if res.get("ok") else 1
+
+
+def cmd_sample_join(a):
+    """Runner (parallel render): glue the pieces + sound, then the usual finish (frames sheet / final delivery)."""
+    from . import sample_render
+    res = sample_render.join(_spec_of(a.spec), _storage(), a.parts_dir)
+    print(json.dumps(res, indent=2, default=str))
+    return 0 if res.get("ok") else 1
+
+
 def cmd_ci(a):
     """One line about a workflow run; waits inside the script (zero tokens while waiting)."""
     from . import ci_brief
@@ -1400,6 +1422,12 @@ def build_parser():
     s.add_argument("phase", choices=["subs"])
     s.add_argument("spec")
     s.set_defaults(fn=cmd_clipcut)
+    s = sub.add_parser("sample-shard", help="runner: one parallel piece of a render (--part N | audio)")
+    s.add_argument("spec"); s.add_argument("--part", required=True); s.add_argument("--parts", type=int, default=8); s.add_argument("--out", required=True)
+    s.set_defaults(fn=cmd_sample_shard)
+    s = sub.add_parser("sample-join", help="runner: glue parallel pieces + sound and finish")
+    s.add_argument("spec"); s.add_argument("--parts-dir", required=True)
+    s.set_defaults(fn=cmd_sample_join)
     s = sub.add_parser("sample-render", help="runner: first seconds of a plan -> frames sheet on branch review")
     s.add_argument("spec")
     s.set_defaults(fn=cmd_sample_render)

@@ -65,8 +65,8 @@ def run(spec, storage, log=print):
         return _run(spec, storage, log)
 
 
-def _run(spec, storage, log=print):
-    from . import render, review
+def _prepared(spec, storage, log=print):
+    """(plan to render, final?, seconds): same preparation for the single render and for every parallel shard."""
     from .common import stage
     plan = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
     sec = float(spec.get("seconds", 6.5))
@@ -74,12 +74,83 @@ def _run(spec, storage, log=print):
         ensure_music(plan, storage, log)
         ensure_sfx(plan, storage, log)
     final = spec.get("quality") == "final"   # full plan, full size, -14 LUFS, delivered to Drive (Faiz's Y)
-    p = plan if final else trim_plan(plan, sec)
-    name = spec["name"]
+    return (plan if final else trim_plan(plan, sec)), final, sec
+
+
+def total_frames(p):
+    fps = p.get("fps", 30)
+    return sum(max(1, int(s["duration_s"] * fps + 0.5)) for s in p["scenes"])
+
+
+def shard_ranges(n_frames, parts):
+    k = -(-n_frames // parts)
+    return [(i * k, min(n_frames, (i + 1) * k) - 1) for i in range(parts) if i * k < n_frames]
+
+
+def shard(spec, storage, part, parts, outdir, log=print):
+    """One parallel machine: a video-only piece (part 0..parts-1) or the one sound render (part == 'audio')."""
+    from . import render
+    p, final, _sec = _prepared(spec, storage, log)
+    outdir = Path(outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+    q = "final" if final else "preview"
+    if part == "audio":
+        res = render.render_plan(p, q, str(outdir / "audio.aac"), storage=storage, audio_only=True)
+    else:
+        rng = shard_ranges(total_frames(p), parts)[int(part)]
+        res = render.render_plan(p, q, str(outdir / f"part{int(part):02d}.mp4"), storage=storage, frames=rng, muted=True)
+    log(f"SHARD {part}/{parts} ok={res.get('ok')}")
+    return res
+
+
+def join(spec, storage, parts_dir, log=print):
+    """Glue the video pieces (stream copy, no re-encode, so quality equals one pass) + the sound, then the normal finish."""
+    from . import costs
+    plan0 = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
+    final0 = spec.get("quality") == "final"
+    media = {"duration_s": float(spec.get("seconds", 6.5)), "width": 2160 if final0 else plan0.get("width", 1080), "height": 3840 if final0 else plan0.get("height", 1920), "fps": plan0.get("fps", 30)}
+    with costs.track(storage, spec["name"], "render_final" if final0 else "render_preview", media=media, extra={"parallel": True}):
+        return _finish(spec, storage, _glue(spec, parts_dir, log), final0, log)
+
+
+def _glue(spec, parts_dir, log):
+    import subprocess
+    pd = Path(parts_dir)
+    vids = sorted(pd.rglob("part*.mp4"))
+    aud = next(iter(pd.rglob("audio.aac")), None)
+    if not vids or aud is None:
+        raise RuntimeError(f"join: {len(vids)} video pieces, audio {'ok' if aud else 'MISSING'}")
+    wd = Path(tempfile.mkdtemp(prefix="itcod-join-"))
+    lst = wd / "list.txt"
+    lst.write_text("".join(f"file '{v.resolve()}'\n" for v in vids), encoding="utf-8")
+    out = wd / f"{spec['name']}-sample.mp4"
+    r = subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", str(lst), "-i", str(aud), "-map", "0:v:0", "-map", "1:a:0",
+                        "-c:v", "copy", "-c:a", "copy", "-shortest", "-movflags", "+faststart", str(out)], capture_output=True, text=True)
+    if r.returncode != 0 or not out.exists():
+        raise RuntimeError("join failed:\n" + (r.stderr or "")[-600:])
+    log(f"joined {len(vids)} pieces + audio")
+    return out
+
+
+def _run(spec, storage, log=print):
+    from . import render
+    from .common import stage
+    p, final, sec = _prepared(spec, storage, log)
     wd = Path(tempfile.mkdtemp(prefix="itcod-sample-"))
-    out = wd / f"{name}-sample.mp4"
+    out = wd / f"{spec['name']}-sample.mp4"
     with stage("render"):
         res = render.render_plan(p, "final" if final else "preview", str(out), storage=storage)
+    return _finish(spec, storage, out, final, log, res)
+
+
+def _finish(spec, storage, out, final, log, res=None):
+    from . import render, review
+    from .common import stage
+    out = Path(out)
+    wd = out.parent
+    sec = float(spec.get("seconds", 6.5))
+    name = spec["name"]
+    res = res or {"ok": out.exists() and out.stat().st_size > 0}
     if final and res.get("ok"):
         from . import finish
         res["loudness"] = finish.normalize_loudness(str(out), -14.0, wd)

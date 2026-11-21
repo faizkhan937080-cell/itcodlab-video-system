@@ -173,7 +173,7 @@ def save_derived(storage, before):
             log(f"derived cache upload failed for {rel}: {e}")
     return sent
 
-def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=None):
+def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=None, muted=False, audio_only=False):
     """plan: dict (already validated). Returns check dict. Raises RuntimeError on render failure."""
     lim = limits()
     errs = validate("scene", plan)
@@ -204,6 +204,10 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=
            f"--scale={scale}"]
     if frames:  # benchmark / part render: only frames a..b (inclusive)
         cmd.append(f"--frames={int(frames[0])}-{int(frames[1])}")
+    if muted:   # fast parallel render: video-only part, sound is rendered once in its own shard
+        cmd.append("--muted")
+    if audio_only:   # one AAC render of the whole sound (same method as render_chunks)
+        cmd = [c for c in cmd if not c.startswith(("--codec=", "--crf=", "--pixel-format=", "--color-space=", "--scale="))] + ["--codec=aac"]
     if plan.get("gl"):   # @remotion/effects need WebGL in headless Chrome
         cmd.append(f"--gl={plan['gl']}")
     if concurrency or os.environ.get("ITCOD_RENDER_CONCURRENCY"):
@@ -232,8 +236,8 @@ def render_plan(plan, quality, out_path, storage=None, concurrency=None, frames=
         raise RuntimeError(f"remotion render stopped by watchdog after {limit_s}s ({dur:.0f}s video, {quality})")
     if rc != 0:
         raise RuntimeError("remotion render failed:\n" + tail(err or out))
-    if frames:
-        return {"ok": out_path.exists() and out_path.stat().st_size > 0, "frames": list(frames), "size": [w, h]}
+    if frames or audio_only:
+        return {"ok": out_path.exists() and out_path.stat().st_size > 0, "frames": list(frames) if frames else None, "size": [w, h]}
     res = check_output(out_path, plan, quality, lim, size=(w, h))
     res["grade"] = grade_report
     res["effects"] = fx_report
