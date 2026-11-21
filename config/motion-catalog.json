@@ -80,7 +80,8 @@
  "attention": [
   {
    "use": "believable life in drawn things: blinks, breathing, head tilt, landing, fabric, fire, plants",
-   "from": "remotion/vendor-skills/ext/rossark-motion-skill/SKILL.md + MOTION.md (curves); templates are React Native/Swift reference"
+   "from": "remotion/vendor-skills/ext/rossark-motion-skill/SKILL.md + MOTION.md (curves); templates are React Native/Swift reference",
+   "note": "when: any drawn character/object must look alive (idle breathing, blinks, settle after landing); how: copy the curve numbers from MOTION.md into the shot's frame math (spring/ease); never run its tools/"
   },
   {
    "use": "meme beats: bruh, panic, wrong, aura, siren",
@@ -118,7 +119,7 @@
   {
    "use": "hook for the script (100 formulas)",
    "from": "remotion/vendor-skills/ext/viral-hooks-skill/hooks-database.md",
-   "note": "then ./run gate-check script"
+   "note": "when: step 2 of every script; how: pick 1 formula fitting the topic, write the Hinglish hook (you-word or ? in first 12 words), then ./run gate-check script; log the formula id in the script JSON as hook_formula"
   },
   {
    "use": "script then gate",
@@ -131,6 +132,11 @@
   {
    "use": "look, score, cost, send",
    "from": "review-fetch, gate-check looked/cost, SendUserFile; score >= 7 or say the flaws"
+  },
+  {
+   "use": "watching a reference video",
+   "from": "OUR analysis worker (./run job / review-fetch collages)",
+   "note": "remotion/vendor-skills/ext/claude-video-watch is reference only: never run it (yt-dlp + Gemini break the hard rules)"
   }
  ]
 }
