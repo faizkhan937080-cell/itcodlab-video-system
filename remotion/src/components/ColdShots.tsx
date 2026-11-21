@@ -21,25 +21,25 @@ const Snow: React.FC<{t: number; n?: number}> = ({t, n = 36}) => (
   </>
 );
 
-/** Bladder: pear shape, origin = centre. level 0..1 = how full of pale-yellow liquid. */
+/** Bladder: round dome, two ureters on top, narrow urethra below. origin = centre. level 0..1 = pale-yellow fill. */
+const BL = 'M -170 -40 C -170 -190 170 -190 170 -40 C 170 60 80 120 40 170 L 40 240 L -40 240 L -40 170 C -80 120 -170 60 -170 -40 Z';
 const Bladder: React.FC<{id: string; x: number; y: number; s?: number; level?: number; t: number; scarf?: boolean; shiver?: number}> = ({id, x, y, s = 1, level = 0.3, t, scarf = false, shiver = 0}) => {
   const jx = Math.sin(t * 70) * 5 * shiver, jy = Math.cos(t * 63) * 4 * shiver;
-  const top = lerp(150, -110, level);
+  const top = lerp(240, -170, level);
   return (
     <g transform={`translate(${x + jx} ${y + jy}) scale(${s})`} filter={`url(#${id}-shadow)`}>
-      <clipPath id={`${id}-bl`}><path d="M -40 -190 C 40 -190 60 -150 150 -60 C 230 40 190 190 0 190 C -190 190 -230 40 -150 -60 C -60 -150 -40 -190 -40 -190 Z" /></clipPath>
-      <g filter={`url(#${id}-flesh)`}>
-        <path d="M -40 -190 C 40 -190 60 -150 150 -60 C 230 40 190 190 0 190 C -190 190 -230 40 -150 -60 C -60 -150 -40 -190 -40 -190 Z" fill="#E98A86" />
-      </g>
+      <clipPath id={`${id}-bl`}><path d={BL} /></clipPath>
+      <path d="M -110 -120 C -120 -200 -150 -240 -170 -290 M 110 -120 C 120 -200 150 -240 170 -290" stroke="#D77A74" strokeWidth={26} fill="none" strokeLinecap="round" />
+      <g filter={`url(#${id}-flesh)`}><path d={BL} fill="#E98A86" /></g>
       <g clipPath={`url(#${id}-bl)`}>
-        <rect x={-260} y={top} width={520} height={400} fill={PEE} opacity={0.85} />
+        <rect x={-260} y={top} width={520} height={400} fill={PEE} opacity={0.88} />
         <path d={`M -260 ${top} q 65 -${10 + Math.sin(t * 4) * 4} 130 0 t 130 0 t 130 0 t 130 0`} stroke="#FFF3B0" strokeWidth={6} fill="none" />
       </g>
-      <path d="M -150 -60 C -110 -130 -40 -170 10 -176" stroke="#FFFFFF" strokeWidth={9} fill="none" strokeLinecap="round" opacity={0.45} />
+      <path d="M -140 -80 C -110 -150 -40 -170 20 -168" stroke="#FFFFFF" strokeWidth={9} fill="none" strokeLinecap="round" opacity={0.5} />
       {scarf && (
         <g>
-          <path d="M -120 -92 C -50 -60 70 -60 140 -96 L 150 -50 C 70 -14 -60 -14 -130 -52 Z" fill="#E5332A" stroke="#FFB0A6" strokeWidth={4} />
-          <path d="M 60 -50 L 90 60 L 40 64 L 22 -44 Z" fill="#C42A22" stroke="#FFB0A6" strokeWidth={4} />
+          <path d="M -70 150 C -20 176 20 176 70 150 L 78 196 C 20 222 -20 222 -78 196 Z" fill="#E5332A" stroke="#FFB0A6" strokeWidth={4} />
+          <path d="M 40 190 L 80 290 L 30 296 L 12 196 Z" fill="#C42A22" stroke="#FFB0A6" strokeWidth={4} />
         </g>
       )}
     </g>
@@ -52,7 +52,7 @@ const hook = (p: BodyProps, id: string, t: number) => {
     <>
       <rect x={100} y={0} width={880} height={900} fill="#16324F" opacity={0.35} />
       <Snow t={t} />
-      <Bladder id={id} x={600} y={500} s={1.05} level={0.2 + 0.5 * ease((t - 1.0) / 2.5)} t={t} scarf shiver={ramp(t, 0.6, 1.2)} />
+      <Bladder id={id} x={620} y={470} s={0.95} level={0.2 + 0.5 * ease((t - 1.0) / 2.5)} t={t} scarf shiver={ramp(t, 0.6, 1.2)} />
       <g transform="translate(250 0)">
         <rect x={-30} y={90} width={60} height={620} rx={30} fill="rgba(255,255,255,0.12)" stroke="#E8F2FF" strokeWidth={5} />
         <circle cx={0} cy={740} r={58} fill="rgba(255,255,255,0.12)" stroke="#E8F2FF" strokeWidth={5} />
@@ -67,13 +67,13 @@ const hook = (p: BodyProps, id: string, t: number) => {
 
 const vessels = (p: BodyProps, id: string, t: number) => {
   const squeeze = ease((t - 0.8) / 2.2);
-  const w = lerp(64, 14, squeeze);
+  const w = lerp(70, 8, squeeze);
   const ys = [220, 400, 580];
   return (
     <>
       <rect x={100} y={0} width={880} height={900} fill="#16324F" opacity={0.3} />
-      {txt(230, 90, 'HAATH-PAIR', 40, ICE, 'middle', 900)}
-      {txt(800, 90, 'CORE (ANDAR)', 40, '#FF9C8E', 'middle', 900)}
+      {txt(290, 100, 'HAATH-PAIR', 34, ICE, 'middle', 900)}
+      {txt(780, 100, 'CORE', 34, '#FF9C8E', 'middle', 900)}
       {ys.map((y, k) => (
         <g key={k}>
           <rect x={130} y={y - w / 2} width={520} height={w} rx={w / 2} fill="#B83A3A" stroke="#FFB0A6" strokeWidth={3} filter={`url(#${id}-gloss)`} />
@@ -100,15 +100,15 @@ const pressure = (p: BodyProps, id: string, t: number) => {
   const ang = lerp(-60, 55, up);
   return (
     <>
-      <g transform="translate(540 430)" filter={`url(#${id}-shadow)`}>
+      <g transform="translate(540 500) scale(0.86)" filter={`url(#${id}-shadow)`}>
         <circle r={290} fill="#0E1B2A" stroke="#E8F2FF" strokeWidth={8} />
         <path d="M -250 0 A 250 250 0 0 1 250 0" stroke={GOOD} strokeWidth={26} fill="none" opacity={0.8} />
         <path d="M 120 -219 A 250 250 0 0 1 250 0" stroke={RED} strokeWidth={26} fill="none" opacity={0.9} />
         <g transform={`rotate(${ang})`}><path d="M -10 20 L 0 -230 L 10 20 Z" fill={YEL} /><circle r={26} fill="#E8F2FF" /></g>
       </g>
-      {txt(540, 790, `PRESSURE ${val}`, 92, up > 0.8 ? RED : YEL, 'middle', 900)}
-      {txt(540, 120, 'ANDAR KHOON ZYADA', 48, '#FF9C8E', 'middle', 900)}
-      {txt(540, 190, 'JAGAH KAM!', 48, YEL, 'middle', 900)}
+      {txt(540, 850, `PRESSURE ${val}`, 84, up > 0.8 ? RED : YEL, 'middle', 900)}
+      {txt(540, 90, 'ANDAR KHOON ZYADA', 42, '#FF9C8E', 'middle', 900)}
+      {txt(540, 148, 'JAGAH KAM!', 42, YEL, 'middle', 900)}
     </>
   );
 };
@@ -136,12 +136,12 @@ const kidney = (p: BodyProps, id: string, t: number) => {
 };
 
 const bladder = (p: BodyProps, id: string, t: number) => {
-  const lvl = 0.12 + 0.8 * ease((t - 0.4) / 3.6);
+  const l0 = (p.count_to ?? 12) / 100, lvl = l0 + (0.95 - l0) * ease((t - 0.4) / 3.6);
   return (
     <>
-      <Bladder id={id} x={540} y={460} s={1.2} level={lvl} t={t} shiver={ramp(t, 2.6, 3.4)} />
-      {txt(540, 110, 'BLADDER: HOUSEFULL', 62, YEL, 'middle', 900)}
-      {txt(540, 840, `${Math.round(lvl * 100)}% BHARA`, 70, lvl > 0.8 ? RED : '#E8F4FF', 'middle', 900)}
+      <Bladder id={id} x={540} y={470} s={1.0} level={lvl} t={t} scarf shiver={ramp(t, 2.6, 3.4)} />
+      {txt(540, 150, 'BLADDER: HOUSEFULL', 54, YEL, 'middle', 900)}
+      {txt(540, 850, `${Math.round(lvl * 100)}% BHARA`, 64, lvl > 0.8 ? RED : '#E8F4FF', 'middle', 900)}
     </>
   );
 };
@@ -166,7 +166,7 @@ const endc = (p: BodyProps, id: string, t: number) => {
   return (
     <>
       <Snow t={t} n={20} />
-      <Bladder id={id} x={230} y={470} s={0.8} level={0.55} t={t} scarf shiver={0.6} />
+      <Bladder id={id} x={230} y={470} s={0.7} level={0.55} t={t} scarf shiver={0.6} />
       {comments.map((c, i) => {
         const st = 0.5 + i * 0.7, q = ease((t - st) / 0.5);
         const y = lerp(880, 120 + i * 190, q);

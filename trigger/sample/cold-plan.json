@@ -56,7 +56,7 @@
       "kind": "panic",
       "at_s": 2.85,
       "dur_s": 1.2,
-      "text": "PRESSURE!!!"
+      "text": "AAAH!"
      }
     ]
    },
@@ -115,6 +115,7 @@
    "template": "body",
    "props": {
     "shot": "co_bladder",
+    "count_to": 92,
     "headline": "Chai pe chai =\nline lambi",
     "headline_at_s": 1.58,
     "real": true
