@@ -13,6 +13,11 @@
    "note": "read the pipeline there, build with Three3D.tsx; its own user rules (no captions, English) do not apply to us"
   },
   {
+   "use": "realistic Blender cinematic shot (city, chase camera, night, forest, car)",
+   "from": "remotion/vendor-skills/ext/claude-blender-skills/{blender-film,blender-car-film,blender-forest}/SKILL.md + notes",
+   "note": "workflow only; run Blender through ./run blender on the worker; scripts not vendored"
+  },
+  {
    "use": "photoreal 3D plate (Cycles, CPU)",
    "from": "./run blender (scripts/blender3d.py)",
    "note": "slow on free runner; use for one hero shot"
@@ -35,6 +40,11 @@
   {
    "use": "blood donation set",
    "from": "DonateShots.tsx"
+  },
+  {
+   "use": "2D stickman / rubber-hose / pixel / meme animation (Code Engine, mode B)",
+   "from": "remotion/vendor-skills/ext/stickman-video-director/SKILL.md + references/",
+   "note": "skip its paid-model Mode A; build in Remotion"
   }
  ],
  "text_and_data": [
