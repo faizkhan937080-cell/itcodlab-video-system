@@ -2,7 +2,7 @@
  "provider": "sarvam",
  "lang": "hi-IN",
  "voice": "shubh",
- "speed": 1.0,
+ "speed": 0.95,
  "target_lufs": -14,
  "lead_in_s": 0.2,
  "lexicon": {},
@@ -39,11 +39,6 @@
   {
    "id": "s6",
    "text": "और ज़्यादा तब होता है, जब आप चाय या coffee ज़्यादा पियो, tension में हो, या नींद पूरी न हो। रात की hard workout भी बढ़ाती है।",
-   "pause_after_s": 0.25
-  },
-  {
-   "id": "s7",
-   "text": "रात को hard workout और phone की screen भी इसको बढ़ा देती है।",
    "pause_after_s": 0.25
   },
   {
