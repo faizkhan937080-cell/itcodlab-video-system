@@ -9,10 +9,12 @@ import {ScanlineGlitch} from './ScanlineGlitch';
 import {DayCounter, PIXEL_FONT} from './DayCounter';
 import {Callout} from './Callout';
 import {PixelScene} from './PixelScene';
+import {SunburnShots} from './SunburnShots';
 
-export type EightBitProps = {scene?: 'skin' | 'end'; start_s?: number; beats: Beat[]};
+export type EightBitProps = {scene?: 'skin' | 'end' | 'sunburn'; start_s?: number; beats: Beat[]};
 
-export const EightBitShots: React.FC<EightBitProps> = ({scene = 'skin', start_s = 0, beats}) => {
+export const EightBitShots: React.FC<EightBitProps> = (props) => (props.scene === 'sunburn' ? <SunburnShots start_s={props.start_s} beats={props.beats as any} /> : <BruiseShots {...props} />);
+const BruiseShots: React.FC<EightBitProps> = ({scene = 'skin', start_s = 0, beats}) => {
   const frame = useCurrentFrame();
   const {fps, width} = useVideoConfig();
   const k = width / 1080; // art is designed at 1080x1920; scale up for 4K frames

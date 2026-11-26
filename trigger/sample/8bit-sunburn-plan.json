@@ -1,0 +1,271 @@
+{
+ "title": "8bit sunburn",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "s1",
+   "duration_s": 60,
+   "template": "eightbit",
+   "transition_in": {
+    "type": "cut"
+   },
+   "props": {
+    "scene": "sunburn",
+    "start_s": 0.0,
+    "beats": [
+     {
+      "id": "b1",
+      "t": [
+       0.0,
+       1.533
+      ],
+      "label": "SUNBURN?",
+      "sound": "sun-hum + blip"
+     },
+     {
+      "id": "b2",
+      "t": [
+       1.533,
+       4.088
+      ],
+      "label": "UV RAYS",
+      "sound": "zap rays"
+     },
+     {
+      "id": "b3",
+      "t": [
+       4.088,
+       6.643
+      ],
+      "label": "UV",
+      "sound": "whoosh zoom + hit"
+     },
+     {
+      "id": "b4",
+      "t": [
+       6.643,
+       8.176
+      ],
+      "label": "DEEP",
+      "sound": "low zap"
+     },
+     {
+      "id": "b5",
+      "t": [
+       8.176,
+       10.731
+      ],
+      "label": "DNA DAMAGE",
+      "sound": "glass-crack"
+     },
+     {
+      "id": "b6",
+      "t": [
+       10.731,
+       11.753
+      ],
+      "counter": "HOUR 2",
+      "sound": "tape ff blip"
+     },
+     {
+      "id": "b7",
+      "t": [
+       11.753,
+       14.308
+      ],
+      "label": "ALARM",
+      "sound": "alarm pop"
+     },
+     {
+      "id": "b8",
+      "t": [
+       14.308,
+       16.863
+      ],
+      "label": "VESSELS WIDEN",
+      "sound": "stretch pop"
+     },
+     {
+      "id": "b9",
+      "t": [
+       16.863,
+       19.929
+      ],
+      "label": "RED + HOT",
+      "sound": "riser"
+     },
+     {
+      "id": "b10",
+      "t": [
+       19.929,
+       20.951
+      ],
+      "counter": "HOUR 6",
+      "sound": "ff blip"
+     },
+     {
+      "id": "b11",
+      "t": [
+       20.951,
+       23.506
+      ],
+      "label": "NERVES",
+      "sound": "zap blips"
+     },
+     {
+      "id": "b12",
+      "t": [
+       23.506,
+       26.061
+      ],
+      "label": "PAIN",
+      "sound": "ouch pop"
+     },
+     {
+      "id": "b13",
+      "t": [
+       26.061,
+       29.127
+      ],
+      "label": "IMMUNE CELLS",
+      "sound": "drift + gulp"
+     },
+     {
+      "id": "b14",
+      "t": [
+       29.127,
+       30.149
+      ],
+      "counter": "DAY 2",
+      "sound": "ff blip"
+     },
+     {
+      "id": "b15",
+      "t": [
+       30.149,
+       32.704
+      ],
+      "label": "CELLS DIE",
+      "sound": "pop-pop-pop"
+     },
+     {
+      "id": "b16",
+      "t": [
+       32.704,
+       35.259
+      ],
+      "label": "TIGHT",
+      "sound": "stretch creak"
+     },
+     {
+      "id": "b17",
+      "t": [
+       35.259,
+       36.792
+      ],
+      "label": "ITCHY",
+      "sound": "scratch ticks"
+     },
+     {
+      "id": "b18",
+      "t": [
+       36.792,
+       37.814
+      ],
+      "counter": "DAY 4",
+      "sound": "ff blip"
+     },
+     {
+      "id": "b19",
+      "t": [
+       37.814,
+       40.88
+      ],
+      "label": "MELANIN",
+      "sound": "soft chime"
+     },
+     {
+      "id": "b20",
+      "t": [
+       40.88,
+       43.435
+      ],
+      "label": "LIFTING",
+      "sound": "paper rustle"
+     },
+     {
+      "id": "b21",
+      "t": [
+       43.435,
+       44.457
+      ],
+      "counter": "DAY 6",
+      "sound": "ff blip"
+     },
+     {
+      "id": "b22",
+      "t": [
+       44.457,
+       47.523
+      ],
+      "label": "PEELING",
+      "sound": "peel rip"
+     },
+     {
+      "id": "b23",
+      "t": [
+       47.523,
+       49.056
+      ],
+      "label": "FALLS",
+      "sound": "drop thud"
+     },
+     {
+      "id": "b24",
+      "t": [
+       49.056,
+       51.611
+      ],
+      "label": "NEW SKIN",
+      "sound": "sparkle chime"
+     },
+     {
+      "id": "b25",
+      "t": [
+       51.611,
+       54.677
+      ],
+      "label": "DNA REMEMBERS",
+      "sound": "low hit"
+     },
+     {
+      "id": "b26",
+      "t": [
+       54.677,
+       57.232
+      ],
+      "label": "SUNSCREEN",
+      "sound": "squirt pop"
+     },
+     {
+      "id": "b27",
+      "t": [
+       57.232,
+       60.0
+      ],
+      "label": "HAT",
+      "sound": "bounce blip"
+     }
+    ]
+   }
+  }
+ ],
+ "captions": [],
+ "audio": [],
+ "audio_target_lufs": -17,
+ "vignette": 0.0,
+ "grain": false
+}

@@ -23,3 +23,18 @@ def test_no_still_zoom_in_pixel_parts():
     for f in ("PixelSkinSection", "PixelActors", "ScanlineGlitch", "DayCounter", "Callout", "PixelScene", "EightBitShots"):
         src = (ROOT / f"remotion/src/components/{f}.tsx").read_text(encoding="utf-8")
         assert "<Img" not in src and "staticFile" not in src, f
+
+
+def test_sunburn_plan_and_no_stills():
+    out = subprocess.run([sys.executable, "-I", str(ROOT / "work/8bit-sciences/make_sunburn_plan.py")], capture_output=True, text=True)
+    assert out.returncode == 0, out.stderr[-300:]
+    plan = json.loads((ROOT / "trigger/sample/8bit-sunburn-plan.json").read_text(encoding="utf-8"))
+    assert validate("scene", plan) == []
+    p = plan["scenes"][0]["props"]
+    assert plan["scenes"][0]["template"] == "eightbit" and p["scene"] == "sunburn" and len(p["beats"]) == 27
+    assert all(b.get("sound") and (b.get("label") or b.get("counter")) for b in p["beats"])
+    smp = json.loads((ROOT / "trigger/sample/8bit-sunburn-sample.json").read_text(encoding="utf-8"))
+    assert len(smp["times"]) == 27
+    for f in ("SunburnShots", "SunburnBeach", "SunburnSkin", "SunburnCell"):
+        src = (ROOT / f"remotion/src/components/{f}.tsx").read_text(encoding="utf-8")
+        assert "<Img" not in src and "staticFile" not in src, f
