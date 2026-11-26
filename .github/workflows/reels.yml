@@ -162,11 +162,15 @@ jobs:
         if: steps.chk.outputs.ready == 'true' && inputs.action == 'candidates'
         timeout-minutes: 15
         run: ./run cand-upload ${{ matrix.job }}
+      - name: Upload creator corpus + breakdown
+        if: steps.chk.outputs.ready == 'true' && inputs.action == 'creator'
+        timeout-minutes: 10
+        run: ./run creator-upload sansser.ai
       - name: Republish pack to review branch
         if: steps.chk.outputs.ready == 'true' && inputs.action == 'republish'
         timeout-minutes: 15
         run: ./run republish ${{ matrix.job }}
       - name: Work on this one reel
-        if: steps.chk.outputs.ready == 'true' && inputs.action != 'republish' && inputs.action != 'candidates'
+        if: steps.chk.outputs.ready == 'true' && inputs.action != 'republish' && inputs.action != 'candidates' && inputs.action != 'creator'
         timeout-minutes: 120
         run: ./run worker --until-idle --no-sheet --grace 120 --max-minutes 110

@@ -1279,6 +1279,24 @@ def cmd_cand_upload(a):
     return 0
 
 
+def cmd_creator_upload(a):
+    """Worker: copy trigger/cand/_creator/{corpus-<type>-v1.json,BREAKDOWN.md} into creators/<h>/ on Drive."""
+    from pathlib import Path
+    st = _storage()
+    src = Path("trigger/cand/_creator")
+    base = f"creators/{a.creator}"
+    for t in ("editing", "scripting", "sound"):
+        f = src / f"corpus-{t}-v1.json"
+        if f.exists():
+            st.put_file(str(f), f"{base}/style/{t}/corpus-v1.json")
+            print("uploaded", f.name)
+    b = src / "BREAKDOWN.md"
+    if b.exists():
+        st.put_file(str(b), f"{base}/BREAKDOWN.md")
+        print("uploaded BREAKDOWN.md")
+    return 0
+
+
 def cmd_review_fetch(a):
     from .review import fetch
     for f in fetch(a.job, a.out):
@@ -1641,6 +1659,9 @@ def build_parser():
     s = sub.add_parser("cand-upload", help="worker: upload trigger/cand/<code>/*.json to each reel folder on Drive")
     s.add_argument("jobs", nargs="+")
     s.set_defaults(fn=cmd_cand_upload)
+    s = sub.add_parser("creator-upload", help="worker: upload corpus + BREAKDOWN of a creator from trigger/cand/_creator")
+    s.add_argument("creator")
+    s.set_defaults(fn=cmd_creator_upload)
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")
     s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")
