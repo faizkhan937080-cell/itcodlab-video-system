@@ -1,0 +1,355 @@
+{
+  "generated": "2026-11-26T21:17:21Z",
+  "video": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60.0,
+    "duration_s": 39.317,
+    "has_audio": true,
+    "total_frames": 2357,
+    "analysis_step": 1
+  },
+  "cut_rhythm": {
+    "scene_count": 1,
+    "cuts_per_min": 0.0,
+    "shot_length_s": {
+      "mean": 39.317,
+      "median": 39.317,
+      "std": 0.0,
+      "min": 39.317,
+      "max": 39.317
+    },
+    "transitions": {}
+  },
+  "motion_classes": {
+    "static": 1
+  },
+  "palette": [
+    {
+      "hex": "#F5F8F5",
+      "share": 0.738
+    },
+    {
+      "hex": "#201D21",
+      "share": 0.182
+    },
+    {
+      "hex": "#A7A9A8",
+      "share": 0.08
+    }
+  ],
+  "brightness": {
+    "mean": 0.929,
+    "median": 0.929,
+    "std": 0.0,
+    "min": 0.929,
+    "max": 0.929
+  },
+  "saturation": {
+    "mean": 0.025,
+    "median": 0.025,
+    "std": 0.0,
+    "min": 0.025,
+    "max": 0.025
+  },
+  "ocr": "available",
+  "dedup": {
+    "phash_hamming_max": 10,
+    "ssim_min": 0.8,
+    "relax_rounds": 0,
+    "scenes_total": 1,
+    "clusters": 1,
+    "capacity": 20,
+    "scenes_not_in_collage_clusters": []
+  },
+  "clusters": [
+    {
+      "cluster": 1,
+      "rep_scene": 1,
+      "members": [
+        1
+      ],
+      "count": 1,
+      "total_duration_s": 39.317,
+      "in_collage": true
+    }
+  ],
+  "collages": [
+    {
+      "file": "collage_01.jpg",
+      "tiles": 1
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "t": [
+        0.0,
+        39.317
+      ],
+      "in": "start",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 1,
+      "colors": [
+        "#F5F8F5",
+        "#201D21"
+      ],
+      "text": "sansser / Claude Code * SEO Analysis Suite Now drop your web"
+    }
+  ],
+  "audio": {
+    "has_audio": true,
+    "duration_s": 39.32,
+    "bpm": 107.7,
+    "beat_count": 70,
+    "beat_times_first_20": [
+      0.14,
+      0.74,
+      1.35,
+      1.9,
+      2.41,
+      3.0,
+      3.62,
+      4.16,
+      4.67,
+      5.25,
+      5.8,
+      6.36,
+      6.9,
+      7.43,
+      7.94,
+      8.52,
+      9.03,
+      9.57,
+      10.08,
+      10.61
+    ],
+    "loudness_db_mean": -22.5,
+    "loudness_db_max": -9.0,
+    "silences": [
+      [
+        38.64,
+        39.32
+      ]
+    ],
+    "cut_beat_sync": null,
+    "ebu_r128": {
+      "integrated_lufs": -17.2,
+      "true_peak_dbtp": -0.6,
+      "short_term_max_lufs": -15.3,
+      "lra_lu": 2.5,
+      "method": "pyloudnorm BS.1770, mono mix"
+    },
+    "stems": {
+      "vocals_lufs": -17.2,
+      "music_lufs": -54.2,
+      "voice_minus_music_lu": 37.0,
+      "engine": "demucs htdemucs"
+    },
+    "silence_share": 0.017
+  },
+  "transcript": {
+    "language": "en",
+    "coverage_ratio": 0.97,
+    "text": "This free Claude skill gets your business named in Google's AI answer, and if you're | not in that answer, your customers never even scroll down to find you. | Take this. | Someone searches Best Dentist in Dallas, and Google answers in a box at the top. | That's called an AI overview, and it names the dentist down the road so that patient | calls them before they ever see you. | Now drop your website link into this skill inside Claude code, and it sends 17 agents | through your whole site at the same time. | They read it the way Google's AI does and check your reviews, your Google business | profile and your service pages, then Claude writes every fix. | And that's the work SEO agencies charge thousands a month for. | Comment SEO and we'll send you the skill with the exact prompt."
+  },
+  "script_metrics": {
+    "available": true,
+    "pass_used": "auto",
+    "coverage_ratio": 0.97,
+    "complete": true,
+    "words": 140,
+    "words_per_min_speaking": 232.4,
+    "words_per_min_overall": 213.6,
+    "speech_ratio": 0.919,
+    "pauses": {
+      "count_gt_0_5s": 0,
+      "mean_s": 0.31,
+      "max_s": 0.38
+    },
+    "sentences": {
+      "count": 8,
+      "words_mean": 17.5,
+      "words_median": 19.0,
+      "words_p90": 25.9
+    },
+    "questions_per_min": 0.0,
+    "exclamations_per_min": 0.0,
+    "numbers_per_min": 1.53,
+    "script_mix": {
+      "devanagari_share": 0.0,
+      "latin_share": 1.0
+    },
+    "second_person_per_100w": 7.14,
+    "first_person_per_100w": 0.0,
+    "fillers_per_100w": 0.71,
+    "cta_words": [
+      "comment",
+      "link"
+    ],
+    "repeated_phrases": [],
+    "repeated_sentences": [],
+    "unique_sentence_share": 1.0,
+    "hook": {
+      "first_word_s": 0.0,
+      "words_in_first_3s": 11.3,
+      "words_in_first_5s": 19.0,
+      "first_12_words": "This free Claude skill gets your business named in Google's AI answer"
+    },
+    "vocabulary_note": "roman"
+  },
+  "voice": {
+    "available": true,
+    "backend": "praat",
+    "global": {
+      "pitch_median_hz": 171.4,
+      "pitch_p10_hz": 122.9,
+      "pitch_p90_hz": 257.3,
+      "pitch_med_st": -0.0,
+      "pitch_range_st": 12.8,
+      "pitch_std_st": 4.85,
+      "voiced_share": 0.57,
+      "energy_db_mean": 75.01,
+      "energy_range_db": 15.74,
+      "expressiveness": "very expressive",
+      "voice_quality": {
+        "jitter_local": 0.0273,
+        "shimmer_local": 0.1213,
+        "hnr_db": 8.8
+      }
+    },
+    "tempo": {
+      "wpm_mean": 232.9,
+      "wpm_min": 176.5,
+      "wpm_max": 260.9,
+      "wpm_cv": 0.09,
+      "rate": "very fast",
+      "fastest_sentence": 7,
+      "slowest_sentence": 9
+    },
+    "gaps": {
+      "count": 13,
+      "total_s": 4.12,
+      "mean_s": 0.32,
+      "max_s": 0.4,
+      "bins": {
+        "0.15-0.3": 5,
+        "0.3-0.6": 8,
+        "0.6-1.0": 0,
+        "1.0-up": 0
+      }
+    },
+    "sentence_endings": {
+      "rising": 2,
+      "falling": 2,
+      "flat": 7
+    },
+    "emphasis_top": [
+      {
+        "w": "17",
+        "t": 21.94,
+        "z_pitch": 0.93,
+        "z_energy": -0.86,
+        "z_len": 7.1,
+        "score": 2.39
+      },
+      {
+        "w": "and",
+        "t": 28.94,
+        "z_pitch": 1.84,
+        "z_energy": 1.56,
+        "z_len": 2.19,
+        "score": 1.86
+      },
+      {
+        "w": "and",
+        "t": 36.12,
+        "z_pitch": 0.87,
+        "z_energy": 1.8,
+        "z_len": 1.4,
+        "score": 1.36
+      },
+      {
+        "w": "free",
+        "t": 0.26,
+        "z_pitch": 1.28,
+        "z_energy": 1.51,
+        "z_len": 0.91,
+        "score": 1.23
+      },
+      {
+        "w": "SEO",
+        "t": 35.68,
+        "z_pitch": 1.05,
+        "z_energy": -0.12,
+        "z_len": 2.58,
+        "score": 1.17
+      },
+      {
+        "w": "AI",
+        "t": 13.24,
+        "z_pitch": -0.92,
+        "z_energy": 0.89,
+        "z_len": 2.97,
+        "score": 0.98
+      },
+      {
+        "w": "AI",
+        "t": 2.72,
+        "z_pitch": -0.56,
+        "z_energy": 1.64,
+        "z_len": 1.79,
+        "score": 0.96
+      },
+      {
+        "w": "that",
+        "t": 4.38,
+        "z_pitch": 0.93,
+        "z_energy": 2.61,
+        "z_len": -0.86,
+        "score": 0.89
+      }
+    ],
+    "words_timed": true
+  },
+  "audit": {
+    "frames": {
+      "total": 2357,
+      "expected_analysed": 2357,
+      "analysed": 2357,
+      "step": 1,
+      "coverage": 1.0
+    },
+    "scenes": {
+      "count": 1,
+      "timeline_gap_s": 0.0,
+      "keyframe_coverage": 1.0,
+      "cluster_coverage": 1.0,
+      "in_collage": 1,
+      "ocr_coverage": 1.0
+    },
+    "transcript_coverage": 0.97,
+    "lufs_measured": true,
+    "warnings": [],
+    "pass": true,
+    "per_minute": [
+      {
+        "minute": 1,
+        "from_s": 0.0,
+        "to_s": 39.3,
+        "scenes": 1,
+        "cuts": 0,
+        "cuts_per_min": 0.0,
+        "avg_shot_s": 39.32,
+        "words": 140,
+        "speech_ratio": 0.92,
+        "ocr_scenes": 1,
+        "motion": {
+          "static": 1
+        }
+      }
+    ]
+  }
+}
