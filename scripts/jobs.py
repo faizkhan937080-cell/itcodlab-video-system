@@ -306,8 +306,8 @@ class Worker:
         started = time.time()
         while time.time() < end:
             beat()
-            if time.time() - upd >= 120:     # a job dropped after a code push must meet the NEW code (2026-11-12 race)
-s now, open jobs resume on the next run")
+            if self._stop_requested(started):
+                log("STOP file found on Drive (jobs/STOP.json): worker ends now, open jobs resume on the next run")
                 return last or []
             if time.time() - upd >= 120:     # a job dropped after a code push must meet the NEW code (2026-11-12 race)
                 upd = time.time()

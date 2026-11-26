@@ -125,9 +125,7 @@ def install_global_hook(root=ROOT):
         "PostToolUse": {"matcher": "Bash|Write|Edit|SendUserFile",
                         "hooks": [{"type": "command", "command": cd + "python3 -m scripts.autofeed"}]},   # minor events -> shared brain log
     }
-    marker = {"PreToolUse": "scripts.guard", "UserPromptSubmit": "run check", "Stop": "cost claude-auto"}
-    changed = []
-cripts.autofeed"}
+    marker = {"PreToolUse": "scripts.guard", "UserPromptSubmit": "run check", "Stop": "cost claude-auto", "PostToolUse": "scripts.autofeed"}
     changed = []
     for ev, entry in want.items():
         cur = hooks.setdefault(ev, [])
