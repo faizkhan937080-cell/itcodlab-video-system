@@ -151,7 +151,7 @@ jobs:
           echo "RENDER CHECK SECONDS: $(( $(date +%s) - start ))"
       - name: Connect Drive and GitHub
         if: steps.chk.outputs.ready == 'true'
-        timeout-minutes: 3
+        timeout-minutes: 8
         run: |
           mkdir -p ~/.config/rclone
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
