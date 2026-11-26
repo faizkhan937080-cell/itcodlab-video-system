@@ -14,7 +14,8 @@ export type EightBitProps = {scene?: 'skin' | 'end'; start_s?: number; beats: Be
 
 export const EightBitShots: React.FC<EightBitProps> = ({scene = 'skin', start_s = 0, beats}) => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
+  const {fps, width} = useVideoConfig();
+  const k = width / 1080; // art is designed at 1080x1920; scale up for 4K frames
   const T = start_s + frame / fps;
   const st = stateAt(T, beats);
   const dayStart = beats.filter((b) => b.counter && b.t[0] <= T).pop()?.t[0] ?? -1;
@@ -27,6 +28,7 @@ export const EightBitShots: React.FC<EightBitProps> = ({scene = 'skin', start_s 
   const b13 = beats.find((b) => b.id === 'b13')?.t[0] ?? 22.3;
   const b14 = beats.find((b) => b.id === 'b14')?.t[0] ?? 23.3;
   return (
+    <AbsoluteFill style={{background: PAL.bg}}><AbsoluteFill style={{width: 1080, height: 1920, transformOrigin: '0 0', transform: `scale(${k})`}}>
     <ScanlineGlitch T={T} fps={fps} hits={glitchTimes(beats)} frame={frame}>
       {scene === 'end' ? <PixelScene t={T} zoom={world} healedAt={b13} outdoorAt={b14} /> : (
         <>
@@ -37,6 +39,7 @@ export const EightBitShots: React.FC<EightBitProps> = ({scene = 'skin', start_s 
         </>
       )}
     </ScanlineGlitch>
+    </AbsoluteFill></AbsoluteFill>
   );
 };
 export {S};
