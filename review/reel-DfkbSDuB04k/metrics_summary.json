@@ -1,0 +1,358 @@
+{
+  "generated": "2026-11-26T21:20:36Z",
+  "video": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24.0,
+    "duration_s": 32.725,
+    "has_audio": true,
+    "total_frames": 785,
+    "analysis_step": 1
+  },
+  "cut_rhythm": {
+    "scene_count": 1,
+    "cuts_per_min": 0.0,
+    "shot_length_s": {
+      "mean": 32.725,
+      "median": 32.725,
+      "std": 0.0,
+      "min": 32.725,
+      "max": 32.725
+    },
+    "transitions": {}
+  },
+  "motion_classes": {
+    "medium": 1
+  },
+  "palette": [
+    {
+      "hex": "#06140E",
+      "share": 0.55
+    },
+    {
+      "hex": "#427B5C",
+      "share": 0.247
+    },
+    {
+      "hex": "#CDD5CB",
+      "share": 0.203
+    }
+  ],
+  "brightness": {
+    "mean": 0.218,
+    "median": 0.218,
+    "std": 0.0,
+    "min": 0.218,
+    "max": 0.218
+  },
+  "saturation": {
+    "mean": 0.679,
+    "median": 0.679,
+    "std": 0.0,
+    "min": 0.679,
+    "max": 0.679
+  },
+  "ocr": "available",
+  "dedup": {
+    "phash_hamming_max": 10,
+    "ssim_min": 0.8,
+    "relax_rounds": 0,
+    "scenes_total": 1,
+    "clusters": 1,
+    "capacity": 20,
+    "scenes_not_in_collage_clusters": []
+  },
+  "clusters": [
+    {
+      "cluster": 1,
+      "rep_scene": 1,
+      "members": [
+        1
+      ],
+      "count": 1,
+      "total_duration_s": 32.725,
+      "in_collage": true
+    }
+  ],
+  "collages": [
+    {
+      "file": "collage_01.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_02.jpg",
+      "tiles": 1
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "t": [
+        0.0,
+        32.725
+      ],
+      "in": "start",
+      "motion": "medium",
+      "pan": "right",
+      "zoom": "out",
+      "cluster": 1,
+      "colors": [
+        "#06140E",
+        "#427B5C"
+      ],
+      "text": "sansser / © STARS GAINED = LAST 30 DAYS ©) pbakaus/impeccabl"
+    }
+  ],
+  "audio": {
+    "has_audio": true,
+    "duration_s": 32.75,
+    "bpm": 117.5,
+    "beat_count": 62,
+    "beat_times_first_20": [
+      0.49,
+      1.0,
+      1.49,
+      1.97,
+      2.46,
+      2.95,
+      3.46,
+      3.99,
+      4.5,
+      4.99,
+      5.6,
+      6.13,
+      6.62,
+      7.15,
+      7.64,
+      8.13,
+      8.68,
+      9.22,
+      9.75,
+      10.31
+    ],
+    "loudness_db_mean": -23.6,
+    "loudness_db_max": -7.3,
+    "silences": [
+      [
+        31.76,
+        32.75
+      ]
+    ],
+    "cut_beat_sync": null,
+    "ebu_r128": {
+      "integrated_lufs": -17.1,
+      "true_peak_dbtp": -0.4,
+      "short_term_max_lufs": -15.5,
+      "lra_lu": 2.4,
+      "method": "pyloudnorm BS.1770, mono mix"
+    },
+    "stems": {
+      "vocals_lufs": -17.1,
+      "music_lufs": -38.8,
+      "voice_minus_music_lu": 21.7,
+      "engine": "demucs htdemucs"
+    },
+    "silence_share": 0.03
+  },
+  "transcript": {
+    "language": "en",
+    "coverage_ratio": 0.97,
+    "text": "These are the seven Claude skills | that got the most GitHub stars in the last 30 days | and all seven are free. | Cloudflare's security audit is right at the top. | It runs a full audit on your code | and double checks every finding. | Then Matt Pocock's skills, | a whole pack for real engineers. | Then Ponytail, so Claude writes a lot less code. | Then Impeccable, so your site looks way less AI made. | Then everything Claude code, | a full setup in one install. | Then Anatomy, which draws any idea | as a little working machine. | And Hallmark, which runs your page | through dozens of AI slot tests before you ship it. | Comment, rank, and we'll send you all seven with the install command for each one."
+  },
+  "script_metrics": {
+    "available": true,
+    "pass_used": "auto",
+    "coverage_ratio": 0.97,
+    "complete": true,
+    "words": 124,
+    "words_per_min_speaking": 250.5,
+    "words_per_min_overall": 227.3,
+    "speech_ratio": 0.908,
+    "pauses": {
+      "count_gt_0_5s": 0,
+      "mean_s": 0.2,
+      "max_s": 0.28
+    },
+    "sentences": {
+      "count": 10,
+      "words_mean": 12.4,
+      "words_median": 10.5,
+      "words_p90": 16.6
+    },
+    "questions_per_min": 0.0,
+    "exclamations_per_min": 0.0,
+    "numbers_per_min": 1.83,
+    "script_mix": {
+      "devanagari_share": 0.0,
+      "latin_share": 1.0
+    },
+    "second_person_per_100w": 4.03,
+    "first_person_per_100w": 0.0,
+    "fillers_per_100w": 2.42,
+    "cta_words": [
+      "comment"
+    ],
+    "repeated_phrases": [],
+    "repeated_sentences": [],
+    "unique_sentence_share": 1.0,
+    "hook": {
+      "first_word_s": 0.0,
+      "words_in_first_3s": 13.1,
+      "words_in_first_5s": 20.8,
+      "first_12_words": "These are the seven Claude skills that got the most GitHub stars"
+    },
+    "vocabulary_note": "roman"
+  },
+  "voice": {
+    "available": true,
+    "backend": "praat",
+    "global": {
+      "pitch_median_hz": 160.1,
+      "pitch_p10_hz": 117.1,
+      "pitch_p90_hz": 247.0,
+      "pitch_med_st": 0.0,
+      "pitch_range_st": 12.92,
+      "pitch_std_st": 4.87,
+      "voiced_share": 0.57,
+      "energy_db_mean": 75.22,
+      "energy_range_db": 15.47,
+      "expressiveness": "very expressive",
+      "voice_quality": {
+        "jitter_local": 0.0292,
+        "shimmer_local": 0.1271,
+        "hnr_db": 8.1
+      }
+    },
+    "tempo": {
+      "wpm_mean": 250.2,
+      "wpm_min": 194.8,
+      "wpm_max": 369.2,
+      "wpm_cv": 0.16,
+      "rate": "very fast",
+      "fastest_sentence": 4,
+      "slowest_sentence": 2
+    },
+    "gaps": {
+      "count": 8,
+      "total_s": 1.86,
+      "mean_s": 0.23,
+      "max_s": 0.28,
+      "bins": {
+        "0.15-0.3": 8,
+        "0.3-0.6": 0,
+        "0.6-1.0": 0,
+        "1.0-up": 0
+      }
+    },
+    "sentence_endings": {
+      "rising": 2,
+      "falling": 10,
+      "flat": 3
+    },
+    "emphasis_top": [
+      {
+        "w": "all",
+        "t": 4.14,
+        "z_pitch": 1.1,
+        "z_energy": 2.29,
+        "z_len": 1.52,
+        "score": 1.64
+      },
+      {
+        "w": "any",
+        "t": 22.3,
+        "z_pitch": 1.05,
+        "z_energy": 0.76,
+        "z_len": 2.0,
+        "score": 1.27
+      },
+      {
+        "w": "all",
+        "t": 29.56,
+        "z_pitch": 0.48,
+        "z_energy": 2.48,
+        "z_len": 0.8,
+        "score": 1.25
+      },
+      {
+        "w": "idea",
+        "t": 22.64,
+        "z_pitch": 1.0,
+        "z_energy": 1.06,
+        "z_len": 1.16,
+        "score": 1.08
+      },
+      {
+        "w": "most",
+        "t": 2.02,
+        "z_pitch": 1.49,
+        "z_energy": 0.56,
+        "z_len": 1.16,
+        "score": 1.07
+      },
+      {
+        "w": "30",
+        "t": 3.32,
+        "z_pitch": 0.05,
+        "z_energy": 0.88,
+        "z_len": 2.25,
+        "score": 1.06
+      },
+      {
+        "w": "free.",
+        "t": 5.02,
+        "z_pitch": 1.43,
+        "z_energy": 1.35,
+        "z_len": 0.37,
+        "score": 1.05
+      },
+      {
+        "w": "and",
+        "t": 3.82,
+        "z_pitch": 2.02,
+        "z_energy": -0.8,
+        "z_len": 1.76,
+        "score": 1.0
+      }
+    ],
+    "words_timed": true
+  },
+  "audit": {
+    "frames": {
+      "total": 785,
+      "expected_analysed": 785,
+      "analysed": 785,
+      "step": 1,
+      "coverage": 1.0
+    },
+    "scenes": {
+      "count": 1,
+      "timeline_gap_s": 0.0,
+      "keyframe_coverage": 1.0,
+      "cluster_coverage": 1.0,
+      "in_collage": 1,
+      "ocr_coverage": 1.0
+    },
+    "transcript_coverage": 0.97,
+    "lufs_measured": true,
+    "warnings": [],
+    "pass": true,
+    "per_minute": [
+      {
+        "minute": 1,
+        "from_s": 0.0,
+        "to_s": 32.7,
+        "scenes": 1,
+        "cuts": 0,
+        "cuts_per_min": 0.0,
+        "avg_shot_s": 32.73,
+        "words": 124,
+        "speech_ratio": 0.91,
+        "ocr_scenes": 1,
+        "motion": {
+          "medium": 1
+        }
+      }
+    ]
+  }
+}
