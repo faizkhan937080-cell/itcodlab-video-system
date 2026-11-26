@@ -13,10 +13,26 @@ SFX_VOLUME = 0.5
 MUSIC_VOLUME = 0.18
 
 
-def _file_of(st, query, type_, name, tags):
-    hit = [i for i in library.find(st, name, type_) if i.get("file")]
-    e = hit[0] if hit else library.fetch_from_openverse(st, query, type_, name, tags, token=os.environ.get("OPENVERSE_TOKEN"))
-    return (e or {}).get("file")
+def _file_of(st, query, type_, name, tags, fallbacks=()):
+    """Library first; else Openverse with 3 tries per query (their server sometimes answers 500). Never raises."""
+    import time
+    try:
+        hit = [i for i in library.find(st, name, type_) if i.get("file")]
+    except Exception:  # noqa: BLE001
+        hit = []
+    if hit:
+        return hit[0]["file"]
+    for q in (query, *fallbacks):
+        for n in range(3):
+            try:
+                e = library.fetch_from_openverse(st, q, type_, name, tags, token=os.environ.get("OPENVERSE_TOKEN"))
+                if e:
+                    return e.get("file")
+                break
+            except Exception as ex:  # noqa: BLE001
+                print(f"fetch {name} '{q}' try {n + 1}: {type(ex).__name__} {str(ex)[:80]}")
+                time.sleep(4)
+    return None
 
 
 def run(plan_path, music_query="chiptune 8-bit loop"):
@@ -32,7 +48,7 @@ def run(plan_path, music_query="chiptune 8-bit loop"):
             skipped.append(kind)
     audio = [a for a in plan.get("audio", []) if a.get("role") not in ("sfx", "music")]
     total = sum(float(s["duration_s"]) for s in plan["scenes"])
-    music = _file_of(st, music_query, "music", MUSIC_NAME, ["chiptune", "8bit", "loop"])
+    music = _file_of(st, music_query, "music", MUSIC_NAME, ["chiptune", "8bit", "loop"], ("8-bit game music", "chiptune", "retro game loop"))
     if music:
         audio.append({"src": music, "at_s": 0, "role": "music", "volume": MUSIC_VOLUME, "duration_s": round(total, 3)})
     audio += [dict(a, role="sfx") for a in sfx.audio_defs(cues, files, SFX_VOLUME)]
