@@ -1,0 +1,161 @@
+# One worker per reel, all at the same time (Faiz 2026-11-27: faster). Input jobs = JSON list of job ids.
+name: reels
+on:
+  workflow_dispatch:
+    inputs:
+      jobs:
+        description: 'JSON list of job ids, e.g. ["reel-AAA","reel-BBB"]'
+        required: true
+permissions:
+  contents: write
+  actions: write
+defaults:
+  run:
+    shell: bash
+jobs:
+  work:
+    # repo variable WORKER_RUNS_ON = ["self-hosted","itcod"] moves the worker to our own VM (no minute limit); unset = GitHub's free runner
+    # TURBO: a wake commit with [turbo] in its message goes to the GPU VM (label itcod-gpu, normally switched off). Only on Faiz's "speed up".
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        job: ${{ fromJSON(inputs.jobs) }}
+    concurrency:
+      group: reel-${{ matrix.job }}
+      cancel-in-progress: false
+    timeout-minutes: 350
+    env:
+      ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
+      RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
+      INSTAGRAM_COOKIES: ${{ secrets.INSTAGRAM_COOKIES }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      ACOUSTID_KEY: ${{ secrets.ACOUSTID_KEY }}
+      OPENVERSE_TOKEN: ${{ secrets.OPENVERSE_TOKEN }}
+      PIXABAY_KEY: ${{ secrets.PIXABAY_KEY }}
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      ITCOD_ONLY_JOBS: ${{ matrix.job }}
+      ITCOD_RUN_STARTED: ${{ github.run_started_at }}
+      # watchdog: rclone gives up on a stalled transfer instead of hanging (idle timeout, not total time)
+      ITCOD_RENDER_CONCURRENCY: ${{ vars.RENDER_CONCURRENCY }}   # set from the bench-render report (identical frames only)
+      PYTHONUNBUFFERED: '1'   # live log lines (a cancelled run used to lose all of them)
+      RCLONE_TIMEOUT: 2m
+      RCLONE_CONTIMEOUT: 30s
+      RCLONE_LOW_LEVEL_RETRIES: '5'
+      RCLONE_TPSLIMIT: '6'   # at most 6 Drive calls per second: stay under Google's per-minute limit (crash 2026-11-12)
+    steps:
+      - uses: actions/checkout@v4
+        timeout-minutes: 3
+      - name: Check the one-time secret
+        id: chk
+        run: |
+          if [ -n "$RCLONE_TOKEN" ]; then echo "ready=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "ready=false" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" = "schedule" ]; then echo "::notice::RCLONE_TOKEN not set yet; skipping"; exit 0; fi
+          echo "::error::Secret RCLONE_TOKEN is missing (see docs/HOSTING.md step 4)"; exit 1
+      - uses: actions/setup-python@v5
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: System tools + virus scanner (in the background, while packages install)
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 1
+        run: nohup bash .github/scripts/apt_bg.sh > /tmp/apt_bg.log 2>&1 &
+      # Python packages: the whole ready environment is kept between runs (key = package lists), so a normal run
+      # only restores it (~20 s) instead of installing everything (~50 s+).
+      - uses: actions/cache/restore@v4
+        id: venv
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 5
+        continue-on-error: true
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 4
+        with:
+          path: ~/venv
+          key: venv-${{ runner.os }}-py311-${{ hashFiles('requirements.txt', 'requirements-heavy.txt') }}
+      - name: Python packages
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 15
+        run: |
+          _t=$(date +%s)
+          if [ ! -x ~/venv/bin/python ] || ! ~/venv/bin/python -c "import cv2, numpy, jsonschema, faster_whisper" 2>/dev/null; then
+            rm -rf ~/venv && python -m venv ~/venv
+            ~/venv/bin/pip install -q --prefer-binary -r requirements.txt && ~/venv/bin/pip install -q -r requirements-heavy.txt --extra-index-url https://download.pytorch.org/whl/cpu
+          fi
+          ~/venv/bin/pip install -q -U yt-dlp
+          echo "$HOME/venv/bin" >> "$GITHUB_PATH"
+          mkdir -p work; echo "python_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
+      # saved right away (not at the end of the run): a run that later fails or is stopped still leaves it for the next
+      - uses: actions/cache/save@v4
+        if: steps.chk.outputs.ready == 'true' && steps.venv.outputs.cache-hit != 'true'
+        timeout-minutes: 6
+        continue-on-error: true
+        with:
+          path: ~/venv
+          key: venv-${{ runner.os }}-py311-${{ hashFiles('requirements.txt', 'requirements-heavy.txt') }}
+      - uses: actions/cache@v4
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 4
+        continue-on-error: true
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 3
+        with:
+          path: ~/.cache/huggingface
+          key: hf-whisper-clap-v1
+      - uses: actions/cache@v4
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 4
+        continue-on-error: true
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 3
+        with:
+          path: ~/.cache/torch
+          key: demucs-weights-v1
+      - uses: actions/cache@v4
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 4
+        continue-on-error: true
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: 3
+        with:
+          path: remotion/node_modules
+          key: remotion-${{ hashFiles('remotion/package.json') }}
+      - name: Remotion packages
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 10
+        run: |
+          _t=$(date +%s)
+          cd remotion && npm install --silent --no-audit --no-fund && npx remotion browser ensure
+          cd .. && mkdir -p work && echo "remotion_packages $(( $(date +%s) - _t ))" >> work/setup_times.txt
+      - name: Wait for system tools (started in the background above)
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 12
+        run: |
+          for i in $(seq 1 330); do [ -f /tmp/itcod/tools.done ] && break; sleep 2; done
+          tail -5 /tmp/apt_bg.log || true
+          [ "$(cat /tmp/itcod/tools.done 2>/dev/null)" = "ok" ] || { echo "system tools missing"; exit 1; }
+          ffmpeg -version | head -1; rclone version | head -1
+      - name: Render self-check (only when the wake message has [render-check]; nothing is saved to Drive)
+        if: steps.chk.outputs.ready == 'true' && contains(github.event.head_commit.message, '[render-check]')
+        continue-on-error: true
+        timeout-minutes: 20
+        run: |
+          start=$(date +%s)
+          ITCOD_RENDER_CONCURRENCY=$(( $(nproc) / 2 + 1 )) ./run render-local --plan config/selfcheck_plan.json --quality preview --out "$RUNNER_TEMP/rc/check.mp4" | tail -40
+          echo "RENDER CHECK SECONDS: $(( $(date +%s) - start ))"
+      - name: Connect Drive and GitHub
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 3
+        run: |
+          mkdir -p ~/.config/rclone
+          printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
+          rclone lsf "$ITCOD_RCLONE_REMOTE" --max-depth 1 | head -20
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          if [ -n "$INSTAGRAM_COOKIES" ]; then printf '%s' "$INSTAGRAM_COOKIES" > "$RUNNER_TEMP/cookies.txt"; echo "ITCOD_COOKIES=$RUNNER_TEMP/cookies.txt" >> "$GITHUB_ENV"; fi
+      - name: Work on this one reel
+        if: steps.chk.outputs.ready == 'true'
+        timeout-minutes: 120
+        run: ./run worker --until-idle --no-sheet --grace 120 --max-minutes 110

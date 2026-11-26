@@ -194,8 +194,12 @@ class Worker:
                 cache[rel] = (mt, data)
             return json.loads(json.dumps(data))
 
+        import os as _os
+        only = {x.strip() for x in _os.environ.get("ITCOD_ONLY_JOBS", "").split(",") if x.strip()}
         for name in sorted(inbox):
             if not name.endswith(".json") or name[:-5] in done:
+                continue
+            if only and name[:-5] not in only:   # parallel reel workers: each takes only its own job
                 continue
             w = waiting.get(name[:-5])
             if w and sig is not None and w[2] == sig and time.time() - w[1] < 300:
