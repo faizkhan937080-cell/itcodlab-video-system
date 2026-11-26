@@ -1,0 +1,674 @@
+{
+  "generated": "2026-11-26T21:13:38Z",
+  "video": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60.0,
+    "duration_s": 37.013,
+    "has_audio": true,
+    "total_frames": 2220,
+    "analysis_step": 1
+  },
+  "cut_rhythm": {
+    "scene_count": 11,
+    "cuts_per_min": 16.21,
+    "shot_length_s": {
+      "mean": 3.365,
+      "median": 3.234,
+      "std": 1.604,
+      "min": 0.434,
+      "max": 6.0
+    },
+    "transitions": {
+      "hard_cut": 10
+    }
+  },
+  "motion_classes": {
+    "static": 7,
+    "slow": 4
+  },
+  "palette": [
+    {
+      "hex": "#F8FBFA",
+      "share": 0.138
+    },
+    {
+      "hex": "#F5F9F8",
+      "share": 0.095
+    },
+    {
+      "hex": "#F8FAF9",
+      "share": 0.093
+    },
+    {
+      "hex": "#121617",
+      "share": 0.073
+    },
+    {
+      "hex": "#101416",
+      "share": 0.073
+    },
+    {
+      "hex": "#111516",
+      "share": 0.072
+    }
+  ],
+  "brightness": {
+    "mean": 0.661,
+    "median": 0.844,
+    "std": 0.295,
+    "min": 0.177,
+    "max": 0.933
+  },
+  "saturation": {
+    "mean": 0.186,
+    "median": 0.19,
+    "std": 0.093,
+    "min": 0.051,
+    "max": 0.334
+  },
+  "ocr": "available",
+  "dedup": {
+    "phash_hamming_max": 10,
+    "ssim_min": 0.8,
+    "relax_rounds": 0,
+    "scenes_total": 11,
+    "clusters": 11,
+    "capacity": 20,
+    "scenes_not_in_collage_clusters": []
+  },
+  "clusters": [
+    {
+      "cluster": 1,
+      "rep_scene": 1,
+      "members": [
+        1
+      ],
+      "count": 1,
+      "total_duration_s": 2.783,
+      "in_collage": true
+    },
+    {
+      "cluster": 2,
+      "rep_scene": 2,
+      "members": [
+        2
+      ],
+      "count": 1,
+      "total_duration_s": 0.434,
+      "in_collage": true
+    },
+    {
+      "cluster": 3,
+      "rep_scene": 3,
+      "members": [
+        3
+      ],
+      "count": 1,
+      "total_duration_s": 0.666,
+      "in_collage": true
+    },
+    {
+      "cluster": 4,
+      "rep_scene": 4,
+      "members": [
+        4
+      ],
+      "count": 1,
+      "total_duration_s": 3.234,
+      "in_collage": true
+    },
+    {
+      "cluster": 5,
+      "rep_scene": 5,
+      "members": [
+        5
+      ],
+      "count": 1,
+      "total_duration_s": 4.266,
+      "in_collage": true
+    },
+    {
+      "cluster": 6,
+      "rep_scene": 6,
+      "members": [
+        6
+      ],
+      "count": 1,
+      "total_duration_s": 4.084,
+      "in_collage": true
+    },
+    {
+      "cluster": 7,
+      "rep_scene": 7,
+      "members": [
+        7
+      ],
+      "count": 1,
+      "total_duration_s": 6.0,
+      "in_collage": true
+    },
+    {
+      "cluster": 8,
+      "rep_scene": 8,
+      "members": [
+        8
+      ],
+      "count": 1,
+      "total_duration_s": 3.933,
+      "in_collage": true
+    },
+    {
+      "cluster": 9,
+      "rep_scene": 9,
+      "members": [
+        9
+      ],
+      "count": 1,
+      "total_duration_s": 5.217,
+      "in_collage": true
+    },
+    {
+      "cluster": 10,
+      "rep_scene": 10,
+      "members": [
+        10
+      ],
+      "count": 1,
+      "total_duration_s": 3.2,
+      "in_collage": true
+    },
+    {
+      "cluster": 11,
+      "rep_scene": 11,
+      "members": [
+        11
+      ],
+      "count": 1,
+      "total_duration_s": 3.196,
+      "in_collage": true
+    }
+  ],
+  "collages": [
+    {
+      "file": "collage_01.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_02.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_03.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_04.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_05.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_06.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_07.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_08.jpg",
+      "tiles": 2
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "t": [
+        0.0,
+        2.783
+      ],
+      "in": "start",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 1,
+      "colors": [
+        "#F4F8F7",
+        "#66B1D6"
+      ],
+      "text": "This website cost me Caramel ap"
+    },
+    {
+      "id": 2,
+      "t": [
+        2.783,
+        3.217
+      ],
+      "in": "hard_cut",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 2,
+      "colors": [
+        "#F4F7FA",
+        "#98C2C3"
+      ],
+      "text": "and nobody can tell Al $1"
+    },
+    {
+      "id": 3,
+      "t": [
+        3.217,
+        3.883
+      ],
+      "in": "hard_cut",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 3,
+      "colors": [
+        "#F4F8F7",
+        "#6BB2D7"
+      ],
+      "text": "and nobody can tell Al made it"
+    },
+    {
+      "id": 4,
+      "t": [
+        3.883,
+        7.117
+      ],
+      "in": "hard_cut",
+      "motion": "slow",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 4,
+      "colors": [
+        "#121617",
+        "#5B9581"
+      ],
+      "text": "Website builders charge $20 @."
+    },
+    {
+      "id": 5,
+      "t": [
+        7.117,
+        11.383
+      ],
+      "in": "hard_cut",
+      "motion": "slow",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 5,
+      "colors": [
+        "#F8FAF9",
+        "#D6DAD5"
+      ],
+      "text": "tell it what your site is ove © Claude Design for my iced co"
+    },
+    {
+      "id": 6,
+      "t": [
+        11.383,
+        15.467
+      ],
+      "in": "hard_cut",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 6,
+      "colors": [
+        "#101416",
+        "#E9E7F5"
+      ],
+      "text": "that cloudbrew.top Experience the Ultimate Coffee Journey"
+    },
+    {
+      "id": 7,
+      "t": [
+        15.467,
+        21.467
+      ],
+      "in": "hard_cut",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 7,
+      "colors": [
+        "#F8FBFA",
+        "#86BBA6"
+      ],
+      "text": "because | gave Claude three skills o"
+    },
+    {
+      "id": 8,
+      "t": [
+        21.467,
+        25.4
+      ],
+      "in": "hard_cut",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 8,
+      "colors": [
+        "#111516",
+        "#5FA6D2"
+      ],
+      "text": "and"
+    },
+    {
+      "id": 9,
+      "t": [
+        25.4,
+        30.617
+      ],
+      "in": "hard_cut",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 9,
+      "colors": [
+        "#F5F9F8",
+        "#63B1D0"
+      ],
+      "text": null
+    },
+    {
+      "id": 10,
+      "t": [
+        30.617,
+        33.817
+      ],
+      "in": "hard_cut",
+      "motion": "slow",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 10,
+      "colors": [
+        "#131819",
+        "#65A9D0"
+      ],
+      "text": "cloudbrew.top Clarity recording a visit Free foam Fridays Se"
+    },
+    {
+      "id": 11,
+      "t": [
+        33.817,
+        37.013
+      ],
+      "in": "hard_cut",
+      "motion": "slow",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 11,
+      "colors": [
+        "#F3F8F6",
+        "#5EB4C7"
+      ],
+      "text": "Comment SKILL for the three skills ® cloudbrew.top @heysanss"
+    }
+  ],
+  "audio": {
+    "has_audio": true,
+    "duration_s": 37.01,
+    "bpm": 123.0,
+    "beat_count": 72,
+    "beat_times_first_20": [
+      0.07,
+      0.51,
+      0.95,
+      1.44,
+      1.88,
+      2.37,
+      2.93,
+      3.51,
+      4.02,
+      4.53,
+      5.02,
+      5.5,
+      5.94,
+      6.41,
+      6.92,
+      7.41,
+      7.89,
+      8.41,
+      8.96,
+      9.43
+    ],
+    "loudness_db_mean": -25.4,
+    "loudness_db_max": -8.4,
+    "silences": [
+      [
+        35.64,
+        37.01
+      ]
+    ],
+    "cut_beat_sync": {
+      "cuts_checked": 10,
+      "share_within_80ms": 0.1,
+      "median_offset_s": 0.138
+    },
+    "ebu_r128": {
+      "integrated_lufs": -17.2,
+      "true_peak_dbtp": -0.4,
+      "short_term_max_lufs": -16.0,
+      "lra_lu": 1.9,
+      "method": "pyloudnorm BS.1770, mono mix"
+    },
+    "stems": {
+      "vocals_lufs": -17.2,
+      "music_lufs": -48.6,
+      "voice_minus_music_lu": 31.4,
+      "engine": "demucs htdemucs"
+    },
+    "silence_share": 0.037
+  },
+  "transcript": {
+    "language": "en",
+    "coverage_ratio": 0.96,
+    "text": "This website cost me $1 and nobody can tell AI made it. | Website builders charge around $20 a month for this. | So take Claude design, tell it what your site is for | and it designs the whole page. | Most AI sites look the same | with that purple gradient and those three boxes. | Mine doesn't because I gave Claude three skills. | One to write like a human and two to design like one. | Then you hit share, send it to Netlify | and it's live and costs nothing. | For the domain, skip the dot com | because a dot top is $1 | and your own country's domain is cheap too. | Add kit for emails and clarity to watch people use your site. | Comment skill for the three skills."
+  },
+  "script_metrics": {
+    "available": true,
+    "pass_used": "auto",
+    "coverage_ratio": 0.96,
+    "complete": true,
+    "words": 125,
+    "words_per_min_speaking": 232.5,
+    "words_per_min_overall": 202.6,
+    "speech_ratio": 0.872,
+    "pauses": {
+      "count_gt_0_5s": 0,
+      "mean_s": 0.35,
+      "max_s": 0.48
+    },
+    "sentences": {
+      "count": 10,
+      "words_mean": 12.5,
+      "words_median": 12.0,
+      "words_p90": 17.4
+    },
+    "questions_per_min": 0.0,
+    "exclamations_per_min": 0.0,
+    "numbers_per_min": 4.86,
+    "script_mix": {
+      "devanagari_share": 0.0,
+      "latin_share": 1.0
+    },
+    "second_person_per_100w": 3.2,
+    "first_person_per_100w": 1.6,
+    "fillers_per_100w": 2.4,
+    "cta_words": [
+      "comment",
+      "like",
+      "share"
+    ],
+    "repeated_phrases": [],
+    "repeated_sentences": [],
+    "unique_sentence_share": 1.0,
+    "hook": {
+      "first_word_s": 0.0,
+      "words_in_first_3s": 10.2,
+      "words_in_first_5s": 15.4,
+      "first_12_words": "This website cost me 1 and nobody can tell AI made it"
+    },
+    "vocabulary_note": "roman"
+  },
+  "voice": {
+    "available": true,
+    "backend": "praat",
+    "global": {
+      "pitch_median_hz": 144.6,
+      "pitch_p10_hz": 114.0,
+      "pitch_p90_hz": 235.6,
+      "pitch_med_st": -0.0,
+      "pitch_range_st": 12.57,
+      "pitch_std_st": 5.25,
+      "voiced_share": 0.55,
+      "energy_db_mean": 74.35,
+      "energy_range_db": 17.71,
+      "expressiveness": "very expressive",
+      "voice_quality": {
+        "jitter_local": 0.0293,
+        "shimmer_local": 0.1194,
+        "hnr_db": 8.6
+      }
+    },
+    "tempo": {
+      "wpm_mean": 235.8,
+      "wpm_min": 183.2,
+      "wpm_max": 282.4,
+      "wpm_cv": 0.14,
+      "rate": "very fast",
+      "fastest_sentence": 8,
+      "slowest_sentence": 6
+    },
+    "gaps": {
+      "count": 12,
+      "total_s": 3.96,
+      "mean_s": 0.33,
+      "max_s": 0.48,
+      "bins": {
+        "0.15-0.3": 5,
+        "0.3-0.6": 7,
+        "0.6-1.0": 0,
+        "1.0-up": 0
+      }
+    },
+    "sentence_endings": {
+      "rising": 2,
+      "falling": 6,
+      "flat": 6
+    },
+    "emphasis_top": [
+      {
+        "w": "Mine",
+        "t": 15.48,
+        "z_pitch": 2.5,
+        "z_energy": 1.19,
+        "z_len": -0.04,
+        "score": 1.22
+      },
+      {
+        "w": "and",
+        "t": 1.36,
+        "z_pitch": 2.43,
+        "z_energy": -1.73,
+        "z_len": 2.51,
+        "score": 1.07
+      },
+      {
+        "w": "emails",
+        "t": 31.2,
+        "z_pitch": 2.57,
+        "z_energy": 0.92,
+        "z_len": -0.66,
+        "score": 0.94
+      },
+      {
+        "w": "own",
+        "t": 28.98,
+        "z_pitch": 0.94,
+        "z_energy": 1.96,
+        "z_len": -0.38,
+        "score": 0.84
+      },
+      {
+        "w": "two",
+        "t": 19.78,
+        "z_pitch": 0.87,
+        "z_energy": 0.97,
+        "z_len": 0.58,
+        "score": 0.81
+      },
+      {
+        "w": "and",
+        "t": 23.1,
+        "z_pitch": 0.6,
+        "z_energy": 0.84,
+        "z_len": 1.0,
+        "score": 0.81
+      },
+      {
+        "w": "take",
+        "t": 7.3,
+        "z_pitch": 1.53,
+        "z_energy": 0.97,
+        "z_len": -0.55,
+        "score": 0.65
+      },
+      {
+        "w": "cost",
+        "t": 0.52,
+        "z_pitch": 1.01,
+        "z_energy": 1.09,
+        "z_len": -0.24,
+        "score": 0.62
+      }
+    ],
+    "words_timed": true
+  },
+  "audit": {
+    "frames": {
+      "total": 2220,
+      "expected_analysed": 2220,
+      "analysed": 2220,
+      "step": 1,
+      "coverage": 1.0
+    },
+    "scenes": {
+      "count": 11,
+      "timeline_gap_s": 0.0,
+      "keyframe_coverage": 1.0,
+      "cluster_coverage": 1.0,
+      "in_collage": 11,
+      "ocr_coverage": 1.0
+    },
+    "transcript_coverage": 0.96,
+    "lufs_measured": true,
+    "warnings": [],
+    "pass": true,
+    "per_minute": [
+      {
+        "minute": 1,
+        "from_s": 0.0,
+        "to_s": 37.0,
+        "scenes": 11,
+        "cuts": 10,
+        "cuts_per_min": 16.21,
+        "avg_shot_s": 3.36,
+        "words": 125,
+        "speech_ratio": 0.87,
+        "ocr_scenes": 10,
+        "motion": {
+          "static": 7,
+          "slow": 4
+        }
+      }
+    ]
+  }
+}
