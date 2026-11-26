@@ -1,0 +1,356 @@
+{
+  "generated": "2026-11-26T21:17:31Z",
+  "video": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 60.0,
+    "duration_s": 52.1,
+    "has_audio": true,
+    "total_frames": 3126,
+    "analysis_step": 1
+  },
+  "cut_rhythm": {
+    "scene_count": 1,
+    "cuts_per_min": 0.0,
+    "shot_length_s": {
+      "mean": 52.1,
+      "median": 52.1,
+      "std": 0.0,
+      "min": 52.1,
+      "max": 52.1
+    },
+    "transitions": {}
+  },
+  "motion_classes": {
+    "static": 1
+  },
+  "palette": [
+    {
+      "hex": "#F6F9F8",
+      "share": 0.873
+    },
+    {
+      "hex": "#CCD6D1",
+      "share": 0.102
+    },
+    {
+      "hex": "#87A99C",
+      "share": 0.025
+    }
+  ],
+  "brightness": {
+    "mean": 0.935,
+    "median": 0.935,
+    "std": 0.0,
+    "min": 0.935,
+    "max": 0.935
+  },
+  "saturation": {
+    "mean": 0.035,
+    "median": 0.035,
+    "std": 0.0,
+    "min": 0.035,
+    "max": 0.035
+  },
+  "ocr": "available",
+  "dedup": {
+    "phash_hamming_max": 10,
+    "ssim_min": 0.8,
+    "relax_rounds": 0,
+    "scenes_total": 1,
+    "clusters": 1,
+    "capacity": 20,
+    "scenes_not_in_collage_clusters": []
+  },
+  "clusters": [
+    {
+      "cluster": 1,
+      "rep_scene": 1,
+      "members": [
+        1
+      ],
+      "count": 1,
+      "total_duration_s": 52.1,
+      "in_collage": true
+    }
+  ],
+  "collages": [
+    {
+      "file": "collage_01.jpg",
+      "tiles": 1
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "t": [
+        0.0,
+        52.1
+      ],
+      "in": "start",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 1,
+      "colors": [
+        "#F6F9F8",
+        "#CCD6D1"
+      ],
+      "text": "sansser /tech Sherlock © sherlock-project/sherlock ® GitHub "
+    }
+  ],
+  "audio": {
+    "has_audio": true,
+    "duration_s": 52.12,
+    "bpm": 123.0,
+    "beat_count": 103,
+    "beat_times_first_20": [
+      0.14,
+      0.65,
+      1.14,
+      1.58,
+      2.04,
+      2.48,
+      2.93,
+      3.41,
+      3.9,
+      4.39,
+      4.85,
+      5.36,
+      5.9,
+      6.41,
+      6.87,
+      7.34,
+      7.87,
+      8.34,
+      8.82,
+      9.26
+    ],
+    "loudness_db_mean": -22.4,
+    "loudness_db_max": -7.8,
+    "silences": [
+      [
+        51.08,
+        52.12
+      ]
+    ],
+    "cut_beat_sync": null,
+    "ebu_r128": {
+      "integrated_lufs": -17.1,
+      "true_peak_dbtp": -0.6,
+      "short_term_max_lufs": -15.4,
+      "lra_lu": 2.4,
+      "method": "pyloudnorm BS.1770, mono mix"
+    },
+    "stems": {
+      "vocals_lufs": -17.1,
+      "music_lufs": -42.6,
+      "voice_minus_music_lu": 25.5,
+      "engine": "demucs htdemucs"
+    },
+    "silence_share": 0.02
+  },
+  "transcript": {
+    "language": "en",
+    "coverage_ratio": 0.98,
+    "text": "These are the nine fastest growing repos on GitHub right now, and all nine are free! | t3 code is right at the top, and it lets you control cloud code and codex from any computer | or straight from your phone. | Then there's a plugin that says it gives you deep seek and Kimmy for free. | No API key. | And next up is Cloudflare's security audit skill, which checks your code and double | checks every finding. | Then impeccable and hallmark, two skills that make your site look way less AI made. | After that comes Sherlock, which tracks down someone's social accounts across sites | from one username. | Then, open Mousebot, an open-source bot that gets its own virtual computer to work on, | and Magpie, so you can run Codex on DeepSeq or Claude Code on Kimmy from your menu bar. | And the wildest one is the last one, a project trying to get GTA 6 running on PC, and it | pulled almost 13,000 stars in less than three days. | Honestly, I give it a week before Rockstar notices. | Comment stars, and I'll send you all nine links. | And make sure you follow, because Instagram only lets me DM the people who follow | me."
+  },
+  "script_metrics": {
+    "available": true,
+    "pass_used": "auto",
+    "coverage_ratio": 0.98,
+    "complete": true,
+    "words": 203,
+    "words_per_min_speaking": 249.9,
+    "words_per_min_overall": 233.8,
+    "speech_ratio": 0.936,
+    "pauses": {
+      "count_gt_0_5s": 0,
+      "mean_s": 0.21,
+      "max_s": 0.26
+    },
+    "sentences": {
+      "count": 12,
+      "words_mean": 16.9,
+      "words_median": 15.5,
+      "words_p90": 29.4
+    },
+    "questions_per_min": 0.0,
+    "exclamations_per_min": 1.15,
+    "numbers_per_min": 4.61,
+    "script_mix": {
+      "devanagari_share": 0.0,
+      "latin_share": 1.0
+    },
+    "second_person_per_100w": 4.43,
+    "first_person_per_100w": 1.48,
+    "fillers_per_100w": 1.48,
+    "cta_words": [
+      "comment",
+      "dm",
+      "follow"
+    ],
+    "repeated_phrases": [],
+    "repeated_sentences": [],
+    "unique_sentence_share": 1.0,
+    "hook": {
+      "first_word_s": 0.0,
+      "words_in_first_3s": 11.0,
+      "words_in_first_5s": 17.9,
+      "first_12_words": "These are the nine fastest growing repos on GitHub right now and"
+    },
+    "vocabulary_note": "roman"
+  },
+  "voice": {
+    "available": true,
+    "backend": "praat",
+    "global": {
+      "pitch_median_hz": 178.6,
+      "pitch_p10_hz": 125.3,
+      "pitch_p90_hz": 253.1,
+      "pitch_med_st": 0.0,
+      "pitch_range_st": 12.17,
+      "pitch_std_st": 4.74,
+      "voiced_share": 0.58,
+      "energy_db_mean": 75.54,
+      "energy_range_db": 14.61,
+      "expressiveness": "very expressive",
+      "voice_quality": {
+        "jitter_local": 0.0286,
+        "shimmer_local": 0.1239,
+        "hnr_db": 8.4
+      }
+    },
+    "tempo": {
+      "wpm_mean": 247.2,
+      "wpm_min": 176.5,
+      "wpm_max": 321.4,
+      "wpm_cv": 0.14,
+      "rate": "very fast",
+      "fastest_sentence": 3,
+      "slowest_sentence": 6
+    },
+    "gaps": {
+      "count": 15,
+      "total_s": 3.06,
+      "mean_s": 0.2,
+      "max_s": 0.26,
+      "bins": {
+        "0.15-0.3": 15,
+        "0.3-0.6": 0,
+        "0.6-1.0": 0,
+        "1.0-up": 0
+      }
+    },
+    "sentence_endings": {
+      "rising": 4,
+      "falling": 7,
+      "flat": 6
+    },
+    "emphasis_top": [
+      {
+        "w": "t3",
+        "t": 4.58,
+        "z_pitch": 1.29,
+        "z_energy": 1.08,
+        "z_len": 2.48,
+        "score": 1.62
+      },
+      {
+        "w": "or",
+        "t": 33.62,
+        "z_pitch": 0.65,
+        "z_energy": 2.5,
+        "z_len": 1.13,
+        "score": 1.43
+      },
+      {
+        "w": "all",
+        "t": 3.3,
+        "z_pitch": 0.81,
+        "z_energy": 2.29,
+        "z_len": 0.59,
+        "score": 1.23
+      },
+      {
+        "w": "is",
+        "t": 5.1,
+        "z_pitch": 2.73,
+        "z_energy": -0.6,
+        "z_len": 1.13,
+        "score": 1.09
+      },
+      {
+        "w": "free!",
+        "t": 4.0,
+        "z_pitch": 1.39,
+        "z_energy": 1.15,
+        "z_len": 0.38,
+        "score": 0.97
+      },
+      {
+        "w": "These",
+        "t": 0.0,
+        "z_pitch": 1.08,
+        "z_energy": 1.98,
+        "z_len": -0.27,
+        "score": 0.93
+      },
+      {
+        "w": "API",
+        "t": 13.34,
+        "z_pitch": 0.9,
+        "z_energy": 0.52,
+        "z_len": 1.31,
+        "score": 0.91
+      },
+      {
+        "w": "code",
+        "t": 4.88,
+        "z_pitch": 1.22,
+        "z_energy": 1.44,
+        "z_len": -0.08,
+        "score": 0.86
+      }
+    ],
+    "words_timed": true
+  },
+  "audit": {
+    "frames": {
+      "total": 3126,
+      "expected_analysed": 3126,
+      "analysed": 3126,
+      "step": 1,
+      "coverage": 1.0
+    },
+    "scenes": {
+      "count": 1,
+      "timeline_gap_s": 0.0,
+      "keyframe_coverage": 1.0,
+      "cluster_coverage": 1.0,
+      "in_collage": 1,
+      "ocr_coverage": 1.0
+    },
+    "transcript_coverage": 0.98,
+    "lufs_measured": true,
+    "warnings": [],
+    "pass": true,
+    "per_minute": [
+      {
+        "minute": 1,
+        "from_s": 0.0,
+        "to_s": 52.1,
+        "scenes": 1,
+        "cuts": 0,
+        "cuts_per_min": 0.0,
+        "avg_shot_s": 52.1,
+        "words": 201,
+        "speech_ratio": 0.94,
+        "ocr_scenes": 1,
+        "motion": {
+          "static": 1
+        }
+      }
+    ]
+  }
+}
