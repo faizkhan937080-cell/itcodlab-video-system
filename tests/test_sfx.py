@@ -61,3 +61,11 @@ def test_fetch_all_takes_first_passing_candidate_and_never_fakes(tmp_path):
     assert out["files"] == {"hit": "assets/sfx/hit.mp3"}
     assert len(out["credits"]) == 1                      # the CC BY one needs a credit
     assert set(out["skipped"]) == {"whoosh", "pop", "tick"}  # nothing found -> skipped, not invented
+
+
+def test_eightbit_beat_cues():
+    from scripts import sfx
+    plan = {"fps": 30, "scenes": [{"id": "s1", "duration_s": 6, "template": "eightbit", "props": {"start_s": 0, "beats": [
+        {"id": "b1", "t": [0, 2], "sound": "zap rays"}, {"id": "b2", "t": [2, 3], "sound": "ff blip"}, {"id": "b3", "t": [3, 6]}]}}]}
+    cues = sfx.plan_cues(plan)
+    assert [(c["kind"], c["t"]) for c in cues] == [("zap", 0.0), ("blip", 2.0)]

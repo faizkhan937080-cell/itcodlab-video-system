@@ -10,7 +10,32 @@ LEAD_S = 0.12            # whoosh starts slightly before the visual change (soun
 SFX_VOLUME = 0.35        # under the voice
 MAX_DURATION_S = 4.0
 OK_LICENSES = ("cc0", "pdm", "by")   # commercial use allowed; "by-sa", "by-nc*", "*-nd" are skipped on purpose
-QUERIES = {"whoosh": "whoosh", "hit": "impact hit", "pop": "pop", "tick": "click tick"}
+QUERIES = {"whoosh": "whoosh", "hit": "impact hit", "pop": "pop", "tick": "click tick",
+           "blip": "8-bit blip beep", "zap": "electric zap", "crack": "glass crack", "riser": "riser rising", "chime": "sparkle chime",
+           "rip": "paper rip", "gulp": "gulp swallow", "creak": "stretch creak", "boing": "bounce boing", "alarm": "alarm beep", "rewind": "tape rewind"}
+# 8bit beats: first keyword found in a beat's `sound` text decides its cue kind (ordered, more specific first)
+BEAT_KINDS = [("rewind", "rewind"), ("ff", "blip"), ("fast-forward", "blip"), ("blip", "blip"), ("crack", "crack"), ("zap", "zap"),
+              ("alarm", "alarm"), ("riser", "riser"), ("rip", "rip"), ("rustle", "rip"), ("gulp", "gulp"), ("chime", "chime"),
+              ("creak", "creak"), ("stretch", "creak"), ("bounce", "boing"), ("whoosh", "whoosh"), ("thud", "hit"), ("hit", "hit"),
+              ("drop", "hit"), ("scratch", "tick"), ("tick", "tick"), ("pop", "pop"), ("hum", "zap")]
+
+
+def beat_kind(text):
+    """`sound` text of a beat -> cue kind, or None (no sound named = no cue)."""
+    t = (text or "").lower()
+    return next((k for w, k in BEAT_KINDS if w in t), None) if t else None
+
+
+def beat_cues(sc, t0):
+    """Cues for an `eightbit` scene: one per beat that names a sound, at the beat start (whoosh/rip lead by LEAD_S)."""
+    props = sc.get("props") or {}
+    a, out = float(props.get("start_s", 0)), []
+    for b in props.get("beats", []):
+        k = beat_kind(b.get("sound"))
+        rel = b["t"][0] - a
+        if k and 0 <= rel < float(sc["duration_s"]):
+            out.append({"t": max(0.0, t0 + rel - (LEAD_S if k in ("whoosh", "rip") else 0.0)), "kind": k, "scene": sc["id"]})
+    return out
 OPENVERSE = "https://api.openverse.org/v1/audio/"
 
 
@@ -24,7 +49,9 @@ def plan_cues(plan):
         trans = (sc.get("transition_in") or {}).get("type", "cut")
         if t > 0 and trans in ("slide", "zoom", "fade"):
             cues.append({"t": max(0.0, t - LEAD_S), "kind": "whoosh", "scene": sc["id"]})
-        if tpl == "title":
+        if tpl == "eightbit":
+            cues += beat_cues(sc, t)
+        elif tpl == "title":
             cues.append({"t": t, "kind": "hit", "scene": sc["id"]})
         elif tpl in ("counter", "bar_chart", "stroke", "paper_cutout", "quote", "split_compare", "banner", "lower_third"):
             cues.append({"t": t + 3 / fps, "kind": "pop", "scene": sc["id"]})
