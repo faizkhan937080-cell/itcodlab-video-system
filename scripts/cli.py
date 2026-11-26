@@ -1248,6 +1248,7 @@ def cmd_story(a):
 
 def cmd_republish(a):
     """Worker: copy a finished job's pack from Drive to its own review branch again (after a lost force-push)."""
+    import os
     import tempfile
     from pathlib import Path
     from . import review
