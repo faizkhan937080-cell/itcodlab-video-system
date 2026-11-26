@@ -37,6 +37,8 @@ def publish(pack_dir, job_id, collage_index=None):
         if rc != 0 or not url:
             return {"status": "skipped", "reason": "no git remote"}
         branch = cfg.get("branch", "review")
+        if os.environ.get("ITCOD_ONLY_JOBS"):   # parallel reel workers: own branch each, no force-push collision
+            branch = f"{branch}-{job_id}"
         tmp = ROOT / "work" / f"_review_{job_id}"
         tmp.mkdir(parents=True, exist_ok=True)
         if not (tmp / ".git").exists():
@@ -74,9 +76,14 @@ def fetch(job_id, dest, repo=None):
     """Claude side: pull review/<job_id>/ from the review branch into `dest`. Returns list of local files."""
     repo = Path(repo or ROOT)
     branch = limits().get("review", {}).get("branch", "review")
-    rc, out, err = run_cmd(["git", "-C", str(repo), "fetch", "-q", "origin", f"+refs/heads/{branch}:refs/remotes/origin/{branch}"], timeout=180)
-    if rc != 0:
-        raise RuntimeError("fetch failed: " + tail(err, 3))
+    own = f"{branch}-{job_id}"
+    rc, out, err = run_cmd(["git", "-C", str(repo), "fetch", "-q", "origin", f"+refs/heads/{own}:refs/remotes/origin/{own}"], timeout=180)
+    if rc == 0:
+        branch = own
+    else:
+        rc, out, err = run_cmd(["git", "-C", str(repo), "fetch", "-q", "origin", f"+refs/heads/{branch}:refs/remotes/origin/{branch}"], timeout=180)
+        if rc != 0:
+            raise RuntimeError("fetch failed: " + tail(err, 3))
     rc, listing, err = run_cmd(["git", "-C", str(repo), "ls-tree", "-r", "--name-only", f"origin/{branch}",
                                 f"review/{job_id}/"])
     names = [n for n in listing.splitlines() if n.strip()]
