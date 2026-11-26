@@ -29,6 +29,7 @@ import {Title} from './components/Title';
 import {VideoScene} from './components/VideoScene';
 import {Three3D} from './components/Three3D';
 import {SkillTest} from './components/SkillTest';
+import {EightBitShots} from './components/EightBitShots';
 import {easeOut} from './lib/anim';
 import {Colors, DEFAULT_COLORS, OverlayDef, Plan, SceneDef, sceneFrames, totalFrames} from './lib/types';
 import {followAt, zoomAt} from './lib/zoom';
@@ -118,6 +119,8 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
       return <MedScene {...(p as any)} />;
     case 'skilltest':
       return <SkillTest {...(p as any)} />;
+    case 'eightbit':
+      return <EightBitShots {...(p as any)} />;
     case 'body':
       return <BodyScene {...(p as any)} />;
     default:

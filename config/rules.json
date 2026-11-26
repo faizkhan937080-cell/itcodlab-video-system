@@ -196,5 +196,11 @@
   "rule": "./run gate-check script <file> --seconds N compares with the creator's measured profile; every number needs a source in facts",
   "enforcer": "C: script_gate.check (tests/test_shotbook_scriptgate.py)",
   "added": "2026-11-15"
+ },
+ {
+  "id": "pixel_parts_real_animation",
+  "rule": "pixel parts are canvas-drawn per frame, no Img/staticFile (test_eightbit); remotion.media blocks local render here, so sample look-check runs on worker",
+  "enforcer": "tests/test_eightbit.py",
+  "added": "2026-11-26"
  }
 ]

@@ -1,0 +1,260 @@
+{
+ "title": "8bit bruise",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "s1",
+   "duration_s": 22.3,
+   "template": "eightbit",
+   "transition_in": {
+    "type": "cut"
+   },
+   "props": {
+    "scene": "skin",
+    "start_s": 0.0,
+    "beats": [
+     {
+      "id": "b1",
+      "t": [
+       0.0,
+       0.8
+      ]
+     },
+     {
+      "id": "b2",
+      "t": [
+       0.8,
+       3.1
+      ],
+      "label": "OUCH"
+     },
+     {
+      "id": "b3",
+      "t": [
+       3.1,
+       5.1
+      ],
+      "label": "CAPILLARY"
+     },
+     {
+      "id": "b4",
+      "t": [
+       5.1,
+       8.2
+      ],
+      "label": "BLOOD"
+     },
+     {
+      "id": "b5",
+      "t": [
+       8.2,
+       9.2
+      ],
+      "counter": "DAY 1"
+     },
+     {
+      "id": "b6",
+      "t": [
+       9.2,
+       12.3
+      ]
+     },
+     {
+      "id": "b7",
+      "t": [
+       12.3,
+       13.3
+      ],
+      "counter": "DAY 3"
+     },
+     {
+      "id": "b8",
+      "t": [
+       13.3,
+       16.4
+      ],
+      "label": "MACROPHAGE"
+     },
+     {
+      "id": "b9",
+      "t": [
+       16.4,
+       17.4
+      ],
+      "counter": "DAY 5"
+     },
+     {
+      "id": "b10",
+      "t": [
+       17.4,
+       19.5
+      ],
+      "label": "BILIVERDIN"
+     },
+     {
+      "id": "b11",
+      "t": [
+       19.5,
+       20.5
+      ],
+      "counter": "DAY 10"
+     },
+     {
+      "id": "b12",
+      "t": [
+       20.5,
+       22.3
+      ],
+      "label": "BILIRUBIN"
+     },
+     {
+      "id": "b13",
+      "t": [
+       22.3,
+       23.3
+      ],
+      "label": "HEALED"
+     },
+     {
+      "id": "b14",
+      "t": [
+       23.3,
+       25.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "s2",
+   "duration_s": 2.7,
+   "template": "eightbit",
+   "transition_in": {
+    "type": "cut"
+   },
+   "props": {
+    "scene": "end",
+    "start_s": 22.3,
+    "beats": [
+     {
+      "id": "b1",
+      "t": [
+       0.0,
+       0.8
+      ]
+     },
+     {
+      "id": "b2",
+      "t": [
+       0.8,
+       3.1
+      ],
+      "label": "OUCH"
+     },
+     {
+      "id": "b3",
+      "t": [
+       3.1,
+       5.1
+      ],
+      "label": "CAPILLARY"
+     },
+     {
+      "id": "b4",
+      "t": [
+       5.1,
+       8.2
+      ],
+      "label": "BLOOD"
+     },
+     {
+      "id": "b5",
+      "t": [
+       8.2,
+       9.2
+      ],
+      "counter": "DAY 1"
+     },
+     {
+      "id": "b6",
+      "t": [
+       9.2,
+       12.3
+      ]
+     },
+     {
+      "id": "b7",
+      "t": [
+       12.3,
+       13.3
+      ],
+      "counter": "DAY 3"
+     },
+     {
+      "id": "b8",
+      "t": [
+       13.3,
+       16.4
+      ],
+      "label": "MACROPHAGE"
+     },
+     {
+      "id": "b9",
+      "t": [
+       16.4,
+       17.4
+      ],
+      "counter": "DAY 5"
+     },
+     {
+      "id": "b10",
+      "t": [
+       17.4,
+       19.5
+      ],
+      "label": "BILIVERDIN"
+     },
+     {
+      "id": "b11",
+      "t": [
+       19.5,
+       20.5
+      ],
+      "counter": "DAY 10"
+     },
+     {
+      "id": "b12",
+      "t": [
+       20.5,
+       22.3
+      ],
+      "label": "BILIRUBIN"
+     },
+     {
+      "id": "b13",
+      "t": [
+       22.3,
+       23.3
+      ],
+      "label": "HEALED"
+     },
+     {
+      "id": "b14",
+      "t": [
+       23.3,
+       25.0
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "captions": [],
+ "audio": [],
+ "audio_target_lufs": -17,
+ "vignette": 0.0,
+ "grain": false
+}
