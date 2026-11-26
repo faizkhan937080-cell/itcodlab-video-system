@@ -35,6 +35,23 @@ def _file_of(st, query, type_, name, tags, fallbacks=(), tries=3):
     return None
 
 
+def _synth_local(kind):
+    """Own 8-bit sound written straight into remotion/public (no Drive round trip: Drive uploads made the old step time out)."""
+    from . import sfx_synth
+    from .common import ROOT
+    if kind not in sfx_synth.RECIPES:
+        return None
+    rel = f"assets/library/sfx/8bit-{kind}-own.wav"
+    dest = ROOT / "remotion" / "public" / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        sfx_synth.make(kind, dest)
+        return rel
+    except Exception as ex:  # noqa: BLE001
+        print(f"synth {kind} failed: {type(ex).__name__} {str(ex)[:80]}")
+        return None
+
+
 def _synth_file(st, kind):
     """Backup when the internet source fails: own 8-bit sound (scripts/sfx_synth.py), added to the library by name."""
     import tempfile
@@ -58,7 +75,7 @@ def run(plan_path, music_query="chiptune 8-bit loop"):
     cues = sfx.plan_cues(plan)
     files, skipped = {}, []
     for kind in sorted({c["kind"] for c in cues}):
-        f = _file_of(st, sfx.QUERIES[kind], "sfx", f"8bit-{kind}", ["8bit", kind], tries=1) or _synth_file(st, kind)
+        f = (_file_of(st, sfx.QUERIES[kind], "sfx", f"8bit-{kind}", ["8bit", kind], tries=1) if os.environ.get("SUN_INTERNET_SFX") else None) or _synth_local(kind)
         if f:
             files[kind] = f
         else:
