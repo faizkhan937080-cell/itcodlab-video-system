@@ -1,0 +1,15 @@
+{
+  "job_id": "reel-DfBQ1AgOC1S",
+  "mode": "both",
+  "created": "2026-11-26T21:02:32Z",
+  "files": [
+    "collage_01.jpg",
+    "collage_02.jpg",
+    "collage_03.jpg",
+    "metrics_summary.json"
+  ],
+  "collage_count": 3,
+  "collage_max": 10,
+  "summary_bytes": 8896,
+  "collage_bytes": 496997
+}
