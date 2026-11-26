@@ -1,0 +1,162 @@
+{
+ "fonts": [
+  {
+   "name": "Inter or similar grotesque sans, bold",
+   "use": "captions, labels",
+   "confidence": "estimated"
+  },
+  {
+   "name": "wordmark sansser with teal slash (custom logo)",
+   "use": "top brand"
+  },
+  {
+   "name": "serif italic seen only inside screenshot cards (not part of style)",
+   "use": "preview"
+  }
+ ],
+ "music": [
+  {
+   "name": "unidentified electronic bed",
+   "bpm": 117.5,
+   "note": "stem -38.8 LUFS"
+  }
+ ],
+ "sfx": [
+  {
+   "name": "none verified",
+   "note": "whoosh/pop likely"
+  }
+ ],
+ "motion": [
+  {
+   "name": "3D glass bars, emerald glow, ranked 1-7, camera dolly",
+   "t": [
+    0,
+    32.7
+   ]
+  },
+  {
+   "name": "value label +40.4K / +34.4K / +27.7K / +27.4K / +24.4K / +22.8K / +22.5K pop above each bar",
+   "t": [
+    5.7,
+    27.7
+   ]
+  },
+  {
+   "name": "logo/portrait chip floating on each bar top",
+   "t": [
+    5.7,
+    27.7
+   ]
+  },
+  {
+   "name": "repo card preview with screenshot dropping above label (e.g. pbakaus/impeccable with Without Impeccable red tag)",
+   "t": [
+    15.0,
+    18.0
+   ]
+  },
+  {
+   "name": "karaoke blur-in captions",
+   "t": [
+    0,
+    31.8
+   ]
+  },
+  {
+   "name": "wide pull-back to full chart with +198.0K STARS IN 30 DAYS ALL SEVEN FREE",
+   "t": [
+    27.7,
+    31.8
+   ]
+  },
+  {
+   "name": "Comment RANK pill",
+   "t": [
+    27.7,
+    31.8
+   ]
+  }
+ ],
+ "textures": [
+  {
+   "name": "near-black gradient floor with soft green glow",
+   "share": 0.55
+  }
+ ],
+ "tools_named": [
+  "three.js / react-three-fiber inside Remotion (estimated)"
+ ],
+ "layout": {
+  "format": "9:16 1080x1920 24fps",
+  "blocks": [
+   "wordmark top",
+   "STARS GAINED LAST 30 DAYS pill",
+   "chart centre",
+   "captions lower-middle",
+   "footer handles"
+  ]
+ },
+ "captions": {
+  "style": "word-by-word karaoke, white bold sans, blur-in",
+  "position": "about 68 percent height"
+ },
+ "assets_needed": [
+  {
+   "name": "Cloudflare logo",
+   "t": [
+    5.7,
+    9.8
+   ]
+  },
+  {
+   "name": "Matt Pocock portrait",
+   "t": [
+    9.8,
+    12.7
+   ]
+  },
+  {
+   "name": "Ponytail avatar (cartoon face)",
+   "t": [
+    12.7,
+    15.0
+   ]
+  },
+  {
+   "name": "pbakaus portrait + Impeccable screenshot",
+   "t": [
+    15.0,
+    17.8
+   ]
+  },
+  {
+   "name": "everything-claude-code icon",
+   "t": [
+    17.8,
+    20.5
+   ]
+  },
+  {
+   "name": "Anatomy rocket engine image",
+   "t": [
+    20.5,
+    23.8
+   ]
+  },
+  {
+   "name": "Hallmark portrait + site screenshot",
+   "t": [
+    23.8,
+    27.7
+   ]
+  },
+  {
+   "name": "footer social handle row",
+   "t": [
+    0,
+    32.7
+   ]
+  }
+ ]
+}

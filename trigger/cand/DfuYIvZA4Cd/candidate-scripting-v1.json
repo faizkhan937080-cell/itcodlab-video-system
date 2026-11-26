@@ -1,0 +1,227 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfuYIvZA4Cd",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.96,
+  "complete": true,
+  "engine": "auto pass (English)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "PAS (problem-agitate-solve) with comment-keyword CTA",
+  "description": "accusation hook, agitate (you pay for one speed), twist (not your ISP), solution via one prompt, proof, CTA, closing question"
+ },
+ "hook": {
+  "kind": "problem-agitate, bold claim",
+  "duration_s": 3.0,
+  "first_words": "Your Wi Fi has been robbing you this whole time and Claude",
+  "time_to_value_s": 3.0,
+  "pattern": "Your <thing> has been robbing you this whole time, and <tool> just caught it red-handed",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "accuse wifi, claim Claude caught it",
+   "start_s": 0.0,
+   "end_s": 4.5,
+   "share": 0.132,
+   "devices": [
+    "personification",
+    "bold claim"
+   ]
+  },
+  {
+   "beat": "agitate",
+   "purpose": "pay for one speed, get half",
+   "start_s": 4.5,
+   "end_s": 8.0,
+   "share": 0.103,
+   "devices": [
+    "contrast"
+   ]
+  },
+  {
+   "beat": "twist",
+   "purpose": "your ISP is not the culprit",
+   "start_s": 8.0,
+   "end_s": 10.5,
+   "share": 0.074,
+   "devices": [
+    "curiosity gap",
+    "twist"
+   ]
+  },
+  {
+   "beat": "solution",
+   "purpose": "one prompt, detective, speed test, background hogs, channel crowding",
+   "start_s": 10.5,
+   "end_s": 22.0,
+   "share": 0.338,
+   "devices": [
+    "analogy detective",
+    "rule of three"
+   ]
+  },
+  {
+   "beat": "proof",
+   "purpose": "fix with yes, speed jumps, double speed",
+   "start_s": 22.0,
+   "end_s": 27.5,
+   "share": 0.162,
+   "devices": [
+    "demo",
+    "claim of proof"
+   ]
+  },
+  {
+   "beat": "cta",
+   "purpose": "comment speed for prompt",
+   "start_s": 27.5,
+   "end_s": 30.5,
+   "share": 0.088,
+   "devices": [
+    "keyword CTA"
+   ]
+  },
+  {
+   "beat": "closing_question",
+   "purpose": "be honest, how long have you been yelling at your internet company",
+   "start_s": 30.5,
+   "end_s": 34.005,
+   "share": 0.103,
+   "devices": [
+    "question",
+    "humour"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "second-person (you), we in CTA",
+  "address_terms": [
+   "you"
+  ],
+  "register": "playful, accusatory-funny explainer",
+  "energy": "high, very fast and even",
+  "humor": "dry roast (yelling at your internet company)",
+  "formality": "casual",
+  "tone_tags": [
+   "playful",
+   "dramatic",
+   "relatable"
+  ]
+ },
+ "language": {
+  "primary": "english",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "networking",
+   "AI coding"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "has been robbing you this whole time",
+   "caught it red-handed",
+   "goes full detective",
+   "your internet company"
+  ],
+  "filler_words": [
+   "and",
+   "then"
+  ],
+  "power_words": [
+   "robbing",
+   "stealing",
+   "double",
+   "red-handed",
+   "secretly"
+  ],
+  "jargon_terms": [
+   "Claude code",
+   "Wi-Fi channel",
+   "speed test"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 269.0,
+  "words_per_min_overall": 241.7,
+  "speech_ratio": 0.899,
+  "sentence_words_mean": 15.2,
+  "sentence_words_p90": 20.2,
+  "pause_mean_s": 0.25,
+  "questions_per_min": 1.76,
+  "numbers_per_min": 0.0
+ },
+ "retention": {
+  "open_loops": 2,
+  "rehooks_at_s": [
+   8.0,
+   10.5,
+   30.5
+  ],
+  "pattern_interrupts": "twist that the ISP is not the culprit; final audience question",
+  "payoff_at_s": 25.5
+ },
+ "cta": {
+  "type": "comment-keyword",
+  "ask": "Comment speed, and we'll send you the exact prompt",
+  "keyword": "speed",
+  "placement_s": 27.5,
+  "repeats": 1,
+  "incentive": "the exact prompt"
+ },
+ "evidence": [
+  {
+   "claim": "accusation hook",
+   "quote": "Your Wi-Fi has been robbing you this whole time, and Claude just caught it red-handed.",
+   "t": [
+    0,
+    3.5
+   ]
+  },
+  {
+   "claim": "twist that redirects blame",
+   "quote": "your internet company isn't even the one stealing it.",
+   "t": [
+    7.7,
+    10.5
+   ]
+  },
+  {
+   "claim": "detective analogy",
+   "quote": "it goes full detective on your laptop.",
+   "t": [
+    12.0,
+    14.8
+   ]
+  },
+  {
+   "claim": "keyword CTA then closing question",
+   "quote": "Comment speed, and we'll send you the exact prompt.",
+   "t": [
+    27.5,
+    30.5
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "measured",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Beat times estimated from events collage (hook 3.3, twist 7.7, laptop 12.0, donut 14.8, fix dialog 20.5, 2x 25.0, router end 28.7 s) and transcript order; structure judged."
+}

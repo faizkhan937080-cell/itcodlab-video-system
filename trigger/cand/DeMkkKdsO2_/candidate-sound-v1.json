@@ -1,0 +1,89 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DeMkkKdsO2_",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.2,
+  "true_peak_dbtp": -0.9,
+  "lra_lu": 1.2,
+  "short_term_max_lufs": -16.0,
+  "standard": "ITU-R BS.1770 / EBU R128 (pyloudnorm, mono mix)"
+ },
+ "tempo": {
+  "bpm": 123.0,
+  "feel": "detected tempo about 123 bpm (49 beats); music character not listened to by Claude"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 2,
+  "median_offset_s": 0.144,
+  "notes": "0 of 2 cuts within 80 ms of a beat; median offset 0.144 s. Cuts follow the story, not the music."
+ },
+ "speech": {
+  "speech_ratio": 0.658,
+  "voice_character": "very fast, very expressive English narration with wide pitch range",
+  "delivery": "Staccato one-line sentences (mean 4.1 words), 17 gaps mostly 0.3-1.0 s that give a beat for each visual change; falling or flat endings, no rising endings even on questions; emphasis on '38', 'one' and 'Fairwind'. Numbers in notes."
+ },
+ "silence": {
+  "share": 0.017,
+  "usage": "Only the last 0.42 s is silent (24.54-24.96 s); rhythm comes from short 0.3-1.0 s breaths between lines, not from silence.",
+  "longest_s": 0.42
+ },
+ "mix": {
+  "voice_over_music": "voice dominates (10.6 LU above music stem); music is a quiet bed",
+  "ducking": "unknown (no envelope measured); loudness range is only 1.2 LU, so the mix is very even",
+  "music_mood": "unknown (not listened to); upbeat modern tech feel suggested by visuals (estimated)",
+  "music_genre": "unknown",
+  "sfx_types": [
+   "split-flap clacks on the departure board 0-1.5 s, estimated",
+   "typing ticks for caret and counter '1_', estimated",
+   "UI pops / swishes for chips and cards, estimated",
+   "confirm tick on the check marks (14.8 s), estimated",
+   "whoosh on the whip at 17.15 s, estimated",
+   "listening chime near 16.7 s, estimated"
+  ],
+  "voice_minus_music_lu": 10.6
+ },
+ "evidence": [
+  {
+   "claim": "Integrated loudness -17.2 LUFS, peak -0.9 dBTP (close to ceiling), LRA 1.2 LU: very even level",
+   "t": [
+    0.0,
+    25.0
+   ]
+  },
+  {
+   "claim": "Voice stem 17.2 LUFS vs music stem 27.8 LUFS (demucs, measuring only)",
+   "t": [
+    0.0,
+    25.0
+   ]
+  },
+  {
+   "claim": "17 gaps; bins 2 / 8 / 7 / 0 for 0.15-0.3 / 0.3-0.6 / 0.6-1.0 / 1.0+ s",
+   "t": [
+    0.0,
+    25.0
+   ]
+  },
+  {
+   "claim": "SFX types are inferred from on-screen events only",
+   "t": [
+    0.0,
+    22.2
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "measured",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "Claude did not listen; music mood, genre, ducking and SFX are unknown or estimated from visuals. Voice (voice.json numbers): pitch median 200.9 Hz, p10-p90 85.2-292.9 Hz, range 21.38 st, label very expressive; tempo mean 238.7 wpm, min 157.9, max 310.3, CV 0.22, rate very fast; gaps n=17, mean 0.5 s, max 0.66 s, bins {\"0.15-0.3\": 2, \"0.3-0.6\": 8, \"0.6-1.0\": 7, \"1.0-up\": 0}; sentence endings rising 0 / falling 6 / flat 7; top emphasised words 38@4.74s, one@2.3s, Fairwind.@22.1s."
+}

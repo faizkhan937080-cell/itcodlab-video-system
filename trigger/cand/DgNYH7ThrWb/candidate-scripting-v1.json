@@ -1,0 +1,209 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgNYH7ThrWb",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.99,
+  "complete": true,
+  "engine": "whisper auto pass (English, roman)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Hook-Problem-Thesis-CTA (myth-bust / hot take)",
+  "description": "Relatable question hook, names the 'trend trap', blames imitation, states the creator-truth thesis, then a comment-keyword CTA."
+ },
+ "hook": {
+  "kind": "question + metaphor (curiosity gap / problem-agitate)",
+  "duration_s": 3.2,
+  "first_words": "Ever worn a style that was never cut for you This is",
+  "time_to_value_s": 3.4,
+  "pattern": "'Ever worn a [thing] that was never cut for you?' -> instantly names the trap",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "relatable question using a clothing metaphor",
+   "start_s": 0.0,
+   "end_s": 3.17,
+   "devices": [
+    "question",
+    "metaphor"
+   ],
+   "share": 0.135
+  },
+  {
+   "beat": "name the problem",
+   "purpose": "label it 'the trend trap in a nutshell'",
+   "start_s": 3.17,
+   "end_s": 4.83,
+   "devices": [
+    "named concept",
+    "list of Clean Cuts / Moody Cinematic / Viral Templates on screen"
+   ],
+   "share": 0.071
+  },
+  {
+   "beat": "cause",
+   "purpose": "you clone another creator's look and wonder why it never clicks",
+   "start_s": 4.83,
+   "end_s": 8.87,
+   "devices": [
+    "second person",
+    "cause-effect"
+   ],
+   "share": 0.172
+  },
+  {
+   "beat": "thesis",
+   "purpose": "imitation never builds a signature; only editors with their own voice get amplified; a look not true to your taste falls flat even if viral",
+   "start_s": 8.87,
+   "end_s": 18.8,
+   "devices": [
+    "contrast (imitation vs own voice)",
+    "concession ('even if it goes viral')"
+   ],
+   "share": 0.423
+  },
+  {
+   "beat": "cta",
+   "purpose": "comment keyword for the full guide, then end card",
+   "start_s": 18.8,
+   "end_s": 23.467,
+   "devices": [
+    "comment keyword"
+   ],
+   "share": 0.199
+  }
+ ],
+ "voice": {
+  "person": "you (second person); no 'I'",
+  "address_terms": [],
+  "register": "confident creator-coach, short declarative opinions",
+  "energy": "high, very fast (measured very fast tempo)",
+  "humor": "none",
+  "formality": "informal-professional",
+  "tone_tags": [
+   "assertive",
+   "tutorial-lite",
+   "opinionated",
+   "fast"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none (pure English)",
+  "english_term_domains": [
+   "video editing",
+   "creator economy",
+   "social trends"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "This is the trend trap in a nutshell.",
+   "Comment Claude for the full guide."
+  ],
+  "filler_words": [],
+  "power_words": [
+   "never",
+   "signature",
+   "viral",
+   "clone",
+   "voice of their own"
+  ],
+  "jargon_terms": [
+   "trend trap",
+   "look",
+   "edit"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 247.8,
+  "words_per_min_overall": 168.7,
+  "speech_ratio": 0.681,
+  "sentence_words_mean": 11,
+  "sentence_words_p90": 15.5,
+  "pause_mean_s": 1.44,
+  "questions_per_min": 2.56,
+  "numbers_per_min": 0.0
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   3.17,
+   4.83,
+   8.87
+  ],
+  "pattern_interrupts": "Scene change plus background flip (dark green -> cream) at 4.83 s and a full layout reset at 8.87 s.",
+  "payoff_at_s": 16.2
+ },
+ "cta": {
+  "type": "comment-keyword",
+  "ask": "Comment Claude for the full guide.",
+  "keyword": "Claude",
+  "placement_s": 18.8,
+  "repeats": 0,
+  "incentive": "the full guide"
+ },
+ "evidence": [
+  {
+   "claim": "Hook is a second-person question with a clothing metaphor",
+   "quote": "Ever worn a style that was never cut for you?",
+   "t": [
+    0.0,
+    3.2
+   ]
+  },
+  {
+   "claim": "Problem is named as a concept",
+   "quote": "This is the trend trap in a nutshell.",
+   "t": [
+    3.2,
+    4.8
+   ]
+  },
+  {
+   "claim": "Cause is the viewer's own behaviour",
+   "quote": "You clone another creator's look, then ask why it never clicks.",
+   "t": [
+    4.8,
+    8.9
+   ]
+  },
+  {
+   "claim": "Thesis with concession, closing near 16.2 s ('even if It Goes' on screen)",
+   "quote": "If a look isn't true to your taste, it falls flat, even if it goes viral.",
+   "t": [
+    11.0,
+    17.0
+   ]
+  },
+  {
+   "claim": "CTA is a single comment-keyword ask, after the 17.83-18.76 s silence",
+   "quote": "Comment Claude for the full guide.",
+   "t": [
+    18.8,
+    21.3
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "judged",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "estimated"
+ },
+ "notes": "Beat times are anchored on scene cuts and on-screen caption frames (transcript has no per-sentence times in the pack); thesis end and CTA start (18.8 s) are estimates from the 17.83-18.76 s silence. A 5.01 s pause exists in the pack (pauses.max_s) but its position is not in the pack: unknown. Voice (voice.json numbers): pitch median 117.2 Hz, p10-p90 84.2-153.2 Hz, range 10.36 st, label very expressive; tempo mean 248.1 wpm, min 215.7, max 285.7, CV 0.09, rate very fast; gaps n=9, mean 0.91 s, max 5.01 s, bins {\"0.15-0.3\": 4, \"0.3-0.6\": 2, \"0.6-1.0\": 2, \"1.0-up\": 1}; sentence endings rising 1 / falling 3 / flat 2; top emphasised words a@9.98s, a@0.52s, never@1.42s, worn@0.18s, a@4.44s."
+}

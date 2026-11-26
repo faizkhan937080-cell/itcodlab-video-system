@@ -1,0 +1,234 @@
+{
+ "reel": "DeMkkKdsO2_",
+ "creator": "sansser.ai",
+ "analysed": "inner edited video only (screen-in-scene; monitor/room ignored)",
+ "fonts": [
+  {
+   "use": "headlines, UI cards",
+   "class": "geometric sans (Poppins style)",
+   "confidence": "estimated"
+  },
+  {
+   "use": "hook pill and flap board",
+   "class": "monospace caps (Space Mono / JetBrains Mono style)",
+   "confidence": "estimated"
+  },
+  {
+   "use": "hero numbers (11 hours, 1_)",
+   "class": "heavy grotesque sans (Inter / Helvetica Neue Bold style)",
+   "confidence": "estimated"
+  }
+ ],
+ "music": [
+  {
+   "name": null,
+   "note": "not identified; ~123 bpm; search hint 'upbeat minimal tech product promo'",
+   "confidence": "unknown"
+  }
+ ],
+ "sfx": [
+  {
+   "kind": "split-flap clack",
+   "t": [
+    0.0,
+    1.47
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "typing tick / counter",
+   "t": [
+    3.8,
+    5.7
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "UI pop",
+   "t": [
+    3.8,
+    15.2
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "confirm tick",
+   "t": [
+    14.8,
+    15.2
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "whoosh (whip)",
+   "t": [
+    16.9,
+    17.4
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "listening chime",
+   "t": [
+    16.7,
+    17.1
+   ],
+   "confidence": "estimated"
+  }
+ ],
+ "motion": [
+  {
+   "name": "split-flap departure board (KYOTO / LISBON / BALI)",
+   "t": [
+    0.0,
+    1.47
+   ]
+  },
+  {
+   "name": "scattering search chips with counter '1_'",
+   "t": [
+    3.8,
+    5.7
+   ]
+  },
+  {
+   "name": "black dot morph",
+   "t": [
+    5.7,
+    5.8
+   ]
+  },
+  {
+   "name": "input pill with 3 tokens + gradient word reveal",
+   "t": [
+    9.3,
+    10.0
+   ]
+  },
+  {
+   "name": "trip card with timer chip 3.1 s -> 10.0 s",
+   "t": [
+    10.2,
+    12.8
+   ]
+  },
+  {
+   "name": "boarding pass / hotel / dinner cards with blue check marks",
+   "t": [
+    12.5,
+    15.2
+   ]
+  },
+  {
+   "name": "listening pill with waveform + Day 2 card",
+   "t": [
+    16.7,
+    17.3
+   ]
+  },
+  {
+   "name": "strike-through '11 hours' + dotted line building new number",
+   "t": [
+    21.0,
+    21.5
+   ]
+  },
+  {
+   "name": "Fairwind pill letter blur-in with three tiles",
+   "t": [
+    21.8,
+    22.2
+   ]
+  }
+ ],
+ "textures": [
+  "frosted pastel gradient (blue to peach)",
+  "soft card drop shadows",
+  "black flap board"
+ ],
+ "tools_named": [
+  {
+   "name": "Remotion (candidate)",
+   "note": "UI cards, springs, kinetic text",
+   "confidence": "estimated"
+  }
+ ],
+ "layout": "portrait 510x930 inner video; centred single focal element on empty pastel frame; mid-height captions (safe zone respected)",
+ "captions": {
+  "style": "mono caps typed hook, bold geometric headline lines, blue gradient on key words, hero numbers",
+  "words_per_caption": 3.0,
+  "texts": [
+   "WHERE TO NEXT?",
+   "KYOTO / LISBON / BALI",
+   "Just tell it where, when, how much.",
+   "Lisbon / 3 days / $800",
+   "11 hours",
+   "Fairwind"
+  ]
+ },
+ "assets_needed": [
+  {
+   "name": "split-flap board component",
+   "t": [
+    0.0,
+    1.47
+   ]
+  },
+  {
+   "name": "search chips set (airbnb vs hotel lisbon, belem tower hours, best pastel de nata, fado bars reddit, rooftop dinner spots, lisbon weather october, cheap flights lisbon, lisbon in 3 days, best area to stay)",
+   "t": [
+    3.8,
+    5.7
+   ]
+  },
+  {
+   "name": "map trip card + timer chip",
+   "t": [
+    10.2,
+    12.8
+   ]
+  },
+  {
+   "name": "boarding pass card FRA -> LIS (Skyfare)",
+   "t": [
+    12.5,
+    15.2
+   ]
+  },
+  {
+   "name": "Casa Alfama hotel illustration card",
+   "t": [
+    12.5,
+    15.2
+   ]
+  },
+  {
+   "name": "Taberna da Esquina dinner card",
+   "t": [
+    12.5,
+    15.2
+   ]
+  },
+  {
+   "name": "listening voice pill with waveform",
+   "t": [
+    16.7,
+    17.3
+   ]
+  },
+  {
+   "name": "pastel gradient background",
+   "t": [
+    1.47,
+    25.0
+   ]
+  },
+  {
+   "name": "Fairwind brand pill / logo",
+   "t": [
+    21.8,
+    25.0
+   ]
+  }
+ ]
+}

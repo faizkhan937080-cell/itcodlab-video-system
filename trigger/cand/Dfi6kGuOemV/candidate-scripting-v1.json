@@ -1,0 +1,230 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-Dfi6kGuOemV",
+  "creator": "sansser.ai",
+  "link": "https://www.instagram.com/reel/Dfi6kGuOemV/"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.98,
+  "complete": true,
+  "engine": "whisper auto pass (roman English)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "explainer tutorial in four chapters (What / When / Switch / Limits) + challenge",
+  "description": "creator brand \"sansser\": news/tools explained as fast voice-over over designed motion cards"
+ },
+ "hook": {
+  "kind": "news-open + time-boxed offer",
+  "duration_s": 5.5,
+  "first_words": "Claude Fable 5.2 is out, and if you're on a pro or team plan, it's included at no extra cost until November 16th.",
+  "time_to_value_s": 0.0,
+  "pattern": "release news + deadline, then \"this is how we'd use that week\"",
+  "open_loop": false,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook+what_it_is",
+   "purpose": "Claude Fable 5.2 is out; included on Pro/Team until Nov 16; this is how we'd use that week; most powerful Claude, faster/cheaper stats",
+   "start_s": 0.0,
+   "end_s": 23.1,
+   "share": 0.326,
+   "devices": [
+    "signposted chapters (tabs)",
+    "contrast (use for / waste on)"
+   ]
+  },
+  {
+   "beat": "when_to_use",
+   "purpose": "start day on Opus 5.5, bring Fable for hardest open-ended work (migration, hard math/engineering, agent teams, orchestrator); waste for quick emails",
+   "start_s": 23.1,
+   "end_s": 42.0,
+   "share": 0.267,
+   "devices": [
+    "signposted chapters (tabs)",
+    "contrast (use for / waste on)"
+   ]
+  },
+  {
+   "beat": "how_to_switch",
+   "purpose": "Claude app model picker; Claude Code: update, /model, press S not Enter",
+   "start_s": 42.0,
+   "end_s": 58.0,
+   "share": 0.226,
+   "devices": [
+    "signposted chapters (tabs)",
+    "contrast (use for / waste on)"
+   ]
+  },
+  {
+   "beat": "limits",
+   "purpose": "Pro: up to half the weekly limit until Nov 16 + one free reset; then usage credits",
+   "start_s": 58.0,
+   "end_s": 65.5,
+   "share": 0.106,
+   "devices": [
+    "signposted chapters (tabs)",
+    "contrast (use for / waste on)"
+   ]
+  },
+  {
+   "beat": "cta_challenge",
+   "purpose": "pick the one problem you gave up on, hand it to Fable this week",
+   "start_s": 65.5,
+   "end_s": 70.792,
+   "share": 0.075,
+   "devices": [
+    "signposted chapters (tabs)",
+    "contrast (use for / waste on)"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "I/we implied, addresses viewer as \"you\"",
+  "address_terms": [
+   "you",
+   "your"
+  ],
+  "register": "conversational explainer, tool-news tone",
+  "energy": "very fast (260.7 wpm mean), very expressive pitch (13.22 st range)",
+  "formality": "casual-professional",
+  "humour": "minimal",
+  "tone_tags": [
+   "fast",
+   "confident",
+   "punchy",
+   "no filler pauses"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none (no Hindi detected, devanagari share 0.0)",
+  "english_term_domains": [
+   "AI tools",
+   "software/GitHub",
+   "Claude models"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "Take this first.",
+   "Now, what to use it for?",
+   "this week",
+   "So pick the one problem you gave up on",
+   "hand it to Fable this week",
+   "up to half your weekly limit"
+  ],
+  "filler_words": [],
+  "power_words": [
+   "most powerful",
+   "included at no extra cost",
+   "faster",
+   "cheaper",
+   "waste",
+   "free reset",
+   "hardest"
+  ],
+  "jargon_terms": [
+   "Claude Fable 5.2",
+   "Mythos",
+   "Opus 5.5",
+   "Sonnet 5.5",
+   "Haiku 5.5",
+   "API",
+   "orchestrator",
+   "agents",
+   "model picker",
+   "slash model",
+   "weekly limit",
+   "usage credits"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 243.1,
+  "words_per_min_overall": 228.0,
+  "speech_ratio": 0.938,
+  "sentence_words_mean": 19.2,
+  "sentence_words_p90": 31.5,
+  "pause_mean_s": 0.21,
+  "questions_per_min": 0.85,
+  "numbers_per_min": 8.48
+ },
+ "retention": {
+  "open_loops": 0,
+  "rehooks_at_s": [
+   6.0,
+   23.1,
+   42.0,
+   58.0
+  ],
+  "pattern_interrupts": "tab chapters advance at ~23, ~42, ~58 s; calendar flip NOV 16->17 at ~60-64 s",
+  "payoff_at_s": 65.5
+ },
+ "cta": {
+  "type": "challenge / action prompt (no comment keyword)",
+  "ask": "pick the one problem you gave up on and hand it to Fable this week",
+  "keyword": "",
+  "placement_s": 65.5,
+  "repeats": 0,
+  "incentive": "none stated"
+ },
+ "evidence": [
+  {
+   "claim": "news-open hook with deadline",
+   "quote": "Claude Fable 5.2 is out, and if you're on a pro or team plan, it's included at no extra cost until November 16th.",
+   "t": [
+    0.0,
+    0.5
+   ]
+  },
+  {
+   "claim": "signpost line bridging into the tutorial",
+   "quote": "So, this is how we'd use that week.",
+   "t": [
+    6.0,
+    6.5
+   ]
+  },
+  {
+   "claim": "contrast: when NOT to use",
+   "quote": "For quick emails and small questions, it's a waste because Fable eats through your limit faster than any other Claude.",
+   "t": [
+    40.0,
+    40.5
+   ]
+  },
+  {
+   "claim": "keystroke tip",
+   "quote": "pick Fable, and press the S key instead of enter so it's only for that session",
+   "t": [
+    54.0,
+    54.5
+   ]
+  },
+  {
+   "claim": "closing challenge CTA",
+   "quote": "So pick the one problem you gave up on, the hardest thing on your list, and hand it to Fable this week.",
+   "t": [
+    65.5,
+    66.0
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "judged",
+  "structure": "estimated",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Structure times: boundaries anchored to collage_events frames and measured emphasis-word times; whole-transcript has no per-sentence timestamps in the pack, so beat edges are estimated (+-1.5 s). Words in first 3 s = 10.3, first 5 s = 17.2. Tempo CV 0.18 (min 203.0, max 409.1); gaps {'0.15-0.3': 21, '0.3-0.6': 1, '0.6-1.0': 0, '1.0-up': 0}; endings {'rising': 7, 'falling': 11, 'flat': 6}; top emphasis ['%', '%', '.2', 'a', 'or']. cta_words \"like\" in metrics is a false hit (\"like moving a big code base\"); no comment/follow CTA present."
+}

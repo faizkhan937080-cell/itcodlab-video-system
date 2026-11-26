@@ -1,0 +1,129 @@
+{
+ "creator": "sansser.ai",
+ "reel": "reel-DgLclCABIa3",
+ "capture": "screen_in_scene, inner edited video only",
+ "fonts": [
+  {
+   "name": "serif (Georgia/Times class)",
+   "use": "'Her first book was rejected', 'Today' italic",
+   "t": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "geometric sans bold (Poppins class)",
+   "use": "pink emphasis, PETER RABBIT, Comment CLAUDE For The Full Guide",
+   "t": [
+    0,
+    10
+   ]
+  },
+  {
+   "name": "geometric sans regular",
+   "use": "'she was selling', 'has sold over'",
+   "t": [
+    2.2,
+    10
+   ]
+  }
+ ],
+ "music": [
+  {
+   "name": "unknown",
+   "note": "audible bed 3.7 LU under voice, about 143.6 bpm grid",
+   "t": [
+    0,
+    10
+   ]
+  }
+ ],
+ "sfx": [
+  {
+   "name": "unknown"
+  }
+ ],
+ "motion": [
+  "word blur/fade reveal",
+  "3D stone-sculpture objects popping per beat",
+  "crosshair and curved guide lines",
+  "dot grid behind rabbit",
+  "dotted circle around carousel horse",
+  "corner brackets",
+  "tilted card perspective",
+  "dark chevron corner marks"
+ ],
+ "textures": [
+  "diagonal stripe light card",
+  "maroon code-line banner texture"
+ ],
+ "tools_named": [
+  "Claude (in CTA keyword)"
+ ],
+ "layout": {
+  "caption": "center of card",
+  "cta_banner": "bottom ~15%"
+ },
+ "captions": {
+  "style": "serif lead-in + pink bold emphasis",
+  "words_per_caption": 4.0
+ },
+ "assets_needed": [
+  {
+   "name": "stone bust girl with pink silk bow (3D render)",
+   "t": [
+    0,
+    2.2
+   ]
+  },
+  {
+   "name": "faint giant word POTTER",
+   "t": [
+    0,
+    2.2
+   ]
+  },
+  {
+   "name": "stone rabbit sculpture on dot grid",
+   "t": [
+    2.2,
+    5.2
+   ]
+  },
+  {
+   "name": "Beatrix Potter profile bust on dark square",
+   "t": [
+    5.2,
+    7.5
+   ]
+  },
+  {
+   "name": "carousel horse in dotted ring",
+   "t": [
+    7.5,
+    10
+   ]
+  },
+  {
+   "name": "CTA banner 'Comment CLAUDE For The Full Guide' over code texture",
+   "t": [
+    0,
+    10
+   ]
+  },
+  {
+   "name": "corner bracket and crosshair overlays",
+   "t": [
+    0,
+    10
+   ]
+  },
+  {
+   "name": "striped light card background",
+   "t": [
+    0,
+    10
+   ]
+  }
+ ]
+}

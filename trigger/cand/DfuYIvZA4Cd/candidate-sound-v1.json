@@ -1,0 +1,78 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfuYIvZA4Cd",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.1,
+  "true_peak_dbtp": -0.6,
+  "lra_lu": 2.8,
+  "short_term_max_lufs": -15.6,
+  "standard": "ITU-R BS.1770 / EBU R128 (social-style level, about -17 LUFS)"
+ },
+ "tempo": {
+  "bpm": 123.0,
+  "feel": "upbeat steady pulse; bpm 123 from detector"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 1,
+  "median_offset_s": 0.123,
+  "notes": "one cut only (dissolve at 10.12 s), 0.123 s from a beat; too few cuts for a sync claim"
+ },
+ "speech": {
+  "speech_ratio": 0.899,
+  "voice_character": "pitch median 199.9 Hz, very expressive (14.8 st)",
+  "delivery": "very fast (270.5 mean wpm, 250-308.4, CV 0.07 so very even); 16 gaps all 0.15-0.3 s; no rising endings"
+ },
+ "silence": {
+  "share": 0.032,
+  "usage": "last 1.1 s (32.93-34.03) silent tail",
+  "longest_s": 1.1
+ },
+ "mix": {
+  "voice_over_music": "voice dominant, music far below",
+  "ducking": "music constant and very low (-38.3 LUFS stem vs voice -17.1)",
+  "music_mood": "bright, upbeat, light tech",
+  "music_genre": "light electronic/pop bed (estimated, not identified)",
+  "sfx_density_per_min": 0,
+  "sfx_types": [
+   "stamp thud on CAUGHT, click on checkbox/button, rising whoosh on 2x (all likely, not verified)"
+  ],
+  "voice_minus_music_lu": 21.2
+ },
+ "evidence": [
+  {
+   "claim": "voice 21.2 LU above music stem",
+   "t": [
+    0,
+    34.0
+   ]
+  },
+  {
+   "claim": "silent tail",
+   "t": [
+    32.93,
+    34.03
+   ]
+  },
+  {
+   "claim": "UI events likely carry click/pop sfx: CAUGHT stamp 3.3 s, Yes fix it 22.1 s, 2x 25.0 s",
+   "t": [
+    3.3,
+    25.7
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "measured",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "judged"
+ },
+ "notes": "Sfx not listened to; listed types are inferred from on-screen actions. Music not identified."
+}

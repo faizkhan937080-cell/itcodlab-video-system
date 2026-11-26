@@ -1,0 +1,191 @@
+{
+ "fonts": [
+  {
+   "use": "wordmark \"sansser /\" and captions/titles",
+   "class": "geometric neo-grotesque sans, bold",
+   "candidates": [
+    "Inter Tight",
+    "Plus Jakarta Sans",
+    "Manrope"
+   ],
+   "tag": "estimated"
+  },
+  {
+   "use": "big light numerals",
+   "class": "sans light ~300",
+   "candidates": [
+    "Inter Light",
+    "Geist Light"
+   ],
+   "tag": "estimated"
+  },
+  {
+   "use": "code/path/terminal labels",
+   "class": "monospace",
+   "candidates": [
+    "JetBrains Mono",
+    "IBM Plex Mono"
+   ],
+   "tag": "estimated"
+  }
+ ],
+ "music": {
+  "name": null,
+  "mood": "unknown",
+  "bpm": 107.7,
+  "bpm_tag": "measured by detector",
+  "loudness_note": "stem music -54.2 LUFS: practically inaudible",
+  "tag": "unknown",
+  "search_hint": "soft tech bed ~108 bpm"
+ },
+ "sfx": {
+  "heard": [],
+  "tag": "unknown",
+  "note": "no listen.json"
+ },
+ "motion": [
+  "search box typing \"best dentist in dallas\" and result row highlighting",
+  "phone mock-up with Google UI and AI Overview text appearing, corner-bracket focus frame",
+  "tag \"made by Gemini\" line callout",
+  "VS Code window (screen-recording look) with pill \"yourclinic.com\" flying into input + cursor",
+  "site tiles Home/Services/Reviews/Contact with scan beam from Google G sparkle",
+  "pills \"Reviews\" and \"Business Profile\" popping with check",
+  "Fixes card + checklist ticks (LocalBusiness schema)",
+  "invoice card $2,500 / month sliding over checklist",
+  "comment thread card with link preview and typing input"
+ ],
+ "textures": [
+  {
+   "name": "soft green radial glow blobs",
+   "where": "behind cards, corners",
+   "tag": "judged"
+  },
+  {
+   "name": "near-white background #F5F8F5-#FCFCFC",
+   "tag": "measured"
+  },
+  {
+   "name": "soft large drop shadows on white cards, rounded corners",
+   "tag": "judged"
+  },
+  {
+   "name": "yellow-green blur glow top-right and left",
+   "tag": "judged"
+  }
+ ],
+ "tools_named": [
+  "Claude Code",
+  "Claude skill (SKILL.md, open source MIT)",
+  "Google Search",
+  "Google AI Overview",
+  "Gemini (tag \"made by Gemini\")",
+  "Google Business Profile",
+  "VS Code-style editor",
+  "/seo command suite (audit, page, sitemap, schema, geo, plan, hreflang, competitor-pages)"
+ ],
+ "layout": {
+  "logo": "sansser / wordmark top-centre ~5%",
+  "label": "Claude Code asterisk label ~9%",
+  "card": "content card 12-45%",
+  "caption": "~63%",
+  "footer": "heysansser | sansser | /sansser.com ~81%"
+ },
+ "captions": {
+  "style": "word-by-word blur-in, bold sentence case, 3-5 words per line",
+  "lines": 1,
+  "tag": "judged"
+ },
+ "assets_needed": [
+  {
+   "name": "SKILL.md pill card",
+   "t": [
+    0.0,
+    5.8
+   ]
+  },
+  {
+   "name": "search card with highlighted result row",
+   "t": [
+    1.5,
+    5.8
+   ]
+  },
+  {
+   "name": "phone mock-up Google UI",
+   "t": [
+    7.7,
+    18.0
+   ]
+  },
+  {
+   "name": "AI Overview block with bracket frame and Gemini tag",
+   "t": [
+    12.3,
+    17.5
+   ]
+  },
+  {
+   "name": "VS Code SEO Analysis Suite window (screen capture)",
+   "t": [
+    18.3,
+    24.0
+   ]
+  },
+  {
+   "name": "url pill yourclinic.com with cursor",
+   "t": [
+    18.3,
+    20.5
+   ]
+  },
+  {
+   "name": "site tiles with scan beam",
+   "t": [
+    24.8,
+    28.0
+   ]
+  },
+  {
+   "name": "Reviews + Business Profile pills",
+   "t": [
+    28.0,
+    29.5
+   ]
+  },
+  {
+   "name": "Fixes card and checklist",
+   "t": [
+    29.5,
+    32.3
+   ]
+  },
+  {
+   "name": "invoice card $2,500/month",
+   "t": [
+    32.3,
+    35.5
+   ]
+  },
+  {
+   "name": "comment thread card",
+   "t": [
+    36.0,
+    39.3
+   ]
+  },
+  {
+   "name": "word-by-word caption component",
+   "t": [
+    0.0,
+    38.5
+   ]
+  },
+  {
+   "name": "footer links row",
+   "t": [
+    0.0,
+    39.3
+   ]
+  }
+ ]
+}

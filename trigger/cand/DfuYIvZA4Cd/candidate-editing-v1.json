@@ -1,0 +1,192 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfuYIvZA4Cd",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 60.0,
+  "duration_s": 34.005,
+  "orientation": "portrait",
+  "aspect": "9:16"
+ },
+ "cut_rhythm": {
+  "asl_s": 17.003,
+  "median_shot_s": 17.003,
+  "std_shot_s": 6.886,
+  "min_shot_s": 10.117,
+  "max_shot_s": 23.888,
+  "cuts_per_min": 1.76,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 5.29
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 0.0
+   }
+  ],
+  "beat_synced_share": 0.0,
+  "pattern": "two scenes: 0-10.12 s speed-check bars, 10.12-34.01 s long evolving explainer with dissolve in; mid-scene icon scenes change every ~2.5-3 s through in-scene animation"
+ },
+ "shots": {
+  "scale_mix": {
+   "ws": 1.0
+  },
+  "camera_angle": "flat frontal vector UI illustrations",
+  "composition": "one hero object centred in upper-middle (bars, router card, laptop, donut, panel), caption below, footer row at bottom",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "dissolve",
+   "share": 1.0,
+   "typical_duration_s": 0.5
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "static"
+   ],
+   "intensity": "static"
+  },
+  "elements": {
+   "easing": "spring with soft overshoot; stamp CAUGHT with scale-down slam",
+   "typical_duration_s": 0.6,
+   "stagger_s": 0.15
+  },
+  "speed_ramps": "none seen"
+ },
+ "text": {
+  "present": true,
+  "role": "karaoke captions plus on-object UI labels",
+  "font_class": "sans",
+  "weight": "bold captions, regular labels",
+  "case": "sentence case",
+  "position": "captions at about 68 percent frame height; wordmark top; handles bottom",
+  "size_class": "large captions",
+  "animation_in": "words blur-in one by one, key phrase highlight in green (double)",
+  "animation_out": "fade",
+  "avg_on_screen_s": 1.2,
+  "words_per_caption": 3.0,
+  "safe_zone_respected": true
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#F1F2ED",
+    "share": 0.647
+   },
+   {
+    "hex": "#EFEFEA",
+    "share": 0.257
+   },
+   {
+    "hex": "#C4C3BF",
+    "share": 0.036
+   },
+   {
+    "hex": "#B3ADAD",
+    "share": 0.029
+   },
+   {
+    "hex": "#D68268",
+    "share": 0.019
+   },
+   {
+    "hex": "#F85F31",
+    "share": 0.011
+   }
+  ],
+  "grade": {
+   "look": "bright off-white UI with warm orange-red accent and soft mint glow",
+   "contrast": "low",
+   "temperature": "warm",
+   "saturation_mean": 0.045,
+   "brightness_mean": 0.905
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "wordmark top, hero object upper-middle, captions lower-middle, footer handles bottom",
+  "framing_notes": "same footer handles (heysansser, sansser, /sansser.com) fixed across the whole reel"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "banner",
+   "lower_third"
+  ],
+  "typical_scene_s": 17.0,
+  "spring": {
+   "damping": 12,
+   "stiffness": 140,
+   "mass": 1
+  },
+  "notes": "one illustrated scene per narrated sentence: wifi card with CAUGHT stamp, bars 300 vs 202 Mbps, router suspect card with magnifier, laptop terminal radar, donut 6 percent eaten, wifi channel bell curve, Found 3 fixes dialog with cursor, speed jump 151 Mbps, 2x badge, router end card; spring values estimated"
+ },
+ "evidence": [
+  {
+   "claim": "hook card: wifi 148 Mbps with red CAUGHT stamp, caption red-handed",
+   "scenes": [
+    1
+   ],
+   "t": [
+    3.3,
+    3.5
+   ]
+  },
+  {
+   "claim": "two bars Your plan 300 Mbps grey vs You get 202 Mbps orange, caption You pay for one",
+   "scenes": [
+    1
+   ],
+   "t": [
+    4.2,
+    5.1
+   ]
+  },
+  {
+   "claim": "Found 3 fixes dialog with checkboxes Pause background uploads, Switch to 5 GHz, Move router to channel 11; cursor moves to Yes fix it",
+   "scenes": [
+    2
+   ],
+   "t": [
+    20.5,
+    22.1
+   ]
+  },
+  {
+   "claim": "2x the speed badge, caption People are getting double the speed with double highlighted green",
+   "scenes": [
+    2
+   ],
+   "t": [
+    25.0,
+    25.7
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ },
+ "notes": "Scene count and dissolve are measured; the many sub-scenes (e1-e13 in the events collage at 3.3, 4.2, 7.7, 12.0, 14.8, 17.5, 20.5, 22.8, 25.0, 28.7 s) are in-scene animation, read from collages."
+}

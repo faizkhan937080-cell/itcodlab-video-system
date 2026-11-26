@@ -1,0 +1,268 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-Dfi6kGuOemV",
+  "creator": "sansser.ai",
+  "link": "https://www.instagram.com/reel/Dfi6kGuOemV/"
+ },
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 24.0,
+  "duration_s": 70.792,
+  "orientation": "portrait",
+  "aspect": "9:16"
+ },
+ "cut_rhythm": {
+  "asl_s": 17.698,
+  "median_shot_s": 18.48,
+  "std_shot_s": 6.92,
+  "min_shot_s": 8.375,
+  "max_shot_s": 25.458,
+  "cuts_per_min": 2.54,
+  "pattern": "Four chapters (tabs \"What it is / When / Switch / Limits\"), each one long scene 8.4-25.5 s; inside each chapter the content swaps every ~2-4 s (event ids reach e30) with no word captions seen. Only 3 detected cuts: dissolve at 23.1, hard cut at 48.6, dissolve at 57.0.",
+  "pace_curve": [
+   {
+    "part": "opening third (0-23.6 s)",
+    "cuts_per_min": 2.54
+   },
+   {
+    "part": "middle third (23.6-47.2 s)",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing third (47.2-70.8 s)",
+    "cuts_per_min": 5.09
+   }
+  ],
+  "note": "pace curve computed from scene boundaries 23.125 (dissolve), 48.583 (hard cut), 56.958 (dissolve); first cut at 23.125 s sits at the opening/middle edge and is counted in opening"
+ },
+ "shots": {
+  "scale_mix": {
+   "ms": 1.0
+  },
+  "camera_angle": "none: flat designed graphics, no camera",
+  "composition": "centered single card, vertically stacked: logo top, content card mid, caption lower third, footer links near bottom",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "dissolve",
+   "share": 0.667,
+   "typical_duration_s": 0.5
+  },
+  {
+   "type": "hard_cut",
+   "share": 0.333
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "none"
+   ],
+   "intensity": "static"
+  },
+  "elements": {
+   "easing": "ease-out / soft spring settle on card entry, slight overshoot on pills (judged from frame positions)",
+   "typical_duration_s": 0.4,
+   "stagger_s": 0.1
+  },
+  "speed_ramps": "none",
+  "notes": "animated numeric counters (stars count up), bar growth, scan beam, cursor flights; real 2D motion graphics, not stills with zoom"
+ },
+ "text": {
+  "present": true,
+  "role": "card titles, tab nav, labels, big numerals; NO word captions seen in the 14 sampled frames",
+  "font_class": "sans",
+  "weight": "semibold titles, mono in terminal",
+  "case": "sentence case; tab labels title case",
+  "position": "tab nav ~12% height, content mid-frame, footer links ~81%",
+  "size_class": "titles ~3%, big \"50%\"/\"17\" ~4-6%",
+  "animation_in": "cards fade/scale in; counter \"+0%\" counts; green highlighter sweep over a to-do item",
+  "animation_out": "card dissolve/slide out",
+  "avg_on_screen_s": 2.5,
+  "safe_zone_respected": false
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#FCFCFC",
+    "share": 0.384
+   },
+   {
+    "hex": "#FCFEFD",
+    "share": 0.332
+   },
+   {
+    "hex": "#FCFDFD",
+    "share": 0.172
+   },
+   {
+    "hex": "#181C18",
+    "share": 0.035
+   },
+   {
+    "hex": "#C7D8D2",
+    "share": 0.018
+   },
+   {
+    "hex": "#D5DAD3",
+    "share": 0.017
+   }
+  ],
+  "grade": {
+   "look": "clean light UI: near-white background, deep emerald-green accent gradients, soft green glow blobs, black code windows; no film grade",
+   "contrast": "medium",
+   "temperature": "neutral",
+   "saturation_mean": 0.031,
+   "brightness_mean": 0.893
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "logo top ~5%; content card 12-45%; caption ~63%; footer ~81%",
+  "framing_notes": "top: \"sansser /\" wordmark centred; bottom footer: heysansser | sansser (YouTube) | /sansser.com; screen-recording/UI shown as cards inside the canvas"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "banner",
+   "kinetic_text",
+   "image",
+   "video"
+  ],
+  "typical_scene_s": 17.7,
+  "spring": {
+   "damping": 18,
+   "stiffness": 140,
+   "note": "estimated, not recoverable"
+  }
+ },
+ "evidence": [
+  {
+   "claim": "Dark announcement card \"Claude Fable 5.2 and Mythos 5.2\" with glowing planet-horizon art, asterisk badge top-left (e1)",
+   "t": [
+    0.0,
+    0.5
+   ]
+  },
+  {
+   "claim": "Stack of four model rows: Fable 5.2 (dark green, selected with corner brackets), Opus 5.5, Sonnet 5.5, Haiku 5.5 (e4, c1 at 11.6)",
+   "t": [
+    10.8,
+    11.6
+   ]
+  },
+  {
+   "claim": "Card \"vs Fable 5.1\" with counter \"+0%\" and thin progress bar, plus a quote card below (anthropic.com) (e7)",
+   "t": [
+    14.7,
+    15.7
+   ]
+  },
+  {
+   "claim": "ANTHROPIC wordmark over a docs-text card \"When to use Claude Fable 5.2 and Mythos 5.2 ...\" (e10)",
+   "t": [
+    21.3,
+    22.0
+   ]
+  },
+  {
+   "claim": "Two cards: folders \"old/ -> new/\" with table icons (code-base migration) and math checklist x^2+y^2=z^2, n>2, F=4.2 kN, dt<=0.8 ms (e13)",
+   "t": [
+    30.0,
+    30.2
+   ]
+  },
+  {
+   "claim": "Org diagram: Fable 5.2 green block tagged \"orchestrator\" connected by dashed lines with node squares to Sonnet 5.5 and Haiku 5.5 (c2)",
+   "t": [
+    35.9,
+    35.9
+   ]
+  },
+  {
+   "claim": "Claude-app chat box \"How can I help you today?\" with model selector \"Opus 5.5\" and cursor, tab Switch active (e17)",
+   "t": [
+    42.7,
+    43.0
+   ]
+  },
+  {
+   "claim": "Same chat box, selector now \"Fable 5.2\" with dropdown row \"Opus 5.5 - Default\" (e20)",
+   "t": [
+    46.7,
+    46.8
+   ]
+  },
+  {
+   "claim": "Terminal: \"$ claude update / Claude Code updated / /model / Select model list (Default, Opus 5.5, Sonnet 5.5, Haiku 5.5, Fable 5.2) / Enter save as default - s this session\"; keycaps \"S\" (green) and \"Enter\" appear below (c3); then docs snippet highlighted \"switch model for this session only\" (e23)",
+   "t": [
+    52.8,
+    54.7
+   ]
+  },
+  {
+   "claim": "Black \"Pro\" tag, \"weekly limit\" bar with Fable at 50% and marker, calendar tile NOV 16 (e26); at 63.9 calendar reads NOV 17 and two gold coins appear (c4)",
+   "t": [
+    59.5,
+    59.8
+   ]
+  },
+  {
+   "claim": "To-do list (reply to emails, fix the login bug, write the tests, update ...) with a green highlighter sweep \"migrate the app to Postgres\" picked out, then green pill button \"Fable 5.2\" (e30)",
+   "t": [
+    68.5,
+    68.7
+   ]
+  },
+  {
+   "claim": "scene boundaries from detector",
+   "scenes": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "t": [
+    0.0,
+    70.792
+   ]
+  },
+  {
+   "claim": "tab indicator advances to \"Switch\" at 42.7 s although scene 3 starts at 48.6 s: chapter changes are animated inside scenes too",
+   "t": [
+    42.7,
+    43.0
+   ]
+  },
+  {
+   "claim": "footer link row constant across the reel (bottom ~81%)",
+   "t": [
+    0.0,
+    70.792
+   ]
+  },
+  {
+   "claim": "single static light background with green glow blobs for whole runtime",
+   "t": [
+    0.0,
+    70.792
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ },
+ "notes": "cuts_per_min = 0 is the detector result for scenes; real change rate is event-based (see evidence). Event ids in collage_events labels are the proof."
+}

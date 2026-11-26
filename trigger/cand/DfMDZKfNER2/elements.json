@@ -1,0 +1,179 @@
+{
+ "creator": "sansser.ai",
+ "reel": "reel-DfMDZKfNER2",
+ "fonts": [
+  {
+   "name": "heavy grotesque sans (Inter Black / Helvetica Neue Heavy class, unidentified)",
+   "use": "headline captions",
+   "t": [
+    0,
+    37
+   ]
+  },
+  {
+   "name": "rounded display (Chewy-like) inside mockup site",
+   "use": "cloudbrew site headings 'Iced Caramel', 'Free foam Fridays'",
+   "t": [
+    0,
+    35
+   ]
+  },
+  {
+   "name": "script/cursive",
+   "use": "'today's sip is' inside mockup",
+   "t": [
+    0,
+    3.9
+   ]
+  }
+ ],
+ "music": [
+  {
+   "name": "unknown",
+   "note": "very quiet bed, 31 LU under voice",
+   "t": [
+    0,
+    37
+   ]
+  }
+ ],
+ "sfx": [
+  {
+   "name": "unknown",
+   "note": "not determinable from frames"
+  }
+ ],
+ "motion": [
+  "word-by-word blur-in kinetic captions",
+  "floating badges with soft shadow and tilt",
+  "green swoosh ribbon sweep",
+  "concentric ring background",
+  "orbiting skill icons with status dots",
+  "Clarity heatmap overlay",
+  "toast slide-up notifications (Netlify, Kit)",
+  "red X draw, red outline box"
+ ],
+ "textures": [
+  "soft mint radial gradient on white",
+  "dark near-black with green glow and thin rings"
+ ],
+ "tools_named": [
+  "Claude Design",
+  "Claude",
+  "Netlify",
+  "Kit",
+  "Clarity",
+  "WIX",
+  "Squarespace",
+  ".top domain"
+ ],
+ "layout": {
+  "headline": "top-left",
+  "visual": "browser mockup center",
+  "handle": "@heysansser bottom center"
+ },
+ "captions": {
+  "style": "word-by-word, green keyword highlight",
+  "words_per_caption": 4.5
+ },
+ "assets_needed": [
+  {
+   "name": "cloudbrew site mockup (blue Iced Caramel hero)",
+   "t": [
+    0,
+    3.9
+   ]
+  },
+  {
+   "name": "generic purple BrewVerse site",
+   "t": [
+    2.8,
+    3.2
+   ]
+  },
+  {
+   "name": "$1/year badge",
+   "t": [
+    0,
+    3.9
+   ]
+  },
+  {
+   "name": "WIX logo + $17.77/mo tag",
+   "t": [
+    3.9,
+    7.1
+   ]
+  },
+  {
+   "name": "Squarespace logo + $19/mo tag",
+   "t": [
+    3.9,
+    7.1
+   ]
+  },
+  {
+   "name": "Claude Design UI mock",
+   "t": [
+    7.1,
+    11.4
+   ]
+  },
+  {
+   "name": "Claude asterisk app icon",
+   "t": [
+    7.1,
+    21.5
+   ]
+  },
+  {
+   "name": "three skill icons (pen, palette, shapes) with lock labels",
+   "t": [
+    15.5,
+    21.5
+   ]
+  },
+  {
+   "name": "share dropdown",
+   "t": [
+    21.5,
+    23.5
+   ]
+  },
+  {
+   "name": "Netlify live toast",
+   "t": [
+    23.7,
+    25.4
+   ]
+  },
+  {
+   "name": ".com $11/yr struck / .top $1 chips",
+   "t": [
+    25.4,
+    30.6
+   ]
+  },
+  {
+   "name": "Kit subscriber toast",
+   "t": [
+    30.6,
+    35
+   ]
+  },
+  {
+   "name": "Clarity recording pill + heatmap",
+   "t": [
+    31,
+    35
+   ]
+  },
+  {
+   "name": "@heysansser handle",
+   "t": [
+    0,
+    37
+   ]
+  }
+ ]
+}

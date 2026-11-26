@@ -1,0 +1,143 @@
+{
+ "fonts": [
+  {
+   "name": "Inter or similar grotesque sans (bold headline, tight tracking)",
+   "use": "headline, card title",
+   "confidence": "estimated"
+  },
+  {
+   "name": "monospace (JetBrains Mono or SF Mono class)",
+   "use": "repo path, counter 05/30",
+   "confidence": "estimated"
+  }
+ ],
+ "music": [
+  {
+   "name": "unidentified soft bed",
+   "bpm": 92.3,
+   "note": "level -34.8 LUFS stem, not identified"
+  }
+ ],
+ "sfx": [
+  {
+   "name": "none verified",
+   "note": "likely tile pops and swipes but not confirmed"
+  }
+ ],
+ "motion": [
+  {
+   "name": "icon tile fall-in grid, 30 tiles, staggered",
+   "t": [
+    0.0,
+    5.6
+   ]
+  },
+  {
+   "name": "counter climbing 2,0xx,xxx to 3,852,400 GitHub stars",
+   "t": [
+    1.0,
+    5.6
+   ]
+  },
+  {
+   "name": "grid regroups into 5 coloured category rows",
+   "t": [
+    5.6,
+    6.6
+   ]
+  },
+  {
+   "name": "whip transition to card carousel",
+   "t": [
+    6.57,
+    6.9
+   ]
+  },
+  {
+   "name": "focus card with blurred neighbours, accent bar left edge",
+   "t": [
+    6.9,
+    46
+   ]
+  },
+  {
+   "name": "segmented progress bar with per-category colours, counter NN/30",
+   "t": [
+    6.9,
+    46
+   ]
+  },
+  {
+   "name": "icon centred reveal (Add one plugin, Archify)",
+   "t": [
+    44.5,
+    50.6
+   ]
+  },
+  {
+   "name": "typed comment box PLUGINS with Post button",
+   "t": [
+    54.8,
+    58.4
+   ]
+  }
+ ],
+ "textures": [
+  {
+   "name": "near-white page with faint dot grid, soft shadows",
+   "share": 0.9
+  }
+ ],
+ "tools_named": [
+  "Remotion-style spring motion (estimated)"
+ ],
+ "layout": {
+  "format": "9:16 1080x1920 60fps",
+  "blocks": [
+   "top pill/headline",
+   "centre card",
+   "bottom progress bar"
+  ]
+ },
+ "captions": {
+  "style": "none burned-in; on-screen graphics carry text",
+  "position": "n/a"
+ },
+ "assets_needed": [
+  {
+   "name": "sunburst Claude-style logo (orange)",
+   "t": [
+    0,
+    6.6
+   ]
+  },
+  {
+   "name": "30 plugin icons/avatars (brain, Anthropic A, CO, Hu, GSD, MP, KS, UX, AS, Im, Sp, PPT, REA, BMAD, etc.)",
+   "t": [
+    0,
+    6.6
+   ]
+  },
+  {
+   "name": "card UI component (title, repo, description, star badge)",
+   "t": [
+    6.9,
+    46
+   ]
+  },
+  {
+   "name": "progress bar segments in 5 accent colours",
+   "t": [
+    6.9,
+    46
+   ]
+  },
+  {
+   "name": "comment box UI with Post button",
+   "t": [
+    54.8,
+    58.4
+   ]
+  }
+ ]
+}

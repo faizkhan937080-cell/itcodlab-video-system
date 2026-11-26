@@ -1,0 +1,78 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfBQ1AgOC1S",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.2,
+  "true_peak_dbtp": -0.8,
+  "lra_lu": 2.7,
+  "short_term_max_lufs": -14.3,
+  "standard": "ITU-R BS.1770 / EBU R128 (social-style level, about -17 LUFS)"
+ },
+ "tempo": {
+  "bpm": 92.3,
+  "feel": "steady mid-tempo bed under fast voice; bpm is a detector value, bed barely audible"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 1,
+  "median_offset_s": 0.097,
+  "notes": "only one cut exists (the whip at 6.57 s); it is 0.097 s from a beat, so beat-cut sync is not meaningful here"
+ },
+ "speech": {
+  "speech_ratio": 0.926,
+  "voice_character": "male-sounding is not assumed; pitch median 159.3 Hz, very expressive (12.16 st range)",
+  "delivery": "very fast (221.4 mean wpm, range 136.4-300), 38 short gaps, mostly 0.15-0.3 s; falling endings dominate"
+ },
+ "silence": {
+  "share": 0.0,
+  "usage": "no silence; audio runs wall to wall",
+  "longest_s": 0.0
+ },
+ "mix": {
+  "voice_over_music": "voice dominant, music far below",
+  "ducking": "no ducking judged; music stem is constant and quiet (music -34.8 LUFS vs voice -17.3)",
+  "music_mood": "light, tech-explainer, neutral",
+  "music_genre": "soft electronic or lo-fi bed (estimated, not identified)",
+  "sfx_density_per_min": 0,
+  "sfx_types": [
+   "no clear sfx judged"
+  ],
+  "voice_minus_music_lu": 17.5
+ },
+ "evidence": [
+  {
+   "claim": "voice leads by 17.5 LU over demucs music stem (engine estimate)",
+   "t": [
+    0,
+    58.4
+   ]
+  },
+  {
+   "claim": "no silences detected",
+   "t": [
+    0,
+    58.4
+   ]
+  },
+  {
+   "claim": "single whip cut near beat but one sample only",
+   "t": [
+    6.5,
+    6.7
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "measured",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "judged"
+ },
+ "notes": "Music and sfx were judged only from stem levels and the frame events; no listening. Sfx for tile pops and card swipes are likely but unverified, so none are claimed."
+}

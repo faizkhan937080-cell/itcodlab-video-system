@@ -1,0 +1,160 @@
+{
+ "reel": "Df97YXth1Y6",
+ "creator": "sansser.ai",
+ "analysed": "inner edited video only (screen-in-scene; monitor/room ignored)",
+ "fonts": [
+  {
+   "use": "connector words",
+   "class": "transitional serif (Georgia / Source Serif style)",
+   "confidence": "estimated"
+  },
+  {
+   "use": "emphasis words",
+   "class": "heavy grotesque sans (Helvetica Neue Bold / Inter style)",
+   "confidence": "estimated"
+  },
+  {
+   "use": "magazine masthead",
+   "class": "high-contrast Didone serif caps (Playfair Display / Bodoni style)",
+   "confidence": "estimated"
+  }
+ ],
+ "music": [
+  {
+   "name": null,
+   "note": "not identified; ~92.3 bpm; search hint 'elegant cinematic fashion beat'",
+   "confidence": "unknown"
+  }
+ ],
+ "sfx": [
+  {
+   "kind": "soft whoosh / swish",
+   "t": [
+    3.2,
+    9.9
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "click pop",
+   "t": [
+    1.5,
+    1.6
+   ],
+   "confidence": "estimated"
+  }
+ ],
+ "motion": [
+  {
+   "name": "selection box with square handles around 'fame'",
+   "t": [
+    1.3,
+    3.2
+   ]
+  },
+  {
+   "name": "portrait blur dissolve",
+   "t": [
+    3.2,
+    3.3
+   ]
+  },
+  {
+   "name": "atelier group photo on wall",
+   "t": [
+    5.3,
+    5.5
+   ]
+  },
+  {
+   "name": "framed portrait + cut-out figure in red gown with wave",
+   "t": [
+    7.2,
+    9.9
+   ]
+  },
+  {
+   "name": "magazine stack reveal ECLAT THE ICON",
+   "t": [
+    9.8,
+    13.2
+   ]
+  }
+ ],
+ "textures": [
+  "warm beige wall",
+  "window-light shadow with plant-leaf pattern overlay",
+  "paper magazine stack"
+ ],
+ "tools_named": [
+  {
+   "name": "Remotion (candidate)",
+   "note": "text + image layers",
+   "confidence": "estimated"
+  }
+ ],
+ "layout": "portrait 418x694 inner video; B&W portraits with red accent on beige wall; captions top / mid-left",
+ "captions": {
+  "style": "serif connector + bold sans key word, word-by-word rise",
+  "words_per_caption": 3.5,
+  "texts": [
+   "She never begged for fame",
+   "Yet",
+   "Grace became her sharpest",
+   "it became her kingdom",
+   "Every runway still whispers",
+   "ECLAT THE ICON"
+  ]
+ },
+ "assets_needed": [
+  {
+   "name": "B&W portrait cut-out with red lips (AI-style)",
+   "t": [
+    1.3,
+    5.5
+   ]
+  },
+  {
+   "name": "atelier group photo (b&w)",
+   "t": [
+    5.3,
+    5.5
+   ]
+  },
+  {
+   "name": "framed portrait on wall",
+   "t": [
+    7.2,
+    9.9
+   ]
+  },
+  {
+   "name": "woman in red satin gown cut-out, waving",
+   "t": [
+    7.2,
+    9.9
+   ]
+  },
+  {
+   "name": "magazine stack with ECLAT cover",
+   "t": [
+    9.8,
+    13.2
+   ]
+  },
+  {
+   "name": "beige wall with plant-leaf window shadow",
+   "t": [
+    0.0,
+    13.2
+   ]
+  },
+  {
+   "name": "red dotted selection box component",
+   "t": [
+    1.3,
+    3.2
+   ]
+  }
+ ]
+}

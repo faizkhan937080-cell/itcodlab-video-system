@@ -1,0 +1,86 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgNYH7ThrWb",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.0,
+  "true_peak_dbtp": -1.5,
+  "lra_lu": 9.3,
+  "short_term_max_lufs": -16.2,
+  "standard": "ITU-R BS.1770 / EBU R128 (pyloudnorm, mono mix)"
+ },
+ "tempo": {
+  "bpm": 117.5,
+  "feel": "detected tempo about 117.5 bpm (44 beats); music character not listened to by Claude"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 3,
+  "median_offset_s": 0.206,
+  "notes": "0 of 3 cuts land within 80 ms of a beat; median offset 0.206 s. Cuts are placed on speech / caption beats, not music beats."
+ },
+ "speech": {
+  "speech_ratio": 0.681,
+  "voice_character": "very fast English voice-over (tempo label very fast, expressiveness label very expressive from pitch spread)",
+  "delivery": "Fast, rushed hook (first sentence about 10 words in 3 s), stronger emphasis on 'never' and 'worn'; mix of falling and flat endings plus one rising ending (the hook question). Numbers in notes."
+ },
+ "silence": {
+  "share": 0.058,
+  "usage": "Two short silences at 16.81-17.25 s and 17.83-18.76 s sit just before the CTA: a dramatic pause between the thesis and the ask.",
+  "longest_s": 0.93
+ },
+ "mix": {
+  "voice_over_music": "voice clearly above a quiet music bed (voice 11.3 LU above music stem)",
+  "ducking": "unknown (no envelope measured)",
+  "music_mood": "unknown (not listened to; no listen.json in the pack)",
+  "music_genre": "unknown",
+  "sfx_types": [
+   "whoosh / spin on the 3D phone-room rotation (4.8-8.9 s), estimated",
+   "typing ticks on the search-bar caption (3.4-4.6 s), estimated",
+   "UI pops on card stacks, estimated"
+  ],
+  "voice_minus_music_lu": 11.3
+ },
+ "evidence": [
+  {
+   "claim": "Integrated loudness -17.0 LUFS, peak -1.5 dBTP, LRA 9.3 LU, wide for a 23 s reel",
+   "t": [
+    0.0,
+    23.4
+   ]
+  },
+  {
+   "claim": "Two silences before the CTA",
+   "t": [
+    16.81,
+    18.76
+   ]
+  },
+  {
+   "claim": "Voice stem 17.3 LUFS vs music stem 28.6 LUFS (demucs, measuring only)",
+   "t": [
+    0.0,
+    23.4
+   ]
+  },
+  {
+   "claim": "SFX types are inferred from on-screen motion only (no audio events file)",
+   "t": [
+    4.8,
+    8.9
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "measured",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "Claude did not listen; music mood, genre, ducking and SFX are unknown or estimated from visuals. Run listen.py for real labels. Voice (voice.json numbers): pitch median 117.2 Hz, p10-p90 84.2-153.2 Hz, range 10.36 st, label very expressive; tempo mean 248.1 wpm, min 215.7, max 285.7, CV 0.09, rate very fast; gaps n=9, mean 0.91 s, max 5.01 s, bins {\"0.15-0.3\": 4, \"0.3-0.6\": 2, \"0.6-1.0\": 2, \"1.0-up\": 1}; sentence endings rising 1 / falling 3 / flat 2; top emphasised words a@9.98s, a@0.52s, never@1.42s, worn@0.18s, a@4.44s."
+}

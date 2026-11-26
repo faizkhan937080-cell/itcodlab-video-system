@@ -1,0 +1,232 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfMDZKfNER2",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.96,
+  "complete": true,
+  "engine": "auto",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Price-shock hook, problem, tool stack tutorial, comment-keyword CTA",
+  "description": "Claims a $1 AI-built site, contrasts with $20/mo builders, shows the 3-step stack (Claude Design, skills, Netlify, cheap domain, Kit, Clarity), ends with comment SKILL."
+ },
+ "hook": {
+  "kind": "price/result claim with curiosity gap",
+  "duration_s": 3.9,
+  "first_words": "This website cost me $1 and nobody can tell AI made it",
+  "time_to_value_s": 3.9,
+  "pattern": "surprising low cost + nobody can tell it is AI",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "$1 site nobody can tell is AI",
+   "start_s": 0.0,
+   "end_s": 3.883,
+   "share": 0.105,
+   "devices": [
+    "price anchor",
+    "bold claim"
+   ]
+  },
+  {
+   "beat": "problem anchor",
+   "purpose": "builders charge about $20 a month",
+   "start_s": 3.883,
+   "end_s": 7.117,
+   "share": 0.087,
+   "devices": [
+    "contrast",
+    "named competitors"
+   ]
+  },
+  {
+   "beat": "solution",
+   "purpose": "Claude Design builds whole page from a prompt",
+   "start_s": 7.117,
+   "end_s": 11.383,
+   "share": 0.115,
+   "devices": [
+    "simple instruction"
+   ]
+  },
+  {
+   "beat": "pain point",
+   "purpose": "most AI sites look the same: purple gradient, three boxes",
+   "start_s": 11.383,
+   "end_s": 15.467,
+   "share": 0.11,
+   "devices": [
+    "pattern interrupt",
+    "common enemy"
+   ]
+  },
+  {
+   "beat": "secret",
+   "purpose": "three skills: one to write human, two to design",
+   "start_s": 15.467,
+   "end_s": 25.4,
+   "share": 0.268,
+   "devices": [
+    "enumeration",
+    "reveal"
+   ]
+  },
+  {
+   "beat": "publish and domain",
+   "purpose": "share to Netlify, free live; .top domain $1",
+   "start_s": 21.467,
+   "end_s": 30.617,
+   "share": 0.247,
+   "devices": [
+    "cost payoff"
+   ]
+  },
+  {
+   "beat": "extras and CTA",
+   "purpose": "Kit for emails, Clarity to watch users; comment SKILL",
+   "start_s": 30.617,
+   "end_s": 37.013,
+   "share": 0.173,
+   "devices": [
+    "stack add-ons",
+    "comment keyword CTA"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "first person ('cost me', 'I gave Claude')",
+  "address_terms": [
+   "you",
+   "your site"
+  ],
+  "register": "casual, confident explainer",
+  "energy": "high, very expressive",
+  "humor": "none",
+  "formality": "informal",
+  "tone_tags": [
+   "fast",
+   "confident",
+   "tutorial",
+   "punchy"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "web",
+   "AI tools",
+   "pricing"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "nobody can tell AI made it",
+   "most AI sites look the same",
+   "comment SKILL"
+  ],
+  "filler_words": [
+   "and",
+   "so",
+   "then"
+  ],
+  "power_words": [
+   "cost",
+   "free",
+   "nothing",
+   "live",
+   "skills"
+  ],
+  "jargon_terms": [
+   "Claude Design",
+   "Netlify",
+   "Kit",
+   "Clarity",
+   ".top domain"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 232.5,
+  "words_per_min_overall": 202.6,
+  "speech_ratio": 0.872,
+  "sentence_words_mean": 12.5,
+  "sentence_words_p90": 17.4,
+  "pause_mean_s": 0.35,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 4.86
+ },
+ "retention": {
+  "open_loops": 2,
+  "rehooks_at_s": [
+   7.1,
+   11.4,
+   15.5
+  ],
+  "pattern_interrupts": "light/dark background flip on each idea; red X, red box, icon pops on screen",
+  "payoff_at_s": 21.5
+ },
+ "cta": {
+  "type": "comment keyword",
+  "ask": "Comment SKILL for the three skills",
+  "keyword": "SKILL",
+  "placement_s": 33.8,
+  "repeats": 1,
+  "incentive": "the three skills"
+ },
+ "evidence": [
+  {
+   "claim": "Opening hook with price and no-one-can-tell claim",
+   "quote": "This website cost me $1 and nobody can tell AI made it.",
+   "t": [
+    0,
+    3.883
+   ]
+  },
+  {
+   "claim": "Competitor price contrast",
+   "quote": "Website builders charge around $20 a month for this.",
+   "t": [
+    3.883,
+    7.117
+   ]
+  },
+  {
+   "claim": "Pain point then secret",
+   "quote": "Most AI sites look the same with that purple gradient and those three boxes. Mine doesn't because I gave Claude three skills.",
+   "t": [
+    11.383,
+    21.467
+   ]
+  },
+  {
+   "claim": "Comment keyword CTA at end",
+   "quote": "Comment skill for the three skills.",
+   "t": [
+    33.8,
+    37.013
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "measured",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Beat 'secret' (15.5-25.4) overlaps 'publish' (21.5-30.6) because narration of the skills runs into Netlify steps; shares are approximate."
+}

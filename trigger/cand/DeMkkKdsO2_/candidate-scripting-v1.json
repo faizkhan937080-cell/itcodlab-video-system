@@ -1,0 +1,221 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DeMkkKdsO2_",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.95,
+  "complete": true,
+  "engine": "whisper auto pass (English, roman)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Problem-Solution product promo (Hook-Pain-Demo-Proof-Brand)",
+  "description": "Question hook, quantified pain (11 hours / 38 taps), product intro, three-token input, 10-second result, change-of-plan proof, before/after, brand sign-off."
+ },
+ "hook": {
+  "kind": "question + one-word answer (pattern interrupt)",
+  "duration_s": 1.5,
+  "first_words": "Where to next Anywhere Planning one weekend away takes 11 hours and",
+  "time_to_value_s": 5.7,
+  "pattern": "'Where to next?' / 'Anywhere.' then a quantified pain statement",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "question and one-word answer on the flap board",
+   "start_s": 0.0,
+   "end_s": 1.47,
+   "devices": [
+    "question",
+    "one-word reply"
+   ],
+   "share": 0.059
+  },
+  {
+   "beat": "pain",
+   "purpose": "planning a weekend takes 11 hours and 38 taps",
+   "start_s": 1.47,
+   "end_s": 5.7,
+   "devices": [
+    "specific numbers",
+    "chaos visual of search chips"
+   ],
+   "share": 0.169
+  },
+  {
+   "beat": "product intro",
+   "purpose": "Meet Fairwind: just tell it where, when and how much",
+   "start_s": 5.7,
+   "end_s": 10.0,
+   "devices": [
+    "rule of three (where, when, how much)"
+   ],
+   "share": 0.172
+  },
+  {
+   "beat": "demo / proof",
+   "purpose": "whole trip in 10 seconds: flights, stay, dinner, booked and under budget",
+   "start_s": 10.0,
+   "end_s": 16.5,
+   "devices": [
+    "list of three",
+    "timer counter",
+    "benefit stack"
+   ],
+   "share": 0.26
+  },
+  {
+   "beat": "flexibility",
+   "purpose": "change of plans? just say it (voice input)",
+   "start_s": 16.5,
+   "end_s": 19.5,
+   "devices": [
+    "question + answer"
+   ],
+   "share": 0.12
+  },
+  {
+   "beat": "before/after + brand",
+   "purpose": "11 hours -> 10 seconds, brand name and tagline",
+   "start_s": 19.5,
+   "end_s": 25.0,
+   "devices": [
+    "contrast (strike-through)",
+    "tagline"
+   ],
+   "share": 0.22
+  }
+ ],
+ "voice": {
+  "person": "you (implied) / brand voice 'it'",
+  "address_terms": [],
+  "register": "crisp product-launch narration",
+  "energy": "fast, upbeat, short punchy lines",
+  "humor": "none",
+  "formality": "informal-professional",
+  "tone_tags": [
+   "confident",
+   "modern",
+   "minimal",
+   "punchy"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "travel",
+   "apps",
+   "product launch"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "Meet Fairwind.",
+   "Just tell it where, when, and how much.",
+   "Go anywhere."
+  ],
+  "filler_words": [],
+  "power_words": [
+   "anywhere",
+   "whole trip",
+   "10 seconds",
+   "under budget",
+   "just say it"
+  ],
+  "jargon_terms": [
+   "taps",
+   "budget"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 208.0,
+  "words_per_min_overall": 136.8,
+  "speech_ratio": 0.658,
+  "sentence_words_mean": 4.1,
+  "sentence_words_p90": 8.0,
+  "pause_mean_s": 0.56,
+  "questions_per_min": 4.8,
+  "numbers_per_min": 12.0
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   1.47,
+   5.7,
+   10.0,
+   16.5,
+   19.5
+  ],
+  "pattern_interrupts": "Dark-to-light flip at 1.47 s, whip at 17.15 s, strike-through number swap at about 21 s.",
+  "payoff_at_s": 15.2
+ },
+ "cta": {
+  "type": "brand sign-off tagline (no ask)",
+  "ask": "Go anywhere.",
+  "placement_s": 22.1,
+  "repeats": 0,
+  "incentive": "none"
+ },
+ "evidence": [
+  {
+   "claim": "Question + one-word answer hook",
+   "quote": "Where to next? Anywhere.",
+   "t": [
+    0.0,
+    1.5
+   ]
+  },
+  {
+   "claim": "Specific pain numbers; '38' is the top emphasised word at 4.74 s",
+   "quote": "Planning one weekend away takes 11 hours and 38 taps.",
+   "t": [
+    1.5,
+    5.7
+   ]
+  },
+  {
+   "claim": "Product intro with rule of three, matches on-screen headline at 9.3 s",
+   "quote": "Just tell it where, when, and how much.",
+   "t": [
+    7.0,
+    10.0
+   ]
+  },
+  {
+   "claim": "Benefit stack with 10 s timer on screen",
+   "quote": "It builds your whole trip in 10 seconds.",
+   "t": [
+    10.0,
+    13.0
+   ]
+  },
+  {
+   "claim": "Before/after and tagline close; 'Fairwind.' emphasised at 22.1 s",
+   "quote": "11 hours. Now 10 seconds. Fairwind. Go anywhere.",
+   "t": [
+    19.5,
+    25.0
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "judged",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Beat times are anchored on on-screen frames and scene cuts (pack has no per-sentence times), accuracy about +-0.7 s. Product 'Fairwind' is an in-reel brand. Voice (voice.json numbers): pitch median 200.9 Hz, p10-p90 85.2-292.9 Hz, range 21.38 st, label very expressive; tempo mean 238.7 wpm, min 157.9, max 310.3, CV 0.22, rate very fast; gaps n=17, mean 0.5 s, max 0.66 s, bins {\"0.15-0.3\": 2, \"0.3-0.6\": 8, \"0.6-1.0\": 7, \"1.0-up\": 0}; sentence endings rising 0 / falling 6 / flat 7; top emphasised words 38@4.74s, one@2.3s, Fairwind.@22.1s."
+}

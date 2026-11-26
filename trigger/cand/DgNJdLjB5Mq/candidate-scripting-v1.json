@@ -1,0 +1,271 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgNJdLjB5Mq",
+  "creator": "sansser.ai",
+  "link": "https://www.instagram.com/reel/DgNJdLjB5Mq/"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.98,
+  "complete": true,
+  "engine": "whisper auto pass (roman English)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "listicle countdown (Hook-List-CTA)",
+  "description": "creator brand \"sansser\": news/tools explained as fast voice-over over designed motion cards"
+ },
+ "hook": {
+  "kind": "bold claim + list promise (result-first)",
+  "duration_s": 4.2,
+  "first_words": "These are the nine fastest growing repos on GitHub right now, and all nine are free!",
+  "time_to_value_s": 0.0,
+  "pattern": "numbered countdown list; last item teased as the wildest",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "bold claim + free: \"nine fastest growing repos ... all nine are free\"",
+   "start_s": 0.0,
+   "end_s": 4.2,
+   "share": 0.081,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "item1_t3",
+   "purpose": "#1 T3 Code: control Claude Code/Codex from any computer or phone",
+   "start_s": 4.2,
+   "end_s": 9.7,
+   "share": 0.106,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "item2_free_model",
+   "purpose": "#2 plugin giving DeepSeek and Kimi free, no API key",
+   "start_s": 9.7,
+   "end_s": 13.7,
+   "share": 0.077,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "item3_cloudflare",
+   "purpose": "#3 Cloudflare security-audit skill",
+   "start_s": 13.7,
+   "end_s": 19.0,
+   "share": 0.102,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "items4_5",
+   "purpose": "#4/#5 impeccable and hallmark (cards not in sampled frames)",
+   "start_s": 19.0,
+   "end_s": 21.7,
+   "share": 0.052,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "item6_sherlock",
+   "purpose": "#6 Sherlock: find social accounts from one username",
+   "start_s": 21.7,
+   "end_s": 26.5,
+   "share": 0.092,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "item7_openmausbot",
+   "purpose": "#7 OpenMausBot: bot with its own virtual computer",
+   "start_s": 26.5,
+   "end_s": 30.8,
+   "share": 0.083,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "item8_magpie",
+   "purpose": "#8 Magpie: run Codex on DeepSeek / Claude Code on Kimi from menu bar",
+   "start_s": 30.8,
+   "end_s": 35.3,
+   "share": 0.086,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "item9_wildest",
+   "purpose": "#9 \"the wildest one\": GTA 6 on PC project, ~13,000 stars in under 3 days; kicker \"a week before Rockstar notices\"",
+   "start_s": 35.3,
+   "end_s": 45.0,
+   "share": 0.186,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  },
+  {
+   "beat": "cta",
+   "purpose": "comment keyword \"stars\" -> DM nine links; follow so IG can DM",
+   "start_s": 45.0,
+   "end_s": 52.1,
+   "share": 0.136,
+   "devices": [
+    "countdown list",
+    "rule of three-free (\"all nine are free\")"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "I/we implied, addresses viewer as \"you\"",
+  "address_terms": [
+   "you",
+   "your"
+  ],
+  "register": "conversational explainer, tool-news tone",
+  "energy": "very fast (247.2 wpm mean), very expressive pitch (12.17 st range)",
+  "formality": "casual-professional",
+  "humour": "light, dry",
+  "tone_tags": [
+   "fast",
+   "confident",
+   "punchy",
+   "no filler pauses"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none (no Hindi detected, devanagari share 0.0)",
+  "english_term_domains": [
+   "AI tools",
+   "software/GitHub",
+   "Claude models"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "These are the nine fastest growing ... right now",
+   "all nine are free",
+   "No API key.",
+   "And the wildest one is the last one",
+   "Comment stars, and I'll send you all nine links",
+   "make sure you follow, because Instagram only lets me DM the people who follow me"
+  ],
+  "filler_words": [],
+  "power_words": [
+   "fastest",
+   "free",
+   "No API key",
+   "wildest",
+   "almost 13,000 stars",
+   "less than three days"
+  ],
+  "jargon_terms": [
+   "GitHub",
+   "repos",
+   "API key",
+   "plugin",
+   "skill",
+   "open-source",
+   "Codex",
+   "Claude Code",
+   "DeepSeek",
+   "menu bar"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 249.9,
+  "words_per_min_overall": 233.8,
+  "speech_ratio": 0.936,
+  "sentence_words_mean": 16.9,
+  "sentence_words_p90": 29.4,
+  "pause_mean_s": 0.21,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 4.61
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   35.3
+  ],
+  "pattern_interrupts": "card swap + progress dot advance every item; on-screen comment box typed at ~45 s",
+  "payoff_at_s": 35.5
+ },
+ "cta": {
+  "type": "comment-keyword DM + follow gate",
+  "ask": "Comment stars, and I'll send you all nine links; follow because Instagram only DMs followers",
+  "keyword": "stars",
+  "placement_s": 46.0,
+  "repeats": 2,
+  "incentive": "all nine links by DM"
+ },
+ "evidence": [
+  {
+   "claim": "hook is a bold list promise with a price hook",
+   "quote": "These are the nine fastest growing repos on GitHub right now, and all nine are free!",
+   "t": [
+    0.0,
+    0.5
+   ]
+  },
+  {
+   "claim": "open loop teasing the best item last",
+   "quote": "And the wildest one is the last one, a project trying to get GTA 6 running on PC",
+   "t": [
+    35.3,
+    35.8
+   ]
+  },
+  {
+   "claim": "comment-keyword CTA",
+   "quote": "Comment stars, and I'll send you all nine links.",
+   "t": [
+    46.0,
+    46.5
+   ]
+  },
+  {
+   "claim": "follow gate justification",
+   "quote": "And make sure you follow, because Instagram only lets me DM the people who follow me.",
+   "t": [
+    49.0,
+    49.5
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "judged",
+  "structure": "estimated",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Structure times: boundaries anchored to collage_events frames and measured emphasis-word times; whole-transcript has no per-sentence timestamps in the pack, so beat edges are estimated (+-1.5 s). Words in first 3 s = 11.0, first 5 s = 17.9. Tempo CV 0.14 (min 176.5, max 321.4); gaps {'0.15-0.3': 15, '0.3-0.6': 0, '0.6-1.0': 0, '1.0-up': 0}; endings {'rising': 4, 'falling': 7, 'flat': 6}; top emphasis ['t3', 'or', 'all', 'is', 'free!']."
+}

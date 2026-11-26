@@ -1,0 +1,172 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgLclCABIa3",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.93,
+  "complete": true,
+  "engine": "auto",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Story twist (rejection to success, reframe)",
+  "description": "Micro-biography of Beatrix Potter that reframes 'selling rabbits' as 'selling wonder'; CTA is a comment-for-guide overlay."
+ },
+ "hook": {
+  "kind": "story fact / struggle",
+  "duration_s": 2.2,
+  "first_words": "Her first book was rejected six times",
+  "time_to_value_s": 2.2,
+  "pattern": "underdog rejection number",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "first book rejected six times",
+   "start_s": 0.0,
+   "end_s": 2.2,
+   "share": 0.22,
+   "devices": [
+    "number",
+    "underdog"
+   ]
+  },
+  {
+   "beat": "success",
+   "purpose": "Peter Rabbit sold 45 million copies",
+   "start_s": 2.2,
+   "end_s": 5.2,
+   "share": 0.3,
+   "devices": [
+    "contrast",
+    "big number"
+   ]
+  },
+  {
+   "beat": "reframe",
+   "purpose": "she was selling the wonder of childhood, not rabbits",
+   "start_s": 5.2,
+   "end_s": 10.0,
+   "share": 0.48,
+   "devices": [
+    "twist",
+    "reframe",
+    "moral"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "third person narration",
+  "address_terms": [],
+  "register": "storyteller, documentary-lite",
+  "energy": "high, very expressive",
+  "humor": "none",
+  "formality": "neutral",
+  "tone_tags": [
+   "fast",
+   "inspirational",
+   "punchy"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "publishing",
+   "branding"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "wasn't selling X, she was selling Y"
+  ],
+  "filler_words": [],
+  "power_words": [
+   "rejected",
+   "six",
+   "45 million",
+   "wonder"
+  ],
+  "jargon_terms": []
+ },
+ "pacing": {
+  "words_per_min_speaking": 222.5,
+  "words_per_min_overall": 174.0,
+  "speech_ratio": 0.782,
+  "sentence_words_mean": 9.7,
+  "sentence_words_p90": 13.4,
+  "pause_mean_s": 0.72,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 6.0
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   2.2,
+   5.2
+  ],
+  "pattern_interrupts": "new 3D object and caption style per beat",
+  "payoff_at_s": 7.5
+ },
+ "cta": {
+  "type": "comment keyword (visual only, not spoken)",
+  "ask": "Comment \"CLAUDE\" For The Full Guide",
+  "keyword": "CLAUDE",
+  "placement_s": 0.0,
+  "repeats": 0,
+  "incentive": "Full Guide"
+ },
+ "evidence": [
+  {
+   "claim": "Struggle hook",
+   "quote": "Her first book was rejected six times.",
+   "t": [
+    0,
+    2.2
+   ]
+  },
+  {
+   "claim": "Success number",
+   "quote": "Today, Peter Rabbit has sold over 45 million copies,",
+   "t": [
+    2.2,
+    5.2
+   ]
+  },
+  {
+   "claim": "Reframe twist",
+   "quote": "but Beatrix Potter wasn't selling rabbits. She was selling the wonder of childhood.",
+   "t": [
+    5.2,
+    10.0
+   ]
+  },
+  {
+   "claim": "CTA banner burned in all through the video",
+   "quote": "Comment \"CLAUDE\" For The Full Guide",
+   "t": [
+    0,
+    10
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "measured",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "The spoken line has no CTA; CTA is on-screen only. Section times for beats are caption-event times (judged), not word timings."
+}

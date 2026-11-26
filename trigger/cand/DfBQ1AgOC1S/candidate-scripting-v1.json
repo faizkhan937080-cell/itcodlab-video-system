@@ -1,0 +1,233 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfBQ1AgOC1S",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.98,
+  "complete": true,
+  "engine": "auto pass (English)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "listicle",
+  "description": "Hook-sorted-list-by-role-warning-CTA: claim of 30 plugins, grouped into 5 role rows, then pick-one advice and comment-keyword CTA"
+ },
+ "hook": {
+  "kind": "result-first, bold claim",
+  "duration_s": 3.0,
+  "first_words": "These are the 30 best Claude plugins on GitHub right now and",
+  "time_to_value_s": 0.0,
+  "pattern": "These are the <number> best <tool> <things> on <platform> right now",
+  "open_loop": false,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "state the list and promise role sorting",
+   "start_s": 0.0,
+   "end_s": 10.5,
+   "share": 0.18,
+   "devices": [
+    "number claim",
+    "curation promise"
+   ]
+  },
+  {
+   "beat": "row_code",
+   "purpose": "row 1 coding plugins",
+   "start_s": 10.5,
+   "end_s": 19.5,
+   "share": 0.154,
+   "devices": [
+    "list of names",
+    "role address If you write code"
+   ]
+  },
+  {
+   "beat": "row_research",
+   "purpose": "row 2 research",
+   "start_s": 19.5,
+   "end_s": 26.5,
+   "share": 0.12,
+   "devices": [
+    "list of names"
+   ]
+  },
+  {
+   "beat": "row_tokens",
+   "purpose": "row 3 big projects, tokens",
+   "start_s": 26.5,
+   "end_s": 32.5,
+   "share": 0.103,
+   "devices": [
+    "list of names"
+   ]
+  },
+  {
+   "beat": "row_design",
+   "purpose": "row 4 design",
+   "start_s": 32.5,
+   "end_s": 39.5,
+   "share": 0.12,
+   "devices": [
+    "list of names"
+   ]
+  },
+  {
+   "beat": "row_writing",
+   "purpose": "row 5 writing and video",
+   "start_s": 39.5,
+   "end_s": 46.0,
+   "share": 0.111,
+   "devices": [
+    "list of names"
+   ]
+  },
+  {
+   "beat": "warning",
+   "purpose": "dont install all 30, pick one row, check repo permissions",
+   "start_s": 46.0,
+   "end_s": 55.5,
+   "share": 0.163,
+   "devices": [
+    "contrast",
+    "safety advice"
+   ]
+  },
+  {
+   "beat": "cta",
+   "purpose": "comment keyword for links",
+   "start_s": 55.5,
+   "end_s": 58.417,
+   "share": 0.05,
+   "devices": [
+    "keyword CTA"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "second-person (you), occasional I will",
+  "address_terms": [
+   "you"
+  ],
+  "register": "confident, plain-spoken tech explainer",
+  "energy": "high, very fast",
+  "humor": "none",
+  "formality": "casual",
+  "tone_tags": [
+   "curated",
+   "helpful",
+   "authoritative"
+  ]
+ },
+ "language": {
+  "primary": "english",
+  "script": "roman",
+  "code_switching": "none; product names spoken as written (G-Stack, Claude Mem)",
+  "english_term_domains": [
+   "AI coding",
+   "GitHub",
+   "Claude plugins"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "If you write code, take this first row.",
+   "Now dont go installing all 30",
+   "Comment plug-ins and I will send you all 30 links"
+  ],
+  "filler_words": [
+   "so",
+   "now"
+  ],
+  "power_words": [
+   "best",
+   "right now",
+   "all 30",
+   "noise"
+  ],
+  "jargon_terms": [
+   "plugins",
+   "repo",
+   "tokens",
+   "GitHub"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 215.2,
+  "words_per_min_overall": 199.3,
+  "speech_ratio": 0.926,
+  "sentence_words_mean": 19.4,
+  "sentence_words_p90": 29.2,
+  "pause_mean_s": 0.26,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 4.11
+ },
+ "retention": {
+  "open_loops": 0,
+  "rehooks_at_s": [
+   46.0
+  ],
+  "pattern_interrupts": "Now dont go installing all 30 turns the list into advice",
+  "payoff_at_s": 55.5
+ },
+ "cta": {
+  "type": "comment-keyword",
+  "ask": "Comment plug-ins and I will send you all 30 links",
+  "keyword": "plugins",
+  "placement_s": 55.5,
+  "repeats": 1,
+  "incentive": "all 30 links sent"
+ },
+ "evidence": [
+  {
+   "claim": "result-first hook",
+   "quote": "These are the 30 best Claude plugins on GitHub right now",
+   "t": [
+    0,
+    3
+   ]
+  },
+  {
+   "claim": "role-based rows",
+   "quote": "If you write code, take this first row.",
+   "t": [
+    8,
+    11
+   ]
+  },
+  {
+   "claim": "anti-overload turn then CTA",
+   "quote": "Now dont go installing all 30, because that just fills Claude with noise.",
+   "t": [
+    46,
+    50
+   ]
+  },
+  {
+   "claim": "CTA keyword",
+   "quote": "Comment plug-ins and I'll send you all 30 links",
+   "t": [
+    55,
+    58
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "measured",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Beat times are estimated from the events collage card change times (rows at 14.8, 18.8, 25.5, 29.5, 33.2, 39.5, 44.5, 54.8 s) and transcript order; no word timings were read. Structure is judged. Last transcript word is cut at export (I'll send you all 30 links)."
+}

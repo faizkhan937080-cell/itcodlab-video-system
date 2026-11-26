@@ -1,0 +1,173 @@
+{
+ "reel": "DgNYH7ThrWb",
+ "creator": "sansser.ai",
+ "analysed": "inner edited video only (screen-in-scene; monitor/room ignored)",
+ "fonts": [
+  {
+   "use": "all captions, UI",
+   "class": "sans grotesque (Neue Montreal / Inter-Tight style), bold + regular, italic bold for hook",
+   "confidence": "estimated"
+  }
+ ],
+ "music": [
+  {
+   "name": null,
+   "note": "not identified; ~117.5 bpm; use library search hint 'minimal modern tech beat'",
+   "confidence": "unknown"
+  }
+ ],
+ "sfx": [
+  {
+   "kind": "whoosh/spin",
+   "t": [
+    4.8,
+    8.9
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "typing tick",
+   "t": [
+    3.4,
+    4.6
+   ],
+   "confidence": "estimated"
+  },
+  {
+   "kind": "UI pop",
+   "t": [
+    3.2,
+    4.8
+   ],
+   "confidence": "estimated"
+  }
+ ],
+ "motion": [
+  {
+   "name": "floating ? tiles over phone lock screen",
+   "t": [
+    0.0,
+    3.17
+   ]
+  },
+  {
+   "name": "3D eye + search bar typing + 3 stacked perspective cards",
+   "t": [
+    3.17,
+    4.83
+   ]
+  },
+  {
+   "name": "spinning phone-room with poster phones, motion blur",
+   "t": [
+    4.83,
+    8.87
+   ]
+  },
+  {
+   "name": "barcode with line-draw to two orange asterisk nodes",
+   "t": [
+    12.3,
+    12.5
+   ]
+  },
+  {
+   "name": "blindfolded statue with bounding box and binary columns",
+   "t": [
+    11.1,
+    16.0
+   ]
+  },
+  {
+   "name": "orange asterisk logo end card with soft shadow",
+   "t": [
+    21.0,
+    23.47
+   ]
+  }
+ ],
+ "textures": [
+  "flat cream paper (#EBE8DB)",
+  "near-black green gradient",
+  "marble statue photo cut-out"
+ ],
+ "tools_named": [
+  {
+   "name": "Remotion + three.js (candidate)",
+   "note": "for 3D rooms and UI",
+   "confidence": "estimated"
+  }
+ ],
+ "layout": "portrait 338x582 inner video; centre-stacked graphics; hook caption low at ~82% (outside safe zone)",
+ "captions": {
+  "style": "word-synced kinetic captions, typed in a search bar then highlight-box word reveal",
+  "words_per_caption": 3.5,
+  "texts": [
+   "Ever worn a style that was never cut for you",
+   "This is the trend trap in a nutshell",
+   "You clone Another Creator's look",
+   "then Ask Why it never clicks",
+   "they only amplify",
+   "even if It Goes",
+   "Edited by CI"
+  ]
+ },
+ "assets_needed": [
+  {
+   "name": "orange 12-ray asterisk logo (#E8704F)",
+   "t": [
+    0.0,
+    23.47
+   ]
+  },
+  {
+   "name": "3D eye model",
+   "t": [
+    3.17,
+    4.83
+   ]
+  },
+  {
+   "name": "phone-shaped room 3D model",
+   "t": [
+    4.83,
+    8.87
+   ]
+  },
+  {
+   "name": "marble blindfolded statue cut-out PNG",
+   "t": [
+    11.1,
+    16.0
+   ]
+  },
+  {
+   "name": "barcode graphic",
+   "t": [
+    11.0,
+    13.0
+   ]
+  },
+  {
+   "name": "binary-digit columns",
+   "t": [
+    11.1,
+    16.0
+   ]
+  },
+  {
+   "name": "floating question-mark tiles",
+   "t": [
+    0.0,
+    3.17
+   ]
+  },
+  {
+   "name": "search bar UI component",
+   "t": [
+    3.17,
+    11.1
+   ]
+  }
+ ]
+}

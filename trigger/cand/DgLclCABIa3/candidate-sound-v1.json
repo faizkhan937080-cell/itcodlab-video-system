@@ -1,0 +1,84 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgLclCABIa3",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.2,
+  "true_peak_dbtp": -1.6,
+  "lra_lu": 1.7,
+  "short_term_max_lufs": -16.4,
+  "standard": "EBU R128 measured"
+ },
+ "tempo": {
+  "bpm": 143.6,
+  "feel": "beat grid from script, 22 beats about every 0.4s; music is audible (only 21.7 LUFS) so tempo is moderate-confidence"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 0,
+  "notes": "no cuts in this clip, so sync not measurable"
+ },
+ "speech": {
+  "speech_ratio": 0.782,
+  "voice_character": "low male-range, pitch median 113.4 Hz, very expressive (range 11.25 st)",
+  "delivery": "very fast, about 238 wpm mean, emphasis on 'six' and 'rejected', falling sentence endings, gaps 0.3-0.78s"
+ },
+ "silence": {
+  "share": 0.0,
+  "usage": "no silences detected",
+  "longest_s": 0.0
+ },
+ "mix": {
+  "voice_over_music": "voice 3.7 LU above music (vocals -18.0, music -21.7 LUFS): music clearly present under voice",
+  "ducking": "unknown",
+  "music_mood": "unknown from metrics",
+  "music_genre": "unknown",
+  "sfx_density_per_min": 0,
+  "sfx_types": [
+   "unknown: not determinable from frames"
+  ],
+  "voice_minus_music_lu": 3.7
+ },
+ "evidence": [
+  {
+   "claim": "Loudness measured",
+   "t": [
+    0,
+    10
+   ]
+  },
+  {
+   "claim": "Voice-minus-music 3.7 LU from demucs",
+   "t": [
+    0,
+    10
+   ]
+  },
+  {
+   "claim": "Emphasis words six and rejected from voice analysis",
+   "t": [
+    0.78,
+    1.18
+   ]
+  },
+  {
+   "claim": "Beat grid about 143.6 bpm, 22 beats",
+   "t": [
+    0,
+    10
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "estimated",
+  "beat_sync": "unknown",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "Music identity and sfx need worker audio analysis."
+}

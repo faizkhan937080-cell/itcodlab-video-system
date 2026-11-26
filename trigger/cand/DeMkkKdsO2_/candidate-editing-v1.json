@@ -1,0 +1,218 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DeMkkKdsO2_",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 510,
+  "height": 930,
+  "fps": 60.0,
+  "duration_s": 25.0,
+  "orientation": "portrait",
+  "aspect": "510:930"
+ },
+ "cut_rhythm": {
+  "asl_s": 8.333,
+  "median_shot_s": 7.85,
+  "std_shot_s": 5.814,
+  "min_shot_s": 1.467,
+  "max_shot_s": 15.683,
+  "cuts_per_min": 4.8,
+  "pattern": "Three scenes: 1.47 s dark split-flap hook, one 15.68 s light UI-demo scene carrying most of the story through internal element animation, whip transition at 17.15 s into a 7.85 s light closing scene (11 hours -> 10 seconds, brand). Short-long-medium rhythm.",
+  "beat_synced_share": 0.0,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 7.2
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 7.2
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ecu": 0.0,
+   "cu": 0.05,
+   "mcu": 0.15,
+   "ms": 0.5,
+   "ws": 0.3,
+   "ews": 0.0
+  },
+  "camera_angle": "Flat-on UI / product-demo graphics, no live footage; cards tilt slightly in perspective and float.",
+  "composition": "Centred single focal element on a mostly empty frosted gradient: input pill at about 50-55% height (9.3 s), trip card centred (10-15 s), stacked booking cards (14.8 s), strike-through number at 30-35% height (21.1 s).",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "hard_cut",
+   "share": 0.5,
+   "typical_duration_s": 0.0
+  },
+  {
+   "type": "whip_pan",
+   "share": 0.5,
+   "typical_duration_s": 0.3
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "static frame",
+    "floating card drift with slight perspective tilt",
+    "whip at 17.15 s"
+   ],
+   "intensity": "slow"
+  },
+  "elements": {
+   "easing": "spring / overshoot for cards and pills; fast ease-out for typing and counters",
+   "typical_duration_s": 0.5,
+   "stagger_s": 0.15
+  },
+  "speed_ramps": "none detected"
+ },
+ "text": {
+  "present": true,
+  "role": "kinetic captions + UI labels + hero numbers",
+  "font_class": "mixed",
+  "weight": "bold for headline lines (Poppins-like geometric sans), medium for UI labels, monospace caps for the flap-board hook",
+  "case": "mono caps in hook ('WHERE TO NEXT?'), sentence case elsewhere",
+  "position": "centre, 25-60% height",
+  "size_class": "headline about 4-5% of frame height, hero numbers (11 hours) larger",
+  "animation_in": "split-flap letter flip (0.7 s), typed caret, search-tag chips pop in, blue gradient word reveal 'where, when, how much.' (9.3 s), letter morph / blur-in on 'Fairwind' (21.8 s)",
+  "animation_out": "cut or element swap",
+  "avg_on_screen_s": 1.5,
+  "words_per_caption": 3.0,
+  "safe_zone_respected": true
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#ECECEE",
+    "share": 0.571
+   },
+   {
+    "hex": "#ECEFF4",
+    "share": 0.224
+   },
+   {
+    "hex": "#F1E9E4",
+    "share": 0.082
+   },
+   {
+    "hex": "#0B090E",
+    "share": 0.057
+   },
+   {
+    "hex": "#171617",
+    "share": 0.041
+   },
+   {
+    "hex": "#75777F",
+    "share": 0.015
+   }
+  ],
+  "grade": {
+   "look": "Hook: black with off-white and orange-coral accent. Body: light frosted pastel gradient (cool pale blue to warm peach, #ECECEE / #ECEFF4 / #F1E9E4), soft drop shadows, brand colours blue (#3B82F6 style), coral-orange, green, yellow, purple chips. Clean flat UI look, no film grade.",
+   "contrast": "high",
+   "temperature": "neutral",
+   "saturation_mean": 0.154,
+   "brightness_mean": 0.609
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "Captions and cards sit in the 25-60% band, inside the safe area.",
+  "framing_notes": "Whole frame is the cropped inner edited video (screen-in-scene reel, monitor ignored). Black frame in the collage after 21 s is collage padding / empty tile, not video (the magenta empty tile in collage_events likewise)."
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "title",
+   "banner",
+   "lower_third",
+   "video"
+  ],
+  "typical_scene_s": 7.85,
+  "notes": "Needs: split-flap board component, search-chip pop-ins (tags like 'lisbon in 3 days'), counter '1_', input pill with three tokens (Lisbon / 3 days / $800 + mic), map trip card with timer chip (3.1 s -> 10.0 s), boarding-pass + hotel + dinner cards with blue checkmarks, listening voice pill with waveform, strike-through '11 hours' with orange line and dotted '10 s' build, brand pill with letter blur-in + three black tiles."
+ },
+ "evidence": [
+  {
+   "claim": "Scene 1: black split-flap departure board with rows KYOTO, LISBON, BALI and an empty highlighted row, plus a typed pill 'WHERE TO NEXT?' with caret",
+   "scenes": [
+    1
+   ],
+   "t": [
+    0.0,
+    1.47
+   ],
+   "quote": "WHERE TO NEXT? KYOTO LISBON BALI"
+  },
+  {
+   "claim": "Scene 2 chaos: many coloured search chips scatter in (airbnb vs hotel lisbon, best pastel de nata, fado bars reddit...) with a counter '1_' reading taps",
+   "scenes": [
+    2
+   ],
+   "t": [
+    3.8,
+    5.7
+   ],
+   "quote": "1_ lisbon in 3 days"
+  },
+  {
+   "claim": "Input pill with Lisbon / 3 days / $800 chips and mic; headline 'Just tell it where, when, how much.' with blue gradient on the last words",
+   "scenes": [
+    2
+   ],
+   "t": [
+    9.3,
+    10.0
+   ],
+   "quote": "Just tell it where, when, how much."
+  },
+  {
+   "claim": "Trip card with map; timer chip counts 3.1 s -> 10.0 s; boarding pass FRA -> LIS, Casa Alfama and Taberna da Esquina cards then get blue check marks",
+   "scenes": [
+    2
+   ],
+   "t": [
+    10.2,
+    15.2
+   ],
+   "quote": "Lisbon - 3 days / 10.0 s"
+  },
+  {
+   "claim": "Voice 'Listening' pill and a Day-2 card at 16.7 s, whip into scene 3, strike-through '11 hours' with orange line, dotted line building the new number, then 'Fairwind' pill blurring in with three tiles",
+   "scenes": [
+    2,
+    3
+   ],
+   "t": [
+    16.7,
+    22.2
+   ],
+   "quote": "11 hours. Now 10 seconds. Fairwind."
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "estimated",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "judged",
+  "layout": "judged",
+  "recipe": "estimated",
+  "evidence": "judged"
+ },
+ "notes": "Palette, brightness, saturation, shot lengths copied from pack. Pace by cuts is low (two cuts); animation density inside scene 2 is high (event frames at 5.7, 10.2, 12.5, 14.8, 16.7 s). Fonts: headline looks like Poppins, flap-board and 'WHERE TO NEXT?' look like a monospace (Space Mono / JetBrains Mono style): estimated only. Product, brand and places are in-reel names (Fairwind, Skyfare, Casa Alfama, Taberna da Esquina)."
+}

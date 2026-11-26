@@ -1,0 +1,210 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-Df97YXth1Y6",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 418,
+  "height": 694,
+  "fps": 30.0,
+  "duration_s": 13.2,
+  "orientation": "portrait",
+  "aspect": "418:694"
+ },
+ "cut_rhythm": {
+  "asl_s": 6.6,
+  "median_shot_s": 6.6,
+  "std_shot_s": 3.333,
+  "min_shot_s": 3.267,
+  "max_shot_s": 9.933,
+  "cuts_per_min": 4.55,
+  "pattern": "Two scenes only: one 9.93 s slow-moving collage scene built from several internal element swaps (portrait, atelier photo, framed picture + cut-out figure) then one 3.27 s static magazine-cover scene. One hard cut at 9.93 s; the real pacing comes from internal element changes about every 2-3 s (frames at 1.3, 3.2, 5.3, 7.2, 9.8 s).",
+  "beat_synced_share": 0.0,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 13.64
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ecu": 0.0,
+   "cu": 0.25,
+   "mcu": 0.25,
+   "ms": 0.1,
+   "ws": 0.4,
+   "ews": 0.0
+  },
+  "camera_angle": "Eye-level fashion portraits (CU/MCU) and flat-on poster/magazine layouts on a beige wall (graphic WS).",
+  "composition": "Subject off-centre then centred; caption at upper area, subject lower; wall set-dressing (framed photo, magazine stack) placed top/mid with figure bottom-right (8.4 s). Strong negative space on the left.",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "hard_cut",
+   "share": 1.0,
+   "typical_duration_s": 0.0
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "slow pan up with slight push",
+    "defocus blur-in / blur-out on portrait (3.2 s)",
+    "static poster hold in last scene"
+   ],
+   "intensity": "slow"
+  },
+  "elements": {
+   "easing": "soft ease-in-out; text fades in with slight rise; red dashed selection box snaps on 'fame' (1.5 s)",
+   "typical_duration_s": 0.6,
+   "stagger_s": 0.1
+  },
+  "speed_ramps": "none detected"
+ },
+ "text": {
+  "present": true,
+  "role": "kinetic captions mirroring the voice, with one emphasised word per line",
+  "font_class": "mixed",
+  "weight": "regular serif for connectors + heavy sans for the key word (fame, her sharpest, kingdom)",
+  "case": "sentence / lower case; THE ICON in caps on the magazine mast",
+  "position": "upper area (about 11-20% height) in the first scene, mid-left at 8.4 s (about 55-62%)",
+  "size_class": "key word about 2-3x the connector size",
+  "animation_in": "word-by-word fade/rise; design-tool selection box (red dotted frame with square handles) around 'fame'",
+  "animation_out": "cut or blur dissolve to next element",
+  "avg_on_screen_s": 1.8,
+  "words_per_caption": 3.5,
+  "safe_zone_respected": false
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#D4CDBC",
+    "share": 0.48
+   },
+   {
+    "hex": "#A7A396",
+    "share": 0.21
+   },
+   {
+    "hex": "#D6D2C5",
+    "share": 0.156
+   },
+   {
+    "hex": "#B3AC9F",
+    "share": 0.079
+   },
+   {
+    "hex": "#21211D",
+    "share": 0.063
+   },
+   {
+    "hex": "#393A35",
+    "share": 0.013
+   }
+  ],
+  "grade": {
+   "look": "Selective colour: black-and-white portraits with only lips, earrings accent and dress kept deep red against a warm beige / cream wall; soft window-light shadow with plant leaves overlaid on the wall. Luxury editorial look, low saturation overall.",
+   "contrast": "medium",
+   "temperature": "warm",
+   "saturation_mean": 0.138,
+   "brightness_mean": 0.713
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "Top captions at 11-16% height sit inside the top 14% hard zone; mid-left caption at 8.4 s is safe.",
+  "framing_notes": "Whole frame is the cropped inner edited video (screen-in-scene reel). Pure graphic layout, no talking head; brand/figure fictional (name spoken at the end)."
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "image",
+   "banner",
+   "title"
+  ],
+  "typical_scene_s": 6.6,
+  "notes": "Build: beige wall background + window/leaf shadow overlay; B&W portrait cut-outs with red colour-pop; framed picture on wall; magazine stack with 'ECLAT / THE ICON' cover (fictional masthead); serif+sans mixed caption component; dotted selection box component. Portraits look AI-generated (estimated)."
+ },
+ "evidence": [
+  {
+   "claim": "Hook caption 'She never begged for fame': serif connector line over a huge bold 'fame' wrapped in a red dotted selection box with handles",
+   "scenes": [
+    1
+   ],
+   "t": [
+    1.3,
+    1.5
+   ],
+   "quote": "never begged for fame"
+  },
+  {
+   "claim": "B&W portrait with red lips and dress on beige wall with leaf shadows; 'Grace became / her sharpest' with serif first line and bold sans second line",
+   "scenes": [
+    1
+   ],
+   "t": [
+    3.2,
+    5.0
+   ],
+   "quote": "Grace became her sharpest"
+  },
+  {
+   "claim": "Framed portrait on the wall and a cut-out woman in a red satin gown; caption 'it became her kingdom' with 'kingdom' bold",
+   "scenes": [
+    1
+   ],
+   "t": [
+    7.2,
+    8.4
+   ],
+   "quote": "it became her kingdom"
+  },
+  {
+   "claim": "Final scene: magazine stack with cover 'ECLAT THE ICON'; caption 'Every runway still whispers' above; static hold",
+   "scenes": [
+    2
+   ],
+   "t": [
+    9.9,
+    13.2
+   ],
+   "quote": "Every runway still whispers"
+  },
+  {
+   "claim": "Event frames: 3.2-3.3 s blurred portrait, 5.3-5.5 s b&w atelier group photo on the wall, 7.2-7.3 s 'it' with wall frame and gown figure",
+   "scenes": [
+    1
+   ],
+   "t": [
+    3.2,
+    7.3
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "estimated",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "judged",
+  "layout": "judged",
+  "recipe": "estimated",
+  "evidence": "judged"
+ },
+ "notes": "Numbers (format, shot lengths, palette, brightness, saturation) copied from pack. Only one cut is detected, so cuts_per_min is low: pacing lives in internal element swaps (judged). Fonts: connector looks like a transitional serif (Georgia / Source Serif style), emphasis looks like a heavy grotesque (Helvetica Neue Bold / Inter style): estimated only."
+}

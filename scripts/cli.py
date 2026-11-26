@@ -1265,6 +1265,20 @@ def cmd_republish(a):
     return 0
 
 
+def cmd_cand_upload(a):
+    """Worker: copy Claude's candidate files (git folder trigger/cand/<code>/) to the reel folder on Drive."""
+    from pathlib import Path
+    st = _storage()
+    for jid in a.jobs:
+        state = st.read_json(f"jobs/state/{jid}.json")
+        base = state["paths"]["analysis"]
+        src = Path("trigger/cand") / jid.replace("reel-", "", 1)
+        for f in sorted(src.glob("*.json")):
+            st.put_file(str(f), f"{base}/{f.name}")
+            print("uploaded", jid, f.name)
+    return 0
+
+
 def cmd_review_fetch(a):
     from .review import fetch
     for f in fetch(a.job, a.out):
@@ -1624,6 +1638,9 @@ def build_parser():
     s = sub.add_parser("republish", help="worker: publish finished packs to review-<job> branches again")
     s.add_argument("jobs", nargs="+")
     s.set_defaults(fn=cmd_republish)
+    s = sub.add_parser("cand-upload", help="worker: upload trigger/cand/<code>/*.json to each reel folder on Drive")
+    s.add_argument("jobs", nargs="+")
+    s.set_defaults(fn=cmd_cand_upload)
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")
     s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")

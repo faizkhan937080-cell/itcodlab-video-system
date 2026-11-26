@@ -1,0 +1,184 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfkbSDuB04k",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 24.0,
+  "duration_s": 32.725,
+  "orientation": "portrait",
+  "aspect": "9:16"
+ },
+ "cut_rhythm": {
+  "asl_s": 32.725,
+  "median_shot_s": 32.725,
+  "std_shot_s": 0.0,
+  "min_shot_s": 32.725,
+  "max_shot_s": 32.725,
+  "cuts_per_min": 0.0,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 0.0
+   }
+  ],
+  "beat_synced_share": 0.0,
+  "pattern": "one continuous 3D motion-graphics scene, zero cuts; change is camera flight along a bar chart, one bar per skill"
+ },
+ "shots": {
+  "scale_mix": {
+   "ws": 0.3,
+   "ms": 0.7
+  },
+  "camera_angle": "3D virtual camera, slight low three-quarter view of glowing bars",
+  "composition": "ranked bar centred, logo/portrait on top of bar, value label above, preview card above that; next bar enters from the right edge",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "other",
+   "share": 1.0,
+   "typical_duration_s": 0.8
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "lateral dolly along bars",
+    "push-in",
+    "pull-back to full chart at end"
+   ],
+   "intensity": "medium"
+  },
+  "elements": {
+   "easing": "ease in-out camera glide; value labels pop with glow",
+   "typical_duration_s": 0.8,
+   "stagger_s": 0.2
+  },
+  "speed_ramps": "none seen"
+ },
+ "text": {
+  "present": true,
+  "role": "word-by-word karaoke captions, value labels, header pill, repo card",
+  "font_class": "sans",
+  "weight": "bold captions, medium labels",
+  "case": "sentence case captions, all-caps tracked header pill",
+  "position": "captions at about 68 percent frame height, header top, handles bottom",
+  "size_class": "large captions",
+  "animation_in": "words blur-in and fade up one by one, active word brighter",
+  "animation_out": "fade",
+  "avg_on_screen_s": 1.2,
+  "words_per_caption": 3.0,
+  "safe_zone_respected": true
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#06140E",
+    "share": 0.55
+   },
+   {
+    "hex": "#427B5C",
+    "share": 0.247
+   },
+   {
+    "hex": "#CDD5CB",
+    "share": 0.203
+   }
+  ],
+  "grade": {
+   "look": "dark near-black background with emerald-green neon glass bars and glow",
+   "contrast": "high",
+   "temperature": "cool",
+   "saturation_mean": 0.679,
+   "brightness_mean": 0.218
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "brand wordmark top, sub-pill below, captions mid-lower, social handles bottom row (instagram, youtube, web)",
+  "framing_notes": "footer handles stay fixed across the whole reel"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "banner",
+   "lower_third",
+   "image"
+  ],
+  "typical_scene_s": 32.7,
+  "spring": {
+   "damping": 18,
+   "stiffness": 100,
+   "mass": 1
+  },
+  "notes": "3D bars need react-three-fiber or three.js inside Remotion; spring values estimated. Each bar: logo or portrait chip, value label, repo card with screenshot above."
+ },
+ "evidence": [
+  {
+   "claim": "first bar Cloudflare +40.4K with white logo chip, caption Cloudflares security",
+   "scenes": [
+    1
+   ],
+   "t": [
+    5.7,
+    6.0
+   ]
+  },
+  {
+   "claim": "camera moves to next bar with portrait chip and repo card pbakaus/impeccable +27.4K",
+   "scenes": [
+    1
+   ],
+   "t": [
+    15.0,
+    16.4
+   ]
+  },
+  {
+   "claim": "closing pull-back shows all seven bars and +198.0K total with Comment RANK pill",
+   "scenes": [
+    1
+   ],
+   "t": [
+    27.7,
+    31.8
+   ]
+  },
+  {
+   "claim": "fixed footer handles heysansser, sansser, sansser.com across all frames",
+   "scenes": [
+    1
+   ],
+   "t": [
+    0,
+    32.7
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "judged",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ },
+ "notes": "Metrics see one scene because the camera never cuts. The collage events show about seven bar visits at 5.7, 9.8, 12.7, 15.0, 17.8, 20.5, 23.8 s and the wide finish at 27.7 s. Transitions share is judged (continuous camera glide), not measured."
+}

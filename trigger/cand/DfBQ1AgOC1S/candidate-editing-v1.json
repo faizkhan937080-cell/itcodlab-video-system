@@ -1,0 +1,193 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfBQ1AgOC1S",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 60.0,
+  "duration_s": 58.417,
+  "orientation": "portrait",
+  "aspect": "9:16"
+ },
+ "cut_rhythm": {
+  "asl_s": 29.209,
+  "median_shot_s": 29.209,
+  "std_shot_s": 22.642,
+  "min_shot_s": 6.567,
+  "max_shot_s": 51.85,
+  "cuts_per_min": 1.03,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 3.08
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 0.0
+   }
+  ],
+  "beat_synced_share": 0.0,
+  "pattern": "two long scenes joined by one whip: 0-6.57 s plugin-icon grid intro, 6.57-58.42 s a continuous card carousel; almost all change comes from in-scene animation, not cuts"
+ },
+ "shots": {
+  "scale_mix": {
+   "ws": 1.0
+  },
+  "camera_angle": "flat frontal graphic, no camera footage",
+  "composition": "centred vertical stack: sunburst logo, two-line headline, icon grid; later one centred white card above a progress bar",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "whip_pan",
+   "share": 1.0,
+   "typical_duration_s": 0.3
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "static",
+    "whip-style swipe between scenes (measured)"
+   ],
+   "intensity": "slow"
+  },
+  "elements": {
+   "easing": "spring with soft overshoot on icon tiles and cards; blur-fade for the neighbour cards",
+   "typical_duration_s": 0.5,
+   "stagger_s": 0.1
+  },
+  "speed_ramps": "none seen"
+ },
+ "text": {
+  "present": true,
+  "role": "title, category pill, card title, repo path, one-line description, star badge, progress counter",
+  "font_class": "sans",
+  "weight": "bold headline, regular body, mono for repo path",
+  "case": "sentence case; keyword in accent colour (30 green, one plugin purple, PLUGINS green)",
+  "position": "headline upper-middle; card centre; pill top-left; progress bar bottom",
+  "size_class": "large headline, medium card title, small mono repo",
+  "animation_in": "tiles fall/slide into grid with stagger; cards slide up and focus while neighbours blur; typed text in the final comment box",
+  "animation_out": "blur and fade",
+  "avg_on_screen_s": 2.0,
+  "words_per_caption": 3.0,
+  "safe_zone_respected": true
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#FDFDFD",
+    "share": 0.801
+   },
+   {
+    "hex": "#FBFBFB",
+    "share": 0.095
+   },
+   {
+    "hex": "#DDDAE1",
+    "share": 0.076
+   },
+   {
+    "hex": "#ACA8A7",
+    "share": 0.012
+   },
+   {
+    "hex": "#A09BA3",
+    "share": 0.011
+   },
+   {
+    "hex": "#414345",
+    "share": 0.005
+   }
+  ],
+  "grade": {
+   "look": "flat clean white UI, no grade",
+   "contrast": "low",
+   "temperature": "neutral",
+   "saturation_mean": 0.032,
+   "brightness_mean": 0.943
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "content sits inside upper 80 percent, bottom area left empty for platform UI",
+  "framing_notes": "all graphics generated in-frame (pure motion graphics, no talking head)"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "banner",
+   "image"
+  ],
+  "typical_scene_s": 29.2,
+  "spring": {
+   "damping": 14,
+   "stiffness": 120,
+   "mass": 1
+  },
+  "notes": "one headline + icon-grid scene, then one long list scene: 30 cards in 5 category groups, one card per ~1.7 s, each group has its own accent colour (green, blue, orange, purple, pink); spring values are estimated"
+ },
+ "evidence": [
+  {
+   "claim": "intro icon grid builds up: tiles fall in, star counter climbs to 3,852,400",
+   "scenes": [
+    1
+   ],
+   "t": [
+    1.0,
+    5.6
+   ]
+  },
+  {
+   "claim": "whip into card carousel; focused card sharp, neighbours blurred, progress bar 05/30 at 14.3 s",
+   "scenes": [
+    2
+   ],
+   "t": [
+    6.57,
+    14.3
+   ]
+  },
+  {
+   "claim": "category pill changes colour per group (Design and visuals purple, 19/30 at 32.5 s)",
+   "scenes": [
+    2
+   ],
+   "t": [
+    32.5,
+    32.5
+   ]
+  },
+  {
+   "claim": "closing: Add one plugin, Archify centred, then Dont install all 30 and Comment PLUGINS typed into a comment box",
+   "scenes": [
+    2
+   ],
+   "t": [
+    44.5,
+    55.2
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ },
+ "notes": "Only two scenes by cut detection, but events collage shows ~30 timed card changes inside scene 2. Whip share and counts are measured; everything visual is read from collages."
+}

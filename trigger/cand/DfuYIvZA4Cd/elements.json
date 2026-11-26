@@ -1,0 +1,178 @@
+{
+ "fonts": [
+  {
+   "name": "Inter or similar grotesque sans, bold",
+   "use": "captions",
+   "confidence": "estimated"
+  },
+  {
+   "name": "wordmark sansser with teal slash (custom logo)",
+   "use": "top brand"
+  }
+ ],
+ "music": [
+  {
+   "name": "unidentified light electronic bed",
+   "bpm": 123.0,
+   "note": "stem -38.3 LUFS"
+  }
+ ],
+ "sfx": [
+  {
+   "name": "none verified",
+   "note": "stamp, click, whoosh likely"
+  }
+ ],
+ "motion": [
+  {
+   "name": "wifi card with sunburst badge and CAUGHT stamp slam",
+   "t": [
+    1.3,
+    3.5
+   ]
+  },
+  {
+   "name": "rounded bar pair 300 vs 202 Mbps with Speed check pill",
+   "t": [
+    3.5,
+    8.2
+   ]
+  },
+  {
+   "name": "router suspect card with magnifier, Suspect 1 tag",
+   "t": [
+    7.7,
+    10.1
+   ]
+  },
+  {
+   "name": "laptop with radar sweep and terminal window",
+   "t": [
+    12.0,
+    14.8
+   ]
+  },
+  {
+   "name": "donut chart 6 percent eaten, Google Drive upload chip 18.4 MB/s",
+   "t": [
+    14.8,
+    17.5
+   ]
+  },
+  {
+   "name": "wifi channel bell curve with You pin",
+   "t": [
+    17.5,
+    20.5
+   ]
+  },
+  {
+   "name": "Found 3 fixes dialog, checkbox ticks, animated cursor, Yes fix it button",
+   "t": [
+    20.5,
+    22.8
+   ]
+  },
+  {
+   "name": "download speed readout 151 Mbps before/after",
+   "t": [
+    22.8,
+    25.0
+   ]
+  },
+  {
+   "name": "2x the speed glowing badge",
+   "t": [
+    25.0,
+    28.7
+   ]
+  },
+  {
+   "name": "router end card Internet company",
+   "t": [
+    28.7,
+    32.9
+   ]
+  },
+  {
+   "name": "karaoke blur-in captions with green highlight word",
+   "t": [
+    0,
+    32.9
+   ]
+  }
+ ],
+ "textures": [
+  {
+   "name": "off-white page with faint radial grid and soft mint/red glows",
+   "share": 0.9
+  }
+ ],
+ "tools_named": [
+  "Remotion-style spring motion (estimated)"
+ ],
+ "layout": {
+  "format": "9:16 1080x1920 60fps",
+  "blocks": [
+   "wordmark top",
+   "hero illustration",
+   "captions lower-middle",
+   "footer handles"
+  ]
+ },
+ "captions": {
+  "style": "word-by-word karaoke, black bold sans, blur-in, one highlight word in green",
+  "position": "about 68 percent height"
+ },
+ "assets_needed": [
+  {
+   "name": "sunburst logo orange",
+   "t": [
+    0,
+    34
+   ]
+  },
+  {
+   "name": "wifi icon card",
+   "t": [
+    1.3,
+    3.5
+   ]
+  },
+  {
+   "name": "router icon x2",
+   "t": [
+    7.7,
+    10.1
+   ]
+  },
+  {
+   "name": "laptop illustration + magnifier",
+   "t": [
+    12.0,
+    14.8
+   ]
+  },
+  {
+   "name": "Google Drive logo chip",
+   "t": [
+    14.8,
+    17.5
+   ]
+  },
+  {
+   "name": "cursor arrow",
+   "t": [
+    20.5,
+    22.8
+   ]
+  },
+  {
+   "name": "footer social handle row",
+   "t": [
+    0,
+    32.9
+   ]
+  }
+ ]
+}

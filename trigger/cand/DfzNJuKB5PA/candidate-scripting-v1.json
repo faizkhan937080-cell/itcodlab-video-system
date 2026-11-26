@@ -1,0 +1,213 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfzNJuKB5PA",
+  "creator": "sansser.ai",
+  "link": "https://www.instagram.com/reel/DfzNJuKB5PA/"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.97,
+  "complete": true,
+  "engine": "whisper auto pass (roman English)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Hook-Problem example-Demo-Value anchor-CTA",
+  "description": "creator brand \"sansser\": news/tools explained as fast voice-over over designed motion cards"
+ },
+ "hook": {
+  "kind": "bold claim + loss-aversion (curiosity gap)",
+  "duration_s": 7.5,
+  "first_words": "This free Claude skill gets your business named in Google's AI answer",
+  "time_to_value_s": 0.0,
+  "pattern": "free-tool promise then consequence of not being in the AI answer",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "bold claim + fear: free Claude skill gets business named in Google AI answer; if not in it customers never scroll",
+   "start_s": 0.0,
+   "end_s": 7.5,
+   "share": 0.191,
+   "devices": [
+    "worked example (dentist in Dallas)",
+    "explain-then-demo"
+   ]
+  },
+  {
+   "beat": "pattern_interrupt_scenario",
+   "purpose": "\"Take this.\" dentist-in-Dallas example, AI overview explained",
+   "start_s": 7.5,
+   "end_s": 17.5,
+   "share": 0.254,
+   "devices": [
+    "worked example (dentist in Dallas)",
+    "explain-then-demo"
+   ]
+  },
+  {
+   "beat": "demo_how",
+   "purpose": "drop website link into skill in Claude Code, 17 agents read site, reviews, Business Profile, service pages; Claude writes every fix",
+   "start_s": 17.5,
+   "end_s": 31.0,
+   "share": 0.343,
+   "devices": [
+    "worked example (dentist in Dallas)",
+    "explain-then-demo"
+   ]
+  },
+  {
+   "beat": "value_anchor",
+   "purpose": "\"that's the work SEO agencies charge thousands a month for\" + $2,500/month invoice",
+   "start_s": 31.0,
+   "end_s": 35.5,
+   "share": 0.114,
+   "devices": [
+    "worked example (dentist in Dallas)",
+    "explain-then-demo"
+   ]
+  },
+  {
+   "beat": "cta",
+   "purpose": "comment keyword \"SEO\" -> skill + exact prompt",
+   "start_s": 35.5,
+   "end_s": 39.3,
+   "share": 0.097,
+   "devices": [
+    "worked example (dentist in Dallas)",
+    "explain-then-demo"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "I/we implied, addresses viewer as \"you\"",
+  "address_terms": [
+   "you",
+   "your"
+  ],
+  "register": "conversational explainer, tool-news tone",
+  "energy": "very fast (232.9 wpm mean), very expressive pitch (12.8 st range)",
+  "formality": "casual-professional",
+  "humour": "minimal",
+  "tone_tags": [
+   "fast",
+   "confident",
+   "punchy",
+   "no filler pauses"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none (no Hindi detected, devanagari share 0.0)",
+  "english_term_domains": [
+   "AI tools",
+   "software/GitHub",
+   "SEO"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "This free Claude skill",
+   "Take this.",
+   "That's called",
+   "Now drop your website link into this skill inside Claude code",
+   "And that's the work SEO agencies charge thousands a month for",
+   "Comment SEO and we'll send you the skill with the exact prompt"
+  ],
+  "filler_words": [],
+  "power_words": [
+   "free",
+   "never",
+   "17 agents",
+   "thousands a month",
+   "exact prompt"
+  ],
+  "jargon_terms": [
+   "Claude skill",
+   "AI overview",
+   "Claude code",
+   "Google business profile",
+   "service pages",
+   "SEO",
+   "agents"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 232.4,
+  "words_per_min_overall": 213.6,
+  "speech_ratio": 0.919,
+  "sentence_words_mean": 17.5,
+  "sentence_words_p90": 25.9,
+  "pause_mean_s": 0.31,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 1.53
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   7.7,
+   32.3
+  ],
+  "pattern_interrupts": "\"Take this.\" at 7.7 s switches to example; invoice card pops over checklist at 32.3 s",
+  "payoff_at_s": 17.5
+ },
+ "cta": {
+  "type": "comment-keyword (skill + prompt delivery)",
+  "ask": "Comment SEO and we'll send you the skill with the exact prompt",
+  "keyword": "SEO",
+  "placement_s": 35.5,
+  "repeats": 1,
+  "incentive": "the skill plus the exact prompt"
+ },
+ "evidence": [
+  {
+   "claim": "hook promises a free skill and states the loss",
+   "quote": "This free Claude skill gets your business named in Google's AI answer, and if you're not in that answer, your customers never even scroll down to find you.",
+   "t": [
+    0.0,
+    0.5
+   ]
+  },
+  {
+   "claim": "pattern-interrupt \"Take this.\" starts the example",
+   "quote": "Take this.",
+   "t": [
+    7.7,
+    8.2
+   ]
+  },
+  {
+   "claim": "price anchor",
+   "quote": "And that's the work SEO agencies charge thousands a month for.",
+   "t": [
+    32.3,
+    32.8
+   ]
+  },
+  {
+   "claim": "comment-keyword CTA",
+   "quote": "Comment SEO and we'll send you the skill with the exact prompt.",
+   "t": [
+    35.5,
+    36.0
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "judged",
+  "structure": "estimated",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Structure times: boundaries anchored to collage_events frames and measured emphasis-word times; whole-transcript has no per-sentence timestamps in the pack, so beat edges are estimated (+-1.5 s). Words in first 3 s = 11.3, first 5 s = 19.0. Tempo CV 0.09 (min 176.5, max 260.9); gaps {'0.15-0.3': 5, '0.3-0.6': 8, '0.6-1.0': 0, '1.0-up': 0}; endings {'rising': 2, 'falling': 2, 'flat': 7}; top emphasis ['17', 'and', 'and', 'free', 'SEO']."
+}

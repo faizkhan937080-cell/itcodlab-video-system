@@ -1,0 +1,83 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-Dfi6kGuOemV",
+  "creator": "sansser.ai",
+  "link": "https://www.instagram.com/reel/Dfi6kGuOemV/"
+ },
+ "loudness": {
+  "integrated_lufs": -17.2,
+  "true_peak_dbtp": -0.5,
+  "lra_lu": 2.5,
+  "short_term_max_lufs": -14.9,
+  "standard": "ITU-R BS.1770; ~3 LU quieter than the -14 LUFS social norm, 6 LU louder than EBU -23; peak close to ceiling"
+ },
+ "tempo": {
+  "bpm": 117.5,
+  "feel": "detector bpm; with music this quiet it may follow speech rhythm, not a music track (estimated)"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 3,
+  "median_offset_s": 0.23,
+  "notes": "cuts are not beat-locked"
+ },
+ "speech": {
+  "speech_ratio": 0.938,
+  "voice_character": "pitch median 147.9 Hz (p10 113.3, p90 243.2), range 13.22 st, very expressive; HNR 8.4 dB (processed/compressed voice likely)",
+  "delivery": "very fast: 260.7 wpm mean (min 203.0, max 409.1, CV 0.18); 22 gaps, mean 0.22 s, max 0.3 s, bins {'0.15-0.3': 21, '0.3-0.6': 1, '0.6-1.0': 0, '1.0-up': 0}; endings {'rising': 7, 'falling': 11, 'flat': 6}; top emphasis words %@16.26, %@17.6, .2@0.92, a@31.88, or@31.68"
+ },
+ "silence": {
+  "share": 0.0,
+  "usage": "no silence at all",
+  "longest_s": 0.0
+ },
+ "mix": {
+  "voice_over_music": "voice dominant, music audible as a bed under voice",
+  "ducking": "cannot be judged: no listen.json and stems only give averages",
+  "music_mood": "unknown (not identified; no listen pass in pack)",
+  "music_genre": "unknown",
+  "sfx_types": [],
+  "voice_minus_music_lu": 15.1
+ },
+ "evidence": [
+  {
+   "claim": "stem loudness: vocals -17.2 LUFS vs music -32.3 LUFS (demucs htdemucs, estimate only)",
+   "t": [
+    0.0,
+    70.81
+   ]
+  },
+  {
+   "claim": "integrated loudness and true peak measured on whole mix",
+   "t": [
+    0.0,
+    70.81
+   ]
+  },
+  {
+   "claim": "speech fills the runtime; pauses all short (0.15-0.4 s)",
+   "t": [
+    0.0,
+    70.81
+   ]
+  },
+  {
+   "claim": "no trailing silence, audio runs to the end",
+   "t": [
+    69.81,
+    70.81
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "measured",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "SFX: not verifiable without listen.json (no CLAP pass). Visual card swaps suggest soft UI whoosh/tick cues but this is NOT confirmed; do not clone SFX from this candidate. music more audible than reels 1-2 (stem gap 15 LU), mood not identifiable by script, no listen.json in pack"
+}

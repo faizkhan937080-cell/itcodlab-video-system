@@ -1,0 +1,229 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfMDZKfNER2",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 60.0,
+  "duration_s": 37.013,
+  "orientation": "portrait",
+  "aspect": "9:16"
+ },
+ "cut_rhythm": {
+  "asl_s": 3.365,
+  "median_shot_s": 3.234,
+  "std_shot_s": 1.604,
+  "min_shot_s": 0.434,
+  "max_shot_s": 6.0,
+  "cuts_per_min": 16.21,
+  "pattern": "11 scenes, hard cuts only; each cut lands on a new caption phrase and/or a light/dark background flip; very short scenes 2-3 (0.434s, 0.666s) are caption-reflow micro-scenes inside one idea",
+  "beat_synced_share": 0.1,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 24.3
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 9.7
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 14.6
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ecu": 0,
+   "cu": 0,
+   "mcu": 0,
+   "ms": 0,
+   "ws": 0,
+   "ews": 1.0
+  },
+  "camera_angle": "none: flat motion-graphics board, no camera footage",
+  "composition": "headline top-left (~y 8-20%), browser-window mockup in the middle (~y 35-70%), handle @heysansser small centered at ~y 83%, large empty bottom area",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.7
+ },
+ "transitions": [
+  {
+   "type": "hard_cut",
+   "share": 1.0
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "none"
+   ],
+   "intensity": "static"
+  },
+  "elements": {
+   "easing": "soft ease-out with slight overshoot on cards/badges (judged); words appear one by one with blur-to-sharp",
+   "typical_duration_s": 0.3
+  },
+  "speed_ramps": "none seen"
+ },
+ "text": {
+  "present": true,
+  "role": "kinetic captions as headline, word-by-word synced to voice; key words recoloured green (or purple for 'purple')",
+  "font_class": "sans",
+  "weight": "extra-bold/black, tight tracking",
+  "case": "sentence case",
+  "position": "top-left aligned, upper ~8-22% of frame",
+  "size_class": "very large (cap height ~5% of frame height)",
+  "animation_in": "word-by-word reveal with blur-to-sharp fade (frames show blurred 'for', 'whole page', 'and costs'); price words ($1, $20) larger and gradient green",
+  "animation_out": "replaced at next cut/phrase; some phrases swap in place",
+  "avg_on_screen_s": 3.4,
+  "words_per_caption": 4.5,
+  "safe_zone_respected": true
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#F8FBFA",
+    "share": 0.138
+   },
+   {
+    "hex": "#F5F9F8",
+    "share": 0.095
+   },
+   {
+    "hex": "#F8FAF9",
+    "share": 0.093
+   },
+   {
+    "hex": "#121617",
+    "share": 0.073
+   },
+   {
+    "hex": "#101416",
+    "share": 0.073
+   },
+   {
+    "hex": "#111516",
+    "share": 0.072
+   }
+  ],
+  "grade": {
+   "look": "flat clean UI/brand look, no film grade; alternating white-mint and near-black-green backgrounds with emerald gradient accent",
+   "contrast": "high",
+   "temperature": "neutral",
+   "saturation_mean": 0.186,
+   "brightness_mean": 0.661
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "headline sits inside top safe zone below hard 7.8% line; mockup centered; bottom ~35% mostly empty except small handle @heysansser",
+  "framing_notes": "mac-style browser window (red/yellow/green dots, url pill cloudbrew.top) is the main visual; floating rounded badges/app icons overlap its corner; green swoosh ribbon sweeps across lower third; concentric thin ring lines in background"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "banner",
+   "image",
+   "lower_third"
+  ],
+  "typical_scene_s": 3.2,
+  "spring": {
+   "damping": 14,
+   "stiffness": 120,
+   "mass": 1
+  },
+  "notes": "Alternate light/dark background per idea. Browser mockup component with url text. Floating badge component ($1/year, WIX $17.77/mo, Squarespace $19/mo, .com $11/yr struck vs .top $1). Overlays: red X over bad site, red box highlight, Claude Design UI mock with prompt typing, share-menu dropdown, Netlify 'live' toast, Kit subscriber toast, Clarity heatmap + 'recording a visit' pill. Spring values are estimated."
+ },
+ "evidence": [
+  {
+   "claim": "Hook scene: big headline with green $1 and floating $1/year badge over cloudbrew.top mockup, then red X over the generic purple site",
+   "scenes": [
+    1,
+    2,
+    3
+   ],
+   "t": [
+    0,
+    3.883
+   ]
+  },
+  {
+   "claim": "Dark background for price comparison with WIX and Squarespace icons plus glass price tags",
+   "scenes": [
+    4
+   ],
+   "t": [
+    3.883,
+    7.117
+   ]
+  },
+  {
+   "claim": "Claude Design UI mock with prompt box then generated page, text blurs in word by word",
+   "scenes": [
+    5
+   ],
+   "t": [
+    7.117,
+    11.383
+   ]
+  },
+  {
+   "claim": "Purple generic AI site with red outline on headline, 'that purple' purple highlight",
+   "scenes": [
+    6
+   ],
+   "t": [
+    11.383,
+    15.467
+   ]
+  },
+  {
+   "claim": "Three skill icons orbit Claude logo, green status dots, blurred lock labels",
+   "scenes": [
+    7
+   ],
+   "t": [
+    15.467,
+    21.467
+   ]
+  },
+  {
+   "claim": "Share dropdown, Netlify live toast, .com struck vs .top $1 chips",
+   "scenes": [
+    8,
+    9
+   ],
+   "t": [
+    21.467,
+    30.617
+   ]
+  },
+  {
+   "claim": "Kit subscriber toast and Clarity heatmap overlay on form page; closing CTA with three green skill icons",
+   "scenes": [
+    10,
+    11
+   ],
+   "t": [
+    30.617,
+    37.013
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ }
+}

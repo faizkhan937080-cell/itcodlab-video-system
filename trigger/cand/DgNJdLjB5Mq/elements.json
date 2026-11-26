@@ -1,0 +1,167 @@
+{
+ "fonts": [
+  {
+   "use": "wordmark \"sansser /\" and captions/titles",
+   "class": "geometric neo-grotesque sans, bold",
+   "candidates": [
+    "Inter Tight",
+    "Plus Jakarta Sans",
+    "Manrope"
+   ],
+   "tag": "estimated"
+  },
+  {
+   "use": "big light numerals",
+   "class": "sans light ~300",
+   "candidates": [
+    "Inter Light",
+    "Geist Light"
+   ],
+   "tag": "estimated"
+  },
+  {
+   "use": "code/path/terminal labels",
+   "class": "monospace",
+   "candidates": [
+    "JetBrains Mono",
+    "IBM Plex Mono"
+   ],
+   "tag": "estimated"
+  }
+ ],
+ "music": {
+  "name": null,
+  "mood": "unknown",
+  "bpm": 123.0,
+  "bpm_tag": "measured by detector",
+  "loudness_note": "stem music -42.6 LUFS: nearly inaudible",
+  "tag": "unknown",
+  "search_hint": "soft modern tech bed ~120 bpm, minimal"
+ },
+ "sfx": {
+  "heard": [],
+  "tag": "unknown",
+  "note": "no listen.json; likely UI ticks/whooshes on card swaps is an unverified guess"
+ },
+ "motion": [
+  "bar-chart race intro (10 gradient bars, logos on top, values)",
+  "card swap per repo with progress dots 1-9",
+  "numeric counter +N.NK counting up",
+  "mini bar sparkline growing in each card",
+  "ring of 10 social icons orbiting around \"@username\" search pill with check badges appearing",
+  "dark code-window thumbnail inside card #3",
+  "comment box with typing cursor at end"
+ ],
+ "textures": [
+  {
+   "name": "soft green radial glow blobs",
+   "where": "behind cards, corners",
+   "tag": "judged"
+  },
+  {
+   "name": "near-white background #F5F8F5-#FCFCFC",
+   "tag": "measured"
+  },
+  {
+   "name": "soft large drop shadows on white cards, rounded corners",
+   "tag": "judged"
+  },
+  {
+   "name": "faint square grid lines over background",
+   "tag": "judged"
+  }
+ ],
+ "tools_named": [
+  "GitHub",
+  "T3 Code",
+  "Cloudflare security-audit skill",
+  "Sherlock (sherlock-project/sherlock)",
+  "OpenMausBot",
+  "Magpie",
+  "Instagram",
+  "X",
+  "Discord",
+  "Reddit",
+  "Spotify",
+  "TikTok",
+  "Pinterest",
+  "Twitch",
+  "YouTube",
+  "GTA 6",
+  "Codex",
+  "Claude Code",
+  "DeepSeek",
+  "Kimi"
+ ],
+ "layout": {
+  "logo": "sansser /tech wordmark top-centre ~6%",
+  "nav": "9 progress dots ~10.5%",
+  "card": "white rounded card 16-58%, rank pill #N top-right green",
+  "caption": "~63%",
+  "footer": "sansser.ai | sansser | /sansser.com ~82%"
+ },
+ "captions": {
+  "style": "word-by-word, new word blur-in, key word green highlight box (\"fastest\")",
+  "lines": 1,
+  "case": "sentence case",
+  "tag": "judged"
+ },
+ "assets_needed": [
+  {
+   "name": "bar-chart race with logos",
+   "t": [
+    0.3,
+    4.0
+   ]
+  },
+  {
+   "name": "repo card component (icon, title, repo path mono, +N.NK counter, sparkline, rank pill)",
+   "t": [
+    4.0,
+    45.0
+   ]
+  },
+  {
+   "name": "progress dots 1-9",
+   "t": [
+    4.0,
+    45.0
+   ]
+  },
+  {
+   "name": "social-icons orbit ring (10 icons + checks)",
+   "t": [
+    21.7,
+    26.5
+   ]
+  },
+  {
+   "name": "code window thumbnail",
+   "t": [
+    13.7,
+    19.0
+   ]
+  },
+  {
+   "name": "comment box typing",
+   "t": [
+    45.0,
+    52.1
+   ]
+  },
+  {
+   "name": "word-by-word caption component",
+   "t": [
+    0.0,
+    51.0
+   ]
+  },
+  {
+   "name": "footer social links row",
+   "t": [
+    0.0,
+    52.1
+   ]
+  }
+ ]
+}

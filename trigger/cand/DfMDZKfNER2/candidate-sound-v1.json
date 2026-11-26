@@ -1,0 +1,85 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfMDZKfNER2",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.2,
+  "true_peak_dbtp": -0.4,
+  "lra_lu": 1.9,
+  "short_term_max_lufs": -16.0,
+  "standard": "EBU R128 measured"
+ },
+ "tempo": {
+  "bpm": 123.0,
+  "feel": "bpm detection from script; music is almost inaudible under voice so tempo is low-confidence"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.1,
+  "cuts_checked": 10,
+  "median_offset_s": 0.138,
+  "notes": "cuts follow voice phrases, not beats"
+ },
+ "speech": {
+  "speech_ratio": 0.872,
+  "voice_character": "male-range, pitch median 144.6 Hz, very expressive (range 12.57 st), light jitter",
+  "delivery": "very fast, about 235.8 wpm mean, rate class very fast, short gaps (mean 0.33s, none above 0.48s)"
+ },
+ "silence": {
+  "share": 0.037,
+  "usage": "only tail silence 35.64-37.01s",
+  "longest_s": 1.37
+ },
+ "mix": {
+  "voice_over_music": "voice dominant; stems show music at -48.6 LUFS vs vocals -17.2 (31.4 LU gap), music essentially a very quiet bed",
+  "ducking": "not measurable; music so low that ducking is not needed",
+  "music_mood": "unknown: not audible enough to judge from metrics",
+  "music_genre": "unknown",
+  "sfx_density_per_min": 0,
+  "sfx_types": [
+   "unknown: no sfx evidence available from collages or metrics"
+  ],
+  "voice_minus_music_lu": 31.4
+ },
+ "evidence": [
+  {
+   "claim": "Integrated loudness and true peak measured",
+   "t": [
+    0,
+    37.013
+   ]
+  },
+  {
+   "claim": "Voice-to-music gap from demucs stems",
+   "t": [
+    0,
+    37.013
+   ]
+  },
+  {
+   "claim": "Trailing silence",
+   "t": [
+    35.64,
+    37.013
+   ]
+  },
+  {
+   "claim": "Cuts do not lock to beats",
+   "t": [
+    0,
+    37.013
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "estimated",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "SFX and music identity cannot be judged from collages; needs audio analysis on worker."
+}

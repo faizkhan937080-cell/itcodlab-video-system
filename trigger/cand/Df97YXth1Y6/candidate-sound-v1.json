@@ -1,0 +1,85 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-Df97YXth1Y6",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.2,
+  "true_peak_dbtp": -1.9,
+  "lra_lu": 1.7,
+  "short_term_max_lufs": -16.5,
+  "standard": "ITU-R BS.1770 / EBU R128 (pyloudnorm, mono mix)"
+ },
+ "tempo": {
+  "bpm": 92.3,
+  "feel": "detected tempo about 92.3 bpm (19 beats); music character not listened to by Claude"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 1,
+  "median_offset_s": 0.261,
+  "notes": "The one cut (9.93 s) is 0.261 s off the nearest beat: 0 of 1 cuts within 80 ms. Too few cuts to judge sync."
+ },
+ "speech": {
+  "speech_ratio": 0.873,
+  "voice_character": "clear, fast, dramatic narration with wide pitch range (very expressive label)",
+  "delivery": "Fast but fully intelligible with very short gaps (0 pauses over 0.5 s); crisp falling endings; emphasis on 'Couture' and 'wasn't'. Numbers in notes."
+ },
+ "silence": {
+  "share": 0.0,
+  "usage": "No silence: voice and music run continuously with no deliberate pause.",
+  "longest_s": 0
+ },
+ "mix": {
+  "voice_over_music": "voice above a music bed, only 7.3 LU gap so music is clearly audible",
+  "ducking": "unknown (no envelope measured)",
+  "music_mood": "unknown (not listened to); visual style suggests an elegant, cinematic bed (estimated)",
+  "music_genre": "unknown",
+  "sfx_types": [
+   "soft whoosh / paper swish on element swaps and magazine reveal, estimated",
+   "typing / click pop on the selection box at 1.5 s, estimated"
+  ],
+  "voice_minus_music_lu": 7.3
+ },
+ "evidence": [
+  {
+   "claim": "Integrated loudness -17.2 LUFS, peak -1.9 dBTP, LRA 1.7 LU: very even level",
+   "t": [
+    0.0,
+    13.2
+   ]
+  },
+  {
+   "claim": "Voice stem 17.9 LUFS vs music stem 25.2 LUFS (demucs, measuring only)",
+   "t": [
+    0.0,
+    13.2
+   ]
+  },
+  {
+   "claim": "Speech ratio 0.873 with no pause over 0.5 s",
+   "t": [
+    0.0,
+    13.2
+   ]
+  },
+  {
+   "claim": "SFX types are inferred from on-screen motion only",
+   "t": [
+    1.3,
+    9.9
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "measured",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "Claude did not listen; music mood, genre, ducking and SFX are unknown or estimated. Voice (voice.json numbers): pitch median 189.5 Hz, p10-p90 87.8-240.2 Hz, range 17.42 st, label very expressive; tempo mean 185.1 wpm, min 130.4, max 223.9, CV 0.18, rate fast; gaps n=6, mean 0.32 s, max 0.46 s, bins {\"0.15-0.3\": 2, \"0.3-0.6\": 4, \"0.6-1.0\": 0, \"1.0-up\": 0}; sentence endings rising 0 / falling 3 / flat 2; top emphasised words Couture@5.66s, wasn't@6.04s."
+}

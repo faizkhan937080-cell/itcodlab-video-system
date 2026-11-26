@@ -1,0 +1,209 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfkbSDuB04k",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.97,
+  "complete": true,
+  "engine": "auto pass (English)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "countdown listicle",
+  "description": "Hook-ranked-list-CTA: seven items from #1 down by GitHub stars, each one a single line, then comment-keyword CTA"
+ },
+ "hook": {
+  "kind": "result-first, curiosity gap (list reveal)",
+  "duration_s": 3.0,
+  "first_words": "These are the seven Claude skills that got the most GitHub stars",
+  "time_to_value_s": 3.0,
+  "pattern": "These are the <number> <tool> <things> that got the most <metric> in <period>",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "number, ranking basis and free",
+   "start_s": 0.0,
+   "end_s": 6.0,
+   "share": 0.183,
+   "devices": [
+    "number claim",
+    "free angle"
+   ]
+  },
+  {
+   "beat": "item1_2",
+   "purpose": "Cloudflare audit, Matt Pocock skills",
+   "start_s": 6.0,
+   "end_s": 11.5,
+   "share": 0.168,
+   "devices": [
+    "one line benefit per item"
+   ]
+  },
+  {
+   "beat": "item3_5",
+   "purpose": "Ponytail, Impeccable, everything Claude code",
+   "start_s": 11.5,
+   "end_s": 19.5,
+   "share": 0.244,
+   "devices": [
+    "Then ... pattern"
+   ]
+  },
+  {
+   "beat": "item6_7",
+   "purpose": "Anatomy, Hallmark",
+   "start_s": 19.5,
+   "end_s": 28.0,
+   "share": 0.26,
+   "devices": [
+    "Then ... pattern",
+    "vivid metaphor little working machine"
+   ]
+  },
+  {
+   "beat": "cta",
+   "purpose": "comment rank for all seven with install commands",
+   "start_s": 28.0,
+   "end_s": 32.725,
+   "share": 0.144,
+   "devices": [
+    "keyword CTA",
+    "incentive"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "second-person implied; we in CTA",
+  "address_terms": [
+   "you"
+  ],
+  "register": "fast punchy news-ticker explainer",
+  "energy": "high, very fast",
+  "humor": "light dry (AI slot tests)",
+  "formality": "casual",
+  "tone_tags": [
+   "punchy",
+   "curated",
+   "promotional"
+  ]
+ },
+ "language": {
+  "primary": "english",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "AI coding",
+   "GitHub",
+   "design"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "Then Matt Pocock's skills",
+   "Then Ponytail",
+   "Then Impeccable",
+   "and all seven are free"
+  ],
+  "filler_words": [
+   "and",
+   "then"
+  ],
+  "power_words": [
+   "most GitHub stars",
+   "free",
+   "full audit",
+   "way less AI made"
+  ],
+  "jargon_terms": [
+   "Claude skills",
+   "GitHub stars",
+   "install command",
+   "AI slot tests"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 250.5,
+  "words_per_min_overall": 227.3,
+  "speech_ratio": 0.908,
+  "sentence_words_mean": 12.4,
+  "sentence_words_p90": 16.6,
+  "pause_mean_s": 0.2,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 1.83
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   9.8,
+   12.7,
+   15.0,
+   17.8,
+   20.5,
+   23.8
+  ],
+  "pattern_interrupts": "each Then starts a new ranked item every ~2.8 s",
+  "payoff_at_s": 24.5
+ },
+ "cta": {
+  "type": "comment-keyword",
+  "ask": "Comment rank, and we'll send you all seven with the install command for each one",
+  "keyword": "rank",
+  "placement_s": 27.7,
+  "repeats": 1,
+  "incentive": "all seven with install commands"
+ },
+ "evidence": [
+  {
+   "claim": "result-first hook with ranking basis",
+   "quote": "These are the seven Claude skills that got the most GitHub stars in the last 30 days",
+   "t": [
+    0,
+    4
+   ]
+  },
+  {
+   "claim": "free angle",
+   "quote": "and all seven are free.",
+   "t": [
+    4,
+    5.5
+   ]
+  },
+  {
+   "claim": "Then-chain listicle",
+   "quote": "Then Matt Pocock's skills, a whole pack for real engineers.",
+   "t": [
+    9.8,
+    12
+   ]
+  },
+  {
+   "claim": "keyword CTA",
+   "quote": "Comment, rank, and we'll send you all seven with the install command for each one.",
+   "t": [
+    27.7,
+    32
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "measured",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Item times are taken from the events collage bar-visit labels; structure is judged. Transcript text mis-hears are possible (rank may be RANK, Anatomy and Hallmark are read from on-screen cards). Counts like seven are from the spoken line."
+}

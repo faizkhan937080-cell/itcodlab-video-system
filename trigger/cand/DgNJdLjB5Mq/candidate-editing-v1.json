@@ -1,0 +1,234 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgNJdLjB5Mq",
+  "creator": "sansser.ai",
+  "link": "https://www.instagram.com/reel/DgNJdLjB5Mq/"
+ },
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 60.0,
+  "duration_s": 52.1,
+  "orientation": "portrait",
+  "aspect": "9:16"
+ },
+ "cut_rhythm": {
+  "asl_s": 52.1,
+  "median_shot_s": 52.1,
+  "std_shot_s": 0.0,
+  "min_shot_s": 52.1,
+  "max_shot_s": 52.1,
+  "cuts_per_min": 0.0,
+  "pattern": "One continuous 52.1 s motion-graphic canvas, zero detected cuts. Content changes every ~3-6 s inside the same frame: a nine-item countdown (#1..#9) where one white card is swapped per repo, a progress-dot row (1..9) advances, and a word-by-word caption runs underneath.",
+  "pace_curve": [
+   {
+    "part": "opening third",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "middle third",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing third",
+    "cuts_per_min": 0.0
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ms": 1.0
+  },
+  "camera_angle": "none: flat designed graphics, no camera",
+  "composition": "centered single card, vertically stacked: logo top, content card mid, caption lower third, footer links near bottom",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "other",
+   "share": 1.0,
+   "typical_duration_s": 0.4,
+   "note": "no cuts: card swap inside one canvas, old card slides up + blur-fades while new card scales/fades in; progress dots advance"
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "none"
+   ],
+   "intensity": "static"
+  },
+  "elements": {
+   "easing": "ease-out / soft spring settle on card entry, slight overshoot on pills (judged from frame positions)",
+   "typical_duration_s": 0.4,
+   "stagger_s": 0.1
+  },
+  "speed_ramps": "none",
+  "notes": "animated numeric counters (stars count up), bar growth, scan beam, cursor flights; real 2D motion graphics, not stills with zoom"
+ },
+ "text": {
+  "present": true,
+  "role": "word-by-word caption + card titles + big numeral",
+  "font_class": "sans",
+  "weight": "bold captions (~700), light (~300) big numerals",
+  "case": "sentence case",
+  "position": "caption centered ~63% of frame height; footer links ~81%",
+  "size_class": "caption ~4% of frame height; numeral ~8%",
+  "animation_in": "each new word blur-to-sharp fade-in (blurred 1-2 words trailing at line end); key words in green highlight box (e.g. \"fastest\")",
+  "animation_out": "whole caption line blur-fades out between sentences",
+  "avg_on_screen_s": 1.5,
+  "words_per_caption": 4,
+  "safe_zone_respected": false,
+  "safe_zone_note": "caption at ~63% is just above the strict bottom 35% line; footer links at ~81% are inside strict bottom zone but outside hard 14.6% zone"
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#F6F9F8",
+    "share": 0.873
+   },
+   {
+    "hex": "#CCD6D1",
+    "share": 0.102
+   },
+   {
+    "hex": "#87A99C",
+    "share": 0.025
+   }
+  ],
+  "grade": {
+   "look": "clean light UI: near-white background, deep emerald-green accent gradients, soft green glow blobs, black code windows; no film grade",
+   "contrast": "low",
+   "temperature": "neutral",
+   "saturation_mean": 0.035,
+   "brightness_mean": 0.935
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "logo top ~5%; content card 12-45%; caption ~63%; footer ~81%",
+  "framing_notes": "top: \"sansser /tech\" wordmark centred; bottom footer: sansser.ai | sansser (YouTube) | /sansser.com; screen-recording/UI shown as cards inside the canvas"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "banner",
+   "kinetic_text",
+   "image",
+   "video"
+  ],
+  "typical_scene_s": 3.0,
+  "spring": {
+   "damping": 18,
+   "stiffness": 140,
+   "note": "estimated, not recoverable"
+  }
+ },
+ "evidence": [
+  {
+   "claim": "Opening bar-chart race: 10 vertical rounded green gradient bars with app/repo logos on top, values 49.3K 47.6K 32.7K 30.2K 28.3K 22.9K 22.2K 20.1K 12.0K; small pill \"Stars gained, last 30 days\" with GitHub icon; caption word \"fastest\" in a green highlight box (e1)",
+   "t": [
+    0.3,
+    1.0
+   ]
+  },
+  {
+   "claim": "Card #1 \"T3 Code\" (+44.5K, mini bar sparkline, \"GitHub stars this month\"), dots row with dot 1 active, caption \"T3\" (e2)",
+   "t": [
+    4.0,
+    4.7
+   ]
+  },
+  {
+   "claim": "Card #2 \"dsh free model\" +45.6K, dot 2 active, caption \"Then\" (e3)",
+   "t": [
+    9.7,
+    10.2
+   ]
+  },
+  {
+   "claim": "Card #3 \"Security Audit\" +32.7K with a dark code-window thumbnail under it, dot 3 active, caption \"Cloudflare's\" (e4)",
+   "t": [
+    13.7,
+    15.0
+   ]
+  },
+  {
+   "claim": "Same card #3, caption \"which checks your\" (e5); value digits count up between samples",
+   "t": [
+    16.5,
+    16.8
+   ]
+  },
+  {
+   "claim": "Card #6 \"Sherlock\" +21.5K, dot 6 active, caption \"After\" (e7)",
+   "t": [
+    21.7,
+    22.8
+   ]
+  },
+  {
+   "claim": "Same Sherlock card, now +22.9K (counter ticked up), #6 pill, ring of ten social icons with green check badges orbiting an \"@username\" search pill, caption line \"social accounts across sites\" blurred mid word-in (c1 collage)",
+   "t": [
+    26.1,
+    26.1
+   ]
+  },
+  {
+   "claim": "Card #7 \"OpenMausBot\" +21.4K, dot 7 active, caption \"Then\" (e8)",
+   "t": [
+    26.5,
+    27.0
+   ]
+  },
+  {
+   "claim": "Card #8 \"Magpie\" +18.6K, dot 8 active, caption \"and\" (e9)",
+   "t": [
+    30.8,
+    31.2
+   ]
+  },
+  {
+   "claim": "Card #9 headed \"The wildest one\" while the body is still empty/loading, dot 9 active, caption \"from your menu bar\" (e10)",
+   "t": [
+    35.3,
+    35.7
+   ]
+  },
+  {
+   "claim": "Card replaced by a comment box \"Add a comment...|\" with typing cursor, caption \"week before Rockstar notices\" (e12)",
+   "t": [
+    45.0,
+    45.3
+   ]
+  },
+  {
+   "claim": "footer link row constant across the reel (bottom ~81%)",
+   "t": [
+    0.0,
+    52.1
+   ]
+  },
+  {
+   "claim": "single static light background with green glow blobs for whole runtime",
+   "t": [
+    0.0,
+    52.1
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "judged",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ },
+ "notes": "cuts_per_min = 0 is the detector result for scenes; real change rate is event-based (see evidence). Event ids in collage_events labels are the proof."
+}

@@ -1,0 +1,214 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgNYH7ThrWb",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 338,
+  "height": 582,
+  "fps": 30.0,
+  "duration_s": 23.467,
+  "orientation": "portrait",
+  "aspect": "338:582"
+ },
+ "cut_rhythm": {
+  "asl_s": 5.867,
+  "median_shot_s": 3.6,
+  "std_shot_s": 5.113,
+  "min_shot_s": 1.666,
+  "max_shot_s": 14.6,
+  "cuts_per_min": 7.67,
+  "pattern": "Four long designed scenes, hard cuts at 3.17 / 4.83 / 8.87 s; every scene is one continuous 3D / UI motion-graphic world with its own internal animation (typed captions, camera spin). Slow-fast-slow: two short scenes (3.17 s, 1.67 s) then a 4.03 s spin scene, then one 14.6 s calm cream scene to the end card.",
+  "beat_synced_share": 0.0,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 15.34
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 7.67
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 0.0
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ecu": 0.05,
+   "cu": 0.2,
+   "mcu": 0.1,
+   "ms": 0.55,
+   "ws": 0.1,
+   "ews": 0.0
+  },
+  "camera_angle": "Graphic / design-world: phone seen from above and tilted (0-3.2 s), flat-on UI cards with tilted 3D perspective (3.2-4.8 s), spinning interior of a phone-shaped room with the camera inside (4.8-8.9 s), flat-on cream poster layout (8.9-23.5 s).",
+  "composition": "Centred vertical stacks. Dark scenes: object top-centre (eye, phones), caption block lower-centre. Cream scenes: barcode top, caption mid-upper, search bar, statue head lower half; caption small and centred in empty space at 16-21 s.",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "hard_cut",
+   "share": 1.0,
+   "typical_duration_s": 0.0
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "push-in (scene 2 zoom in)",
+    "pull-out + pan left with spinning 3D rotation (scene 3)",
+    "slow pan down + zoom in (scene 4)",
+    "3D phone / card tilt"
+   ],
+   "intensity": "medium"
+  },
+  "elements": {
+   "easing": "ease-out / spring settle for cards and typed text; fast spinning with motion blur in scene 3",
+   "typical_duration_s": 0.5,
+   "stagger_s": 0.1
+  },
+  "speed_ramps": "none detected; scene-3 spin shows heavy motion blur (judged from frames 5.4, 6.8)"
+ },
+ "text": {
+  "present": true,
+  "role": "kinetic captions that mirror the voice word-for-word (typed in a search bar, word-by-word reveal, highlighted key phrase)",
+  "font_class": "sans",
+  "weight": "bold for key words, light/regular for connectors; italic bold used for the hook line",
+  "case": "sentence case, Title Case on highlighted phrase ('Another Creator's', 'It Goes')",
+  "position": "centre, mid-frame; hook block at 55-82% height",
+  "size_class": "small connector words + large emphasised words (size contrast about 1:3)",
+  "animation_in": "letter-by-letter typing in a search field (3.4-4.6 s); word reveal with highlight box wipe (6.8 s); blinking caret box around 'Ask Why it never' (8.3 s); word swap",
+  "animation_out": "cut / scene change",
+  "avg_on_screen_s": 1.6,
+  "words_per_caption": 3.5,
+  "safe_zone_respected": false
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#EBE8DB",
+    "share": 0.596
+   },
+   {
+    "hex": "#061008",
+    "share": 0.117
+   },
+   {
+    "hex": "#DDDCD7",
+    "share": 0.106
+   },
+   {
+    "hex": "#07130A",
+    "share": 0.063
+   },
+   {
+    "hex": "#266047",
+    "share": 0.042
+   },
+   {
+    "hex": "#8A978E",
+    "share": 0.024
+   }
+  ],
+  "grade": {
+   "look": "Scene 1-2: near-black bottle-green background with white type, one orange asterisk accent (about #E8704F). Scene 3-4: warm cream / off-white (#EBE8DB) with black type, green (#266047) and mint accents plus orange-red accent. Flat, clean, graphic; no film grade.",
+   "contrast": "high",
+   "temperature": "neutral",
+   "saturation_mean": 0.405,
+   "brightness_mean": 0.435
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "Hook caption (2.7 s) sits at about 82% height, inside the bottom 35% unsafe zone; most later captions sit at 20-55% height, inside the safe area.",
+  "framing_notes": "Whole frame is the already-cropped inner edited video (screen-in-scene reel; monitor, room and desk ignored). Dark intro -> light body is a deliberate contrast flip at 4.83 s."
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "title",
+   "banner",
+   "image",
+   "video"
+  ],
+  "typical_scene_s": 3.6,
+  "notes": "Needs 3D phone-room scene (three.js / Remotion ThreeCanvas), search-bar typing component, stacked cards with perspective, highlight-box word reveal, barcode + orange asterisk line-draw (12.3 s), marble statue cut-out with bounding-box overlay. Fonts and easing not recoverable: best candidates only."
+ },
+ "evidence": [
+  {
+   "claim": "Scene 1 is a dark phone lock screen from above with floating '?' tiles; caption builds 'Ever worn' -> 'Ever worn a style' -> 'that was never cut for you'",
+   "scenes": [
+    1
+   ],
+   "t": [
+    0.5,
+    2.7
+   ],
+   "quote": "Ever worn a style / that was never cut for you"
+  },
+  {
+   "claim": "Scene 2 is a UI world: 3D eye above a search bar that types the voice line, plus three stacked cards (Clean Cuts, Moody Cinematic, Viral Templates) with bullet lists",
+   "scenes": [
+    2
+   ],
+   "t": [
+    3.4,
+    4.6
+   ],
+   "quote": "This is the trend trap in a nutshell..."
+  },
+  {
+   "claim": "Scene 3 is the interior of a spinning phone-shaped room with heavy motion blur; poster-phones show 'Same Edit', 'Most', 'Copying her way in', '47'; caption box highlights 'Another Creator's' and 'Ask Why it never'",
+   "scenes": [
+    3
+   ],
+   "t": [
+    5.4,
+    8.3
+   ],
+   "quote": "You clone Another Creator's look / then Ask Why it never clicks"
+  },
+  {
+   "claim": "Scene 4 is a cream poster layout: barcode, search bar, blindfolded marble statue with bounding-box and binary columns; later a very sparse centred caption and an orange asterisk end card 'Edited by CI'",
+   "scenes": [
+    4
+   ],
+   "t": [
+    11.1,
+    21.3
+   ],
+   "quote": "they only amplify / even if It Goes / Edited by CI"
+  },
+  {
+   "claim": "Event frames: 3.0-3.2 s eye UI still, 4.8-5.0 s tilted phone close, 8.7-9.0 s blank cream before the poster builds, 12.3-12.5 s barcode with line drawing to two orange nodes",
+   "scenes": [
+    2,
+    3,
+    4
+   ],
+   "t": [
+    3.0,
+    12.5
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "estimated",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "judged",
+  "layout": "judged",
+  "recipe": "estimated",
+  "evidence": "judged"
+ },
+ "notes": "Palette shares, brightness and saturation copied from pack. Grade look and accent hex are read by eye from collages. Cut_rhythm is on 4 scenes only (3 cuts), so cuts_per_min is low; the real editorial density is the internal animation in each scene. The frame is a cropped inner video of a screen-in-scene reel; monitor and room not described."
+}

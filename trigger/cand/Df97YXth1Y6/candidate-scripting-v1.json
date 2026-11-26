@@ -1,0 +1,200 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-Df97YXth1Y6",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.98,
+  "complete": true,
+  "engine": "whisper auto pass (English, roman)",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Rise-and-legacy mini biography (story arc)",
+  "description": "Contrast hook about a woman who never begged for fame, three escalating power statements, closing callback naming her legacy."
+ },
+ "hook": {
+  "kind": "contrarian claim + story-open",
+  "duration_s": 3.2,
+  "first_words": "She never begged for fame yet every single camera went wild Grace",
+  "time_to_value_s": 3.2,
+  "pattern": "'She never [wanted X], yet [huge result]'",
+  "open_loop": true,
+  "first_word_s": 0.0
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "contrast: no begging for fame, yet cameras went wild",
+   "start_s": 0.0,
+   "end_s": 3.2,
+   "devices": [
+    "contrast",
+    "hyperbole ('every single camera')"
+   ],
+   "share": 0.242
+  },
+  {
+   "beat": "turn",
+   "purpose": "grace reframed as a weapon",
+   "start_s": 3.2,
+   "end_s": 5.5,
+   "devices": [
+    "metaphor"
+   ],
+   "share": 0.174
+  },
+  {
+   "beat": "rise",
+   "purpose": "couture was not a hobby, it became a kingdom",
+   "start_s": 5.5,
+   "end_s": 9.8,
+   "devices": [
+    "contrast (hobby vs kingdom)",
+    "metaphor"
+   ],
+   "share": 0.326
+  },
+  {
+   "beat": "crowning",
+   "purpose": "external validation: crowned the icon",
+   "start_s": 9.8,
+   "end_s": 11.5,
+   "devices": [
+    "authority"
+   ],
+   "share": 0.129
+  },
+  {
+   "beat": "legacy close",
+   "purpose": "callback line ending on the name",
+   "start_s": 11.5,
+   "end_s": 13.2,
+   "devices": [
+    "callback",
+    "name drop"
+   ],
+   "share": 0.129
+  }
+ ],
+ "voice": {
+  "person": "third person (she / her)",
+  "address_terms": [],
+  "register": "dramatic documentary / fashion-biography narration",
+  "energy": "fast, crisp, confident",
+  "humor": "none",
+  "formality": "elevated, polished",
+  "tone_tags": [
+   "dramatic",
+   "glamorous",
+   "epic",
+   "mythologising"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "fashion",
+   "couture",
+   "celebrity"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "She never begged for fame",
+   "it became her kingdom",
+   "Every runway still whispers"
+  ],
+  "filler_words": [],
+  "power_words": [
+   "never",
+   "sharpest weapon",
+   "kingdom",
+   "icon",
+   "crowned",
+   "whispers"
+  ],
+  "jargon_terms": [
+   "couture",
+   "runway"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 182.3,
+  "words_per_min_overall": 159.1,
+  "speech_ratio": 0.873,
+  "sentence_words_mean": 7,
+  "sentence_words_p90": 9.8,
+  "pause_mean_s": 0.35,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 0.0
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   3.2,
+   5.5,
+   9.9
+  ],
+  "pattern_interrupts": "Selection-box pop on 'fame' (1.5 s), blur dissolve between portraits (3.2 s), framed-photo and cut-out figure reveals (5.3, 7.2 s).",
+  "payoff_at_s": 11.6
+ },
+ "cta": {
+  "type": "none",
+  "ask": "",
+  "placement_s": 0,
+  "repeats": 0,
+  "incentive": "none"
+ },
+ "evidence": [
+  {
+   "claim": "Contrast hook with hyperbole",
+   "quote": "She never begged for fame, yet every single camera went wild.",
+   "t": [
+    0.0,
+    3.2
+   ]
+  },
+  {
+   "claim": "Metaphor line: grace as a weapon",
+   "quote": "Grace became her sharpest weapon.",
+   "t": [
+    3.2,
+    5.5
+   ]
+  },
+  {
+   "claim": "Hobby-vs-kingdom contrast; 'Couture' is the strongest emphasised word at 5.66 s",
+   "quote": "Couture wasn't her hobby, it became her kingdom.",
+   "t": [
+    5.5,
+    9.8
+   ]
+  },
+  {
+   "claim": "Closing callback with the name",
+   "quote": "Every runway still whispers Valentina Noir.",
+   "t": [
+    11.5,
+    13.2
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "judged",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "measured"
+ },
+ "notes": "Beat times are anchored on caption frames and scene cut (no per-sentence times in the pack); treat them as +-0.5 s. No CTA in this reel: it is a pure story/brand piece. 'Valentina Noir' and 'Maison Noir' are fictional names from the reel. Voice (voice.json numbers): pitch median 189.5 Hz, p10-p90 87.8-240.2 Hz, range 17.42 st, label very expressive; tempo mean 185.1 wpm, min 130.4, max 223.9, CV 0.18, rate fast; gaps n=6, mean 0.32 s, max 0.46 s, bins {\"0.15-0.3\": 2, \"0.3-0.6\": 4, \"0.6-1.0\": 0, \"1.0-up\": 0}; sentence endings rising 0 / falling 3 / flat 2; top emphasised words Couture@5.66s, wasn't@6.04s."
+}

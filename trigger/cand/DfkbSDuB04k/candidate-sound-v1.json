@@ -1,0 +1,78 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfkbSDuB04k",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.1,
+  "true_peak_dbtp": -0.4,
+  "lra_lu": 2.4,
+  "short_term_max_lufs": -15.5,
+  "standard": "ITU-R BS.1770 / EBU R128 (social-style level, about -17 LUFS)"
+ },
+ "tempo": {
+  "bpm": 117.5,
+  "feel": "upbeat steady pulse; bpm 117.5 from detector"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.0,
+  "cuts_checked": 0,
+  "median_offset_s": 0.0,
+  "notes": "no cuts exist, so cut-to-beat sync cannot be checked; bar visits at 9.8, 12.7, 15.0, 17.8, 20.5, 23.8 s land every ~2.8 s, about one visit per 5 beats at the measured bpm (estimated)"
+ },
+ "speech": {
+  "speech_ratio": 0.908,
+  "voice_character": "pitch median 160.1 Hz, very expressive (12.92 st)",
+  "delivery": "very fast (250.2 mean wpm, 194.8-369.2); 8 gaps all 0.15-0.3 s; endings mostly falling"
+ },
+ "silence": {
+  "share": 0.03,
+  "usage": "last 1 s (31.76-32.75) is silent tail",
+  "longest_s": 0.99
+ },
+ "mix": {
+  "voice_over_music": "voice dominant, music far below",
+  "ducking": "music constant and very low (-38.8 LUFS stem vs voice -17.1)",
+  "music_mood": "energetic, modern tech countdown",
+  "music_genre": "electronic bed (estimated, not identified)",
+  "sfx_density_per_min": 0,
+  "sfx_types": [
+   "likely whoosh on camera moves and pop on value labels (not verified)"
+  ],
+  "voice_minus_music_lu": 21.7
+ },
+ "evidence": [
+  {
+   "claim": "voice 21.7 LU above music stem",
+   "t": [
+    0,
+    32.7
+   ]
+  },
+  {
+   "claim": "silent tail at end",
+   "t": [
+    31.76,
+    32.75
+   ]
+  },
+  {
+   "claim": "camera moves every ~2.8 s give a rhythm to score",
+   "t": [
+    5.7,
+    27.7
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "measured",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "judged"
+ },
+ "notes": "Sfx not listened to; types listed as likely only. Music not identified."
+}

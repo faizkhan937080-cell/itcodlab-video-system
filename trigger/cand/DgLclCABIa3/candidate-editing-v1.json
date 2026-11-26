@@ -1,0 +1,193 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DgLclCABIa3",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 798,
+  "height": 1594,
+  "fps": 60.0,
+  "duration_s": 10.0,
+  "orientation": "portrait",
+  "aspect": "9:16 (cropped inner screen)"
+ },
+ "cut_rhythm": {
+  "asl_s": 10.0,
+  "median_shot_s": 10.0,
+  "std_shot_s": 0.0,
+  "min_shot_s": 10.0,
+  "max_shot_s": 10.0,
+  "cuts_per_min": 0.0,
+  "pattern": "single continuous scene (no detected cuts); rhythm comes from animated objects and caption changes inside one board (events about 2.2, 5.2, 7.5s)",
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 0.0
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 0.0
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ecu": 0,
+   "cu": 0,
+   "mcu": 0,
+   "ms": 0,
+   "ws": 0,
+   "ews": 1.0
+  },
+  "camera_angle": "none: designed 3D-render/motion-graphic card",
+  "composition": "centered subject object (stone bust, rabbit, carousel horse) under centered caption; light rounded card tilted in perspective on dark maroon panel; bottom ~15% fixed CTA banner",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "other",
+   "share": 1.0,
+   "typical_duration_s": 0.3
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "subtle perspective tilt of card (judged)"
+   ],
+   "intensity": "slow"
+  },
+  "elements": {
+   "easing": "ease-out with soft blur reveal on words",
+   "typical_duration_s": 0.3
+  },
+  "speed_ramps": "none seen"
+ },
+ "text": {
+  "present": true,
+  "role": "kinetic caption plus fixed CTA banner",
+  "font_class": "mixed",
+  "weight": "serif regular for small lead-in, bold geometric sans (Poppins-like) for emphasis words",
+  "case": "sentence case; CTA title case",
+  "position": "centered mid-card (about y 25-35%); CTA banner bottom",
+  "size_class": "medium on card, large 'Full Guide'",
+  "animation_in": "word-by-word fade/blur-in; pink emphasis words ('six times', '45 million'); 'Today PETER RABBIT' italic + black caps",
+  "animation_out": "swap on next beat",
+  "avg_on_screen_s": 2.5,
+  "words_per_caption": 4.0,
+  "safe_zone_respected": false
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#F0E7E6",
+    "share": 0.716
+   },
+   {
+    "hex": "#3D232C",
+    "share": 0.152
+   },
+   {
+    "hex": "#AC9A9B",
+    "share": 0.132
+   }
+  ],
+  "grade": {
+   "look": "soft pinkish-white studio render, dark maroon accent, magenta/pink emphasis, orange-coral CTA keyword",
+   "contrast": "medium",
+   "temperature": "warm",
+   "saturation_mean": 0.167,
+   "brightness_mean": 0.717
+  }
+ },
+ "layout": {
+  "orientation": "portrait",
+  "safe_zones": "CTA banner occupies the bottom ~15% which is inside the platform bottom danger zone",
+  "framing_notes": "analysed video is the cropped inner edited video only (screen_in_scene); monitor and room ignored. Dark corner brackets/chevrons at card corners, thin crosshair guide lines, dotted circle around carousel horse, dot grid behind rabbit."
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "image",
+   "banner"
+  ],
+  "typical_scene_s": 10.0,
+  "spring": {
+   "damping": 16,
+   "stiffness": 100,
+   "mass": 1
+  },
+  "notes": "3D-rendered stone-sculpture objects per beat (bust with pink silk bow, rabbit, Beatrix Potter profile bust on dark square, carousel horse) each with a graphic device (crosshair, dot grid, dotted ring, corner brackets). Background card with diagonal stripe texture and giant faint word 'POTTER'. Fixed bottom banner 'Comment \"CLAUDE\" For The Full Guide' over code-line texture. Spring values estimated."
+ },
+ "evidence": [
+  {
+   "claim": "Opening: stone bust with pink bow, serif 'Her first book was rejected' + pink 'six times', faint POTTER word behind",
+   "scenes": [
+    1
+   ],
+   "t": [
+    0,
+    2.2
+   ]
+  },
+  {
+   "claim": "Rabbit sculpture on dot grid with 'Today PETER RABBIT has sold over 45 million copies'",
+   "scenes": [
+    1
+   ],
+   "t": [
+    2.2,
+    5.2
+   ]
+  },
+  {
+   "claim": "Beatrix Potter profile bust on dark square with thin curved lines",
+   "scenes": [
+    1
+   ],
+   "t": [
+    5.2,
+    7.5
+   ]
+  },
+  {
+   "claim": "Carousel horse in dotted ring with corner brackets, 'she was selling'",
+   "scenes": [
+    1
+   ],
+   "t": [
+    7.5,
+    10
+   ]
+  },
+  {
+   "claim": "CTA banner constant across all frames",
+   "scenes": [
+    1
+   ],
+   "t": [
+    0,
+    10
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "estimated",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ },
+ "notes": "Event times from collage_events (2.2-2.3, 5.2-5.5, 7.5-7.8). Final frames after 8.5s (the 'wonder of childhood' line) not shown in any collage: unknown."
+}
