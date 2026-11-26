@@ -1,0 +1,107 @@
+{
+ "topic": "baoli (stepwell) kyun bani",
+ "hook_formula": "028-style pattern interrupt + curiosity gap (ruko + paani bhaag raha hai)",
+ "creator_ref": "mildly.elsewhere reel-Df9trJcGWZO",
+ "text": "Ruko, aap registan mein kuan khodo, toh paani door kyun bhaagta hai? Barish mein paani upar hota hai, bas jhuko aur bhar lo. Par garmi mein wo terah manzil neeche chala jaata hai. Rassi chhoti padti hai, toh aap side mein seedhiyan kaat dete ho aur neeche utarte ho. Par ruko, ret aapki seedhiyan nigal leti hai, deewarein dhah jaati hain. Ab kya karoge? Aap poora gadda patthar ke bloc se bharte ho, bina cement ke. Ab paani darraron se andar aata hai. Par ek aur musibat, poora shehar aa gaya, aur ek seedhi par traffic jam lag gaya! Toh aap teen taraf zigzag seedhiyan kaat dete ho, aur sainkdon log ek saath chadh sakte hain. Aakhir mein ye kuan terah manzil gehra hai, aur isme saadhe teen hazaar seedhiyan hain. Sabse ajeeb baat, neeche upar se paanch degree thanda hota hai, isliye garmi mein shehar yahin aaram karta tha. Isliye ye kuan ulte pyramid jaisa dikhta hai. Is video ko share karo, us dost ko jo kehta hai kuan bas gadda hota hai!",
+ "words": 176,
+ "target_seconds": 58,
+ "wpm_target": 188,
+ "facts": [
+  {
+   "number": "terah",
+   "source": "https://en.wikipedia.org/wiki/Chand_Baori",
+   "claim": "13 floors"
+  },
+  {
+   "number": "teen",
+   "source": "https://en.wikipedia.org/wiki/Chand_Baori",
+   "claim": "three sides zigzag / three thousand"
+  },
+  {
+   "number": "hazaar",
+   "source": "https://en.wikipedia.org/wiki/Chand_Baori",
+   "claim": "3,500 steps (saadhe teen hazaar)"
+  },
+  {
+   "number": "sainkdon",
+   "source": "https://en.wikipedia.org/wiki/Chand_Baori",
+   "claim": "hundreds of people (reference reel)"
+  },
+  {
+   "number": "paanch",
+   "source": "https://en.wikipedia.org/wiki/Chand_Baori",
+   "claim": "~5 C cooler at bottom (sources say 5-6 C; reel says 10 C)"
+  }
+ ],
+ "note": "WebSearch tool not available to this agent: facts from reference transcript + common knowledge; URLs listed need a check before final.",
+ "ref": {
+  "available": true,
+  "pass_used": "auto",
+  "coverage_ratio": 0.99,
+  "complete": true,
+  "words": 181,
+  "words_per_min_speaking": 219.9,
+  "words_per_min_overall": 195.2,
+  "speech_ratio": 0.888,
+  "pauses": {
+   "count_gt_0_5s": 8,
+   "mean_s": 0.59,
+   "max_s": 0.76
+  },
+  "sentences": {
+   "count": 13,
+   "words_mean": 13.9,
+   "words_median": 13.0,
+   "words_p90": 17.6
+  },
+  "questions_per_min": 0.0,
+  "exclamations_per_min": 0.0,
+  "numbers_per_min": 4.31,
+  "script_mix": {
+   "devanagari_share": 0.0,
+   "latin_share": 1.0
+  },
+  "second_person_per_100w": 5.52,
+  "first_person_per_100w": 0.0,
+  "fillers_per_100w": 3.31,
+  "cta_words": [
+   "like"
+  ],
+  "repeated_phrases": [
+   {
+    "phrase": "cut steps down",
+    "count": 2
+   },
+   {
+    "phrase": "on your steps",
+    "count": 2
+   },
+   {
+    "phrase": "so you cut",
+    "count": 2
+   },
+   {
+    "phrase": "the whole town",
+    "count": 2
+   },
+   {
+    "phrase": "whole town comes",
+    "count": 2
+   },
+   {
+    "phrase": "you cut steps",
+    "count": 2
+   }
+  ],
+  "repeated_sentences": [],
+  "unique_sentence_share": 1.0,
+  "hook": {
+   "first_word_s": 0.0,
+   "words_in_first_3s": 12.4,
+   "words_in_first_5s": 19.7,
+   "first_12_words": "If you dig a well in the desert the water keeps sinking"
+  },
+  "vocabulary_note": "roman"
+ },
+ "verified": false
+}

@@ -9,7 +9,7 @@ import time
 from pathlib import Path
 
 from .mem import has_secret
-from . import tripwire
+from . import tripwire, braingate
 
 LOG = Path.home() / ".cache" / "itcod" / "guard.log"
 TEXT_EXT = {".py", ".md", ".json", ".jsonl", ".log", ".txt", ".csv", ".tsx", ".ts", ".js", ".yml", ".yaml", ".sh", ".html"}
@@ -130,8 +130,10 @@ def main():
     except ValueError:
         return 0
     tool, inp = data.get("tool_name", ""), data.get("tool_input", {}) or {}
-    reason = None
-    if tool == "Bash":
+    reason = braingate.gate(tool, inp)
+    if reason:
+        pass
+    elif tool == "Bash":
         reason = check_bash(inp.get("command", ""))
     elif tool in ("Write", "Edit"):
         reason = (check_write(inp.get("content") or inp.get("new_string") or "")

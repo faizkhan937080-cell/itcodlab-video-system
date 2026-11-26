@@ -281,6 +281,16 @@ class Worker:
                     os._exit(75)
         threading.Thread(target=watch, daemon=True).start()
 
+    def _stop_requested(self, since):
+        """Faiz/Claude can end a stuck or idle worker from anywhere (no PC, no GitHub cancel): put jobs/STOP.json
+        {"ts": <epoch seconds>} on Drive. Only a STOP newer than this worker's start counts, so old ones never matter."""
+        try:
+            if not self.storage.exists("jobs/STOP.json"):
+                return False
+            return float(self.storage.read_json("jobs/STOP.json").get("ts", 0)) > since
+        except Exception:  # noqa: BLE001
+            return False
+
     def run_until_idle(self, max_minutes=330, grace_s=180, warm_s=None):
         """For GitHub Actions / one-shot hosts: work until nothing changes for `grace_s` seconds (new inbox jobs,
         approvals or candidates that arrive meanwhile are still picked up), then return so the machine can stop.
@@ -293,8 +303,12 @@ class Worker:
         upd = time.time()
         worked = False
         self.start_watchdog()
+        started = time.time()
         while time.time() < end:
             beat()
+            if time.time() - upd >= 120:     # a job dropped after a code push must meet the NEW code (2026-11-12 race)
+s now, open jobs resume on the next run")
+                return last or []
             if time.time() - upd >= 120:     # a job dropped after a code push must meet the NEW code (2026-11-12 race)
                 upd = time.time()
                 try:

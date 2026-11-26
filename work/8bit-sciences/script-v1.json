@@ -1,0 +1,65 @@
+{
+ "topic": "Bruise (neel): ek chot ke baad 14 din mein rang kyun badalta hai",
+ "why_this_topic": "Same format as blister: cause -> damage -> body response -> time jumps with DAY counter. Bruise gives a natural colour change per day (red, purple, green, yellow) so DAY counter carries the story; same skin cross-section, same immune cells.",
+ "hook_formula": "visual-only: rewind icon then ball hits skin; on-screen 1-2 word pixel hook 'OUCH' at 0.5 s; voice sting 'Hmm'",
+ "creator_ref": "8bit_sciences reel-DgJre5hyNYW",
+ "text": "Hmm? Aapko chot lagi, ab andar kya hota hai? Das din.",
+ "words": 11,
+ "target_seconds": 25,
+ "wpm_target": 0,
+ "onscreen_labels": [
+  "OUCH",
+  "CAPILLARY",
+  "BLOOD",
+  "MACROPHAGE",
+  "BILIVERDIN",
+  "BILIRUBIN",
+  "HEALED"
+ ],
+ "day_counter": [
+  "DAY 1",
+  "DAY 3",
+  "DAY 5",
+  "DAY 10",
+  "DAY 14"
+ ],
+ "facts": [
+  {
+   "number": "1",
+   "claim": "Day 1: red/dark red, blood from broken capillaries pools in tissue",
+   "source": "https://en.wikipedia.org/wiki/Bruise",
+   "status": "to verify"
+  },
+  {
+   "number": "3-5",
+   "claim": "purple/blue as oxygen leaves the trapped haemoglobin",
+   "source": "https://en.wikipedia.org/wiki/Bruise",
+   "status": "to verify"
+  },
+  {
+   "number": "das",
+   "claim": "green (biliverdin) then yellow/brown (bilirubin/hemosiderin)",
+   "source": "https://en.wikipedia.org/wiki/Bruise",
+   "status": "to verify"
+  },
+  {
+   "number": "das",
+   "claim": "most bruises fade in about two weeks",
+   "source": "https://www.nhs.uk/conditions/bruises/",
+   "status": "to verify"
+  },
+  {
+   "number": "note",
+   "claim": "colour-by-day is a rough guide, varies by person and depth (Wikipedia warns against exact dating)",
+   "status": "keep claim loose: 'about'"
+  }
+ ],
+ "note": "WebSearch not used in this run: facts from common knowledge, URLs listed MUST be checked before final. Narration is intentionally ~zero (reference has one word). DEVIATION: strict clone = 'Hmm.' only (gate BLOCKS: no you/question/number in hook, retention). v1 adds about 10 words in 3 voice stings (hook at 0.6 s, DAY 3 and DAY 14) to pass the gate; Faiz may choose strict silent (gate-check --faiz-ok).",
+ "ref": {
+  "available": true,
+  "coverage_ratio": 0.08,
+  "pass_used": "auto",
+  "fast": 2
+ },
+ "verified": false
+}

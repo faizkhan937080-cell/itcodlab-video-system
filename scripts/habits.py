@@ -122,8 +122,12 @@ def install_global_hook(root=ROOT):
                        "hooks": [{"type": "command", "command": cd + "python3 -m scripts.guard"}]},
         "UserPromptSubmit": {"hooks": [{"type": "command", "command": cd + "./run check --quiet"}]},
         "Stop": {"hooks": [{"type": "command", "command": cd + "./run cost claude-auto"}]},   # counts Claude tokens after every turn
+        "PostToolUse": {"matcher": "Bash|Write|Edit|SendUserFile",
+                        "hooks": [{"type": "command", "command": cd + "python3 -m scripts.autofeed"}]},   # minor events -> shared brain log
     }
     marker = {"PreToolUse": "scripts.guard", "UserPromptSubmit": "run check", "Stop": "cost claude-auto"}
+    changed = []
+cripts.autofeed"}
     changed = []
     for ev, entry in want.items():
         cur = hooks.setdefault(ev, [])

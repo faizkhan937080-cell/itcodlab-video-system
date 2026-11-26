@@ -1,0 +1,29 @@
+{
+ "name": "8bit_sciences",
+ "from_ref": "reel-DgJre5hyNYW",
+ "look": {
+  "subject_rules": ["one continuous 2D pixel-art SIDE CROSS-SECTION of the body (skin layers), flat side view, no camera move until the final zoom-out", "layers top to bottom: air/shoe or object, epidermis (cream bricks), dermis (pink cells with dots), papillary wave, capillaries (thin red vertical), blood-vessel band (dark red), muscle/fat (pink wavy lines)", "process shown by tiny pixel actors: fluid, white immune cells with dark nucleus, droplets"],
+  "materials": ["hard-edged pixel art, no anti-aliasing, 1 art pixel = 4-6 screen px", "limited palette, dithering for shadow"],
+  "light": "flat, no real lighting",
+  "camera": "locked side view; one hard zoom-out to whole limb (e7) then outdoor pixel scene (e8)",
+  "finish": "retro game / 8-bit, CRT scanline + glitch band on every transition",
+  "never": ["photoreal", "3D render", "smooth vector", "zoom on stills", "talking head", "long voice-over"]
+ },
+ "palette": ["#C67579", "#121115", "#E5CEA9", "#7A3B45", "#E8D9A0", "#5BA66B", "#7EC8DC"],
+ "palette_note": "measured: pink #C67579 50.1 %, bg #121115 38.1 %, cream #E5CEA9 11.8 %; outdoor end scene adds sky blue + tree green",
+ "brightness_mean": 0.474,
+ "saturation_mean": 0.356,
+ "cut_rhythm": {"cuts_per_min": 0, "shots": 1, "note": "one continuous scene; changes are in-scene time jumps (DAY counter) not cuts; one final scene swap at ~22.7 s"},
+ "motion": {"class": "medium", "real_animation": "pixel sprites animate every frame (fluid fills, cells drift, skin bulges); NOT zoom on stills"},
+ "ui": {
+  "day_counter": "top-left, fast-forward icon (double triangle) + 'DAY n' in small pixel font, white, y~0.035; n updates on each time jump (DAY 1, DAY 2, DAY 5)",
+  "rewind_icon": "shown at start (rewind to 'before')",
+  "callout": "single thin line from a structure to a pixel label in capitals (e.g. 'BLISTER'), appears ~0.3 s after the thing forms",
+  "transition": "CRT scanline overlay + horizontal glitch band, ~0.3 s",
+  "captions": "none; no subtitles"
+ },
+ "script": {"wpm_speaking": 94, "words": 1, "person": "none", "questions": false, "cta": false, "shape": "silent explainer: cause -> damage -> body response (fluid, immune cells) -> time jumps -> healed -> real-life scene", "voice_text": "Hmm"},
+ "voice": {"wpm_target": 0, "expressiveness": "n/a; one short 'Hmm' (speech_ratio 0.026), pitch median 156.7 Hz", "note": "voice is a sting, not narration"},
+ "sound": {"bpm": 117.5, "beat_count": 44, "lufs": -17.3, "true_peak_dbtp": -3.0, "lra_lu": 1.9, "voice_minus_music_lu": -2.5, "music_lufs": -18.0, "genre": "judged: light chiptune / lo-fi game loop, steady 4/4", "silence_share": 0.0, "name": null, "name_note": "AcoustID/listen.json not run yet: title unknown, never guessed"},
+ "ref_events_s": {"e1_intact_skin": [3.8, 4.2], "e2_layers_split": [8.5, 9.3], "e3_blister_day1": [12.5, 13.3], "e4_cells_arrive": [14.8, 15.7], "e5_day2": [16.8, 17.3], "e6_day5_dry": [20.7, 21.3], "e7_zoom_out_leg": [22.7, 23.0], "e8_outdoor_shoe": [24.5, 24.7]}
+}

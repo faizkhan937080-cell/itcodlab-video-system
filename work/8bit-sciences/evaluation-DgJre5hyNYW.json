@@ -1,0 +1,16 @@
+{
+ "creator": "8bit_sciences",
+ "reel": "DgJre5hyNYW",
+ "job": "reel-DgJre5hyNYW",
+ "evaluated": "2026-11-26",
+ "summary": "25 s, 30 fps, 1080x1920, ONE continuous scene. Pixel-art side cross-section of skin shows a blister forming (friction -> layers split -> fluid fills -> immune cells -> DAY counter jumps -> dry/heal) then zooms out to a leg and an outdoor pixel scene with the shoe that caused it. Strength: wordless, one idea, instantly readable, strong loop-style visual, DAY counter gives time-lapse logic. Weakness: only 2 s of the last scene explains cause visually late; no hook text in first 3 s; callouts are few (one label 'BLISTER'); no caption means silent-scroll viewers get no words; music name unknown.",
+ "scripting": {"words": 1, "transcript": "Hmm", "speech_ratio": 0.026, "structure": ["rewind icon (before)", "intact skin", "friction/split", "fluid fills (DAY 1)", "immune cells arrive", "DAY 2 bigger blister", "DAY 5 dried/flat", "zoom out to leg", "outdoor scene with the cause (shoe)"], "hook": "visual only: skin cross-section under pressure", "questions": 0, "cta": "none"},
+ "editing": {"cuts_per_min": 0, "shots": 1, "motion": "medium, sprite animation + one bulge deformation", "transitions": "CRT scanline + glitch", "ui": "DAY counter top-left with fast-forward icon; one callout line 'BLISTER'; rewind icon at start", "captions": "none"},
+ "sound": {"bpm": 117.5, "lufs": -17.3, "true_peak": -3.0, "lra": 1.9, "music_lufs": -18.0, "vocals_lufs": -20.5, "silence_share": 0.0, "verdict": "music bed carries it, steady 117.5 BPM (beats 0.51 s apart), one 'Hmm' voice sting, no silences"},
+ "voice": {"pitch_median_hz": 156.7, "expressiveness": "very expressive (one word, low evidence)"},
+ "palette": ["#C67579", "#121115", "#E5CEA9"],
+ "events_s": {"e1": [3.8, 4.2], "e2": [8.5, 9.3], "e3": [12.5, 13.3], "e4": [14.8, 15.7], "e5": [16.8, 17.3], "e6": [20.7, 21.3], "e7": [22.7, 23.0], "e8": [24.5, 24.7]},
+ "style_card": "config/style-cards/8bit_sciences.json",
+ "same_style_new_topic_rules": ["keep: pixel side cross-section, dark #121115 bg, pink/cream palette, DAY counter + fast-forward icon, one callout label per new structure, CRT glitch on time jumps, one 'Hmm'-type voice sting, 117 BPM bed at -17 LUFS, ends on pixel outdoor scene of the cause", "change only: the topic (bruise), its colours over days, the end scene", "small honest upgrade allowed without breaking style: 1-2 word on-screen hook in first 2 s (ref has none)"],
+ "open": ["music title unknown (run listen/AcoustID on worker)", "reference is silent: our voice = 'Hmm' sting + very short pixel-font labels only"]
+}

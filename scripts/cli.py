@@ -916,6 +916,13 @@ def cmd_approve(a):
     return 0
 
 
+def cmd_brain_read(a):
+    from . import braingate
+    ok, text = braingate.read_brain(" ".join(a.words))
+    print(text)
+    return 0 if ok else 1
+
+
 def cmd_sync(a):
     from . import chatsync
     if a.action == "read":
@@ -1250,6 +1257,9 @@ def build_parser():
     s.add_argument("--keys", default="")
     s.set_defaults(fn=cmd_mem)
 
+    s = sub.add_parser("brain-read", help="read the brain (state + other chats + topic); writes the marker the brain barrier checks")
+    s.add_argument("words", nargs="*")
+    s.set_defaults(fn=cmd_brain_read)
     s = sub.add_parser("sync", help="shared chat log across all chats: read | add <chat> <text> | nudge")
     s.add_argument("action", choices=["read", "add", "nudge"])
     s.add_argument("words", nargs="*")

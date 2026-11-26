@@ -1,0 +1,22 @@
+{
+ "video": "8bit-bruise-v1", "creator": "8bit_sciences", "topic": "Bruise: chot ke baad 14 din mein rang kyun badalta hai",
+ "format": {"w": 1080, "h": 1920, "fps": 30, "seconds": 25, "bg": "#121115", "approved": false},
+ "bar_s": 0.511, "note": "bar = one beat at 117.5 BPM; every cut/time-jump lands on a beat (0.511 s grid). Cadence 14 beats / 25 s = 0.56 per s: gate limit 0.5 -> merge b1+b2 or drop b13 (fix in plan before gates).",
+ "beats": [
+  {"id": "b1", "t": [0.0, 0.8], "what": "rewind icon + glitch, 'before' state intact skin", "sound": "tape-rewind sfx", "motion": "scanline glitch"},
+  {"id": "b2", "t": [0.8, 3.1], "what": "intact skin cross-section, 'OUCH' pixel hook at 0.5 s; voice 'Hmm?' at 0.6 s", "label": "OUCH", "motion": "idle sprites: cells wobble"},
+  {"id": "b3", "t": [3.1, 5.1], "what": "pixel cricket ball drops from top, skin dents (squash 4 frames), capillaries snap", "label": "CAPILLARY", "sound": "thud + crack"},
+  {"id": "b4", "t": [5.1, 8.2], "what": "red blood droplets leak and pool in dermis; voice 'Aapko chot lagi, ab andar kya hota hai?'", "label": "BLOOD", "motion": "droplet particles fall, pool grows"},
+  {"id": "b5", "t": [8.2, 9.2], "what": "glitch + fast-forward icon, DAY 1", "counter": "DAY 1", "sound": "ff blip"},
+  {"id": "b6", "t": [9.2, 12.3], "what": "dark red pool spreads wide under skin, surface turns red-pink", "motion": "fill spreads"},
+  {"id": "b7", "t": [12.3, 13.3], "what": "glitch, DAY 3", "counter": "DAY 3"},
+  {"id": "b8", "t": [13.3, 16.4], "what": "pool turns purple-blue; white immune cells (macrophages) enter and eat blood", "label": "MACROPHAGE", "motion": "cells drift + gulp (same sprite as ref)"},
+  {"id": "b9", "t": [16.4, 17.4], "what": "glitch, DAY 5", "counter": "DAY 5"},
+  {"id": "b10", "t": [17.4, 19.5], "what": "pool turns green as haemoglobin breaks down", "label": "BILIVERDIN"},
+  {"id": "b11", "t": [19.5, 20.5], "what": "glitch, DAY 10; voice 'Das din.'", "counter": "DAY 10"},
+  {"id": "b12", "t": [20.5, 22.3], "what": "yellow-brown fading pool, shrinking; skin flat again", "label": "BILIRUBIN"},
+  {"id": "b13", "t": [22.3, 23.3], "what": "hard zoom-out to pixel thigh, 'HEALED' (like ref e7)", "label": "HEALED", "motion": "zoom-out = scale of pixel scene, own sprite art"},
+  {"id": "b14", "t": [23.3, 25.0], "what": "pixel outdoor scene: sky, trees, boy with cricket bat, ball rolling (like ref shoe scene)", "motion": "ball + clouds animate"}
+ ],
+ "audio": {"music": "chiptune/lofi loop 117.5 BPM, ~-18 LUFS bed; voice stings ~-20 LUFS; master -17 LUFS, true peak <= -3 dB", "sfx_style": "8-bit blips for DAY jumps, thud for hit, tape-rewind for start"}
+}

@@ -1,0 +1,64 @@
+{
+ "name": "mildly.elsewhere",
+ "from_ref": "reel-Df9trJcGWZO",
+ "look": {
+  "subject_rules": [
+   "one historic/engineering object shown as a 3D cutaway cross-section (layers of soil, stone, water)",
+   "tiny stylised people with pots give scale",
+   "each problem solved by one visible change to the same structure"
+  ],
+  "materials": [
+   "sandstone blocks with visible joints",
+   "layered earth strata",
+   "turquoise-green water with soft reflections"
+  ],
+  "light": "warm sun, hard shadows, rain in the opening",
+  "camera": "slow orbit / descent along the structure, wide",
+  "finish": "clean 3D render, mild colour grade",
+  "never": [
+   "live-action footage",
+   "flat 2D slides",
+   "stills with zoom"
+  ]
+ },
+ "palette": [
+  "#A0732F",
+  "#492C08",
+  "#1C684A",
+  "#5A3D23",
+  "#A58F72",
+  "#875E42"
+ ],
+ "brightness_mean": 0.382,
+ "cut_rhythm": {
+  "cuts_per_min": 1.08,
+  "transitions": {
+   "hard_cut": 1
+  }
+ },
+ "motion": {
+  "fast": 2
+ },
+ "captions": {
+  "font": "white sans-serif, two lines, centred lower third (y~0.72), soft shadow, English",
+  "logo": "MILDLY ELSEWHERE text watermark upper right, beige"
+ },
+ "script": {
+  "wpm_speaking": 220,
+  "person": "second",
+  "questions": false,
+  "cta": false,
+  "shape": "problem -> fix -> new problem -> fix (chain of 'so you...') -> payoff fact -> 'that's why' closer",
+  "words": 181
+ },
+ "voice": {
+  "wpm_target": 175,
+  "expressiveness": "very expressive (ref pitch range 10.6 st)"
+ },
+ "sound": {
+  "bpm": 129.2,
+  "lufs": -17.2,
+  "voice_over_music_lu": 25.9,
+  "note": "music nearly inaudible, voice carries it"
+ }
+}

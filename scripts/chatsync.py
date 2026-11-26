@@ -71,6 +71,11 @@ def add(chat, text):
     _git(b, "add", "sync")
     _git(b, "commit", "-q", "-m", f"sync: {chat}")
     r = _git(b, "push", "-q", "origin", "HEAD")
+    try:
+        from . import braingate
+        braingate.refresh()
+    except Exception:  # noqa: BLE001
+        pass
     return True, "saved + pushed" if r.returncode == 0 else "saved locally, push failed (will go with next push)"
 
 

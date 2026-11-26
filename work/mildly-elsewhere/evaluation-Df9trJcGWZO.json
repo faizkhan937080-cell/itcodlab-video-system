@@ -1,0 +1,67 @@
+{
+ "creator": "mildly.elsewhere",
+ "reel": "Df9trJcGWZO",
+ "job": "reel-Df9trJcGWZO",
+ "evaluated": "2026-11-22",
+ "summary": "55.6 s, 24 fps, 1080x1920. Two long shots only (7.5 s + 48 s): one continuous 3D cutaway of a stepwell that is rebuilt on screen while the narrator solves each problem. Strength: story is a chain of problem->fix, one idea per sentence. Weakness: hook is flat (statement, no question/tension), voice is very fast (219.9 wpm, above our 200 cap), no emotion beat, music inaudible, no CTA.",
+ "scripting": {
+  "words": 181,
+  "wpm_speaking": 219.9,
+  "sentences": 13,
+  "mean_words": 13.9,
+  "hook": "If you dig a well in the desert, the water keeps sinking away from you (statement, you-word present)",
+  "structure": [
+   "setup",
+   "dry-season problem",
+   "fix 1 steps",
+   "problem 2 sand caves in",
+   "fix 2 stone blocks",
+   "problem 3 seepage",
+   "problem 4 traffic jam",
+   "fix 3 zigzag",
+   "payoff numbers 13 floors 3500 steps",
+   "fact 10 degrees cooler",
+   "closer: that's why upside-down pyramid"
+  ],
+  "numbers_per_min": 4.31,
+  "questions": 0,
+  "cta": "none"
+ },
+ "editing": {
+  "cuts_per_min": 1.08,
+  "shots": 2,
+  "motion": "continuous camera descent + orbit, real 3D animation (people walk, rain, water ripples)",
+  "captions": "2 lines, centred lower, white, sentence-level not word-level",
+  "brand": "watermark upper right"
+ },
+ "sound": {
+  "bpm": 129.2,
+  "integrated_lufs": -17.2,
+  "true_peak": -0.9,
+  "music_vs_voice_lu": 25.9,
+  "silence_share": 0.0,
+  "verdict": "voice only, music ~-43 LUFS (not heard), no SFX detected"
+ },
+ "voice": {
+  "pitch_median_hz": 144.8,
+  "expressiveness": "very expressive",
+  "wpm_mean": 223.4,
+  "rate": "very fast",
+  "gaps_mean_s": 0.39
+ },
+ "style_card": "config/style-cards/mildly.elsewhere.json",
+ "our_different_approach": [
+  "hook: command + question ('Ruko, aap ... kyun bhaagta hai?') in first 3 s instead of flat statement",
+  "tension: every problem ends with a question or 'ab kya karoge?' before the fix",
+  "pace: about 165-175 wpm spoken, bigger pauses before reveals (reel is 220 wpm)",
+  "word-level captions in Hinglish (reel: sentence-level English)",
+  "sound: soft SFX (rain, stone thud, crowd murmur) + audible music bed, reel has none",
+  "payoff: temperature fact + share CTA, reel has no CTA",
+  "different voice: aditya (not reuse of rahul used in skilltest)",
+  "3D in Remotion/three.js: stepwell cutaway with moving people, rain, water"
+ ],
+ "source_urls_to_verify": [
+  "https://en.wikipedia.org/wiki/Chand_Baori"
+ ],
+ "not_done": "video render: GitHub push 403 + no Drive write tool in this session, new stepwell 3D shot cannot reach the runner"
+}
