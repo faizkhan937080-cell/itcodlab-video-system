@@ -32,6 +32,12 @@ def cmd_analyze_local(a):
     return 0
 
 
+def cmd_listen_reel(a):
+    from . import listenreel
+    listenreel.run(a.reel)
+    return 0
+
+
 def cmd_validate(a):
     from .dna import errors_tail, validate
     obj = json.loads(Path(a.file).read_text(encoding="utf-8"))
@@ -1271,6 +1277,9 @@ def build_parser():
     s.add_argument("--dry-run", action="store_true")
     s.add_argument("--meme-fx", action="store_true", help="also add picture effects (zoom-punch, shake, flash, RGB split) on the hit/whoosh cues")
     s.set_defaults(fn=cmd_sfx)
+    s = sub.add_parser("listen-reel", help="worker: listen to a reference reel again (sound events + music name) -> listen.json")
+    s.add_argument("reel", help="<handle>/<code>")
+    s.set_defaults(fn=cmd_listen_reel)
     s = sub.add_parser("resolve", help="clone by name: recipe elements -> library found / missing")
     s.add_argument("reel")
     s.set_defaults(fn=cmd_resolve)
