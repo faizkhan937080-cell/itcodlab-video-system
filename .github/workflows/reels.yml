@@ -155,7 +155,7 @@ jobs:
         run: |
           mkdir -p ~/.config/rclone
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
-          rclone lsf "$ITCOD_RCLONE_REMOTE" --max-depth 1 | head -20
+          sleep $((RANDOM % 45)); for i in 1 2 3 4 5 6; do rclone lsf "$ITCOD_RCLONE_REMOTE" --max-depth 1 | head -20 && break; echo "drive quota, retry $i"; sleep $((20 + RANDOM % 40)); done
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           if [ -n "$INSTAGRAM_COOKIES" ]; then printf '%s' "$INSTAGRAM_COOKIES" > "$RUNNER_TEMP/cookies.txt"; echo "ITCOD_COOKIES=$RUNNER_TEMP/cookies.txt" >> "$GITHUB_ENV"; fi
       - name: Upload candidates from git to Drive
