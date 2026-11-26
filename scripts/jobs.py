@@ -364,6 +364,23 @@ class Worker:
             self.set_status(st, job, "QUEUED", f"waiting for code that knows job type {job.get('type')}")
         return False
 
+    def _record_capture(self, res, capture, sdir, warn):
+        """Put the capture note + candidate/crop files into the pack so the DNA says the background was ignored."""
+        pack = Path(res["pack"])
+        for n in ("screen_candidates.jpg", "screen_candidates.json", "screen_crop.json"):
+            if (sdir / n).exists():
+                shutil.copy2(sdir / n, pack / n)
+        if warn:
+            capture = dict(capture, warning=warn)
+        mp = pack / "metrics_summary.json"
+        try:
+            ms = json.loads(mp.read_text(encoding="utf-8")) if mp.exists() else {}
+            ms["capture"] = capture
+            mp.write_text(json.dumps(ms, ensure_ascii=False), encoding="utf-8")
+        except Exception:  # noqa: BLE001
+            pass
+        (pack / "capture.json").write_text(json.dumps(capture, ensure_ascii=False), encoding="utf-8")
+
     def _ensure_local_source(self, st, wd):
         """A new Actions run (or a new VM) has no copy of the video the last run downloaded: pull our own Drive copy back,
         so a job that was cut off mid-analysis resumes instead of failing its last attempt on 'file not found'."""
@@ -431,7 +448,17 @@ class Worker:
                 from .common import stage, stage_times
                 from . import costs as _costs
                 _t0, _m0 = time.time(), _costs.mark()
+                capture = None
+                if job.get("content_only"):      # screen-in-scene: analyse only the inner video, never the room
+                    with stage("screen_crop"):
+                        from . import screencrop
+                        src, capture, warn = screencrop.prepare(src, wd / "screencrop", job.get("crop"))
+                    st["content_crop"] = {"analysed": capture["analysed"], "warning": warn}
+                    if warn:
+                        log(f"{jid} WARNING {warn}")
                 res = run_pipeline(str(src), wd / "analysis", job_id=jid, mode=job["mode"])
+                if capture:
+                    self._record_capture(res, capture, wd / "screencrop", st.get("content_crop", {}).get("warning"))
                 if not job.get("bulk") and job["mode"] != "audio":     # rulebooks/23 rule 2: what MOVES, not only what cuts
                     try:
                         with stage("style_record"):
