@@ -6,6 +6,9 @@ on:
       jobs:
         description: 'JSON list of job ids, e.g. ["reel-AAA","reel-BBB"]'
         required: true
+      action:
+        description: 'work (default) or republish'
+        default: 'work'
 permissions:
   contents: write
   actions: write
@@ -155,7 +158,11 @@ jobs:
           rclone lsf "$ITCOD_RCLONE_REMOTE" --max-depth 1 | head -20
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           if [ -n "$INSTAGRAM_COOKIES" ]; then printf '%s' "$INSTAGRAM_COOKIES" > "$RUNNER_TEMP/cookies.txt"; echo "ITCOD_COOKIES=$RUNNER_TEMP/cookies.txt" >> "$GITHUB_ENV"; fi
+      - name: Republish pack to review branch
+        if: steps.chk.outputs.ready == 'true' && inputs.action == 'republish'
+        timeout-minutes: 15
+        run: ./run republish ${{ matrix.job }}
       - name: Work on this one reel
-        if: steps.chk.outputs.ready == 'true'
+        if: steps.chk.outputs.ready == 'true' && inputs.action != 'republish'
         timeout-minutes: 120
         run: ./run worker --until-idle --no-sheet --grace 120 --max-minutes 110

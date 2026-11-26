@@ -1246,6 +1246,24 @@ def cmd_story(a):
     return 0 if rc == 0 and not over else 1
 
 
+def cmd_republish(a):
+    """Worker: copy a finished job's pack from Drive to its own review branch again (after a lost force-push)."""
+    import tempfile
+    from pathlib import Path
+    from . import review
+    st = _storage()
+    for jid in a.jobs:
+        state = st.read_json(f"jobs/state/{jid}.json")
+        pack = state["paths"]["pack"]
+        tmp = Path(tempfile.mkdtemp())
+        for name in st.list_dir(pack):
+            if name.endswith((".jpg", ".json")):
+                st.fetch(f"{pack}/{name}", tmp / name)
+        os.environ["ITCOD_ONLY_JOBS"] = jid
+        print(jid, json.dumps(review.publish(tmp, jid)))
+    return 0
+
+
 def cmd_review_fetch(a):
     from .review import fetch
     for f in fetch(a.job, a.out):
@@ -1602,6 +1620,9 @@ def build_parser():
     s.add_argument("--name")
     s.add_argument("--no-upload", action="store_true")
     s.set_defaults(fn=cmd_voice_run)
+    s = sub.add_parser("republish", help="worker: publish finished packs to review-<job> branches again")
+    s.add_argument("jobs", nargs="+")
+    s.set_defaults(fn=cmd_republish)
     s = sub.add_parser("worker", help="process jobs from Drive jobs/inbox")
     s.add_argument("--loop", action="store_true")
     s.add_argument("--until-idle", action="store_true", help="work, then stop after --grace idle seconds (GitHub Actions)")
