@@ -13,7 +13,7 @@ SFX_VOLUME = 0.5
 MUSIC_VOLUME = 0.18
 
 
-def _file_of(st, query, type_, name, tags, fallbacks=()):
+def _file_of(st, query, type_, name, tags, fallbacks=(), tries=3):
     """Library first; else Openverse with 3 tries per query (their server sometimes answers 500). Never raises."""
     import time
     try:
@@ -23,7 +23,7 @@ def _file_of(st, query, type_, name, tags, fallbacks=()):
     if hit:
         return hit[0]["file"]
     for q in (query, *fallbacks):
-        for n in range(3):
+        for n in range(tries):
             try:
                 e = library.fetch_from_openverse(st, q, type_, name, tags, token=os.environ.get("OPENVERSE_TOKEN"))
                 if e:
@@ -35,13 +35,30 @@ def _file_of(st, query, type_, name, tags, fallbacks=()):
     return None
 
 
+def _synth_file(st, kind):
+    """Backup when the internet source fails: own 8-bit sound (scripts/sfx_synth.py), added to the library by name."""
+    import tempfile
+    from . import sfx_synth
+    if kind not in sfx_synth.RECIPES:
+        return None
+    rel = f"assets/library/sfx/8bit-{kind}-own.wav"
+    try:
+        if not st.exists(rel):
+            with tempfile.TemporaryDirectory() as td:
+                st.put_file(sfx_synth.make(kind, Path(td) / f"8bit-{kind}-own.wav"), rel, versioned=False)
+        return rel
+    except Exception as ex:  # noqa: BLE001
+        print(f"synth {kind} failed: {type(ex).__name__} {str(ex)[:80]}")
+        return None
+
+
 def run(plan_path, music_query="chiptune 8-bit loop"):
     st = Storage()
     plan = json.loads(Path(plan_path).read_text(encoding="utf-8"))
     cues = sfx.plan_cues(plan)
     files, skipped = {}, []
     for kind in sorted({c["kind"] for c in cues}):
-        f = _file_of(st, sfx.QUERIES[kind], "sfx", f"8bit-{kind}", ["8bit", kind])
+        f = _file_of(st, sfx.QUERIES[kind], "sfx", f"8bit-{kind}", ["8bit", kind], tries=1) or _synth_file(st, kind)
         if f:
             files[kind] = f
         else:
