@@ -1,0 +1,477 @@
+{
+  "generated": "2026-11-26T21:17:39Z",
+  "video": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24.0,
+    "duration_s": 70.792,
+    "has_audio": true,
+    "total_frames": 1699,
+    "analysis_step": 1
+  },
+  "cut_rhythm": {
+    "scene_count": 4,
+    "cuts_per_min": 2.54,
+    "shot_length_s": {
+      "mean": 17.698,
+      "median": 18.48,
+      "std": 6.92,
+      "min": 8.375,
+      "max": 25.458
+    },
+    "transitions": {
+      "dissolve": 2,
+      "hard_cut": 1
+    }
+  },
+  "motion_classes": {
+    "static": 4
+  },
+  "palette": [
+    {
+      "hex": "#FCFCFC",
+      "share": 0.384
+    },
+    {
+      "hex": "#FCFEFD",
+      "share": 0.332
+    },
+    {
+      "hex": "#FCFDFD",
+      "share": 0.172
+    },
+    {
+      "hex": "#181C18",
+      "share": 0.035
+    },
+    {
+      "hex": "#C7D8D2",
+      "share": 0.018
+    },
+    {
+      "hex": "#D5DAD3",
+      "share": 0.017
+    }
+  ],
+  "brightness": {
+    "mean": 0.893,
+    "median": 0.941,
+    "std": 0.103,
+    "min": 0.719,
+    "max": 0.972
+  },
+  "saturation": {
+    "mean": 0.031,
+    "median": 0.026,
+    "std": 0.014,
+    "min": 0.018,
+    "max": 0.053
+  },
+  "ocr": "available",
+  "dedup": {
+    "phash_hamming_max": 10,
+    "ssim_min": 0.8,
+    "relax_rounds": 0,
+    "scenes_total": 4,
+    "clusters": 4,
+    "capacity": 20,
+    "scenes_not_in_collage_clusters": []
+  },
+  "clusters": [
+    {
+      "cluster": 1,
+      "rep_scene": 1,
+      "members": [
+        1
+      ],
+      "count": 1,
+      "total_duration_s": 23.125,
+      "in_collage": true
+    },
+    {
+      "cluster": 2,
+      "rep_scene": 2,
+      "members": [
+        2
+      ],
+      "count": 1,
+      "total_duration_s": 25.458,
+      "in_collage": true
+    },
+    {
+      "cluster": 3,
+      "rep_scene": 3,
+      "members": [
+        3
+      ],
+      "count": 1,
+      "total_duration_s": 8.375,
+      "in_collage": true
+    },
+    {
+      "cluster": 4,
+      "rep_scene": 4,
+      "members": [
+        4
+      ],
+      "count": 1,
+      "total_duration_s": 13.834,
+      "in_collage": true
+    }
+  ],
+  "collages": [
+    {
+      "file": "collage_01.jpg",
+      "tiles": 2
+    },
+    {
+      "file": "collage_02.jpg",
+      "tiles": 2
+    }
+  ],
+  "scenes": [
+    {
+      "id": 1,
+      "t": [
+        0.0,
+        23.125
+      ],
+      "in": "start",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 1,
+      "colors": [
+        "#FCFCFC",
+        "#ADB5B1"
+      ],
+      "text": "What it is Whe Switch Limits Fable 5.2 E =! S€ Opus 5.5 S€ S"
+    },
+    {
+      "id": 2,
+      "t": [
+        23.125,
+        48.583
+      ],
+      "in": "dissolve",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 2,
+      "colors": [
+        "#FCFEFD",
+        "#C7D8D2"
+      ],
+      "text": "sansser / What it is When Switch Limits ™ orchestrator | | |"
+    },
+    {
+      "id": 3,
+      "t": [
+        48.583,
+        56.958
+      ],
+      "in": "hard_cut",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 3,
+      "colors": [
+        "#FCFCFC",
+        "#181C18"
+      ],
+      "text": "sansser | What it is When Switch claude update Claude Code u"
+    },
+    {
+      "id": 4,
+      "t": [
+        56.958,
+        70.792
+      ],
+      "in": "dissolve",
+      "motion": "static",
+      "pan": "none",
+      "zoom": "none",
+      "cluster": 4,
+      "colors": [
+        "#FCFDFD",
+        "#D5DAD3"
+      ],
+      "text": "What it is When Switch Limits weekly limit Fable 50% 17 @hey"
+    }
+  ],
+  "audio": {
+    "has_audio": true,
+    "duration_s": 70.81,
+    "bpm": 117.5,
+    "beat_count": 139,
+    "beat_times_first_20": [
+      0.09,
+      0.7,
+      1.3,
+      1.81,
+      2.3,
+      2.81,
+      3.27,
+      3.78,
+      4.3,
+      4.85,
+      5.43,
+      6.01,
+      6.52,
+      7.04,
+      7.62,
+      8.15,
+      8.68,
+      9.1,
+      9.61,
+      10.12
+    ],
+    "loudness_db_mean": -21.6,
+    "loudness_db_max": -6.8,
+    "silences": [],
+    "cut_beat_sync": {
+      "cuts_checked": 3,
+      "share_within_80ms": 0.0,
+      "median_offset_s": 0.23
+    },
+    "ebu_r128": {
+      "integrated_lufs": -17.2,
+      "true_peak_dbtp": -0.5,
+      "short_term_max_lufs": -14.9,
+      "lra_lu": 2.5,
+      "method": "pyloudnorm BS.1770, mono mix"
+    },
+    "stems": {
+      "vocals_lufs": -17.2,
+      "music_lufs": -32.3,
+      "voice_minus_music_lu": 15.1,
+      "engine": "demucs htdemucs"
+    },
+    "silence_share": 0.0
+  },
+  "transcript": {
+    "language": "en",
+    "coverage_ratio": 0.98,
+    "text": "Claude Fable 5.2 is out, and if you're on a pro or team plan, it's included at no extra cost until November 16th. | So, this is how we'd use that week. | Take this first. Fable is the most powerful Claude you can use. | The same brain as Mythos with safety filters on top, and this version is up to 30% faster and 20% cheaper on the API than the last one. | Now, what to use it for? | Anthropic itself says to start your normal day on Opus 5.5 and bring in Fable for the hardest open-ended work, | like moving a big code base over to something new, | a tough math or engineering problem, | or a job where it runs a team of agents for hours. | It can even be the boss | and hand the easy parts to smaller models. | For quick emails and small questions, it's a waste | because Fable eats through your limit faster than any other Claude. | To switch, in the Claude app, | open the model picker and choose Fable 5.2, | and your default stays the same. | In Claude code, update it first, type slash model, | pick Fable, and press the S key instead of enter | so it's only for that session | and doesn't become your default without you noticing. | On Pro, you get up to half your weekly limit on Fable until November 16th, plus one free | reset if you run out. | And after that, it runs on usage credits. | So pick the one problem you gave up on, the hardest thing on your list, and hand it to | Fable this week."
+  },
+  "script_metrics": {
+    "available": true,
+    "pass_used": "auto",
+    "coverage_ratio": 0.98,
+    "complete": true,
+    "words": 269,
+    "words_per_min_speaking": 243.1,
+    "words_per_min_overall": 228.0,
+    "speech_ratio": 0.938,
+    "pauses": {
+      "count_gt_0_5s": 0,
+      "mean_s": 0.21,
+      "max_s": 0.3
+    },
+    "sentences": {
+      "count": 14,
+      "words_mean": 19.2,
+      "words_median": 20.5,
+      "words_p90": 31.5
+    },
+    "questions_per_min": 0.85,
+    "exclamations_per_min": 0.0,
+    "numbers_per_min": 8.48,
+    "script_mix": {
+      "devanagari_share": 0.0,
+      "latin_share": 1.0
+    },
+    "second_person_per_100w": 4.09,
+    "first_person_per_100w": 0.0,
+    "fillers_per_100w": 1.49,
+    "cta_words": [
+      "like"
+    ],
+    "repeated_phrases": [
+      {
+        "phrase": "fable 5 2",
+        "count": 2
+      },
+      {
+        "phrase": "until november 16th",
+        "count": 2
+      }
+    ],
+    "repeated_sentences": [],
+    "unique_sentence_share": 1.0,
+    "hook": {
+      "first_word_s": 0.0,
+      "words_in_first_3s": 10.3,
+      "words_in_first_5s": 17.2,
+      "first_12_words": "Claude Fable 5 2 is out and if you're on a pro"
+    },
+    "vocabulary_note": "roman"
+  },
+  "voice": {
+    "available": true,
+    "backend": "praat",
+    "global": {
+      "pitch_median_hz": 147.9,
+      "pitch_p10_hz": 113.3,
+      "pitch_p90_hz": 243.2,
+      "pitch_med_st": -0.0,
+      "pitch_range_st": 13.22,
+      "pitch_std_st": 5.26,
+      "voiced_share": 0.55,
+      "energy_db_mean": 75.14,
+      "energy_range_db": 15.51,
+      "expressiveness": "very expressive",
+      "voice_quality": {
+        "jitter_local": 0.0283,
+        "shimmer_local": 0.1179,
+        "hnr_db": 8.4
+      }
+    },
+    "tempo": {
+      "wpm_mean": 260.7,
+      "wpm_min": 203.0,
+      "wpm_max": 409.1,
+      "wpm_cv": 0.18,
+      "rate": "very fast",
+      "fastest_sentence": 9,
+      "slowest_sentence": 16
+    },
+    "gaps": {
+      "count": 22,
+      "total_s": 4.86,
+      "mean_s": 0.22,
+      "max_s": 0.3,
+      "bins": {
+        "0.15-0.3": 21,
+        "0.3-0.6": 1,
+        "0.6-1.0": 0,
+        "1.0-up": 0
+      }
+    },
+    "sentence_endings": {
+      "rising": 7,
+      "falling": 11,
+      "flat": 6
+    },
+    "emphasis_top": [
+      {
+        "w": "%",
+        "t": 16.26,
+        "z_pitch": 0.87,
+        "z_energy": 0.76,
+        "z_len": 4.59,
+        "score": 2.07
+      },
+      {
+        "w": "%",
+        "t": 17.6,
+        "z_pitch": 0.93,
+        "z_energy": 0.35,
+        "z_len": 4.59,
+        "score": 1.96
+      },
+      {
+        "w": ".2",
+        "t": 0.92,
+        "z_pitch": 1.14,
+        "z_energy": 0.89,
+        "z_len": 3.4,
+        "score": 1.81
+      },
+      {
+        "w": "a",
+        "t": 31.88,
+        "z_pitch": 1.32,
+        "z_energy": 0.52,
+        "z_len": 2.6,
+        "score": 1.48
+      },
+      {
+        "w": "or",
+        "t": 31.68,
+        "z_pitch": 1.0,
+        "z_energy": 2.56,
+        "z_len": 0.62,
+        "score": 1.39
+      },
+      {
+        "w": "30",
+        "t": 15.86,
+        "z_pitch": 0.94,
+        "z_energy": 0.43,
+        "z_len": 2.6,
+        "score": 1.33
+      },
+      {
+        "w": ".2,",
+        "t": 46.16,
+        "z_pitch": 2.19,
+        "z_energy": -0.38,
+        "z_len": 1.81,
+        "score": 1.21
+      },
+      {
+        "w": "only",
+        "t": 53.96,
+        "z_pitch": 2.31,
+        "z_energy": 0.91,
+        "z_len": 0.02,
+        "score": 1.08
+      }
+    ],
+    "words_timed": true
+  },
+  "audit": {
+    "frames": {
+      "total": 1699,
+      "expected_analysed": 1699,
+      "analysed": 1699,
+      "step": 1,
+      "coverage": 1.0
+    },
+    "scenes": {
+      "count": 4,
+      "timeline_gap_s": 0.0,
+      "keyframe_coverage": 1.0,
+      "cluster_coverage": 1.0,
+      "in_collage": 4,
+      "ocr_coverage": 1.0
+    },
+    "transcript_coverage": 0.98,
+    "lufs_measured": true,
+    "warnings": [],
+    "pass": true,
+    "per_minute": [
+      {
+        "minute": 1,
+        "from_s": 0.0,
+        "to_s": 60.0,
+        "scenes": 4,
+        "cuts": 3,
+        "cuts_per_min": 3.0,
+        "avg_shot_s": 15.0,
+        "words": 223,
+        "speech_ratio": 0.95,
+        "ocr_scenes": 4,
+        "motion": {
+          "static": 4
+        }
+      },
+      {
+        "minute": 2,
+        "from_s": 60.0,
+        "to_s": 70.8,
+        "scenes": 1,
+        "cuts": 0,
+        "cuts_per_min": 0.0,
+        "avg_shot_s": 10.79,
+        "words": 42,
+        "speech_ratio": 0.86,
+        "ocr_scenes": 1,
+        "motion": {
+          "static": 1
+        }
+      }
+    ]
+  }
+}
