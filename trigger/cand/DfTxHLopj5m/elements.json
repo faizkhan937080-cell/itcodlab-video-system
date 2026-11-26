@@ -1,0 +1,209 @@
+{
+ "creator": "sansser.ai",
+ "reel": "reel-DfTxHLopj5m",
+ "capture": "screen_in_scene: only inner edited video described",
+ "fonts": [
+  {
+   "name": "heavy grotesque sans (Inter Black / Helvetica Neue Heavy class, unidentified)",
+   "use": "centered key words HOLY SHOT, NOT READY, HELL, ONE, YOUR WORKFLOW",
+   "t": [
+    0,
+    44
+   ]
+  },
+  {
+   "name": "wide extended heavy sans",
+   "use": "STRETCH. (letters widen) and CODE logo",
+   "t": [
+    26.8,
+    51.5
+   ]
+  },
+  {
+   "name": "monospace (JetBrains Mono class)",
+   "use": "prompt box, HUD labels, timeline mock",
+   "t": [
+    18,
+    27
+   ]
+  },
+  {
+   "name": "regular grotesque sans",
+   "use": "top-left caption pill",
+   "t": [
+    0.7,
+    30
+   ]
+  }
+ ],
+ "music": [
+  {
+   "name": "unknown",
+   "note": "bed 10.3 LU under voice, 92.3 bpm detected",
+   "t": [
+    0,
+    51.5
+   ]
+  }
+ ],
+ "sfx": [
+  {
+   "name": "unknown",
+   "note": "not determinable from frames"
+  }
+ ],
+ "motion": [
+  "caption pill with orange highlight box moving word by word",
+  "glowing orange comet dot tracing lines",
+  "letter stretch/morph (G drops into MOTION, STRETCH. widens, THE blur-in)",
+  "typewriter prompt text with orange phrase highlights",
+  "node diagram connecting boxes",
+  "wireframe polyhedron and triangle floating in",
+  "full-orange flip scene",
+  "3D extruded text with tilting camera and white flash",
+  "counter list tallying 9H",
+  "pipeline boxes CLAUDE > PROMPT > GENERATE sliding in"
+ ],
+ "textures": [
+  "near-black navy with dotted grid",
+  "soft orange radial glow on flat orange scene",
+  "glow/bloom on white type"
+ ],
+ "tools_named": [
+  "Claude Code",
+  "Claude",
+  "After Effects",
+  "MCP",
+  "Edita Club"
+ ],
+ "layout": {
+  "headline": "centered key word",
+  "caption": "top-left pill",
+  "hud": "corner brackets, CLAUDE - CODE top-right, REC bottom-left, timecode bottom-right"
+ },
+ "captions": {
+  "style": "word-by-word orange highlight box on sentence-case text",
+  "words_per_caption": 3.0
+ },
+ "assets_needed": [
+  {
+   "name": "HOLY SHOT with orange flower O + '*censored for LinkedIn' note",
+   "t": [
+    2.2,
+    4.45
+   ]
+  },
+  {
+   "name": "NOT READY with READINESS 14% bar",
+   "t": [
+    3.8,
+    4.45
+   ]
+  },
+  {
+   "name": "MOTION title with axis and falling G",
+   "t": [
+    4.45,
+    5.7
+   ]
+  },
+  {
+   "name": "After Effects timeline mock (Not Responding)",
+   "t": [
+    5.7,
+    9.5
+   ]
+  },
+  {
+   "name": "AND NO, pink text",
+   "t": [
+    8.3,
+    11.0
+   ]
+  },
+  {
+   "name": "node diagram CLAUDE > MCP SERVER > AFTER EFFECTS",
+   "t": [
+    11.0,
+    12.0
+   ]
+  },
+  {
+   "name": "THIS IS Claude title",
+   "t": [
+    12.1,
+    13.5
+   ]
+  },
+  {
+   "name": "prompt box + CLAUDE engine checklist (STORYBOARD, KINETIC TYPE, SHAPES - 3D)",
+   "t": [
+    13.5,
+    18.25
+   ]
+  },
+  {
+   "name": "THE PROMPT: box with typewriter text",
+   "t": [
+    18.25,
+    26.767
+   ]
+  },
+  {
+   "name": "wireframe polyhedron and triangle",
+   "t": [
+    25.0,
+    26.767
+   ]
+  },
+  {
+   "name": "orange scene THE / STRETCH.",
+   "t": [
+    26.767,
+    28.8
+   ]
+  },
+  {
+   "name": "3D extruded THAT / SEAMLESS with tilted frames",
+   "t": [
+    28.8,
+    29.317
+   ]
+  },
+  {
+   "name": "HELL title",
+   "t": [
+    30.4,
+    33.5
+   ]
+  },
+  {
+   "name": "YOUR WORKFLOW counter list to 9H",
+   "t": [
+    33.5,
+    40
+   ]
+  },
+  {
+   "name": "CLAUDE > PROMPT > GENERATE pipeline",
+   "t": [
+    40,
+    43.8
+   ]
+  },
+  {
+   "name": "ONE title",
+   "t": [
+    47,
+    49
+   ]
+  },
+  {
+   "name": "Claude CODE by Edita Club logo with flames",
+   "t": [
+    49.5,
+    51.533
+   ]
+  }
+ ]
+}

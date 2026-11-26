@@ -1,0 +1,253 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfTxHLopj5m",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.95,
+  "complete": true,
+  "engine": "auto",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Shock hook, claim, demo-by-prompt, workflow contrast, one-line payoff",
+  "description": "Opens with shock, claims motion graphics made without After Effects, rules out the MCP assumption, reveals Claude Code, shows the exact prompt, lists the old workflow vs Prompt-Generate-Render, ends on 'One prompt and that's it.'"
+ },
+ "hook": {
+  "kind": "pattern interrupt plus bold claim",
+  "duration_s": 3.0,
+  "first_words": "Holy shit! You are not ready for this.",
+  "time_to_value_s": 4.45,
+  "pattern": "profanity-shock opener, then 'I made these motion graphics without even opening After Effects'",
+  "open_loop": true,
+  "first_word_s": 0.34
+ },
+ "structure": [
+  {
+   "beat": "hook",
+   "purpose": "shock and readiness challenge",
+   "start_s": 0.0,
+   "end_s": 4.45,
+   "share": 0.086,
+   "devices": [
+    "pattern interrupt",
+    "bold claim"
+   ]
+  },
+  {
+   "beat": "claim",
+   "purpose": "motion graphics made without opening After Effects",
+   "start_s": 4.45,
+   "end_s": 11.0,
+   "share": 0.127,
+   "devices": [
+    "contrast",
+    "named tool"
+   ]
+  },
+  {
+   "beat": "objection",
+   "purpose": "not an MCP controlling After Effects",
+   "start_s": 5.7,
+   "end_s": 11.0,
+   "share": 0.103,
+   "devices": [
+    "myth-bust",
+    "diagram"
+   ]
+  },
+  {
+   "beat": "reveal",
+   "purpose": "this is Claude Code; you describe, Claude handles the rest",
+   "start_s": 11.0,
+   "end_s": 18.25,
+   "share": 0.141,
+   "devices": [
+    "reveal",
+    "simple instruction"
+   ]
+  },
+  {
+   "beat": "demo prompt",
+   "purpose": "the exact prompt given",
+   "start_s": 18.25,
+   "end_s": 26.767,
+   "share": 0.165,
+   "devices": [
+    "proof",
+    "enumeration"
+   ]
+  },
+  {
+   "beat": "result reaction",
+   "purpose": "letters stretch, seamless camera, transition: Hell yes",
+   "start_s": 26.767,
+   "end_s": 30.4,
+   "share": 0.07,
+   "devices": [
+    "rule of three",
+    "show then tell"
+   ]
+  },
+  {
+   "beat": "workflow contrast",
+   "purpose": "After Effects, Layers, Keyframes, Graph Editor, Render vs Prompt, Generate, Render",
+   "start_s": 30.4,
+   "end_s": 43.8,
+   "share": 0.26,
+   "devices": [
+    "contrast",
+    "counter of hours"
+   ]
+  },
+  {
+   "beat": "payoff",
+   "purpose": "first idea to final frame, one prompt",
+   "start_s": 43.8,
+   "end_s": 51.533,
+   "share": 0.15,
+   "devices": [
+    "callback",
+    "punchline"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "first person ('I made', 'I gave it') with direct 'you'",
+  "address_terms": [
+   "you"
+  ],
+  "register": "excited casual explainer",
+  "energy": "high, very expressive",
+  "humor": "light, shock swearing censored on screen",
+  "formality": "informal",
+  "tone_tags": [
+   "excited",
+   "confident",
+   "demo",
+   "punchy"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "motion design",
+   "AI tools",
+   "After Effects"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "You are not ready for this",
+   "I made these motion graphics without even opening After Effects",
+   "One prompt and that's it"
+  ],
+  "filler_words": [
+   "so",
+   "and"
+  ],
+  "power_words": [
+   "Holy",
+   "not ready",
+   "seamless",
+   "Hell yes",
+   "One prompt"
+  ],
+  "jargon_terms": [
+   "After Effects",
+   "MCP",
+   "Claude Code",
+   "kinetic type",
+   "keyframes",
+   "Graph Editor"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 164.0,
+  "words_per_min_overall": 137.4,
+  "speech_ratio": 0.838,
+  "sentence_words_mean": 7.4,
+  "sentence_words_p90": 15.5,
+  "pause_mean_s": 0.55,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 2.33
+ },
+ "retention": {
+  "open_loops": 2,
+  "rehooks_at_s": [
+   4.45,
+   11.0,
+   18.25,
+   26.767
+  ],
+  "pattern_interrupts": "orange full-screen flip at 26.8s, white flash at 29.9s, 3D camera whips; each new phrase gets a new visual",
+  "payoff_at_s": 43.8
+ },
+ "cta": {
+  "type": "none in the inner video",
+  "ask": "none heard; closing line is a payoff, logo 'Claude CODE by Edita Club' ends the video",
+  "keyword": "none",
+  "placement_s": 50.4,
+  "repeats": 0,
+  "incentive": "none"
+ },
+ "evidence": [
+  {
+   "claim": "Opening shock hook",
+   "quote": "Holy shit! You are not ready for this.",
+   "t": [
+    0.34,
+    4.36
+   ]
+  },
+  {
+   "claim": "Claim without After Effects",
+   "quote": "I made these motion graphics without even opening After Effects.",
+   "t": [
+    4.36,
+    5.7
+   ]
+  },
+  {
+   "claim": "Myth bust then reveal",
+   "quote": "And no, this isn't an MCP controlling After Effects. This is Claude. Code.",
+   "t": [
+    5.7,
+    18.25
+   ]
+  },
+  {
+   "claim": "Prompt given",
+   "quote": "Create a 15 second cinematic animation with kinetic type, morphing shapes, 3d elements and fluid camera moves.",
+   "t": [
+    18.25,
+    26.767
+   ]
+  },
+  {
+   "claim": "Payoff",
+   "quote": "One prompt and that's it.",
+   "t": [
+    43.8,
+    51.533
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "judged",
+  "hook": "judged",
+  "structure": "judged",
+  "voice": "judged",
+  "language": "measured",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "Transcript says 'Clod' and 'Render to Clod' (ASR errors for Claude). Beat 'objection' overlaps 'claim'. cta none: the inner video has no spoken ask; any caption/keyword CTA would sit outside the crop."
+}

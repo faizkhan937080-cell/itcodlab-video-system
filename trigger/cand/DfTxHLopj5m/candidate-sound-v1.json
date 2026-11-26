@@ -1,0 +1,92 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfTxHLopj5m",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.3,
+  "true_peak_dbtp": -0.1,
+  "lra_lu": 2.7,
+  "short_term_max_lufs": -15.4,
+  "standard": "EBU R128 measured"
+ },
+ "tempo": {
+  "bpm": 92.3,
+  "feel": "detected 92.3 bpm with 74 beats, but voice dominates; low confidence"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.1,
+  "cuts_checked": 10,
+  "median_offset_s": 0.157,
+  "notes": "cuts follow phrases and visual events, not the beat"
+ },
+ "speech": {
+  "speech_ratio": 0.838,
+  "voice_character": "pitch median 212.3 Hz, range 22.36 st, very expressive, jitter 0.034, HNR 5.1 dB (screen-recorded room audio)",
+  "delivery": "fast, 183.2 wpm mean (min 106.0, max 300.0, CV 0.29); gaps mean 0.48s max 0.86s; endings 5 rising, 4 falling, 3 flat; most emphasised: Holy, I, to, and, from, 3d"
+ },
+ "silence": {
+  "share": 0.011,
+  "usage": "only leading silence 0-0.58s",
+  "longest_s": 0.58
+ },
+ "mix": {
+  "voice_over_music": "voice dominant: vocals -17.6 LUFS vs music -27.9 LUFS (10.3 LU gap), music audible as a bed",
+  "ducking": "not measurable from stems",
+  "music_mood": "unknown: not identifiable from metrics",
+  "music_genre": "unknown",
+  "sfx_density_per_min": 0,
+  "sfx_types": [
+   "unknown: no sfx evidence from collages or metrics; whoosh-like hits plausible at whip cuts 4.45s and 28.8-30.4s but unconfirmed"
+  ],
+  "voice_minus_music_lu": 10.3
+ },
+ "evidence": [
+  {
+   "claim": "Integrated loudness and true peak measured",
+   "t": [
+    0,
+    51.53
+   ]
+  },
+  {
+   "claim": "Voice vs music stems (demucs)",
+   "t": [
+    0,
+    51.53
+   ]
+  },
+  {
+   "claim": "Leading silence",
+   "t": [
+    0,
+    0.58
+   ]
+  },
+  {
+   "claim": "Cuts do not lock to beats",
+   "t": [
+    0,
+    51.53
+   ]
+  },
+  {
+   "claim": "Delivery tempo and gaps from voice analysis",
+   "t": [
+    0,
+    51.53
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "estimated",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "Audio comes from filming a screen, so room/phone capture colours loudness numbers. Music/SFX identity needs worker audio analysis."
+}

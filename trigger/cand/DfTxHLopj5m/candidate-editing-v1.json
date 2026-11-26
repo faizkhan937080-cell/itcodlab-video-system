@@ -1,0 +1,254 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfTxHLopj5m",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 876,
+  "height": 492,
+  "fps": 60.0,
+  "duration_s": 51.533,
+  "orientation": "landscape",
+  "aspect": "16:9"
+ },
+ "cut_rhythm": {
+  "asl_s": 4.685,
+  "median_shot_s": 4.45,
+  "std_shot_s": 4.022,
+  "min_shot_s": 0.2,
+  "max_shot_s": 13.4,
+  "cuts_per_min": 11.64,
+  "pattern": "11 scenes inside a screen-in-scene reel (only the inner edited video described; monitor bezel ignored, a sliver of monitor edge shows at the top of the crop). Slow calm start, a flurry of three very short scenes 7-9 (0.317s, 0.2s, 1.083s) as whip-cut camera-move burst at 28.8-30.4s on the words 'seamless camera movement', then two long holds (13.4s and 7.733s). Cuts follow phrases, not beats.",
+  "beat_synced_share": 0.1,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 10.48
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 20.96
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 3.49
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ecu": 0,
+   "cu": 0,
+   "mcu": 0,
+   "ms": 0,
+   "ws": 0,
+   "ews": 1.0
+  },
+  "camera_angle": "none for most scenes: flat 2D UI/typography board; scenes 7-9 (28.8-30.4s) are a virtual 3D camera tilting and whipping around extruded text and tech frames",
+  "composition": "centered kinetic word (HOLY SHOT, NOT READY, AND NO, HELL, ONE) with small top-left caption pill; HUD corner brackets, 'CLAUDE - CODE' label top-right, REC dot bottom-left, timecode bottom-right; diagrams centered",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "hard_cut",
+   "share": 0.6
+  },
+  {
+   "type": "whip_pan",
+   "share": 0.4
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "static",
+    "push-in",
+    "whip pan",
+    "3D tilt/orbit (scenes 7-9)"
+   ],
+   "intensity": "slow"
+  },
+  "elements": {
+   "easing": "ease-out letter reveals; letters stretch/morph (G of MOTION slides in from below, STRETCH. widens, THE blur-in); orange glowing dot/comet traces lines between boxes; typewriter prompt text; counters tick (9H, +4H)",
+   "typical_duration_s": 0.4
+  },
+  "speed_ramps": "none seen"
+ },
+ "text": {
+  "present": true,
+  "role": "two layers: big kinetic key word centered (white, orange or pink accent) plus small sentence-style caption pill top-left with the current word highlighted in an orange box (word-by-word, synced to voice)",
+  "font_class": "mixed",
+  "weight": "black for key words, regular for caption",
+  "case": "UPPERCASE key words, sentence case captions",
+  "position": "key word centered; caption top-left ~y 5-12%",
+  "size_class": "key words very large (up to ~35% of frame height); caption small",
+  "animation_in": "word-by-word highlight box moves with voice; key words pop with glow; scene 6 letters blur-in then stretch wide; scene 7-8 extruded 3D letters whip in",
+  "animation_out": "replaced at next phrase or cut",
+  "avg_on_screen_s": 2.0,
+  "words_per_caption": 3.0,
+  "safe_zone_respected": true
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#090C11",
+    "share": 0.21
+   },
+   {
+    "hex": "#060A0F",
+    "share": 0.133
+   },
+   {
+    "hex": "#080B0F",
+    "share": 0.128
+   },
+   {
+    "hex": "#070B0F",
+    "share": 0.121
+   },
+   {
+    "hex": "#0B0E14",
+    "share": 0.09
+   },
+   {
+    "hex": "#0F1115",
+    "share": 0.072
+   }
+  ],
+  "grade": {
+   "look": "near-black navy background with one orange accent (#FA954E class) and white type; pink/red used for NO and the time-spent counter; scene 6 flips to full flat orange with dark text; scene 9 flashes white",
+   "contrast": "high",
+   "temperature": "warm",
+   "saturation_mean": 0.521,
+   "brightness_mean": 0.185
+  }
+ },
+ "layout": {
+  "orientation": "landscape",
+  "safe_zones": "inner video is 16:9 shown on a monitor in a vertical reel; only inner video described",
+  "framing_notes": "crop is 876x492 from a tracked screen quad; top edge of crop includes a bit of monitor frame and orange items on the desk (scene 1 also shows player controls at 0.7s: the video is about to start)"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "kinetic_text",
+   "title",
+   "lower_third",
+   "video"
+  ],
+  "typical_scene_s": 4.5,
+  "spring": {
+   "damping": 14,
+   "stiffness": 120,
+   "mass": 1
+  },
+  "notes": "Orange-on-black Claude Code HUD style: corner brackets, REC dot, timecode, dotted grid. Components: caption pill with moving highlight, centered kinetic word, node-diagram (CLAUDE -> MCP SERVER -> AFTER EFFECTS), prompt box with typewriter and orange highlighted phrases, timeline mock (After Effects Not Responding), 3D extruded text with camera, counter list (KEYFRAMES +4H, LAYERS +3H, AFTER EFFECTS +2H = 9H), pipeline CLAUDE -> PROMPT -> GENERATE, final logo 'Claude CODE by Edita Club'. Spring values estimated."
+ },
+ "evidence": [
+  {
+   "claim": "Black screen with player controls, then HOLY SHOT with orange flower replacing the I, small note '*censored for LinkedIn'",
+   "scenes": [
+    1
+   ],
+   "t": [
+    0,
+    4.45
+   ]
+  },
+  {
+   "claim": "Whip into MOTION title with G dropping below an axis, caption pill 'I made these motion'",
+   "scenes": [
+    2
+   ],
+   "t": [
+    4.45,
+    5.7
+   ]
+  },
+  {
+   "claim": "After Effects timeline mock 'Not Responding', then AND NO, in pink",
+   "scenes": [
+    3
+   ],
+   "t": [
+    5.7,
+    11.0
+   ]
+  },
+  {
+   "claim": "Node diagram CLAUDE > MCP SERVER > AFTER EFFECTS, then 'THIS IS Claude', prompt box, CLAUDE engine with storyboard/kinetic type/shapes checklist",
+   "scenes": [
+    4
+   ],
+   "t": [
+    11.0,
+    18.25
+   ]
+  },
+  {
+   "claim": "THE PROMPT: box, typewriter text with orange highlighted 15-second, cinematic, kinetic type, morphing shapes, 3D elements; wireframe polyhedron and triangle appear",
+   "scenes": [
+    5
+   ],
+   "t": [
+    18.25,
+    26.767
+   ]
+  },
+  {
+   "claim": "Full orange flat scene: THE blurs in, STRETCH. letters widen",
+   "scenes": [
+    6
+   ],
+   "t": [
+    26.767,
+    28.8
+   ]
+  },
+  {
+   "claim": "3D camera burst: THAT, SEAMLESS extruded letters, white flash with 'camera'",
+   "scenes": [
+    7,
+    8,
+    9
+   ],
+   "t": [
+    28.8,
+    30.4
+   ]
+  },
+  {
+   "claim": "HELL, YOUR WORKFLOW with KEYFRAMES/LAYERS/AFTER EFFECTS counter to 9H, then CLAUDE > PROMPT > GENERATE",
+   "scenes": [
+    10
+   ],
+   "t": [
+    30.4,
+    43.8
+   ]
+  },
+  {
+   "claim": "Orange dot, ONE, closing logo Claude CODE by Edita Club",
+   "scenes": [
+    11
+   ],
+   "t": [
+    43.8,
+    51.533
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ }
+}
