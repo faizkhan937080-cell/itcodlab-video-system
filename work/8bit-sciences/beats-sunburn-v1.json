@@ -1,0 +1,245 @@
+{
+ "video": "8bit-sunburn-v1",
+ "creator": "8bit_sciences",
+ "topic": "Sunburn: dhoop se skin jalti kyun hai, phir chhilti kyun hai",
+ "format": {
+  "w": 1080,
+  "h": 1920,
+  "fps": 30,
+  "seconds": 60,
+  "approved": false
+ },
+ "bar_s": 0.511,
+ "note": "23 beats / 60 s = 0.38 per s (gate limit 0.5 ok). Every cut on the 0.511 s beat grid. Understandable without voice: each beat has an on-screen label. Music = same loop as bruise, ~117.5 BPM.",
+ "beats": [
+  {
+   "id": "b1",
+   "t": [
+    0,
+    2.0
+   ],
+   "what": "Boy sleeps on beach, big sun. Text SUNBURN? (hook)",
+   "sound": "sun-hum + blip",
+   "label": "SUNBURN?"
+  },
+  {
+   "id": "b2",
+   "t": [
+    2.0,
+    5.1
+   ],
+   "what": "Sun beams pixel UV rays down on boy",
+   "sound": "zap rays",
+   "label": "UV RAYS"
+  },
+  {
+   "id": "b3",
+   "t": [
+    5.1,
+    8.2
+   ],
+   "what": "Zoom into skin cross-section, rays hit surface",
+   "sound": "whoosh zoom + hit",
+   "label": "UV"
+  },
+  {
+   "id": "b4",
+   "t": [
+    8.2,
+    11.3
+   ],
+   "what": "UV breaks DNA in a skin cell (DNA ladder cracks)",
+   "sound": "glass-crack",
+   "label": "DNA DAMAGE"
+  },
+  {
+   "id": "b5",
+   "t": [
+    11.3,
+    12.3
+   ],
+   "what": "Glitch + fast-forward",
+   "sound": "tape ff blip",
+   "counter": "HOUR 2"
+  },
+  {
+   "id": "b6",
+   "t": [
+    12.3,
+    15.4
+   ],
+   "what": "Damaged cells send alarm; blood vessels widen",
+   "sound": "pop alarm",
+   "label": "VESSELS WIDEN"
+  },
+  {
+   "id": "b7",
+   "t": [
+    15.4,
+    18.5
+   ],
+   "what": "Blood rushes in, skin turns red, heat waves",
+   "sound": "rising riser",
+   "label": "RED + HOT"
+  },
+  {
+   "id": "b8",
+   "t": [
+    18.5,
+    19.5
+   ],
+   "what": "Glitch + fast-forward",
+   "sound": "ff blip",
+   "counter": "HOUR 6"
+  },
+  {
+   "id": "b9",
+   "t": [
+    19.5,
+    22.6
+   ],
+   "what": "Boy touches back, ouch, nerves flash (pain)",
+   "sound": "zap + ouch pop",
+   "label": "PAIN"
+  },
+  {
+   "id": "b10",
+   "t": [
+    22.6,
+    25.7
+   ],
+   "what": "Immune cells arrive to clean damaged cells",
+   "sound": "drift + gulp",
+   "label": "IMMUNE CELLS"
+  },
+  {
+   "id": "b11",
+   "t": [
+    25.7,
+    26.7
+   ],
+   "what": "Glitch + fast-forward",
+   "sound": "ff blip",
+   "counter": "DAY 2"
+  },
+  {
+   "id": "b12",
+   "t": [
+    26.7,
+    29.8
+   ],
+   "what": "Skin cells that cannot be repaired self-destruct",
+   "sound": "pop-pop-pop",
+   "label": "CELLS DIE"
+  },
+  {
+   "id": "b13",
+   "t": [
+    29.8,
+    32.9
+   ],
+   "what": "Dead cells loosen, skin feels tight and dry",
+   "sound": "stretch creak",
+   "label": "TIGHT"
+  },
+  {
+   "id": "b14",
+   "t": [
+    32.9,
+    33.9
+   ],
+   "what": "Glitch + fast-forward",
+   "sound": "ff blip",
+   "counter": "DAY 4"
+  },
+  {
+   "id": "b15",
+   "t": [
+    33.9,
+    37.0
+   ],
+   "what": "Fresh melanin cells darken (tan builds)",
+   "sound": "soft chime",
+   "label": "MELANIN"
+  },
+  {
+   "id": "b16",
+   "t": [
+    37.0,
+    40.1
+   ],
+   "what": "Skin top layer lifts up at the edges",
+   "sound": "paper rustle",
+   "label": "LIFTING"
+  },
+  {
+   "id": "b17",
+   "t": [
+    40.1,
+    41.1
+   ],
+   "what": "Glitch + fast-forward",
+   "sound": "ff blip",
+   "counter": "DAY 6"
+  },
+  {
+   "id": "b18",
+   "t": [
+    41.1,
+    44.2
+   ],
+   "what": "Dead layer peels off in a sheet, falls away",
+   "sound": "peel rip + drop",
+   "label": "PEELING"
+  },
+  {
+   "id": "b19",
+   "t": [
+    44.2,
+    47.3
+   ],
+   "what": "Fresh pink skin underneath, healthy",
+   "sound": "sparkle chime",
+   "label": "NEW SKIN"
+  },
+  {
+   "id": "b20",
+   "t": [
+    47.3,
+    50.4
+   ],
+   "what": "Warning: UV damage stays in DNA even after healing",
+   "sound": "low hit",
+   "label": "DNA REMEMBERS"
+  },
+  {
+   "id": "b21",
+   "t": [
+    50.4,
+    53.5
+   ],
+   "what": "Boy puts on sunscreen + hat, sun blocked by shield",
+   "sound": "shield pop",
+   "label": "SUNSCREEN"
+  },
+  {
+   "id": "b22",
+   "t": [
+    53.5,
+    57.6
+   ],
+   "what": "Boy happy under shield, rays bounce off",
+   "sound": "bounce blips",
+   "label": "SAFE"
+  },
+  {
+   "id": "b23",
+   "t": [
+    57.6,
+    60.0
+   ],
+   "what": "End card: loop to hook",
+   "sound": "rewind blip"
+  }
+ ]
+}
