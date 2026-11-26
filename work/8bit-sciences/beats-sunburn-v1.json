@@ -10,7 +10,7 @@
   "approved": false
  },
  "bar_s": 0.511,
- "note": "23 beats / 60 s = 0.38 per s (gate limit 0.5 ok). Every cut on the 0.511 s beat grid. Understandable without voice: each beat has an on-screen label. Music = same loop as bruise, ~117.5 BPM.",
+ "note": "28 beats / 60 s = 0.47 per s (limit 0.5). Beats extended per Faiz 2026-11-26.",
  "beats": [
   {
    "id": "b1",
@@ -33,14 +33,24 @@
    "label": "UV RAYS"
   },
   {
-   "id": "b3",
+   "id": "b3a",
    "t": [
     5.1,
+    6.633
+   ],
+   "what": "UV hits top layer",
+   "label": "UV",
+   "sound": "whoosh zoom + hit"
+  },
+  {
+   "id": "b3b",
+   "t": [
+    6.633,
     8.2
    ],
-   "what": "Zoom into skin cross-section, rays hit surface",
-   "sound": "whoosh zoom + hit",
-   "label": "UV"
+   "what": "rays sink deeper",
+   "label": "UV GOES IN",
+   "sound": "zap sink"
   },
   {
    "id": "b4",
@@ -73,14 +83,24 @@
    "label": "VESSELS WIDEN"
   },
   {
-   "id": "b7",
+   "id": "b7a",
    "t": [
     15.4,
+    16.933
+   ],
+   "what": "blood rushes in",
+   "label": "RED + HOT",
+   "sound": "rising riser"
+  },
+  {
+   "id": "b7b",
+   "t": [
+    16.933,
     18.5
    ],
-   "what": "Blood rushes in, skin turns red, heat waves",
-   "sound": "rising riser",
-   "label": "RED + HOT"
+   "what": "skin turns red + heat waves",
+   "label": "HOT",
+   "sound": "riser then sizzle"
   },
   {
    "id": "b8",
@@ -103,14 +123,24 @@
    "label": "PAIN"
   },
   {
-   "id": "b10",
+   "id": "b10a",
    "t": [
     22.6,
+    24.133
+   ],
+   "what": "immune cells arrive",
+   "label": "IMMUNE CELLS",
+   "sound": "drift + gulp"
+  },
+  {
+   "id": "b10b",
+   "t": [
+    24.133,
     25.7
    ],
-   "what": "Immune cells arrive to clean damaged cells",
-   "sound": "drift + gulp",
-   "label": "IMMUNE CELLS"
+   "what": "they eat damaged cells",
+   "label": "CLEANUP",
+   "sound": "drift + gulp"
   },
   {
    "id": "b11",
@@ -153,14 +183,24 @@
    "counter": "DAY 4"
   },
   {
-   "id": "b15",
+   "id": "b15a",
    "t": [
     33.9,
+    35.433
+   ],
+   "what": "melanin cells wake up",
+   "label": "MELANIN",
+   "sound": "soft chime"
+  },
+  {
+   "id": "b15b",
+   "t": [
+    35.433,
     37.0
    ],
-   "what": "Fresh melanin cells darken (tan builds)",
-   "sound": "soft chime",
-   "label": "MELANIN"
+   "what": "skin slowly tans darker",
+   "label": "TAN",
+   "sound": "soft chime"
   },
   {
    "id": "b16",
@@ -223,14 +263,24 @@
    "label": "SUNSCREEN"
   },
   {
-   "id": "b22",
+   "id": "b22a",
    "t": [
     53.5,
+    55.544
+   ],
+   "what": "boy happy under shield",
+   "label": "SAFE",
+   "sound": "bounce blips"
+  },
+  {
+   "id": "b22b",
+   "t": [
+    55.544,
     57.6
    ],
-   "what": "Boy happy under shield, rays bounce off",
-   "sound": "bounce blips",
-   "label": "SAFE"
+   "what": "rays bounce off, thumbs up",
+   "label": "SAFE",
+   "sound": "bounce blips"
   },
   {
    "id": "b23",
