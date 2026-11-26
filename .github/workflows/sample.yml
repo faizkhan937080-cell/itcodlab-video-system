@@ -6,6 +6,9 @@ on:
     paths: ['trigger/sample/*-sample.json']
   workflow_dispatch:
     inputs:
+      sound:
+        description: 'yes = fetch music + sfx first'
+        default: 'no'
       spec:
         description: 'spec file'
         default: 'trigger/sample/tbm-chai-cig-sample.json'
@@ -60,6 +63,14 @@ jobs:
           printf '[gdrive]\ntype = drive\nscope = drive\ntoken = %s\n' "$RCLONE_TOKEN" > ~/.config/rclone/rclone.conf
           git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git config user.name itcod-worker; git config user.email worker@users.noreply.github.com
+      - name: Sound (music + sfx) for plans that ask for it
+        continue-on-error: true
+        timeout-minutes: 15
+        run: |
+          SPEC="${{ github.event.inputs.spec }}"; [ -n "$SPEC" ] || SPEC=$(git diff --name-only HEAD~1 HEAD -- 'trigger/sample/*-sample.json' | head -1)
+          if [ -f "trigger/sample/$(basename "$SPEC" -sample.json)-plan.json" ] && git log -1 --format=%B | grep -q '\[sound\]' || [ "${{ github.event.inputs.sound }}" = "yes" ]; then
+            python -m scripts.sunsound "trigger/sample/$(basename "$SPEC" -sample.json)-plan.json" | tail -30
+          fi
       - name: Sample render
         timeout-minutes: 80
         run: |
