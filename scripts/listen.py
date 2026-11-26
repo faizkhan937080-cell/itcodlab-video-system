@@ -10,7 +10,8 @@ import urllib.parse
 import urllib.request
 
 LABELS = ["whoosh", "swoosh", "pop", "click", "tick", "camera shutter", "paper rustle", "page flip", "typing", "impact hit",
-          "riser", "bass drop", "ding notification", "glitch", "stamp", "scribble pen drawing", "cash register", "applause"]
+          "riser", "bass drop", "ding notification", "glitch", "stamp", "scribble pen drawing", "cash register", "applause",
+          "8-bit blip", "retro game beep", "coin pickup", "tape rewind", "fast forward", "thud", "splat", "crack", "sparkle chime", "static noise"]
 MIN_SCORE = 0.35
 WINDOW_S, HOP_S = 1.0, 0.5
 
@@ -83,7 +84,11 @@ def clap_scorer():
     proc = ClapProcessor.from_pretrained("laion/clap-htsat-unfused")
 
     def score(samples, sr, labels):
-        inp = proc(text=[f"the sound of {x}" for x in labels], audios=[samples], sampling_rate=sr, return_tensors="pt", padding=True)
+        txt = [f"the sound of {x}" for x in labels]
+        try:  # newer transformers renamed audios -> audio
+            inp = proc(text=txt, audio=[samples], sampling_rate=sr, return_tensors="pt", padding=True)
+        except (ValueError, TypeError):
+            inp = proc(text=txt, audios=[samples], sampling_rate=sr, return_tensors="pt", padding=True)
         with torch.no_grad():
             probs = model(**inp).logits_per_audio.softmax(dim=-1)[0].tolist()
         return dict(zip(labels, probs))
