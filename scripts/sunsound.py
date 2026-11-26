@@ -45,7 +45,7 @@ def _synth_file(st, kind):
     try:
         if not st.exists(rel):
             with tempfile.TemporaryDirectory() as td:
-                st.put_file(sfx_synth.make(kind, Path(td) / f"8bit-{kind}-own.wav"), rel, versioned=False)
+                st.put_file(sfx_synth.make(kind, Path(td) / f"8bit-{kind}-own.wav"), rel)
         return rel
     except Exception as ex:  # noqa: BLE001
         print(f"synth {kind} failed: {type(ex).__name__} {str(ex)[:80]}")
