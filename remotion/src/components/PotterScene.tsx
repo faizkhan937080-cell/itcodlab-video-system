@@ -2,7 +2,7 @@
 // pops in per beat on a tilted card, words reveal one by one (blur -> sharp), decor lines draw on, fixed CTA banner at the bottom.
 // Everything is a function of the scene time t (deterministic). Layout numbers measured from reference DgLclCABIa3.
 import React, {useMemo} from 'react';
-import {AbsoluteFill, Easing, Sequence, interpolate, random, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Easing, Img, Sequence, spring, staticFile, interpolate, random, useCurrentFrame, useVideoConfig} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
 import * as THREE from 'three';
 import {FONTS} from '../ext/fonts';
@@ -11,7 +11,7 @@ import {OBJ, ObjName, POSE, SoapPink, Studio, useMats} from './PotterObjects';
 type W = {w: string; st: 's' | 'i' | 'b' | 'p' | 'r' | 'c'; at: number};     // serif | serif italic | bold black | bold pink | regular sans | coral
 export type PotterCap = {t0: number; t1: number; lines: W[][]; y?: number};
 export type PotterObj = {obj: ObjName | 'soap_pink'; t0: number; t1: number; box: {x: number; y: number; w: number; h: number}; decor: 'dots' | 'ring' | 'brackets' | 'cross' | 'frame' | 'curves' | 'none'};
-export type PotterProps = {ghost: string; key_word: string; cta_big: string; caps: PotterCap[]; objs: PotterObj[]; end_s: number};
+export type PotterProps = {ghost: string; key_word: string; cta_big: string; caps: PotterCap[]; objs: PotterObj[]; end_s: number; logo?: {src: string; t0: number}};
 
 const CW = 1080, CH = 1920;                 // card size, 1080x1920 frame
 const INK = '#2B1018', PINK = '#CF3F82', CORAL = '#F08A5D';
@@ -214,7 +214,7 @@ const Banner: React.FC<{t: number; keyWord: string; big: string}> = ({t, keyWord
   );
 };
 
-export const PotterScene: React.FC<PotterProps> = ({ghost, key_word, cta_big, caps, objs}) => {
+export const PotterScene: React.FC<PotterProps> = ({caps, objs, logo}) => {
   const frame = useCurrentFrame();
   const {fps, width} = useVideoConfig();
   const sc = width / 1080;
@@ -230,7 +230,7 @@ export const PotterScene: React.FC<PotterProps> = ({ghost, key_word, cta_big, ca
           <div style={{position: 'absolute', left: 0, top: 0, width: CW, height: CH, overflow: 'hidden', background: '#F7EEED'}}>
             <div style={{position: 'absolute', inset: 0, background: 'repeating-linear-gradient(115deg, rgba(255,255,255,0.7) 0 26px, rgba(206,178,184,0.16) 26px 56px)', transform: `translateX(${(t * 14) % 56}px)`}} />
             <Chevron x={30} y={40} rot={-8} s={1.3} />
-            <Chevron x={CW - 170} y={1440} rot={180} s={0.8} />
+            <Chevron x={CW - 170} y={1740} rot={180} s={0.8} />
             {objs.map((o, i) => {
               const from = Math.round(o.t0 * fps), dur = Math.max(1, Math.round((o.t1 - o.t0) * fps));
               return (
@@ -241,10 +241,24 @@ export const PotterScene: React.FC<PotterProps> = ({ghost, key_word, cta_big, ca
             })}
             {cap ? <Caption c={cap} t={t} /> : null}
           </div>
-          <Banner t={t} keyWord={key_word} big={cta_big} />
         </AbsoluteFill>
       </AbsoluteFill>
+      {logo ? <EndCard t={t} logo={logo} fps={fps} /> : null}
      </div>
+    </AbsoluteFill>
+  );
+};
+
+const EndCard: React.FC<{t: number; logo: {src: string; t0: number}; fps: number}> = ({t, logo, fps}) => {
+  if (t < logo.t0) return null;
+  const bg = interpolate(t, [logo.t0, logo.t0 + 0.35], [0, 1], clamp);
+  const sp = spring({frame: Math.round((t - logo.t0 - 0.2) * fps), fps, config: {damping: 14, stiffness: 120}});
+  const op = interpolate(t, [logo.t0 + 0.2, logo.t0 + 0.6], [0, 1], clamp);
+  return (
+    <AbsoluteFill style={{background: '#FFFFFF', opacity: bg}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <Img src={staticFile(logo.src)} style={{width: 860, height: 860, opacity: op, transform: `scale(${0.82 + 0.18 * Math.min(1.08, sp)})`}} />
+      </div>
     </AbsoluteFill>
   );
 };

@@ -13,7 +13,9 @@ S = json.load(open("work/potter-health/script-v1.json", encoding="utf-8"))["segm
 tr = {"available": True, "segments": [{"start": a, "end": b, "text": s["text"]} for (_, a, b), s in zip(SEG, S)]}
 W = words_from_transcript(tr)
 assert len(W) == 94, len(W)
-END = round(SEG[-1][2] + 1.0, 2)
+SP_END = SEG[-1][2]
+END = round(SP_END + 3.0, 2)
+LOGO_T = round(SP_END + 0.55, 2)
 
 
 def tt(i):  # start time of token i (end of speech for i == len)
@@ -60,13 +62,13 @@ for k, (a, b, lines) in enumerate(Cp):
             i += n
         out.append(row)
     assert i == b, (k, i, b)
-    nxt = tt(Cp[k + 1][0]) if k + 1 < len(Cp) else END
+    nxt = tt(Cp[k + 1][0]) if k + 1 < len(Cp) else SP_END + 0.3
     caps.append({"t0": round(tt(a) - 0.1, 3), "t1": round(nxt - 0.03, 3), "lines": out})
 caps[0]["t0"] = 0.0
-caps[-1]["t1"] = END
+caps[-1]["t1"] = round(SP_END + 0.3, 3)
 
-STD = {"x": 0.5, "y": 0.585, "w": 1.0, "h": 0.47}
-BUST = {"x": 0.5, "y": 0.6, "w": 1.0, "h": 0.54}
+STD = {"x": 0.5, "y": 0.62, "w": 1.0, "h": 0.52}
+BUST = {"x": 0.5, "y": 0.63, "w": 1.0, "h": 0.58}
 O = [  # (object, token_from, token_to, box, decor)
     ("bed", 0, 8, STD, "dots"),
     ("five", 8, 16, STD, "brackets"),
@@ -85,10 +87,10 @@ O = [  # (object, token_from, token_to, box, decor)
 objs = []
 for k, (o, a, b, box, dec) in enumerate(O):
     t0 = 0.0 if k == 0 else round(tt(a) - 0.12, 3)
-    t1 = round(tt(O[k + 1][1]) - 0.12 + 0.2, 3) if k + 1 < len(O) else END   # 0.2 s overlap: the next one pops in while this one leaves
+    t1 = round(tt(O[k + 1][1]) - 0.12 + 0.2, 3) if k + 1 < len(O) else round(LOGO_T, 3)   # 0.2 s overlap: the next one pops in while this one leaves
     objs.append({"obj": o, "t0": t0, "t1": t1, "box": box, "decor": dec})
 
-props = {"ghost": "SEMMELWEIS", "key_word": "HEALTH", "cta_big": "Full Story", "caps": caps, "objs": objs, "end_s": END}
+props = {"caps": caps, "objs": objs, "end_s": END, "logo": {"src": "brand/integrity-logo.jpg", "t0": LOGO_T}}
 total = SAMPLE or END
 scenes = [{"id": "s1", "duration_s": total, "template": "potter", "props": props, "transition_in": {"type": "cut"}}]
 SFX = "assets/library/sfx"
@@ -100,15 +102,16 @@ def sfx(name, at, vol, dur=0.8):
 
 sf = [sfx("softpop", o["t0"] + 0.04, 0.6) for o in objs] + [sfx("swish", o["t0"] - 0.05, 0.22, 0.5) for o in objs[1:]]
 sf += [sfx("softpop", t, 0.32, 0.4) for t in pink_times]
+sf.append(sfx("softpop", LOGO_T + 0.25, 0.6))
 sf = [s for s in sf if s["at_s"] < total]
 voice = {"src": f"output/voice/{VOICE}/{VOICE}.wav", "at_s": 0, "role": "voice", "volume": 1.0}
-music = {"src": "assets/library/music/groove-143.mp3", "at_s": 0, "duration_s": total, "role": "music", "volume": 0.34, "fade_in_s": 0.4, "fade_out_s": 1.5,
+music = {"src": "assets/library/music/groove-143.mp3", "at_s": 0, "duration_s": total, "role": "music", "volume": 0.34, "fade_in_s": 0.4, "fade_out_s": 2.2,
          "duck": [{"from_s": a, "to_s": b, "gain": 0.62} for _, a, b in SEG]}
 plan = {"title": "Semmelweis handwashing (health reel, potter style)", "fps": 30, "orientation": "portrait", "width": 1080, "height": 1920,
         "scenes": scenes, "captions": [], "audio": [voice, music] + sf, "audio_target_lufs": -17, "vignette": 0.0, "grain": False}
 name = "health-sample" if SAMPLE else "health-full"
 d = Path("trigger/sample")
 (d / f"{name}-plan.json").write_text(json.dumps(plan, indent=1, ensure_ascii=False), encoding="utf-8")
-times = [0.3, 1.0, 2.2, 3.5, 4.6, 5.6, 6.6, 7.9, 8.6, 9.3] if SAMPLE else sorted({round(min(END - 0.1, f), 2) for o in objs for f in (o["t0"] + 0.45, (o["t0"] + o["t1"]) / 2, o["t1"] - 0.45)})
+times = [0.3, 1.0, 2.2, 3.5, 4.6, 5.6, 6.6, 7.9, 8.6, 9.3] if SAMPLE else sorted({round(min(END - 0.1, f), 2) for o in objs for f in (o["t0"] + 0.45, (o["t0"] + o["t1"]) / 2, o["t1"] - 0.45)} | {LOGO_T + 0.15, LOGO_T + 0.5, LOGO_T + 1.5, END - 0.3})
 (d / f"{name}-sample.json").write_text(json.dumps({"name": name, "plan": f"{name}-plan.json", "seconds": total, "times": times, "cols": 6, "tile_w": 250} if not SAMPLE else {"name": name, "plan": f"{name}-plan.json", "seconds": total, "times": times}), encoding="utf-8")
 print(name, total, len(objs), "objects", len(sf), "sfx", len(caps), "captions")
