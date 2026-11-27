@@ -1,0 +1,152 @@
+{
+ "music": {
+  "title": null,
+  "note": "not identified (no named track, no fingerprint match)"
+ },
+ "sound_events": [
+  {
+   "label": "bass drop",
+   "t": 0.0,
+   "end": 1.0,
+   "score": 0.38
+  },
+  {
+   "label": "glitch",
+   "t": 2.0,
+   "end": 3.0,
+   "score": 0.407
+  },
+  {
+   "label": "bass drop",
+   "t": 3.5,
+   "end": 5.0,
+   "score": 0.515
+  },
+  {
+   "label": "pop",
+   "t": 6.0,
+   "end": 7.5,
+   "score": 0.368
+  },
+  {
+   "label": "glitch",
+   "t": 7.0,
+   "end": 8.5,
+   "score": 0.408
+  },
+  {
+   "label": "splat",
+   "t": 9.5,
+   "end": 10.5,
+   "score": 0.632
+  },
+  {
+   "label": "glitch",
+   "t": 11.0,
+   "end": 12.0,
+   "score": 0.423
+  },
+  {
+   "label": "splat",
+   "t": 12.0,
+   "end": 13.0,
+   "score": 0.365
+  },
+  {
+   "label": "glitch",
+   "t": 13.5,
+   "end": 15.0,
+   "score": 0.639
+  },
+  {
+   "label": "splat",
+   "t": 15.5,
+   "end": 16.5,
+   "score": 0.506
+  },
+  {
+   "label": "glitch",
+   "t": 16.0,
+   "end": 17.0,
+   "score": 0.389
+  },
+  {
+   "label": "glitch",
+   "t": 18.0,
+   "end": 26.0,
+   "score": 0.752
+  },
+  {
+   "label": "splat",
+   "t": 26.5,
+   "end": 32.0,
+   "score": 0.665
+  },
+  {
+   "label": "glitch",
+   "t": 31.5,
+   "end": 33.5,
+   "score": 0.46
+  },
+  {
+   "label": "splat",
+   "t": 33.0,
+   "end": 34.0,
+   "score": 0.548
+  },
+  {
+   "label": "glitch",
+   "t": 34.0,
+   "end": 35.0,
+   "score": 0.359
+  },
+  {
+   "label": "splat",
+   "t": 35.5,
+   "end": 36.5,
+   "score": 0.512
+  },
+  {
+   "label": "glitch",
+   "t": 37.0,
+   "end": 38.0,
+   "score": 0.372
+  },
+  {
+   "label": "bass drop",
+   "t": 38.0,
+   "end": 39.5,
+   "score": 0.594
+  },
+  {
+   "label": "splat",
+   "t": 39.5,
+   "end": 45.0,
+   "score": 0.47
+  },
+  {
+   "label": "glitch",
+   "t": 46.0,
+   "end": 47.0,
+   "score": 0.369
+  },
+  {
+   "label": "splat",
+   "t": 46.5,
+   "end": 47.5,
+   "score": 0.623
+  },
+  {
+   "label": "glitch",
+   "t": 47.5,
+   "end": 50.5,
+   "score": 0.793
+  },
+  {
+   "label": "tick",
+   "t": 51.0,
+   "end": 52.0,
+   "score": 0.803
+  }
+ ]
+}
