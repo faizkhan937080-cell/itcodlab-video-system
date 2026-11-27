@@ -226,29 +226,30 @@ const Bars: React.FC<{t: number; m: Mats}> = ({t, m}) => {
 };
 
 const Gavel: React.FC<{t: number; m: Mats}> = ({t, m}) => {
-  // hinge at the hand (PX,PY); handle length L; the head hits the pad top at angle A_HIT: PY + L*sin(A_HIT) - R_HEAD = PAD_TOP
-  const PX = -1.29, PY = 1.355, L = 1.7, R_HEAD = 0.3, PAD_TOP = 0.24, A_HIT = -0.5, A_UP = 0.2;
+  // The head is a cylinder whose AXIS is the strike direction (local y), the handle enters its side at the centre (like a real mallet).
+  // Hinge at the hand (PX,PY), handle length L. Lowest point of the head = c_y - HL*cos(a) - R*|sin(a)|.
+  // PY is solved so that at A_HIT that lowest point == PAD_TOP (touching, never inside).
+  const L = 1.5, R = 0.3, HL = 0.45, PAD_TOP = 0.24, A_HIT = -0.5, A_UP = 0.15, PX = -1.12;
+  const low = (py: number, a: number) => py + L * Math.sin(a) - HL * Math.cos(a) - R * Math.abs(Math.sin(a));
+  const PY = PAD_TOP - (L * Math.sin(A_HIT) - HL * Math.cos(A_HIT) - R * Math.abs(Math.sin(A_HIT)));
   const cyc = (t % 1.3) / 1.3;
   let a: number;
-  if (cyc < 0.55) a = A_UP + (A_HIT - A_UP) * 0 + 0.0 + (ease(cyc / 0.55) * 0.0);   // hold up while lifting from rest
-  else a = A_UP;
-  if (cyc < 0.5) a = A_HIT + (A_UP - A_HIT) * ease(cyc / 0.5);                         // lift
-  else if (cyc < 0.62) a = A_UP + (A_HIT - A_UP) * Math.pow((cyc - 0.5) / 0.12, 2.2);   // fast strike
-  else if (cyc < 0.72) a = A_HIT + 0.16 * Math.sin(((cyc - 0.62) / 0.1) * Math.PI);      // small bounce (always above the pad)
+  if (cyc < 0.5) a = A_HIT + (A_UP - A_HIT) * ease(cyc / 0.5);                           // lift
+  else if (cyc < 0.62) a = A_UP + (A_HIT - A_UP) * Math.pow((cyc - 0.5) / 0.12, 2.2);    // fast strike
+  else if (cyc < 0.72) a = A_HIT + 0.16 * Math.sin(((cyc - 0.62) / 0.1) * Math.PI);       // small bounce, stays above the pad
   else a = A_HIT;
-  a = Math.max(A_HIT, a);                                                                // never below the contact angle
-  const bottom = PY + L * Math.sin(a) - R_HEAD;
-  const guard = Math.max(0, PAD_TOP - bottom);                                           // belt and braces: lift if anything ever dips
+  a = Math.max(A_HIT, a);
+  const guard = Math.max(0, PAD_TOP - low(PY, a));
   return (
-    <group position={[0, -0.6, 0]}>
+    <group position={[0, -0.75, 0]} scale={0.8}>
       <mesh position={[0.2, 0.06, 0]} material={m.marble}><cylinderGeometry args={[0.95, 1.05, 0.12, 64]} /></mesh>
       <mesh position={[0.2, 0.18, 0]} material={m.satin}><cylinderGeometry args={[0.55, 0.6, 0.12, 48]} /></mesh>
       <group position={[PX, PY + guard, 0]} rotation={[0, 0, a]}>
         <mesh position={[L / 2, 0, 0]} rotation={[0, 0, Math.PI / 2]} material={m.marble}><cylinderGeometry args={[0.07, 0.09, L, 32]} /></mesh>
-        <group position={[L, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh material={m.marble}><cylinderGeometry args={[R_HEAD, R_HEAD, 0.9, 48]} /></mesh>
-          <mesh position={[0, 0.4, 0]} material={m.satin}><cylinderGeometry args={[R_HEAD + 0.015, R_HEAD + 0.015, 0.1, 48]} /></mesh>
-          <mesh position={[0, -0.4, 0]} material={m.satin}><cylinderGeometry args={[R_HEAD + 0.015, R_HEAD + 0.015, 0.1, 48]} /></mesh>
+        <group position={[L, 0, 0]}>
+          <mesh material={m.marble}><cylinderGeometry args={[R, R, HL * 2, 48]} /></mesh>
+          <mesh position={[0, HL - 0.05, 0]} material={m.satin}><cylinderGeometry args={[R + 0.015, R + 0.015, 0.1, 48]} /></mesh>
+          <mesh position={[0, -HL + 0.05, 0]} material={m.satin}><cylinderGeometry args={[R + 0.015, R + 0.015, 0.1, 48]} /></mesh>
         </group>
       </group>
     </group>
@@ -339,7 +340,7 @@ export const POSE: Record<ObjName, {yaw: number; sway: number; spin: number; til
   bed: {yaw: -0.6, sway: 0.35, spin: 0, tilt: 0.38, scale: 1.0},
   five: {yaw: 0, sway: 0.0, spin: 0, tilt: 0.12, scale: 1.0},
   bust: {yaw: -0.1, sway: 0.4, spin: 0, tilt: 0.04, scale: 1.0},
-  scalpel: {yaw: 0.0, sway: 0.5, spin: 0, tilt: 0.2, scale: 1.0},
+  scalpel: {yaw: 0.0, sway: 0.45, spin: 0, tilt: 0.5, scale: 1.0},
   soap: {yaw: -0.3, sway: 0.4, spin: 0, tilt: 0.3, scale: 1.0},
   bars: {yaw: -0.35, sway: 0.25, spin: 0, tilt: 0.22, scale: 1.0},
   gavel: {yaw: -0.4, sway: 0.2, spin: 0, tilt: 0.28, scale: 1.0},
