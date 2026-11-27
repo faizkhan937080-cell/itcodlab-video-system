@@ -1,0 +1,174 @@
+{
+ "creator": "sansser.ai",
+ "reel": "reel-DfWN_TpptL7",
+ "capture": "screen_in_scene: only inner edited video described",
+ "fonts": [
+  {
+   "name": "black condensed grotesque (Anton / Impact-Bebas Neue class, unidentified)",
+   "use": "NO, TIMELINE, KEYFRAMES, ONE PROMPT.",
+   "t": [
+    4.05,
+    5.183
+   ]
+  },
+  {
+   "name": "extra-bold grotesque (Archivo Black / Inter Black class)",
+   "use": "CLAUDE title, clock digits",
+   "t": [
+    0.617,
+    8.0
+   ]
+  },
+  {
+   "name": "italic high-contrast serif",
+   "use": "'now does moti..' and 'Claude' logo",
+   "t": [
+    1.0,
+    13.65
+   ]
+  },
+  {
+   "name": "monospace (JetBrains Mono class)",
+   "use": "HUD labels, terminal, timecode",
+   "t": [
+    0,
+    13.65
+   ]
+  }
+ ],
+ "music": [
+  {
+   "name": "unknown",
+   "note": "bed, 89.1 bpm detected, music stem -18.1 LUFS",
+   "t": [
+    0,
+    13.63
+   ]
+  }
+ ],
+ "sfx": [
+  {
+   "name": "unknown",
+   "note": "not determinable from frames"
+  }
+ ],
+ "motion": [
+  "pulsing glow asterisk",
+  "typed title with cursor",
+  "3D cube wave forming a pyramid",
+  "strike-through bar sweep",
+  "outlined echo text rows",
+  "rolling clock digits",
+  "bar and line chart grow",
+  "line-particle tunnel to starburst",
+  "terminal checklist and render bar",
+  "12-dot ring morph to 12-ray asterisk"
+ ],
+ "textures": [
+  "warm film-like vignette on dark scenes",
+  "beige paper background",
+  "orange radial glow behind logo"
+ ],
+ "tools_named": [
+  "Claude",
+  "Claude Code",
+  "Opus 5.5",
+  "prompt.html",
+  "field3d.js"
+ ],
+ "layout": {
+  "headline": "centered key word",
+  "caption": "none except final CTA line",
+  "hud": "top-left CLAUDE CODE/ MOTION LAB, top-right OPUS 5.5 pill, bottom-left section label, bottom-right timecode, bottom progress line, corner brackets"
+ },
+ "captions": {
+  "style": "no voice captions; on-screen titles only",
+  "words_per_caption": 1.5
+ },
+ "assets_needed": [
+  {
+   "name": "glowing asterisk logo on vignette",
+   "t": [
+    0,
+    0.617
+   ]
+  },
+  {
+   "name": "orange title board CLAUDE with typed build and italic subtitle",
+   "t": [
+    0.617,
+    2.1
+   ]
+  },
+  {
+   "name": "3D cube field with pyramid and asterisk",
+   "t": [
+    2.1,
+    4.05
+   ]
+  },
+  {
+   "name": "NO",
+   "t": [
+    4.05,
+    4.25
+   ]
+  },
+  {
+   "name": "TIMELINE with strike-through bar",
+   "t": [
+    4.25,
+    4.483
+   ]
+  },
+  {
+   "name": "KEYFRAMES",
+   "t": [
+    4.483,
+    4.883
+   ]
+  },
+  {
+   "name": "ONE PROMPT. with outlined echo rows",
+   "t": [
+    4.883,
+    5.183
+   ]
+  },
+  {
+   "name": "data card: clock, bars, -98% pill, stat tiles, reels per week line",
+   "t": [
+    5.183,
+    6.933
+   ]
+  },
+  {
+   "name": "line-particle tunnel and starburst",
+   "t": [
+    6.933,
+    8.717
+   ]
+  },
+  {
+   "name": "orange scene terminal window with render bar",
+   "t": [
+    8.717,
+    10.0
+   ]
+  },
+  {
+   "name": "12-dot ring morph to 12 RAYS asterisk",
+   "t": [
+    10.0,
+    12.0
+   ]
+  },
+  {
+   "name": "closing Claude logo with comment CTA line",
+   "t": [
+    12.0,
+    13.65
+   ]
+  }
+ ]
+}

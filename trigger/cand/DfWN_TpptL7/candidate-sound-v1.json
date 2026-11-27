@@ -1,0 +1,85 @@
+{
+ "type": "sound",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfWN_TpptL7",
+  "creator": "sansser.ai"
+ },
+ "loudness": {
+  "integrated_lufs": -17.9,
+  "true_peak_dbtp": -0.8,
+  "lra_lu": 2.7,
+  "short_term_max_lufs": -16.3,
+  "standard": "EBU R128 measured"
+ },
+ "tempo": {
+  "bpm": 89.1,
+  "feel": "detected 89.1 bpm with 18 beats; steady pulse, music-only reel, moderate confidence"
+ },
+ "beat_sync": {
+  "share_within_80ms": 0.333,
+  "cuts_checked": 9,
+  "median_offset_s": 0.199,
+  "notes": "one third of cuts land within 80 ms of a beat; the rest drift (median 0.199s)"
+ },
+ "speech": {
+  "speech_ratio": 0.0,
+  "voice_character": "no speech: vocals stem about -67.7 LUFS, transcript empty; global pitch numbers (median 273.0 Hz, very expressive) come from music/noise and are not a voice",
+  "delivery": "no voiceover"
+ },
+ "silence": {
+  "share": 0.0,
+  "usage": "none, audio runs the whole clip",
+  "longest_s": 0.0
+ },
+ "mix": {
+  "voice_over_music": "music only: music stem -18.1 LUFS, vocals -67.7 LUFS (voice minus music -49.6 LU)",
+  "ducking": "none (no voice)",
+  "music_mood": "unknown: not identifiable from metrics",
+  "music_genre": "unknown",
+  "sfx_density_per_min": 0,
+  "sfx_types": [
+   "unknown: whoosh/hit likely at the whip at 0.617s and the burst at 4.05-5.183s but unconfirmed"
+  ],
+  "voice_minus_music_lu": -49.6
+ },
+ "evidence": [
+  {
+   "claim": "Integrated loudness and true peak measured",
+   "t": [
+    0,
+    13.63
+   ]
+  },
+  {
+   "claim": "Vocals stem near silent",
+   "t": [
+    0,
+    13.63
+   ]
+  },
+  {
+   "claim": "Beat times 0.28 to 11.82s, 18 beats",
+   "t": [
+    0,
+    13.63
+   ]
+  },
+  {
+   "claim": "Cut-to-beat share 0.333",
+   "t": [
+    0,
+    13.65
+   ]
+  }
+ ],
+ "confidence": {
+  "loudness": "measured",
+  "tempo": "estimated",
+  "beat_sync": "measured",
+  "speech": "measured",
+  "silence": "measured",
+  "mix": "estimated"
+ },
+ "notes": "Audio is screen-captured so room/phone colours loudness. Music/SFX identity needs worker audio analysis."
+}

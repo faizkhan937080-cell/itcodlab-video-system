@@ -78,6 +78,9 @@ def _crosscheck(dna_type, dna, summary):
             p.append("loudness tagged measured but the pack has no ebu_r128 numbers (re-run analysis)")
     elif dna_type == "scripting":
         sm = summary.get("script_metrics") or {}
+        if not sm.get("available") and _get(dna, "transcript_basis.complete") is False \
+                and not _get(dna, "transcript_basis.coverage_ratio") and _get(summary, "audio.ebu_r128.integrated_lufs") is not None:
+            return p   # silent reel (audio exists, no speech): scripting = on-screen text only, declared incomplete with coverage 0
         if not sm.get("available"):
             p.append("pack has no script_metrics (no transcript): scripting DNA cannot be measured")
             return p

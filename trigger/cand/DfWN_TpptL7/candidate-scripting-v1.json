@@ -1,0 +1,227 @@
+{
+ "type": "scripting",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfWN_TpptL7",
+  "creator": "sansser.ai"
+ },
+ "transcript_basis": {
+  "coverage_ratio": 0.0,
+  "complete": false,
+  "engine": "auto",
+  "phonetic_only": false
+ },
+ "framework": {
+  "name": "Silent on-screen-text promo: logo, title, 3D demo, one-word punches, proof card, build proof, logo + CTA",
+  "description": "No spoken words (transcript empty, vocals about -67.7 LUFS). The script is carried by on-screen text: brand open, 'CLAUDE now does moti..', 'NO TIMELINE KEYFRAMES ONE PROMPT.', a before/after time card, a terminal build, '12 RAYS 1 PROMPT', logo with a comment-keyword ask."
+ },
+ "hook": {
+  "kind": "curiosity gap by visual (logo + 3D reveal)",
+  "duration_s": 3.0,
+  "first_words": "CLAUDE now does moti..",
+  "time_to_value_s": 0.617,
+  "pattern": "brand title then immediate 3D spectacle; no words spoken",
+  "open_loop": true,
+  "first_word_s": 0.617
+ },
+ "structure": [
+  {
+   "beat": "brand open",
+   "purpose": "asterisk logo with HUD",
+   "start_s": 0.0,
+   "end_s": 0.617,
+   "share": 0.045,
+   "devices": [
+    "brand mark"
+   ]
+  },
+  {
+   "beat": "title claim",
+   "purpose": "CLAUDE now does motion (text cut off in frame)",
+   "start_s": 0.617,
+   "end_s": 2.1,
+   "share": 0.109,
+   "devices": [
+    "bold claim",
+    "contrast of black sans and italic serif"
+   ]
+  },
+  {
+   "beat": "3D proof",
+   "purpose": "cube field shows motion capability",
+   "start_s": 2.1,
+   "end_s": 4.05,
+   "share": 0.143,
+   "devices": [
+    "demo"
+   ]
+  },
+  {
+   "beat": "one-word punches",
+   "purpose": "NO / TIMELINE (struck) / KEYFRAMES / ONE PROMPT.",
+   "start_s": 4.05,
+   "end_s": 5.183,
+   "share": 0.083,
+   "devices": [
+    "rule of three",
+    "negation then replacement"
+   ]
+  },
+  {
+   "beat": "data proof",
+   "purpose": "edit time by hand vs Claude, -98 percent",
+   "start_s": 5.183,
+   "end_s": 6.933,
+   "share": 0.128,
+   "devices": [
+    "numbers",
+    "before/after"
+   ]
+  },
+  {
+   "beat": "particle spectacle",
+   "purpose": "visual re-hook",
+   "start_s": 6.933,
+   "end_s": 8.717,
+   "share": 0.131,
+   "devices": [
+    "pattern interrupt"
+   ]
+  },
+  {
+   "beat": "build proof and payoff",
+   "purpose": "terminal build, 12 RAYS 1 PROMPT, logo and comment CTA",
+   "start_s": 8.717,
+   "end_s": 13.65,
+   "share": 0.361,
+   "devices": [
+    "demo",
+    "callback",
+    "CTA"
+   ]
+  }
+ ],
+ "voice": {
+  "person": "none spoken; on-screen text uses third person about Claude and imperative CTA",
+  "address_terms": [
+   "none"
+  ],
+  "register": "terse tech-brand promo",
+  "energy": "high visual energy, no voice",
+  "humor": "none",
+  "formality": "neutral",
+  "tone_tags": [
+   "confident",
+   "punchy",
+   "showcase"
+  ]
+ },
+ "language": {
+  "primary": "English",
+  "script": "roman",
+  "code_switching": "none",
+  "english_term_domains": [
+   "AI tools",
+   "motion design",
+   "video editing"
+  ]
+ },
+ "lexicon": {
+  "signature_phrases": [
+   "ONE PROMPT.",
+   "12 RAYS - 1 PROMPT",
+   "COMMENT \"CLAUDE\" FOR THE FU"
+  ],
+  "filler_words": [],
+  "power_words": [
+   "NO",
+   "ONE PROMPT",
+   "KEYFRAMES",
+   "TIMELINE",
+   "-98%"
+  ],
+  "jargon_terms": [
+   "keyframes",
+   "timeline",
+   "prompt",
+   "Opus 5.5",
+   "Claude Code"
+  ]
+ },
+ "pacing": {
+  "words_per_min_speaking": 0.0,
+  "words_per_min_overall": 0.0,
+  "speech_ratio": 0.0,
+  "sentence_words_mean": 0.0,
+  "sentence_words_p90": 0.0,
+  "pause_mean_s": 0.0,
+  "questions_per_min": 0.0,
+  "numbers_per_min": 0.0
+ },
+ "retention": {
+  "open_loops": 1,
+  "rehooks_at_s": [
+   2.1,
+   4.05,
+   6.933,
+   8.717
+  ],
+  "pattern_interrupts": "scene colour flips dark/orange/white/beige at nearly every cut; 0.2-0.4s word flashes at 4.05-5.183s; particle explosion at 8.4s",
+  "payoff_at_s": 11.2
+ },
+ "cta": {
+  "type": "comment-keyword",
+  "ask": "COMMENT \"CLAUDE\" FOR THE FU.. (text truncated in sampled frame)",
+  "keyword": "CLAUDE",
+  "placement_s": 12.9,
+  "repeats": 1,
+  "incentive": "unknown, text cut off (likely a link or file)"
+ },
+ "evidence": [
+  {
+   "claim": "Title claim on screen",
+   "quote": "CLAUDE now does moti",
+   "t": [
+    0.617,
+    2.1
+   ]
+  },
+  {
+   "claim": "One-word punches",
+   "quote": "NO / TIMELINE / KEYFRAMES / ONE PROMPT.",
+   "t": [
+    4.05,
+    5.183
+   ]
+  },
+  {
+   "claim": "Closing payoff",
+   "quote": "12 RAYS - 1 PROMPT",
+   "t": [
+    10.2,
+    11.9
+   ]
+  },
+  {
+   "claim": "CTA caption",
+   "quote": "COMMENT \"CLAUDE\" FOR THE FU",
+   "t": [
+    12.5,
+    13.65
+   ]
+  }
+ ],
+ "confidence": {
+  "transcript_basis": "measured",
+  "framework": "estimated",
+  "hook": "estimated",
+  "structure": "judged",
+  "voice": "estimated",
+  "language": "judged",
+  "lexicon": "judged",
+  "pacing": "measured",
+  "retention": "judged",
+  "cta": "judged"
+ },
+ "notes": "No speech in this reel; scripting DNA is from on-screen text only, so voice/lexicon are estimated. Do not use as a spoken-script reference. The words 'cut off' reflect the 13.65s clip ending and sampled frames."
+}

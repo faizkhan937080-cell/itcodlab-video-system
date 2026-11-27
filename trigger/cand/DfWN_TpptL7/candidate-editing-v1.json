@@ -1,0 +1,236 @@
+{
+ "type": "editing",
+ "schema_version": 2,
+ "source": {
+  "job_id": "reel-DfWN_TpptL7",
+  "creator": "sansser.ai"
+ },
+ "format": {
+  "width": 810,
+  "height": 538,
+  "fps": 60.0,
+  "duration_s": 13.65,
+  "orientation": "landscape",
+  "aspect": "3:2 (810x538 crop of tracked screen quad)"
+ },
+ "cut_rhythm": {
+  "asl_s": 1.365,
+  "median_shot_s": 1.05,
+  "std_shot_s": 1.367,
+  "min_shot_s": 0.2,
+  "max_shot_s": 4.933,
+  "cuts_per_min": 39.56,
+  "pattern": "10 scenes inside a screen-in-scene reel (only the inner edited video described; monitor and room ignored). Slow logo open (0.617s), then 3D cube field (1.95s), then a rapid-fire type burst of four scenes of 0.2s, 0.233s, 0.4s, 0.3s at 4.05-5.183s (NO / TIMELINE / KEYFRAMES / ONE PROMPT.), then a data card (1.75s), particle burst (1.784s) and a long closing hold (4.933s). Each scene carries a numbered HUD label 01-PROMPT .. 09-CLAUDE. Cuts follow the section changes, not the beat.",
+  "beat_synced_share": 0.333,
+  "pace_curve": [
+   {
+    "part": "opening",
+    "cuts_per_min": 39.56
+   },
+   {
+    "part": "middle",
+    "cuts_per_min": 39.56
+   },
+   {
+    "part": "closing",
+    "cuts_per_min": 39.56
+   }
+  ]
+ },
+ "shots": {
+  "scale_mix": {
+   "ecu": 0,
+   "cu": 0,
+   "mcu": 0,
+   "ms": 0,
+   "ws": 0,
+   "ews": 1.0
+  },
+  "camera_angle": "flat 2D motion-graphics boards except scene 3 (low-angle perspective over a 3D cube field, tilted then settling) and scene 9 (radial particle tunnel into starburst); no filmed footage",
+  "composition": "centered hero element (asterisk, CLAUDE, NO, TIMELINE, KEYFRAMES, ONE PROMPT., clock digits, terminal window, logo); every scene framed by HUD: top-left 'CLAUDE CODE/ MOTION LAB', top-right 'OPUS 5.5' pill, bottom-left section label, bottom-right timecode, bottom progress line, corner brackets",
+  "broll_share": 0.0,
+  "screen_recording_share": 0.0
+ },
+ "transitions": [
+  {
+   "type": "hard_cut",
+   "share": 0.889
+  },
+  {
+   "type": "whip_pan",
+   "share": 0.111
+  }
+ ],
+ "motion": {
+  "camera": {
+   "moves": [
+    "static",
+    "push-in (scene 2, 9)",
+    "3D cube-field tilt and settle (scene 3)",
+    "pan right (scene 7)",
+    "radial tunnel to starburst (scene 9)"
+   ],
+   "intensity": "slow"
+  },
+  "elements": {
+   "easing": "title text builds letter by letter with a typed cursor (CLAUD_ at 0.5-0.8s of the screen clip) ; cube wave ripples outward from the asterisk and forms a stepped pyramid; strike-through bar sweeps across TIMELINE; digits roll then settle (6:33:33 -> 0:11:28 -> 0:09:41); bar and line chart grow; progress bar fills in terminal; 12 dots ring morphs into a 12-ray asterisk",
+   "typical_duration_s": 0.3
+  },
+  "speed_ramps": "none seen"
+ },
+ "text": {
+  "present": true,
+  "role": "kinetic title words (CLAUDE, NO, TIMELINE, KEYFRAMES, ONE PROMPT.) plus UI data card and terminal mock, small mono HUD labels, closing caption 'COMMENT \"CLAUDE\" FOR THE FU..' (cut off in the sampled frame)",
+  "font_class": "mixed",
+  "weight": "black condensed grotesque for key words, serif italic for 'now does moti..', monospace for HUD and terminal",
+  "case": "UPPERCASE key words, lowercase italic subtitle",
+  "position": "key words centered; HUD in the frame margins",
+  "size_class": "key words very large (TIMELINE and KEYFRAMES span about 80 percent of frame width); HUD tiny",
+  "animation_in": "hard snap for NO and KEYFRAMES, typed build for CLAUDE, strike-through sweep for TIMELINE, repeating outlined echo rows behind ONE PROMPT.",
+  "animation_out": "replaced at next cut",
+  "avg_on_screen_s": 0.4,
+  "words_per_caption": 1.5,
+  "safe_zone_respected": true
+ },
+ "color": {
+  "palette": [
+   {
+    "hex": "#AEACA4",
+    "share": 0.187
+   },
+   {
+    "hex": "#A8A69A",
+    "share": 0.16
+   },
+   {
+    "hex": "#ACABA1",
+    "share": 0.116
+   },
+   {
+    "hex": "#2C261F",
+    "share": 0.059
+   },
+   {
+    "hex": "#EF5F2A",
+    "share": 0.054
+   },
+   {
+    "hex": "#E27C4E",
+    "share": 0.051
+   }
+  ],
+  "grade": {
+   "look": "Claude brand palette: warm grey-beige paper, near-black brown, and one hot orange (#EF5F2A class) with cream type; scenes alternate dark, orange, off-white and beige for rhythm",
+   "contrast": "high",
+   "temperature": "warm",
+   "saturation_mean": 0.347,
+   "brightness_mean": 0.42
+  }
+ },
+ "layout": {
+  "orientation": "landscape",
+  "safe_zones": "inner video shown on a screen in a vertical reel; only inner video described",
+  "framing_notes": "crop 810x538 from tracked quad, tracked_fraction 1.0; left and right sliver of black bars at the crop sides (visible in all collages)"
+ },
+ "recipe": {
+  "remotion_templates": [
+   "title",
+   "kinetic_text",
+   "video",
+   "banner"
+  ],
+  "typical_scene_s": 1.4,
+  "spring": {
+   "damping": 14,
+   "stiffness": 120,
+   "mass": 1
+  },
+  "notes": "Components: HUD frame with timecode and section label per scene, glowing asterisk logo, 3D voxel field (about 484 cubes, per the terminal mock), black/orange display type, strike-through bar, outlined echo text rows, data card (rolling clock 'EDIT TIME - ONE 15 s REEL', YOU vs CLAUDE bar, -98 percent pill, three stat tiles 9/200/33 then 9/214/38, reels per week line to 21 / wk), line-particle tunnel to starburst, terminal window with checklist and render bar, 12-dot ring morph to asterisk, closing logo and caption. Spring values estimated."
+ },
+ "evidence": [
+  {
+   "claim": "Dark vignette, glowing cream asterisk centered, HUD '01 - PROMPT'",
+   "scenes": [
+    1
+   ],
+   "t": [
+    0,
+    0.617
+   ]
+  },
+  {
+   "claim": "Whip into flat orange title board: 'PROMPT + MOTION', 'OPUS 5.5 - 2026', huge black CLAUDE with underline, italic 'now does moti..'; title builds with a typed cursor (CLAUD_ in the event frame)",
+   "scenes": [
+    2
+   ],
+   "t": [
+    0.617,
+    2.1
+   ]
+  },
+  {
+   "claim": "3D orange cube field ripples, forms a stepped pyramid under the asterisk, then settles; HUD '03 - 3D FIELD'",
+   "scenes": [
+    3
+   ],
+   "t": [
+    2.1,
+    4.05
+   ]
+  },
+  {
+   "claim": "Type burst: NO on off-white, TIMELINE struck through on black, KEYFRAMES on off-white, ONE PROMPT. on black with outlined echo rows",
+   "scenes": [
+    4,
+    5,
+    6,
+    7
+   ],
+   "t": [
+    4.05,
+    5.183
+   ]
+  },
+  {
+   "claim": "Beige data card: rolling clock 6:33:33 to 0:11:28 to 0:09:41, YOU 8h 00m vs CLAUDE 9m 41s bars, -98% pill, stats 9 / 200 to 214 / 33 to 38, reels per week curve ending 21 / wk",
+   "scenes": [
+    8
+   ],
+   "t": [
+    5.183,
+    6.933
+   ]
+  },
+  {
+   "claim": "Line-particle tunnel swirls then explodes into a starburst; HUD '06 - PARTICLES'",
+   "scenes": [
+    9
+   ],
+   "t": [
+    6.933,
+    8.717
+   ]
+  },
+  {
+   "claim": "Orange scene with terminal window (Planning 9 scenes, prompt.html typed, field3d.js 484 cubes, rendering bar 0 to 38 percent), then beige 12-dot ring morphs to orange asterisk '12 RAYS - 1 PROMPT', then dark closing logo 'Claude' with caption 'COMMENT \"CLAUDE\" FOR THE FU'",
+   "scenes": [
+    10
+   ],
+   "t": [
+    8.717,
+    13.65
+   ]
+  }
+ ],
+ "confidence": {
+  "format": "measured",
+  "cut_rhythm": "measured",
+  "shots": "judged",
+  "transitions": "measured",
+  "motion": "judged",
+  "text": "judged",
+  "color": "measured",
+  "layout": "judged",
+  "recipe": "estimated"
+ }
+}
