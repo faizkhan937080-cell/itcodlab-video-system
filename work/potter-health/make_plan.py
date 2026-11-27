@@ -67,8 +67,8 @@ for k, (a, b, lines) in enumerate(Cp):
 caps[0]["t0"] = 0.0
 caps[-1]["t1"] = round(SP_END + 0.3, 3)
 
-STD = {"x": 0.5, "y": 0.62, "w": 1.0, "h": 0.52}
-BUST = {"x": 0.5, "y": 0.63, "w": 1.0, "h": 0.58}
+STD = {"x": 0.5, "y": 0.65, "w": 1.0, "h": 0.52}
+BUST = {"x": 0.5, "y": 0.66, "w": 1.0, "h": 0.58}
 O = [  # (object, token_from, token_to, box, decor)
     ("bed", 0, 8, STD, "dots"),
     ("five", 8, 16, STD, "brackets"),

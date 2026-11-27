@@ -125,7 +125,7 @@ const Five: React.FC<{t: number; m: Mats}> = ({t, m}) => {
         const mix = last ? ease((t - 1.1) / 0.5) : 0;
         const mt = mix > 0.5 ? m.satin : m.marble;
         return (
-          <group key={i} position={[(i - 2) * 0.62, 0, 0]} scale={s} rotation={[0, Math.sin(t * 1.3 + i) * 0.25, 0]}>
+          <group key={i} position={[(i - 2) * 0.5, 0, 0]} scale={s} rotation={[0, Math.sin(t * 1.3 + i) * 0.25, 0]}>
             <mesh geometry={body} material={mt} />
             <mesh position={[0, 0.88, 0]} material={mt}><sphereGeometry args={[0.2, 40, 28]} /></mesh>
           </group>
