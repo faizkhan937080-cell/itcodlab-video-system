@@ -63,7 +63,7 @@ export const useMats = () =>
     const blush = new THREE.MeshPhysicalMaterial({map: t, color: '#e8aeba', roughness: 0.3, clearcoat: 0.4, clearcoatRoughness: 0.2, envMapIntensity: 0.9});
     const dark = new THREE.MeshPhysicalMaterial({color: '#3a1d27', roughness: 0.4, clearcoat: 0.3, envMapIntensity: 0.8});
     const glass = new THREE.MeshPhysicalMaterial({color: '#ffffff', roughness: 0.05, metalness: 0, transparent: true, opacity: 0.28, clearcoat: 1, envMapIntensity: 1.4, side: THREE.DoubleSide, depthWrite: false});
-    const bubble = new THREE.MeshPhysicalMaterial({color: '#ffffff', roughness: 0.02, transparent: true, opacity: 0.45, clearcoat: 1, envMapIntensity: 1.8, iridescence: 1, iridescenceIOR: 1.4, depthWrite: false});
+    const bubble = new THREE.MeshPhysicalMaterial({color: '#ffe3ea', roughness: 0.06, metalness: 0.15, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 2.4, iridescence: 0.6});
     return {marble, satin, blush, dark, glass, bubble};
   }, []);
 type Mats = ReturnType<typeof useMats>;
@@ -176,15 +176,18 @@ const Scalpel: React.FC<{t: number; m: Mats}> = ({m}) => {
 const Bubbles: React.FC<{t: number; m: Mats; n: number; seed: number}> = ({t, m, n, seed}) => (
   <>
     {Array.from({length: n}).map((_, i) => {
-      const life = 2.6 + random(`${seed}-l${i}`) * 1.6;
+      const life = 2.2 + random(`${seed}-l${i}`) * 1.2;
       const ph = random(`${seed}-p${i}`) * life;
       const k = ((t + ph) % life) / life;
-      const x = (random(`${seed}-x${i}`) - 0.5) * 1.5 + Math.sin(t * 1.4 + i) * 0.1;
-      const z = (random(`${seed}-z${i}`) - 0.5) * 0.8;
-      const r = 0.07 + random(`${seed}-r${i}`) * 0.17;
+      const x = (random(`${seed}-x${i}`) - 0.5) * 1.7 + Math.sin(t * 2.2 + i * 1.7) * 0.12 * k;
+      const z = (random(`${seed}-z${i}`) - 0.5) * 0.7;
+      const r = 0.14 + random(`${seed}-r${i}`) * 0.16;
+      const grow = Math.min(1, k * 5);
+      const pop = k > 0.9 ? 1 + (k - 0.9) * 4 : 1;     // swells just before it pops
+      const gone = k > 0.96 ? 0.001 : 1;
       return (
-        <mesh key={i} position={[x, 0.15 + k * 1.9, z]} scale={r * Math.min(1, k * 6) * (1 - Math.max(0, k - 0.9) * 10)} material={m.bubble}>
-          <sphereGeometry args={[1, 32, 24]} />
+        <mesh key={i} position={[x, 0.55 + k * 1.6, z]} scale={Math.max(0.001, r * grow * pop * gone)} material={m.bubble}>
+          <sphereGeometry args={[1, 40, 28]} />
         </mesh>
       );
     })}
@@ -197,7 +200,7 @@ const Soap: React.FC<{t: number; m: Mats; pink?: boolean}> = ({t, m, pink}) => {
     <group position={[0, -0.7, 0]}>
       <mesh geometry={g} position={[0, 0.25, 0]} material={pink ? m.blush : m.marble} />
       <mesh position={[0, 0.5, 0]} scale={[0.6, 0.04, 0.34]} material={m.satin}><sphereGeometry args={[1, 32, 16]} /></mesh>
-      <Bubbles t={t} m={m} n={pink ? 12 : 16} seed={pink ? 9 : 4} />
+      <Bubbles t={t} m={m} n={pink ? 8 : 9} seed={pink ? 9 : 4} />
     </group>
   );
 };
@@ -300,15 +303,15 @@ const Heart: React.FC<{t: number; m: Mats}> = ({t, m}) => {
     s.bezierCurveTo(-0.98, 0.9, -0.3, 1.0, 0, 0.55);
     s.bezierCurveTo(0.3, 1.0, 0.98, 0.9, 1.0, 0.35);
     s.bezierCurveTo(1.05, -0.2, 0.2, -0.75, 0, -0.95);
-    const e = new THREE.ExtrudeGeometry(s, {depth: 0.5, bevelEnabled: true, bevelSegments: 14, bevelSize: 0.22, bevelThickness: 0.25, curveSegments: 48});
+    const e = new THREE.ExtrudeGeometry(s, {depth: 0.35, bevelEnabled: true, bevelSegments: 12, bevelSize: 0.1, bevelThickness: 0.14, curveSegments: 64});
     e.center();
     return e;
   }, []);
   const ph = (t * 1.25) % 1;
   const beat = 1 + 0.09 * Math.exp(-Math.pow((ph - 0.08) * 9, 2)) + 0.06 * Math.exp(-Math.pow((ph - 0.32) * 9, 2));
   return (
-    <group scale={0.8 * beat} rotation={[0, 0, 0.0]}>
-      <mesh geometry={g} material={m.blush} />
+    <group scale={0.95 * beat} rotation={[0, 0, 0.0]}>
+      <mesh geometry={g} material={m.satin} />
     </group>
   );
 };
@@ -330,5 +333,5 @@ export const POSE: Record<ObjName, {yaw: number; sway: number; spin: number; til
   hourglass: {yaw: 0, sway: 0, spin: 0.7, tilt: 0.1, scale: 1.0},
   globe: {yaw: 0, sway: 0.15, spin: 0, tilt: 0.12, scale: 1.0},
   capsule: {yaw: 0, sway: 0, spin: 0.8, tilt: 0.1, scale: 1.0},
-  heart: {yaw: 0, sway: 0, spin: 0.85, tilt: 0.0, scale: 1.0},
+  heart: {yaw: 0, sway: 0.55, spin: 0, tilt: 0.0, scale: 1.0},
 };

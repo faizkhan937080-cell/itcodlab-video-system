@@ -65,8 +65,8 @@ for k, (a, b, lines) in enumerate(Cp):
 caps[0]["t0"] = 0.0
 caps[-1]["t1"] = END
 
-STD = {"x": 0.5, "y": 0.665, "w": 0.94, "h": 0.46}
-BUST = {"x": 0.5, "y": 0.69, "w": 1.0, "h": 0.54}
+STD = {"x": 0.5, "y": 0.625, "w": 1.0, "h": 0.36}
+BUST = {"x": 0.5, "y": 0.63, "w": 1.0, "h": 0.40}
 O = [  # (object, token_from, token_to, box, decor)
     ("bed", 0, 8, STD, "dots"),
     ("five", 8, 16, STD, "brackets"),
@@ -109,6 +109,6 @@ plan = {"title": "Semmelweis handwashing (health reel, potter style)", "fps": 30
 name = "health-sample" if SAMPLE else "health-full"
 d = Path("trigger/sample")
 (d / f"{name}-plan.json").write_text(json.dumps(plan, indent=1, ensure_ascii=False), encoding="utf-8")
-times = [0.3, 1.0, 2.2, 3.5, 4.6, 5.6, 6.6, 7.9, 8.6, 9.3] if SAMPLE else [round(x, 1) for x in [1, 3, 5, 8, 10, 13, 16, 19, 22, 26, 30, 34, 38, 42, END - 3, END - 0.5]]
-(d / f"{name}-sample.json").write_text(json.dumps({"name": name, "plan": f"{name}-plan.json", "seconds": total, "times": times}), encoding="utf-8")
+times = [0.3, 1.0, 2.2, 3.5, 4.6, 5.6, 6.6, 7.9, 8.6, 9.3] if SAMPLE else sorted({round(min(END - 0.1, f), 2) for o in objs for f in (o["t0"] + 0.45, (o["t0"] + o["t1"]) / 2, o["t1"] - 0.45)})
+(d / f"{name}-sample.json").write_text(json.dumps({"name": name, "plan": f"{name}-plan.json", "seconds": total, "times": times, "cols": 6, "tile_w": 250} if not SAMPLE else {"name": name, "plan": f"{name}-plan.json", "seconds": total, "times": times}), encoding="utf-8")
 print(name, total, len(objs), "objects", len(sf), "sfx", len(caps), "captions")

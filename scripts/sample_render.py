@@ -170,7 +170,7 @@ def _finish(spec, storage, out, final, log, res=None):
     times = spec.get("times") or [round(sec * k / 7, 2) for k in range(1, 7)]
     sheet = wd / "frames.jpg"
     with stage("collage"):
-        render.contact_sheet(str(out), times, str(sheet), cols=3)
+        render.contact_sheet(str(out), times, str(sheet), cols=int(spec.get('cols', 3)), tile_w=int(spec.get('tile_w', 360)))
     pack = wd / "pack"
     pack.mkdir()
     (pack / "collage_frames.jpg").write_bytes(sheet.read_bytes())

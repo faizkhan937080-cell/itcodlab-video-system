@@ -13,7 +13,7 @@ export type PotterCap = {t0: number; t1: number; lines: W[][]; y?: number};
 export type PotterObj = {obj: ObjName | 'soap_pink'; t0: number; t1: number; box: {x: number; y: number; w: number; h: number}; decor: 'dots' | 'ring' | 'brackets' | 'cross' | 'frame' | 'curves' | 'none'};
 export type PotterProps = {ghost: string; key_word: string; cta_big: string; caps: PotterCap[]; objs: PotterObj[]; end_s: number};
 
-const CW = 777, CH = 1098;                 // card size, 1080x1920 frame
+const CW = 1080, CH = 1920;                 // card size, 1080x1920 frame
 const INK = '#2B1018', PINK = '#CF3F82', CORAL = '#F08A5D';
 const bez = Easing.bezier(0.2, 0.8, 0.2, 1);
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
@@ -152,12 +152,12 @@ const ObjLayer: React.FC<{o: PotterObj; dur: number}> = ({o, dur}) => {
 // ---------- captions ----------
 const wordStyle = (st: W['st'], ff: {serif: string; sans: string}): React.CSSProperties => {
   switch (st) {
-    case 's': return {fontFamily: ff.serif, fontWeight: 400, fontSize: 76, color: INK, letterSpacing: -0.5};
-    case 'i': return {fontFamily: ff.serif, fontStyle: 'italic', fontWeight: 400, fontSize: 76, color: INK};
-    case 'b': return {fontFamily: ff.sans, fontWeight: 800, fontSize: 98, color: INK, letterSpacing: -2};
-    case 'p': return {fontFamily: ff.sans, fontWeight: 700, fontSize: 124, color: PINK, letterSpacing: -3};
-    case 'r': return {fontFamily: ff.sans, fontWeight: 400, fontSize: 62, color: INK, letterSpacing: -1};
-    default: return {fontFamily: ff.sans, fontWeight: 800, fontSize: 98, color: CORAL};
+    case 's': return {fontFamily: ff.serif, fontWeight: 400, fontSize: 96, color: INK, letterSpacing: -0.5};
+    case 'i': return {fontFamily: ff.serif, fontStyle: 'italic', fontWeight: 400, fontSize: 96, color: INK};
+    case 'b': return {fontFamily: ff.sans, fontWeight: 800, fontSize: 124, color: INK, letterSpacing: -2};
+    case 'p': return {fontFamily: ff.sans, fontWeight: 700, fontSize: 156, color: PINK, letterSpacing: -3};
+    case 'r': return {fontFamily: ff.sans, fontWeight: 400, fontSize: 98, color: INK, letterSpacing: -1};
+    default: return {fontFamily: ff.sans, fontWeight: 800, fontSize: 124, color: CORAL};
   }
 };
 
@@ -165,12 +165,12 @@ const Caption: React.FC<{c: PotterCap; t: number}> = ({c, t}) => {
   const ff = {serif: FONTS['Gelasio'], sans: FONTS['Poppins']};
   const out = interpolate(t, [c.t1 - 0.16, c.t1], [0, 1], clamp);
   return (
-    <div style={{position: 'absolute', left: 0, right: 0, top: (c.y ?? 0.27) * CH, transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 1 - out, filter: `blur(${out * 10}px)`}}>
+    <div style={{position: 'absolute', left: 0, right: 0, top: (c.y ?? 0.235) * CH, transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 1 - out, filter: `blur(${out * 10}px)`}}>
       {c.lines.map((ln, li) => {
         const EM: Record<string, number> = {s: 0.47, i: 0.44, b: 0.62, p: 0.6, r: 0.52, c: 0.62};
-        const SZ: Record<string, number> = {s: 76, i: 76, b: 98, p: 124, r: 78, c: 98};
+        const SZ: Record<string, number> = {s: 96, i: 96, b: 124, p: 156, r: 98, c: 124};
         const est = ln.reduce((a, w) => a + w.w.length * EM[w.st] * SZ[w.st] + 20, -20);
-        const fit = Math.min(1, 700 / est);
+        const fit = Math.min(1, 940 / est);
         return (
         <div key={li} style={{display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 20, whiteSpace: 'nowrap', transform: `scale(${fit})`, transformOrigin: '50% 60%'}}>
           {ln.map((w, wi) => {
@@ -195,19 +195,19 @@ const Banner: React.FC<{t: number; keyWord: string; big: string}> = ({t, keyWord
   const dots = useMemo(() => Array.from({length: 70}).map((_, i) => ({y: 18 + (i % 28) * 11, x: 12 + Math.floor(i / 28) * 12, c: ['#C0506A', '#E08A6A', '#9b8a90', '#7A3A4C'][Math.floor(random(`dc${i}`) * 4)]})), []);
   const scroll = (t * 6) % 12.2;
   return (
-    <div style={{position: 'absolute', left: 60, top: 1328, width: 960, height: 336, borderRadius: 28, overflow: 'hidden', background: 'linear-gradient(180deg,#43202D,#33141F)', boxShadow: '0 18px 40px rgba(50,15,25,0.45), 0 0 0 2px rgba(255,205,215,0.55)'}}>
-      <svg width={960} height={336} style={{position: 'absolute', left: 0, top: 0}}>
+    <div style={{position: 'absolute', left: 0, top: 1560, width: 1080, height: 360, borderRadius: '34px 34px 0 0', overflow: 'hidden', background: 'linear-gradient(180deg,#43202D,#33141F)', boxShadow: '0 18px 40px rgba(50,15,25,0.45), 0 0 0 2px rgba(255,205,215,0.55)'}}>
+      <svg width={1080} height={360} style={{position: 'absolute', left: 0, top: 0}}>
         <g transform={`translate(0 ${-scroll})`} opacity={0.9}>
           {bars.map((b, i) => <rect key={i} x={b.x} y={b.y} width={b.w} height={4} rx={2} fill={b.c} opacity={b.o} />)}
           {bars.map((b, i) => <rect key={`r${i}`} x={960 - b.x - b.w * 0.6} y={b.y + 6} width={b.w * 0.6} height={4} rx={2} fill={b.c} opacity={b.o * 0.7} />)}
         </g>
         {dots.map((d, i) => <rect key={i} x={d.x} y={d.y} width={7} height={5} fill={d.c} opacity={0.6} />)}
-        <line x1={338} y1={0} x2={338} y2={336} stroke="rgba(255,255,255,0.35)" strokeWidth={1.5} />
+        <line x1={380} y1={0} x2={380} y2={360} stroke="rgba(255,255,255,0.35)" strokeWidth={1.5} />
       </svg>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 36, textAlign: 'center', fontFamily: ff, fontWeight: 700, fontSize: 56, color: '#fff', textShadow: '0 0 18px rgba(255,255,255,0.25), 0 3px 4px rgba(0,0,0,0.4)'}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 40, textAlign: 'center', fontFamily: ff, fontWeight: 700, fontSize: 62, color: '#fff', textShadow: '0 0 18px rgba(255,255,255,0.25), 0 3px 4px rgba(0,0,0,0.4)'}}>
         Comment <span style={{color: CORAL}}>“{keyWord}”</span> For The
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 104, textAlign: 'center', fontFamily: ff, fontWeight: 800, fontSize: 158, lineHeight: 1.0, letterSpacing: -4, color: '#fff', textShadow: '0 0 26px rgba(255,255,255,0.4), 0 6px 8px rgba(0,0,0,0.35)'}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 116, textAlign: 'center', fontFamily: ff, fontWeight: 800, fontSize: 176, lineHeight: 1.0, letterSpacing: -4, color: '#fff', textShadow: '0 0 26px rgba(255,255,255,0.4), 0 6px 8px rgba(0,0,0,0.35)'}}>
         {big}
       </div>
     </div>
@@ -225,15 +225,12 @@ export const PotterScene: React.FC<PotterProps> = ({ghost, key_word, cta_big, ca
   return (
     <AbsoluteFill>
      <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transform: `scale(${sc})`, transformOrigin: '0 0', overflow: 'hidden'}}>
-      <Fabric t={t} />
-      <AppTile t={t} />
       <AbsoluteFill style={{perspective: 2000, perspectiveOrigin: '50% 45%'}}>
-        <AbsoluteFill style={{transform: `rotateZ(${rz}deg) rotateY(${ry}deg) rotateX(${rx}deg) translateY(${Math.sin(t * 0.9) * 6}px)`, transformOrigin: '50% 50%'}}>
-          <div style={{position: 'absolute', left: 154, top: 280, width: CW, height: CH, borderRadius: 56, overflow: 'hidden', background: '#F7EEED', boxShadow: '0 34px 70px rgba(70,30,45,0.38), 0 0 0 3px rgba(255,214,196,0.9)'}}>
+        <AbsoluteFill style={{transformOrigin: '50% 50%'}}>
+          <div style={{position: 'absolute', left: 0, top: 0, width: CW, height: CH, overflow: 'hidden', background: '#F7EEED'}}>
             <div style={{position: 'absolute', inset: 0, background: 'repeating-linear-gradient(115deg, rgba(255,255,255,0.7) 0 26px, rgba(206,178,184,0.16) 26px 56px)', transform: `translateX(${(t * 14) % 56}px)`}} />
-            <div style={{position: 'absolute', left: -20, right: -20, top: 150, textAlign: 'center', fontFamily: FONTS['Poppins'], fontWeight: 800, fontSize: 112, letterSpacing: -4, color: 'rgba(60,30,40,0.075)', whiteSpace: 'nowrap', filter: `blur(${Math.max(0, 8 - t * 20)}px)`}}>{ghost}</div>
-            <Chevron x={-6} y={-6} rot={-8} s={1.1} />
-            <Chevron x={CW - 120} y={CH - 150} rot={180} s={0.6} />
+            <Chevron x={30} y={40} rot={-8} s={1.3} />
+            <Chevron x={CW - 170} y={1440} rot={180} s={0.8} />
             {objs.map((o, i) => {
               const from = Math.round(o.t0 * fps), dur = Math.max(1, Math.round((o.t1 - o.t0) * fps));
               return (
