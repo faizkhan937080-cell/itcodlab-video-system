@@ -144,11 +144,10 @@ const Bust: React.FC<{t: number; m: Mats}> = ({m}) => {
   return (
     <group position={[0, -0.05, 0]} scale={[scaleX * 0.95, 0.95, 0.95]}>
       <mesh geometry={shoulders} material={m.marble} scale={[1.15, 1, 0.7]} />
-      <mesh position={[0, 0.62, 0.02]} scale={[0.4, 0.52, 0.44]} material={m.marble}><sphereGeometry args={[1, 64, 48]} /></mesh>
-      <mesh position={[0, 0.3, 0.2]} scale={[0.3, 0.3, 0.3]} material={m.marble}><sphereGeometry args={[1, 40, 28]} /></mesh>
-      <mesh position={[0, 0.5, 0.44]} rotation={[0.28, 0, 0]} material={m.marble}><coneGeometry args={[0.075, 0.26, 24]} /></mesh>
-      <mesh position={[-0.15, 0.62, 0.38]} scale={[0.09, 0.05, 0.05]} material={m.dark}><sphereGeometry args={[1, 16, 12]} /></mesh>
-      <mesh position={[0.15, 0.62, 0.38]} scale={[0.09, 0.05, 0.05]} material={m.dark}><sphereGeometry args={[1, 16, 12]} /></mesh>
+      <mesh position={[0, 0.62, 0.02]} scale={[0.4, 0.55, 0.45]} material={m.marble}><sphereGeometry args={[1, 96, 72]} /></mesh>
+      <mesh position={[0, 0.3, 0.16]} scale={[0.24, 0.22, 0.24]} material={m.marble}><sphereGeometry args={[1, 64, 48]} /></mesh>
+      <mesh position={[0, 0.52, 0.43]} rotation={[0.2, 0, 0]} scale={[1, 1.1, 0.8]} material={m.marble}><coneGeometry args={[0.06, 0.24, 32]} /></mesh>
+      <mesh position={[0, 0.66, 0.42]} scale={[0.3, 0.05, 0.1]} material={m.marble}><sphereGeometry args={[1, 32, 20]} /></mesh>
       {/* pink surgeon cap */}
       <mesh position={[0, 0.78, -0.03]} scale={[0.43, 0.4, 0.47]} material={m.satin}><sphereGeometry args={[1, 48, 32, 0, Math.PI * 2, 0, Math.PI * 0.5]} /></mesh>
       {/* stethoscope */}
