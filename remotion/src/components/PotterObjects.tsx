@@ -136,24 +136,24 @@ const Five: React.FC<{t: number; m: Mats}> = ({t, m}) => {
 };
 
 const Bust: React.FC<{t: number; m: Mats}> = ({m}) => {
-  const shoulders = useMemo(() => lathe([[0, -0.95], [0.78, -0.95], [0.86, -0.8], [0.76, -0.45], [0.42, -0.2], [0.26, -0.05], [0.24, 0.15], [0, 0.15]]), []);
+  const shoulders = useMemo(() => lathe([[0, -1.0], [1.0, -1.0], [1.05, -0.9], [0.95, -0.62], [0.7, -0.4], [0.36, -0.28], [0.2, -0.15], [0.19, 0.2], [0, 0.2]]), []);
+  const scaleX = 1.0;
   const tube = useMemo(() => new THREE.TubeGeometry(new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-0.3, -0.12, 0.2), new THREE.Vector3(-0.34, -0.3, 0.3), new THREE.Vector3(-0.2, -0.5, 0.4),
-    new THREE.Vector3(0, -0.62, 0.44), new THREE.Vector3(0.2, -0.5, 0.4), new THREE.Vector3(0.34, -0.3, 0.3), new THREE.Vector3(0.3, -0.12, 0.2)]), 64, 0.035, 12), []);
+    new THREE.Vector3(-0.28, -0.3, 0.1), new THREE.Vector3(-0.42, -0.5, 0.3), new THREE.Vector3(-0.24, -0.72, 0.46),
+    new THREE.Vector3(0, -0.8, 0.5), new THREE.Vector3(0.24, -0.72, 0.46), new THREE.Vector3(0.42, -0.5, 0.3), new THREE.Vector3(0.28, -0.3, 0.1)]), 64, 0.04, 12), []);
   return (
-    <group position={[0, -0.2, 0]} scale={0.95}>
-      <mesh geometry={shoulders} material={m.marble} />
-      <mesh position={[0, 0.58, 0.02]} scale={[0.4, 0.5, 0.45]} material={m.marble}><sphereGeometry args={[1, 56, 40]} /></mesh>
-      <mesh position={[0, 0.5, 0.46]} rotation={[0.25, 0, 0]} material={m.marble}><coneGeometry args={[0.07, 0.22, 24]} /></mesh>
-      <mesh position={[0, 0.18, 0.3]} scale={[0.3, 0.14, 0.25]} material={m.marble}><sphereGeometry args={[1, 32, 20]} /></mesh>
-      {/* hair bun + cap */}
-      <mesh position={[0, 0.92, -0.05]} scale={[0.43, 0.3, 0.47]} material={m.marble}><sphereGeometry args={[1, 48, 32, 0, Math.PI * 2, 0, Math.PI / 2]} /></mesh>
-      <mesh position={[0, 1.12, -0.28]} material={m.marble}><sphereGeometry args={[0.16, 32, 24]} /></mesh>
+    <group position={[0, -0.05, 0]} scale={[scaleX * 0.95, 0.95, 0.95]}>
+      <mesh geometry={shoulders} material={m.marble} scale={[1.15, 1, 0.7]} />
+      <mesh position={[0, 0.62, 0.02]} scale={[0.4, 0.52, 0.44]} material={m.marble}><sphereGeometry args={[1, 64, 48]} /></mesh>
+      <mesh position={[0, 0.3, 0.2]} scale={[0.3, 0.3, 0.3]} material={m.marble}><sphereGeometry args={[1, 40, 28]} /></mesh>
+      <mesh position={[0, 0.5, 0.44]} rotation={[0.28, 0, 0]} material={m.marble}><coneGeometry args={[0.075, 0.26, 24]} /></mesh>
+      <mesh position={[-0.15, 0.62, 0.38]} scale={[0.09, 0.05, 0.05]} material={m.dark}><sphereGeometry args={[1, 16, 12]} /></mesh>
+      <mesh position={[0.15, 0.62, 0.38]} scale={[0.09, 0.05, 0.05]} material={m.dark}><sphereGeometry args={[1, 16, 12]} /></mesh>
+      {/* pink surgeon cap */}
+      <mesh position={[0, 0.78, -0.03]} scale={[0.43, 0.4, 0.47]} material={m.satin}><sphereGeometry args={[1, 48, 32, 0, Math.PI * 2, 0, Math.PI * 0.5]} /></mesh>
       {/* stethoscope */}
-      <mesh geometry={tube} material={m.satin} />
-      <mesh position={[0, -0.64, 0.46]} material={m.satin}><cylinderGeometry args={[0.1, 0.1, 0.05, 32]} /></mesh>
-      <mesh position={[-0.3, -0.1, 0.2]} material={m.dark}><sphereGeometry args={[0.05, 16, 12]} /></mesh>
-      <mesh position={[0.3, -0.1, 0.2]} material={m.dark}><sphereGeometry args={[0.05, 16, 12]} /></mesh>
+      <mesh geometry={tube} material={m.satin} position={[0, 0, 0]} scale={[1.1, 1, 1]} />
+      <mesh position={[0, -0.82, 0.52]} rotation={[Math.PI / 2, 0, 0]} material={m.dark}><cylinderGeometry args={[0.11, 0.11, 0.06, 32]} /></mesh>
     </group>
   );
 };
@@ -322,7 +322,7 @@ export const SoapPink: React.FC<{t: number; m: Mats}> = (p) => <Soap {...p} pink
 export const POSE: Record<ObjName, {yaw: number; sway: number; spin: number; tilt: number; scale: number}> = {
   bed: {yaw: -0.6, sway: 0.35, spin: 0, tilt: 0.38, scale: 1.0},
   five: {yaw: 0, sway: 0.0, spin: 0, tilt: 0.12, scale: 1.0},
-  bust: {yaw: -0.15, sway: 0.5, spin: 0, tilt: 0.04, scale: 1.0},
+  bust: {yaw: -0.1, sway: 0.4, spin: 0, tilt: 0.04, scale: 1.0},
   scalpel: {yaw: 0.0, sway: 0.5, spin: 0, tilt: 0.2, scale: 1.0},
   soap: {yaw: -0.3, sway: 0.4, spin: 0, tilt: 0.3, scale: 1.0},
   bars: {yaw: -0.35, sway: 0.25, spin: 0, tilt: 0.22, scale: 1.0},
