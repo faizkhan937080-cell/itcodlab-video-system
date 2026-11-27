@@ -30,7 +30,7 @@ def run(handle_code, storage=None):
     pack = work / "pack"
     pack.mkdir()
     (pack / "listen.json").write_text(json.dumps(res, indent=1, ensure_ascii=False), encoding="utf-8")
-    st.put_json(f"{base}/listen.json", res, versioned=False)
+    st.put_json(f"{base}/listen.json", res)
     log(f"listen: {len(res.get('sound_events', []))} sound events, error={res.get('sound_events_error')}")
     print(json.dumps(res, ensure_ascii=False)[:3000])
     print(review.publish(pack, f"listen-{code}"))
