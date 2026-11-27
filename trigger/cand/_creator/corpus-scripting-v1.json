@@ -3,13 +3,14 @@
  "schema_version": 2,
  "dna_type": "scripting",
  "creator": "sansser.ai",
- "n_videos": 12,
+ "n_videos": 13,
  "job_ids": [
   "reel-DeMkkKdsO2_",
   "reel-Df97YXth1Y6",
   "reel-DfBQ1AgOC1S",
   "reel-DfMDZKfNER2",
   "reel-DfTxHLopj5m",
+  "reel-DfWN_TpptL7",
   "reel-Dfi6kGuOemV",
   "reel-DfkbSDuB04k",
   "reel-DfuYIvZA4Cd",
@@ -46,13 +47,13 @@
      1
     ]
    ],
-   "coverage": 0.583
+   "coverage": 0.538
   },
   "cta.incentive": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "none",
-   "agreement": 0.25,
+   "agreement": 0.231,
    "top": [
     [
      "none",
@@ -67,11 +68,11 @@
      1
     ],
     [
-     "none stated",
+     "unknown, text cut off (likely a link or file)",
      1
     ],
     [
-     "all seven with install commands",
+     "none stated",
      1
     ]
    ],
@@ -79,13 +80,13 @@
   },
   "cta.keyword": {
    "kind": "word",
-   "n": 10,
+   "n": 11,
    "mode": "claude",
-   "agreement": 0.2,
+   "agreement": 0.273,
    "top": [
     [
      "claude",
-     2
+     3
     ],
     [
      "plugins",
@@ -104,41 +105,41 @@
      1
     ]
    ],
-   "coverage": 0.833
+   "coverage": 0.846
   },
   "cta.placement_s": {
    "kind": "number",
-   "n": 12,
-   "median": 30.75,
-   "mean": 31.9,
-   "p25": 21.275,
-   "p75": 47.1,
+   "n": 13,
+   "median": 27.7,
+   "mean": 30.438,
+   "p25": 18.8,
+   "p75": 46.0,
    "min": 0.0,
    "max": 65.5,
-   "cv": 0.613,
+   "cv": 0.639,
    "coverage": 1.0
   },
   "cta.repeats": {
    "kind": "number",
-   "n": 12,
-   "median": 0.5,
-   "mean": 0.583,
+   "n": 13,
+   "median": 1.0,
+   "mean": 0.615,
    "p25": 0.0,
    "p75": 1.0,
    "min": 0.0,
    "max": 2.0,
-   "cv": 1.097,
+   "cv": 1.016,
    "coverage": 1.0
   },
   "cta.type": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "comment-keyword",
-   "agreement": 0.333,
+   "agreement": 0.385,
    "top": [
     [
      "comment-keyword",
-     4
+     5
     ],
     [
      "brand sign-off tagline (no ask)",
@@ -186,37 +187,37 @@
      1
     ]
    ],
-   "coverage": 0.75
+   "coverage": 0.692
   },
   "hook.duration_s": {
    "kind": "number",
-   "n": 12,
-   "median": 3.1,
-   "mean": 3.6,
+   "n": 13,
+   "median": 3.0,
+   "mean": 3.554,
    "p25": 3.0,
-   "p75": 3.975,
+   "p75": 3.9,
    "min": 1.5,
    "max": 7.5,
-   "cv": 0.42,
+   "cv": 0.411,
    "coverage": 1.0
   },
   "hook.first_word_s": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 0.0,
-   "mean": 0.028,
+   "mean": 0.074,
    "p25": 0.0,
    "p75": 0.0,
    "min": 0.0,
-   "max": 0.34,
-   "cv": 3.317,
+   "max": 0.617,
+   "cv": 2.459,
    "coverage": 1.0
   },
   "hook.first_words": {
    "kind": "word",
-   "n": 6,
+   "n": 7,
    "mode": "these are the 30 best claude plugins on github right now and",
-   "agreement": 0.167,
+   "agreement": 0.143,
    "top": [
     [
      "these are the 30 best claude plugins on github right now and",
@@ -231,21 +232,21 @@
      1
     ],
     [
-     "your wi fi has been robbing you this whole time and claude",
+     "claude now does moti..",
      1
     ],
     [
-     "her first book was rejected six times",
+     "your wi fi has been robbing you this whole time and claude",
      1
     ]
    ],
-   "coverage": 0.5
+   "coverage": 0.538
   },
   "hook.kind": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "question + one-word answer (pattern interrupt)",
-   "agreement": 0.083,
+   "agreement": 0.077,
    "top": [
     [
      "question + one-word answer (pattern interrupt)",
@@ -272,16 +273,16 @@
   },
   "hook.open_loop": {
    "kind": "bool",
-   "n": 12,
+   "n": 13,
    "mode": true,
-   "agreement": 0.833,
+   "agreement": 0.846,
    "coverage": 1.0
   },
   "hook.pattern": {
    "kind": "word",
-   "n": 4,
+   "n": 5,
    "mode": "'she never [wanted x], yet [huge result]'",
-   "agreement": 0.25,
+   "agreement": 0.2,
    "top": [
     [
      "'she never [wanted x], yet [huge result]'",
@@ -289,6 +290,10 @@
     ],
     [
      "surprising low cost + nobody can tell it is ai",
+     1
+    ],
+    [
+     "brand title then immediate 3d spectacle; no words spoken",
      1
     ],
     [
@@ -300,29 +305,29 @@
      1
     ]
    ],
-   "coverage": 0.333
+   "coverage": 0.385
   },
   "hook.time_to_value_s": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 3.0,
-   "mean": 2.404,
+   "mean": 2.267,
    "p25": 0.0,
-   "p75": 3.525,
+   "p75": 3.4,
    "min": 0.0,
    "max": 5.7,
-   "cv": 0.785,
+   "cv": 0.827,
    "coverage": 1.0
   },
   "language.code_switching": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "none",
-   "agreement": 0.583,
+   "agreement": 0.615,
    "top": [
     [
      "none",
-     7
+     8
     ],
     [
      "none (no hindi detected, devanagari share 0.0)",
@@ -341,73 +346,73 @@
   },
   "language.english_term_domains": {
    "kind": "items",
-   "n": 12,
+   "n": 13,
    "top": [
     [
      "ai tools",
-     0.417
+     0.462
     ],
     [
      "ai coding",
-     0.25
+     0.231
     ],
     [
      "software/github",
-     0.25
+     0.231
     ],
     [
      "github",
-     0.167
+     0.154
+    ],
+    [
+     "motion design",
+     0.154
+    ],
+    [
+     "video editing",
+     0.154
     ],
     [
      "claude models",
-     0.167
+     0.154
     ],
     [
      "apps",
-     0.083
+     0.077
     ],
     [
      "product launch",
-     0.083
+     0.077
     ],
     [
      "travel",
-     0.083
-    ],
-    [
-     "celebrity",
-     0.083
-    ],
-    [
-     "couture",
-     0.083
+     0.077
     ]
    ],
    "coverage": 1.0
   },
   "language.primary": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "english",
    "agreement": 1.0,
    "top": [
     [
      "english",
-     12
+     13
     ]
    ],
    "coverage": 1.0
   },
   "language.script": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "roman",
    "agreement": 1.0,
    "top": [
     [
      "roman",
-     12
+     13
     ]
    ],
    "coverage": 1.0
@@ -433,255 +438,255 @@
      0.2
     ]
    ],
-   "coverage": 0.417
+   "coverage": 0.385
   },
   "lexicon.jargon_terms": {
-   "kind": "items",
-   "n": 11,
-   "top": [
-    [
-     "claude code",
-     0.364
-    ],
-    [
-     "github",
-     0.182
-    ],
-    [
-     "agents",
-     0.182
-    ],
-    [
-     "budget",
-     0.091
-    ],
-    [
-     "taps",
-     0.091
-    ],
-    [
-     "couture",
-     0.091
-    ],
-    [
-     "runway",
-     0.091
-    ],
-    [
-     "plugins",
-     0.091
-    ],
-    [
-     "repo",
-     0.091
-    ],
-    [
-     "tokens",
-     0.091
-    ]
-   ],
-   "coverage": 0.917
-  },
-  "lexicon.power_words": {
    "kind": "items",
    "n": 12,
    "top": [
     [
+     "claude code",
+     0.417
+    ],
+    [
+     "github",
+     0.167
+    ],
+    [
+     "keyframes",
+     0.167
+    ],
+    [
+     "opus 5.5",
+     0.167
+    ],
+    [
+     "agents",
+     0.167
+    ],
+    [
+     "budget",
+     0.083
+    ],
+    [
+     "taps",
+     0.083
+    ],
+    [
+     "couture",
+     0.083
+    ],
+    [
+     "runway",
+     0.083
+    ],
+    [
+     "plugins",
+     0.083
+    ]
+   ],
+   "coverage": 0.923
+  },
+  "lexicon.power_words": {
+   "kind": "items",
+   "n": 13,
+   "top": [
+    [
      "free",
-     0.333
+     0.308
     ],
     [
      "never",
-     0.25
+     0.231
+    ],
+    [
+     "one prompt",
+     0.154
     ],
     [
      "10 seconds",
-     0.083
+     0.077
     ],
     [
      "anywhere",
-     0.083
+     0.077
     ],
     [
      "just say it",
-     0.083
+     0.077
     ],
     [
      "under budget",
-     0.083
+     0.077
     ],
     [
      "whole trip",
-     0.083
+     0.077
     ],
     [
      "crowned",
-     0.083
+     0.077
     ],
     [
      "icon",
-     0.083
-    ],
-    [
-     "kingdom",
-     0.083
+     0.077
     ]
    ],
    "coverage": 1.0
   },
   "lexicon.signature_phrases": {
    "kind": "items",
-   "n": 12,
+   "n": 13,
    "top": [
     [
      "go anywhere.",
-     0.083
+     0.077
     ],
     [
      "just tell it where, when, and how much.",
-     0.083
+     0.077
     ],
     [
      "meet fairwind.",
-     0.083
+     0.077
     ],
     [
      "every runway still whispers",
-     0.083
+     0.077
     ],
     [
      "it became her kingdom",
-     0.083
+     0.077
     ],
     [
      "she never begged for fame",
-     0.083
+     0.077
     ],
     [
      "comment plug-ins and i will send you all 30 links",
-     0.083
+     0.077
     ],
     [
      "if you write code, take this first row.",
-     0.083
+     0.077
     ],
     [
      "now dont go installing all 30",
-     0.083
+     0.077
     ],
     [
      "comment skill",
-     0.083
+     0.077
     ]
    ],
    "coverage": 1.0
   },
   "pacing.numbers_per_min": {
    "kind": "number",
-   "n": 12,
-   "median": 3.22,
-   "mean": 3.812,
-   "p25": 1.147,
-   "p75": 5.145,
+   "n": 13,
+   "median": 2.33,
+   "mean": 3.519,
+   "p25": 0.0,
+   "p75": 4.86,
    "min": 0.0,
    "max": 12.0,
-   "cv": 0.928,
+   "cv": 1.009,
    "coverage": 1.0
   },
   "pacing.pause_mean_s": {
    "kind": "number",
-   "n": 12,
-   "median": 0.33,
-   "mean": 0.451,
-   "p25": 0.24,
-   "p75": 0.552,
-   "min": 0.2,
+   "n": 13,
+   "median": 0.31,
+   "mean": 0.416,
+   "p25": 0.21,
+   "p75": 0.55,
+   "min": 0.0,
    "max": 1.44,
-   "cv": 0.749,
+   "cv": 0.831,
    "coverage": 1.0
   },
   "pacing.questions_per_min": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 0.0,
-   "mean": 0.831,
+   "mean": 0.767,
    "p25": 0.0,
-   "p75": 1.077,
+   "p75": 0.85,
    "min": 0.0,
    "max": 4.8,
-   "cv": 1.742,
+   "cv": 1.836,
    "coverage": 1.0
   },
   "pacing.sentence_words_mean": {
    "kind": "number",
-   "n": 12,
-   "median": 12.45,
-   "mean": 12.692,
-   "p25": 9.125,
-   "p75": 17.05,
-   "min": 4.1,
+   "n": 13,
+   "median": 12.4,
+   "mean": 11.715,
+   "p25": 7.4,
+   "p75": 16.9,
+   "min": 0.0,
    "max": 19.4,
-   "cv": 0.381,
+   "cv": 0.491,
    "coverage": 1.0
   },
   "pacing.sentence_words_p90": {
    "kind": "number",
-   "n": 12,
-   "median": 17.0,
-   "mean": 19.367,
-   "p25": 14.975,
-   "p75": 26.725,
-   "min": 8.0,
+   "n": 13,
+   "median": 16.6,
+   "mean": 17.877,
+   "p25": 13.4,
+   "p75": 25.9,
+   "min": 0.0,
    "max": 31.5,
-   "cv": 0.39,
+   "cv": 0.498,
    "coverage": 1.0
   },
   "pacing.speech_ratio": {
    "kind": "number",
-   "n": 12,
-   "median": 0.886,
-   "mean": 0.853,
-   "p25": 0.824,
-   "p75": 0.921,
-   "min": 0.658,
+   "n": 13,
+   "median": 0.873,
+   "mean": 0.787,
+   "p25": 0.782,
+   "p75": 0.919,
+   "min": 0.0,
    "max": 0.938,
-   "cv": 0.108,
+   "cv": 0.31,
    "coverage": 1.0
   },
   "pacing.words_per_min_overall": {
    "kind": "number",
-   "n": 12,
-   "median": 200.95,
-   "mean": 193.525,
-   "p25": 166.3,
-   "p75": 227.475,
-   "min": 136.8,
+   "n": 13,
+   "median": 199.3,
+   "mean": 178.638,
+   "p25": 159.1,
+   "p75": 227.3,
+   "min": 0.0,
    "max": 241.7,
-   "cv": 0.185,
+   "cv": 0.347,
    "coverage": 1.0
   },
   "pacing.words_per_min_speaking": {
    "kind": "number",
-   "n": 12,
-   "median": 232.45,
-   "mean": 226.433,
-   "p25": 213.4,
-   "p75": 248.325,
-   "min": 164.0,
+   "n": 13,
+   "median": 232.4,
+   "mean": 209.015,
+   "p25": 208.0,
+   "p75": 247.8,
+   "min": 0.0,
    "max": 269.0,
-   "cv": 0.128,
+   "cv": 0.318,
    "coverage": 1.0
   },
   "retention.open_loops": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 1.0,
-   "mean": 1.083,
+   "mean": 1.077,
    "p25": 1.0,
-   "p75": 1.25,
+   "p75": 1.0,
    "min": 0.0,
    "max": 2.0,
-   "cv": 0.591,
+   "cv": 0.571,
    "coverage": 1.0
   },
   "retention.pattern_interrupts": {
@@ -703,19 +708,92 @@
      1
     ]
    ],
-   "coverage": 0.25
+   "coverage": 0.231
   },
   "retention.payoff_at_s": {
    "kind": "number",
-   "n": 12,
-   "median": 23.0,
-   "mean": 28.317,
-   "p25": 15.95,
-   "p75": 37.575,
+   "n": 13,
+   "median": 21.5,
+   "mean": 27.0,
+   "p25": 15.2,
+   "p75": 35.5,
    "min": 7.5,
    "max": 65.5,
-   "cv": 0.614,
+   "cv": 0.642,
    "coverage": 1.0
+  },
+  "structure[3D proof].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "3d proof",
+   "agreement": 1.0,
+   "top": [
+    [
+     "3d proof",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[3D proof].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "demo",
+     1.0
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[3D proof].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.05,
+   "mean": 4.05,
+   "p25": 4.05,
+   "p75": 4.05,
+   "min": 4.05,
+   "max": 4.05,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[3D proof].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "cube field shows motion capability",
+   "agreement": 1.0,
+   "top": [
+    [
+     "cube field shows motion capability",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[3D proof].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.143,
+   "mean": 0.143,
+   "p25": 0.143,
+   "p75": 0.143,
+   "min": 0.143,
+   "max": 0.143,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[3D proof].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 2.1,
+   "mean": 2.1,
+   "p25": 2.1,
+   "p75": 2.1,
+   "min": 2.1,
+   "max": 2.1,
+   "cv": 0.0,
+   "coverage": 0.077
   },
   "structure[agitate].beat": {
    "kind": "word",
@@ -728,7 +806,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[agitate].devices": {
    "kind": "items",
@@ -739,7 +817,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[agitate].end_s": {
    "kind": "number",
@@ -751,7 +829,7 @@
    "min": 8.0,
    "max": 8.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[agitate].purpose": {
    "kind": "word",
@@ -764,7 +842,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[agitate].share": {
    "kind": "number",
@@ -776,7 +854,7 @@
    "min": 0.103,
    "max": 0.103,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[agitate].start_s": {
    "kind": "number",
@@ -788,7 +866,7 @@
    "min": 4.5,
    "max": 4.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[before/after + brand].beat": {
    "kind": "word",
@@ -801,7 +879,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[before/after + brand].devices": {
    "kind": "items",
@@ -816,7 +894,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[before/after + brand].end_s": {
    "kind": "number",
@@ -828,7 +906,7 @@
    "min": 25.0,
    "max": 25.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[before/after + brand].purpose": {
    "kind": "word",
@@ -841,7 +919,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[before/after + brand].share": {
    "kind": "number",
@@ -853,7 +931,7 @@
    "min": 0.22,
    "max": 0.22,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[before/after + brand].start_s": {
    "kind": "number",
@@ -865,7 +943,161 @@
    "min": 19.5,
    "max": 19.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
+  },
+  "structure[brand open].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "brand open",
+   "agreement": 1.0,
+   "top": [
+    [
+     "brand open",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[brand open].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "brand mark",
+     1.0
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[brand open].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.617,
+   "mean": 0.617,
+   "p25": 0.617,
+   "p75": 0.617,
+   "min": 0.617,
+   "max": 0.617,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[brand open].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "asterisk logo with hud",
+   "agreement": 1.0,
+   "top": [
+    [
+     "asterisk logo with hud",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[brand open].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.045,
+   "mean": 0.045,
+   "p25": 0.045,
+   "p75": 0.045,
+   "min": 0.045,
+   "max": 0.045,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[brand open].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.0,
+   "mean": 0.0,
+   "p25": 0.0,
+   "p75": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[build proof and payoff].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "build proof and payoff",
+   "agreement": 1.0,
+   "top": [
+    [
+     "build proof and payoff",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[build proof and payoff].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "callback",
+     1.0
+    ],
+    [
+     "cta",
+     1.0
+    ],
+    [
+     "demo",
+     1.0
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[build proof and payoff].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 13.65,
+   "mean": 13.65,
+   "p25": 13.65,
+   "p75": 13.65,
+   "min": 13.65,
+   "max": 13.65,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[build proof and payoff].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "terminal build, 12 rays 1 prompt, logo and comment cta",
+   "agreement": 1.0,
+   "top": [
+    [
+     "terminal build, 12 rays 1 prompt, logo and comment cta",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[build proof and payoff].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.361,
+   "mean": 0.361,
+   "p25": 0.361,
+   "p75": 0.361,
+   "min": 0.361,
+   "max": 0.361,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[build proof and payoff].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.717,
+   "mean": 8.717,
+   "p25": 8.717,
+   "p75": 8.717,
+   "min": 8.717,
+   "max": 8.717,
+   "cv": 0.0,
+   "coverage": 0.077
   },
   "structure[cause].beat": {
    "kind": "word",
@@ -878,7 +1110,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cause].devices": {
    "kind": "items",
@@ -893,7 +1125,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cause].end_s": {
    "kind": "number",
@@ -905,7 +1137,7 @@
    "min": 8.87,
    "max": 8.87,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cause].share": {
    "kind": "number",
@@ -917,7 +1149,7 @@
    "min": 0.172,
    "max": 0.172,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cause].start_s": {
    "kind": "number",
@@ -929,7 +1161,7 @@
    "min": 4.83,
    "max": 4.83,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[claim].beat": {
    "kind": "word",
@@ -942,7 +1174,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[claim].devices": {
    "kind": "items",
@@ -957,7 +1189,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[claim].end_s": {
    "kind": "number",
@@ -969,7 +1201,7 @@
    "min": 11.0,
    "max": 11.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[claim].purpose": {
    "kind": "word",
@@ -982,7 +1214,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[claim].share": {
    "kind": "number",
@@ -994,7 +1226,7 @@
    "min": 0.127,
    "max": 0.127,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[claim].start_s": {
    "kind": "number",
@@ -1006,7 +1238,7 @@
    "min": 4.45,
    "max": 4.45,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[closing_question].beat": {
    "kind": "word",
@@ -1019,7 +1251,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[closing_question].devices": {
    "kind": "items",
@@ -1034,7 +1266,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[closing_question].end_s": {
    "kind": "number",
@@ -1046,7 +1278,7 @@
    "min": 34.005,
    "max": 34.005,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[closing_question].share": {
    "kind": "number",
@@ -1058,7 +1290,7 @@
    "min": 0.103,
    "max": 0.103,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[closing_question].start_s": {
    "kind": "number",
@@ -1070,7 +1302,7 @@
    "min": 30.5,
    "max": 30.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[crowning].beat": {
    "kind": "word",
@@ -1083,7 +1315,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[crowning].devices": {
    "kind": "items",
@@ -1094,7 +1326,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[crowning].end_s": {
    "kind": "number",
@@ -1106,7 +1338,7 @@
    "min": 11.5,
    "max": 11.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[crowning].purpose": {
    "kind": "word",
@@ -1119,7 +1351,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[crowning].share": {
    "kind": "number",
@@ -1131,7 +1363,7 @@
    "min": 0.129,
    "max": 0.129,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[crowning].start_s": {
    "kind": "number",
@@ -1143,7 +1375,7 @@
    "min": 9.8,
    "max": 9.8,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cta].beat": {
    "kind": "word",
@@ -1156,7 +1388,7 @@
      6
     ]
    ],
-   "coverage": 0.5
+   "coverage": 0.462
   },
   "structure[cta].devices": {
    "kind": "items",
@@ -1191,7 +1423,7 @@
      0.167
     ]
    ],
-   "coverage": 0.5
+   "coverage": 0.462
   },
   "structure[cta].end_s": {
    "kind": "number",
@@ -1203,7 +1435,7 @@
    "min": 23.467,
    "max": 58.417,
    "cv": 0.311,
-   "coverage": 0.5
+   "coverage": 0.462
   },
   "structure[cta].purpose": {
    "kind": "word",
@@ -1232,7 +1464,7 @@
      1
     ]
    ],
-   "coverage": 0.417
+   "coverage": 0.385
   },
   "structure[cta].share": {
    "kind": "number",
@@ -1244,7 +1476,7 @@
    "min": 0.05,
    "max": 0.199,
    "cv": 0.399,
-   "coverage": 0.5
+   "coverage": 0.462
   },
   "structure[cta].start_s": {
    "kind": "number",
@@ -1256,7 +1488,7 @@
    "min": 18.8,
    "max": 55.5,
    "cv": 0.347,
-   "coverage": 0.5
+   "coverage": 0.462
   },
   "structure[cta_challenge].beat": {
    "kind": "word",
@@ -1269,7 +1501,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cta_challenge].devices": {
    "kind": "items",
@@ -1284,7 +1516,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cta_challenge].end_s": {
    "kind": "number",
@@ -1296,7 +1528,7 @@
    "min": 70.792,
    "max": 70.792,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cta_challenge].share": {
    "kind": "number",
@@ -1308,7 +1540,7 @@
    "min": 0.075,
    "max": 0.075,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[cta_challenge].start_s": {
    "kind": "number",
@@ -1320,7 +1552,84 @@
    "min": 65.5,
    "max": 65.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
+  },
+  "structure[data proof].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "data proof",
+   "agreement": 1.0,
+   "top": [
+    [
+     "data proof",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[data proof].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "before/after",
+     1.0
+    ],
+    [
+     "numbers",
+     1.0
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[data proof].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 6.933,
+   "mean": 6.933,
+   "p25": 6.933,
+   "p75": 6.933,
+   "min": 6.933,
+   "max": 6.933,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[data proof].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "edit time by hand vs claude, -98 percent",
+   "agreement": 1.0,
+   "top": [
+    [
+     "edit time by hand vs claude, -98 percent",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[data proof].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.128,
+   "mean": 0.128,
+   "p25": 0.128,
+   "p75": 0.128,
+   "min": 0.128,
+   "max": 0.128,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[data proof].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.183,
+   "mean": 5.183,
+   "p25": 5.183,
+   "p75": 5.183,
+   "min": 5.183,
+   "max": 5.183,
+   "cv": 0.0,
+   "coverage": 0.077
   },
   "structure[demo / proof].beat": {
    "kind": "word",
@@ -1333,7 +1642,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo / proof].devices": {
    "kind": "items",
@@ -1352,7 +1661,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo / proof].end_s": {
    "kind": "number",
@@ -1364,7 +1673,7 @@
    "min": 16.5,
    "max": 16.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo / proof].share": {
    "kind": "number",
@@ -1376,7 +1685,7 @@
    "min": 0.26,
    "max": 0.26,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo / proof].start_s": {
    "kind": "number",
@@ -1388,7 +1697,7 @@
    "min": 10.0,
    "max": 10.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo prompt].beat": {
    "kind": "word",
@@ -1401,7 +1710,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo prompt].devices": {
    "kind": "items",
@@ -1416,7 +1725,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo prompt].end_s": {
    "kind": "number",
@@ -1428,7 +1737,7 @@
    "min": 26.767,
    "max": 26.767,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo prompt].purpose": {
    "kind": "word",
@@ -1441,7 +1750,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo prompt].share": {
    "kind": "number",
@@ -1453,7 +1762,7 @@
    "min": 0.165,
    "max": 0.165,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo prompt].start_s": {
    "kind": "number",
@@ -1465,7 +1774,7 @@
    "min": 18.25,
    "max": 18.25,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo_how].beat": {
    "kind": "word",
@@ -1478,7 +1787,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo_how].devices": {
    "kind": "items",
@@ -1493,7 +1802,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo_how].end_s": {
    "kind": "number",
@@ -1505,7 +1814,7 @@
    "min": 31.0,
    "max": 31.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo_how].share": {
    "kind": "number",
@@ -1517,7 +1826,7 @@
    "min": 0.343,
    "max": 0.343,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[demo_how].start_s": {
    "kind": "number",
@@ -1529,7 +1838,7 @@
    "min": 17.5,
    "max": 17.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[extras and CTA].beat": {
    "kind": "word",
@@ -1542,7 +1851,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[extras and CTA].devices": {
    "kind": "items",
@@ -1557,7 +1866,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[extras and CTA].end_s": {
    "kind": "number",
@@ -1569,7 +1878,7 @@
    "min": 37.013,
    "max": 37.013,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[extras and CTA].purpose": {
    "kind": "word",
@@ -1582,7 +1891,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[extras and CTA].share": {
    "kind": "number",
@@ -1594,7 +1903,7 @@
    "min": 0.173,
    "max": 0.173,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[extras and CTA].start_s": {
    "kind": "number",
@@ -1606,7 +1915,7 @@
    "min": 30.617,
    "max": 30.617,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[flexibility].beat": {
    "kind": "word",
@@ -1619,7 +1928,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[flexibility].devices": {
    "kind": "items",
@@ -1630,7 +1939,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[flexibility].end_s": {
    "kind": "number",
@@ -1642,7 +1951,7 @@
    "min": 19.5,
    "max": 19.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[flexibility].purpose": {
    "kind": "word",
@@ -1655,7 +1964,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[flexibility].share": {
    "kind": "number",
@@ -1667,7 +1976,7 @@
    "min": 0.12,
    "max": 0.12,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[flexibility].start_s": {
    "kind": "number",
@@ -1679,7 +1988,7 @@
    "min": 16.5,
    "max": 16.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[hook+what_it_is].beat": {
    "kind": "word",
@@ -1692,7 +2001,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[hook+what_it_is].devices": {
    "kind": "items",
@@ -1707,7 +2016,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[hook+what_it_is].end_s": {
    "kind": "number",
@@ -1719,7 +2028,7 @@
    "min": 23.1,
    "max": 23.1,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[hook+what_it_is].share": {
    "kind": "number",
@@ -1731,7 +2040,7 @@
    "min": 0.326,
    "max": 0.326,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[hook+what_it_is].start_s": {
    "kind": "number",
@@ -1743,7 +2052,7 @@
    "min": 0.0,
    "max": 0.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[hook].beat": {
    "kind": "word",
@@ -1756,7 +2065,7 @@
      11
     ]
    ],
-   "coverage": 0.917
+   "coverage": 0.846
   },
   "structure[hook].devices": {
    "kind": "items",
@@ -1803,7 +2112,7 @@
      0.091
     ]
    ],
-   "coverage": 0.917
+   "coverage": 0.846
   },
   "structure[hook].end_s": {
    "kind": "number",
@@ -1815,7 +2124,7 @@
    "min": 1.47,
    "max": 10.5,
    "cv": 0.525,
-   "coverage": 0.917
+   "coverage": 0.846
   },
   "structure[hook].purpose": {
    "kind": "word",
@@ -1844,7 +2153,7 @@
      1
     ]
    ],
-   "coverage": 0.75
+   "coverage": 0.692
   },
   "structure[hook].share": {
    "kind": "number",
@@ -1856,7 +2165,7 @@
    "min": 0.059,
    "max": 0.242,
    "cv": 0.393,
-   "coverage": 0.917
+   "coverage": 0.846
   },
   "structure[hook].start_s": {
    "kind": "number",
@@ -1868,7 +2177,7 @@
    "min": 0.0,
    "max": 0.0,
    "cv": 0.0,
-   "coverage": 0.917
+   "coverage": 0.846
   },
   "structure[how_to_switch].beat": {
    "kind": "word",
@@ -1881,7 +2190,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[how_to_switch].devices": {
    "kind": "items",
@@ -1896,7 +2205,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[how_to_switch].end_s": {
    "kind": "number",
@@ -1908,7 +2217,7 @@
    "min": 58.0,
    "max": 58.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[how_to_switch].share": {
    "kind": "number",
@@ -1920,7 +2229,7 @@
    "min": 0.226,
    "max": 0.226,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[how_to_switch].start_s": {
    "kind": "number",
@@ -1932,7 +2241,7 @@
    "min": 42.0,
    "max": 42.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_2].beat": {
    "kind": "word",
@@ -1945,7 +2254,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_2].devices": {
    "kind": "items",
@@ -1956,7 +2265,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_2].end_s": {
    "kind": "number",
@@ -1968,7 +2277,7 @@
    "min": 11.5,
    "max": 11.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_2].purpose": {
    "kind": "word",
@@ -1981,7 +2290,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_2].share": {
    "kind": "number",
@@ -1993,7 +2302,7 @@
    "min": 0.168,
    "max": 0.168,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_2].start_s": {
    "kind": "number",
@@ -2005,7 +2314,7 @@
    "min": 6.0,
    "max": 6.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_t3].beat": {
    "kind": "word",
@@ -2018,7 +2327,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_t3].devices": {
    "kind": "items",
@@ -2033,7 +2342,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_t3].end_s": {
    "kind": "number",
@@ -2045,7 +2354,7 @@
    "min": 9.7,
    "max": 9.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_t3].share": {
    "kind": "number",
@@ -2057,7 +2366,7 @@
    "min": 0.106,
    "max": 0.106,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item1_t3].start_s": {
    "kind": "number",
@@ -2069,7 +2378,7 @@
    "min": 4.2,
    "max": 4.2,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item2_free_model].beat": {
    "kind": "word",
@@ -2082,7 +2391,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item2_free_model].devices": {
    "kind": "items",
@@ -2097,7 +2406,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item2_free_model].end_s": {
    "kind": "number",
@@ -2109,7 +2418,7 @@
    "min": 13.7,
    "max": 13.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item2_free_model].purpose": {
    "kind": "word",
@@ -2122,7 +2431,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item2_free_model].share": {
    "kind": "number",
@@ -2134,7 +2443,7 @@
    "min": 0.077,
    "max": 0.077,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item2_free_model].start_s": {
    "kind": "number",
@@ -2146,7 +2455,7 @@
    "min": 9.7,
    "max": 9.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_5].beat": {
    "kind": "word",
@@ -2159,7 +2468,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_5].devices": {
    "kind": "items",
@@ -2170,7 +2479,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_5].end_s": {
    "kind": "number",
@@ -2182,7 +2491,7 @@
    "min": 19.5,
    "max": 19.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_5].purpose": {
    "kind": "word",
@@ -2195,7 +2504,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_5].share": {
    "kind": "number",
@@ -2207,7 +2516,7 @@
    "min": 0.244,
    "max": 0.244,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_5].start_s": {
    "kind": "number",
@@ -2219,7 +2528,7 @@
    "min": 11.5,
    "max": 11.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_cloudflare].beat": {
    "kind": "word",
@@ -2232,7 +2541,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_cloudflare].devices": {
    "kind": "items",
@@ -2247,7 +2556,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_cloudflare].end_s": {
    "kind": "number",
@@ -2259,7 +2568,7 @@
    "min": 19.0,
    "max": 19.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_cloudflare].purpose": {
    "kind": "word",
@@ -2272,7 +2581,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_cloudflare].share": {
    "kind": "number",
@@ -2284,7 +2593,7 @@
    "min": 0.102,
    "max": 0.102,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item3_cloudflare].start_s": {
    "kind": "number",
@@ -2296,7 +2605,7 @@
    "min": 13.7,
    "max": 13.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_7].beat": {
    "kind": "word",
@@ -2309,7 +2618,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_7].devices": {
    "kind": "items",
@@ -2324,7 +2633,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_7].end_s": {
    "kind": "number",
@@ -2336,7 +2645,7 @@
    "min": 28.0,
    "max": 28.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_7].purpose": {
    "kind": "word",
@@ -2349,7 +2658,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_7].share": {
    "kind": "number",
@@ -2361,7 +2670,7 @@
    "min": 0.26,
    "max": 0.26,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_7].start_s": {
    "kind": "number",
@@ -2373,7 +2682,7 @@
    "min": 19.5,
    "max": 19.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_sherlock].beat": {
    "kind": "word",
@@ -2386,7 +2695,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_sherlock].devices": {
    "kind": "items",
@@ -2401,7 +2710,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_sherlock].end_s": {
    "kind": "number",
@@ -2413,7 +2722,7 @@
    "min": 26.5,
    "max": 26.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_sherlock].purpose": {
    "kind": "word",
@@ -2426,7 +2735,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_sherlock].share": {
    "kind": "number",
@@ -2438,7 +2747,7 @@
    "min": 0.092,
    "max": 0.092,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item6_sherlock].start_s": {
    "kind": "number",
@@ -2450,7 +2759,7 @@
    "min": 21.7,
    "max": 21.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item7_openmausbot].beat": {
    "kind": "word",
@@ -2463,7 +2772,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item7_openmausbot].devices": {
    "kind": "items",
@@ -2478,7 +2787,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item7_openmausbot].end_s": {
    "kind": "number",
@@ -2490,7 +2799,7 @@
    "min": 30.8,
    "max": 30.8,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item7_openmausbot].purpose": {
    "kind": "word",
@@ -2503,7 +2812,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item7_openmausbot].share": {
    "kind": "number",
@@ -2515,7 +2824,7 @@
    "min": 0.083,
    "max": 0.083,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item7_openmausbot].start_s": {
    "kind": "number",
@@ -2527,7 +2836,7 @@
    "min": 26.5,
    "max": 26.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item8_magpie].beat": {
    "kind": "word",
@@ -2540,7 +2849,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item8_magpie].devices": {
    "kind": "items",
@@ -2555,7 +2864,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item8_magpie].end_s": {
    "kind": "number",
@@ -2567,7 +2876,7 @@
    "min": 35.3,
    "max": 35.3,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item8_magpie].share": {
    "kind": "number",
@@ -2579,7 +2888,7 @@
    "min": 0.086,
    "max": 0.086,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item8_magpie].start_s": {
    "kind": "number",
@@ -2591,7 +2900,7 @@
    "min": 30.8,
    "max": 30.8,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item9_wildest].beat": {
    "kind": "word",
@@ -2604,7 +2913,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item9_wildest].devices": {
    "kind": "items",
@@ -2619,7 +2928,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item9_wildest].end_s": {
    "kind": "number",
@@ -2631,7 +2940,7 @@
    "min": 45.0,
    "max": 45.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item9_wildest].share": {
    "kind": "number",
@@ -2643,7 +2952,7 @@
    "min": 0.186,
    "max": 0.186,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[item9_wildest].start_s": {
    "kind": "number",
@@ -2655,7 +2964,7 @@
    "min": 35.3,
    "max": 35.3,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[items4_5].beat": {
    "kind": "word",
@@ -2668,7 +2977,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[items4_5].devices": {
    "kind": "items",
@@ -2683,7 +2992,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[items4_5].end_s": {
    "kind": "number",
@@ -2695,7 +3004,7 @@
    "min": 21.7,
    "max": 21.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[items4_5].purpose": {
    "kind": "word",
@@ -2708,7 +3017,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[items4_5].share": {
    "kind": "number",
@@ -2720,7 +3029,7 @@
    "min": 0.052,
    "max": 0.052,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[items4_5].start_s": {
    "kind": "number",
@@ -2732,7 +3041,7 @@
    "min": 19.0,
    "max": 19.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[legacy close].beat": {
    "kind": "word",
@@ -2745,7 +3054,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[legacy close].devices": {
    "kind": "items",
@@ -2760,7 +3069,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[legacy close].end_s": {
    "kind": "number",
@@ -2772,7 +3081,7 @@
    "min": 13.2,
    "max": 13.2,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[legacy close].purpose": {
    "kind": "word",
@@ -2785,7 +3094,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[legacy close].share": {
    "kind": "number",
@@ -2797,7 +3106,7 @@
    "min": 0.129,
    "max": 0.129,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[legacy close].start_s": {
    "kind": "number",
@@ -2809,7 +3118,7 @@
    "min": 11.5,
    "max": 11.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[limits].beat": {
    "kind": "word",
@@ -2822,7 +3131,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[limits].devices": {
    "kind": "items",
@@ -2837,7 +3146,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[limits].end_s": {
    "kind": "number",
@@ -2849,7 +3158,7 @@
    "min": 65.5,
    "max": 65.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[limits].share": {
    "kind": "number",
@@ -2861,7 +3170,7 @@
    "min": 0.106,
    "max": 0.106,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[limits].start_s": {
    "kind": "number",
@@ -2873,7 +3182,7 @@
    "min": 58.0,
    "max": 58.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[name the problem].beat": {
    "kind": "word",
@@ -2886,7 +3195,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[name the problem].devices": {
    "kind": "items",
@@ -2901,7 +3210,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[name the problem].end_s": {
    "kind": "number",
@@ -2913,7 +3222,7 @@
    "min": 4.83,
    "max": 4.83,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[name the problem].purpose": {
    "kind": "word",
@@ -2926,7 +3235,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[name the problem].share": {
    "kind": "number",
@@ -2938,7 +3247,7 @@
    "min": 0.071,
    "max": 0.071,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[name the problem].start_s": {
    "kind": "number",
@@ -2950,7 +3259,7 @@
    "min": 3.17,
    "max": 3.17,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[objection].beat": {
    "kind": "word",
@@ -2963,7 +3272,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[objection].devices": {
    "kind": "items",
@@ -2978,7 +3287,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[objection].end_s": {
    "kind": "number",
@@ -2990,7 +3299,7 @@
    "min": 11.0,
    "max": 11.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[objection].purpose": {
    "kind": "word",
@@ -3003,7 +3312,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[objection].share": {
    "kind": "number",
@@ -3015,7 +3324,7 @@
    "min": 0.103,
    "max": 0.103,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[objection].start_s": {
    "kind": "number",
@@ -3027,7 +3336,84 @@
    "min": 5.7,
    "max": 5.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
+  },
+  "structure[one-word punches].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "one-word punches",
+   "agreement": 1.0,
+   "top": [
+    [
+     "one-word punches",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[one-word punches].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "negation then replacement",
+     1.0
+    ],
+    [
+     "rule of three",
+     1.0
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[one-word punches].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.183,
+   "mean": 5.183,
+   "p25": 5.183,
+   "p75": 5.183,
+   "min": 5.183,
+   "max": 5.183,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[one-word punches].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "no / timeline (struck) / keyframes / one prompt.",
+   "agreement": 1.0,
+   "top": [
+    [
+     "no / timeline (struck) / keyframes / one prompt.",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[one-word punches].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.083,
+   "mean": 0.083,
+   "p25": 0.083,
+   "p75": 0.083,
+   "min": 0.083,
+   "max": 0.083,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[one-word punches].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.05,
+   "mean": 4.05,
+   "p25": 4.05,
+   "p75": 4.05,
+   "min": 4.05,
+   "max": 4.05,
+   "cv": 0.0,
+   "coverage": 0.077
   },
   "structure[pain point].beat": {
    "kind": "word",
@@ -3040,7 +3426,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain point].devices": {
    "kind": "items",
@@ -3055,7 +3441,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain point].end_s": {
    "kind": "number",
@@ -3067,7 +3453,7 @@
    "min": 15.467,
    "max": 15.467,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain point].purpose": {
    "kind": "word",
@@ -3080,7 +3466,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain point].share": {
    "kind": "number",
@@ -3092,7 +3478,7 @@
    "min": 0.11,
    "max": 0.11,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain point].start_s": {
    "kind": "number",
@@ -3104,7 +3490,7 @@
    "min": 11.383,
    "max": 11.383,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain].beat": {
    "kind": "word",
@@ -3117,7 +3503,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain].devices": {
    "kind": "items",
@@ -3132,7 +3518,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain].end_s": {
    "kind": "number",
@@ -3144,7 +3530,7 @@
    "min": 5.7,
    "max": 5.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain].purpose": {
    "kind": "word",
@@ -3157,7 +3543,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain].share": {
    "kind": "number",
@@ -3169,7 +3555,7 @@
    "min": 0.169,
    "max": 0.169,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pain].start_s": {
    "kind": "number",
@@ -3181,7 +3567,80 @@
    "min": 1.47,
    "max": 1.47,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
+  },
+  "structure[particle spectacle].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "particle spectacle",
+   "agreement": 1.0,
+   "top": [
+    [
+     "particle spectacle",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[particle spectacle].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "pattern interrupt",
+     1.0
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[particle spectacle].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.717,
+   "mean": 8.717,
+   "p25": 8.717,
+   "p75": 8.717,
+   "min": 8.717,
+   "max": 8.717,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[particle spectacle].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "visual re-hook",
+   "agreement": 1.0,
+   "top": [
+    [
+     "visual re-hook",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[particle spectacle].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.131,
+   "mean": 0.131,
+   "p25": 0.131,
+   "p75": 0.131,
+   "min": 0.131,
+   "max": 0.131,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[particle spectacle].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 6.933,
+   "mean": 6.933,
+   "p25": 6.933,
+   "p75": 6.933,
+   "min": 6.933,
+   "max": 6.933,
+   "cv": 0.0,
+   "coverage": 0.077
   },
   "structure[pattern_interrupt_scenario].beat": {
    "kind": "word",
@@ -3194,7 +3653,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pattern_interrupt_scenario].devices": {
    "kind": "items",
@@ -3209,7 +3668,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pattern_interrupt_scenario].end_s": {
    "kind": "number",
@@ -3221,7 +3680,7 @@
    "min": 17.5,
    "max": 17.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pattern_interrupt_scenario].share": {
    "kind": "number",
@@ -3233,7 +3692,7 @@
    "min": 0.254,
    "max": 0.254,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[pattern_interrupt_scenario].start_s": {
    "kind": "number",
@@ -3245,7 +3704,7 @@
    "min": 7.5,
    "max": 7.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[payoff].beat": {
    "kind": "word",
@@ -3258,7 +3717,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[payoff].devices": {
    "kind": "items",
@@ -3273,7 +3732,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[payoff].end_s": {
    "kind": "number",
@@ -3285,7 +3744,7 @@
    "min": 51.533,
    "max": 51.533,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[payoff].purpose": {
    "kind": "word",
@@ -3298,7 +3757,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[payoff].share": {
    "kind": "number",
@@ -3310,7 +3769,7 @@
    "min": 0.15,
    "max": 0.15,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[payoff].start_s": {
    "kind": "number",
@@ -3322,7 +3781,7 @@
    "min": 43.8,
    "max": 43.8,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[problem anchor].beat": {
    "kind": "word",
@@ -3335,7 +3794,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[problem anchor].devices": {
    "kind": "items",
@@ -3350,7 +3809,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[problem anchor].end_s": {
    "kind": "number",
@@ -3362,7 +3821,7 @@
    "min": 7.117,
    "max": 7.117,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[problem anchor].purpose": {
    "kind": "word",
@@ -3375,7 +3834,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[problem anchor].share": {
    "kind": "number",
@@ -3387,7 +3846,7 @@
    "min": 0.087,
    "max": 0.087,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[problem anchor].start_s": {
    "kind": "number",
@@ -3399,7 +3858,7 @@
    "min": 3.883,
    "max": 3.883,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[product intro].beat": {
    "kind": "word",
@@ -3412,7 +3871,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[product intro].devices": {
    "kind": "items",
@@ -3423,7 +3882,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[product intro].end_s": {
    "kind": "number",
@@ -3435,7 +3894,7 @@
    "min": 10.0,
    "max": 10.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[product intro].purpose": {
    "kind": "word",
@@ -3448,7 +3907,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[product intro].share": {
    "kind": "number",
@@ -3460,7 +3919,7 @@
    "min": 0.172,
    "max": 0.172,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[product intro].start_s": {
    "kind": "number",
@@ -3472,7 +3931,7 @@
    "min": 5.7,
    "max": 5.7,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[proof].beat": {
    "kind": "word",
@@ -3485,7 +3944,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[proof].devices": {
    "kind": "items",
@@ -3500,7 +3959,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[proof].end_s": {
    "kind": "number",
@@ -3512,7 +3971,7 @@
    "min": 27.5,
    "max": 27.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[proof].purpose": {
    "kind": "word",
@@ -3525,7 +3984,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[proof].share": {
    "kind": "number",
@@ -3537,7 +3996,7 @@
    "min": 0.162,
    "max": 0.162,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[proof].start_s": {
    "kind": "number",
@@ -3549,7 +4008,7 @@
    "min": 22.0,
    "max": 22.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[publish and domain].beat": {
    "kind": "word",
@@ -3562,7 +4021,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[publish and domain].devices": {
    "kind": "items",
@@ -3573,7 +4032,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[publish and domain].end_s": {
    "kind": "number",
@@ -3585,7 +4044,7 @@
    "min": 30.617,
    "max": 30.617,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[publish and domain].purpose": {
    "kind": "word",
@@ -3598,7 +4057,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[publish and domain].share": {
    "kind": "number",
@@ -3610,7 +4069,7 @@
    "min": 0.247,
    "max": 0.247,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[publish and domain].start_s": {
    "kind": "number",
@@ -3622,7 +4081,7 @@
    "min": 21.467,
    "max": 21.467,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reframe].beat": {
    "kind": "word",
@@ -3635,7 +4094,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reframe].devices": {
    "kind": "items",
@@ -3654,7 +4113,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reframe].end_s": {
    "kind": "number",
@@ -3666,7 +4125,7 @@
    "min": 10.0,
    "max": 10.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reframe].purpose": {
    "kind": "word",
@@ -3679,7 +4138,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reframe].share": {
    "kind": "number",
@@ -3691,7 +4150,7 @@
    "min": 0.48,
    "max": 0.48,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reframe].start_s": {
    "kind": "number",
@@ -3703,7 +4162,7 @@
    "min": 5.2,
    "max": 5.2,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[result reaction].beat": {
    "kind": "word",
@@ -3716,7 +4175,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[result reaction].devices": {
    "kind": "items",
@@ -3731,7 +4190,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[result reaction].end_s": {
    "kind": "number",
@@ -3743,7 +4202,7 @@
    "min": 30.4,
    "max": 30.4,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[result reaction].purpose": {
    "kind": "word",
@@ -3756,7 +4215,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[result reaction].share": {
    "kind": "number",
@@ -3768,7 +4227,7 @@
    "min": 0.07,
    "max": 0.07,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[result reaction].start_s": {
    "kind": "number",
@@ -3780,7 +4239,7 @@
    "min": 26.767,
    "max": 26.767,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reveal].beat": {
    "kind": "word",
@@ -3793,7 +4252,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reveal].devices": {
    "kind": "items",
@@ -3808,7 +4267,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reveal].end_s": {
    "kind": "number",
@@ -3820,7 +4279,7 @@
    "min": 18.25,
    "max": 18.25,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reveal].purpose": {
    "kind": "word",
@@ -3833,7 +4292,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reveal].share": {
    "kind": "number",
@@ -3845,7 +4304,7 @@
    "min": 0.141,
    "max": 0.141,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[reveal].start_s": {
    "kind": "number",
@@ -3857,7 +4316,7 @@
    "min": 11.0,
    "max": 11.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[rise].beat": {
    "kind": "word",
@@ -3870,7 +4329,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[rise].devices": {
    "kind": "items",
@@ -3885,7 +4344,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[rise].end_s": {
    "kind": "number",
@@ -3897,7 +4356,7 @@
    "min": 9.8,
    "max": 9.8,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[rise].purpose": {
    "kind": "word",
@@ -3910,7 +4369,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[rise].share": {
    "kind": "number",
@@ -3922,7 +4381,7 @@
    "min": 0.326,
    "max": 0.326,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[rise].start_s": {
    "kind": "number",
@@ -3934,7 +4393,7 @@
    "min": 5.5,
    "max": 5.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_code].beat": {
    "kind": "word",
@@ -3947,7 +4406,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_code].devices": {
    "kind": "items",
@@ -3962,7 +4421,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_code].end_s": {
    "kind": "number",
@@ -3974,7 +4433,7 @@
    "min": 19.5,
    "max": 19.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_code].purpose": {
    "kind": "word",
@@ -3987,7 +4446,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_code].share": {
    "kind": "number",
@@ -3999,7 +4458,7 @@
    "min": 0.154,
    "max": 0.154,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_code].start_s": {
    "kind": "number",
@@ -4011,7 +4470,7 @@
    "min": 10.5,
    "max": 10.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_design].beat": {
    "kind": "word",
@@ -4024,7 +4483,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_design].devices": {
    "kind": "items",
@@ -4035,7 +4494,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_design].end_s": {
    "kind": "number",
@@ -4047,7 +4506,7 @@
    "min": 39.5,
    "max": 39.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_design].purpose": {
    "kind": "word",
@@ -4060,7 +4519,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_design].share": {
    "kind": "number",
@@ -4072,7 +4531,7 @@
    "min": 0.12,
    "max": 0.12,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_design].start_s": {
    "kind": "number",
@@ -4084,7 +4543,7 @@
    "min": 32.5,
    "max": 32.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_research].beat": {
    "kind": "word",
@@ -4097,7 +4556,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_research].devices": {
    "kind": "items",
@@ -4108,7 +4567,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_research].end_s": {
    "kind": "number",
@@ -4120,7 +4579,7 @@
    "min": 26.5,
    "max": 26.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_research].purpose": {
    "kind": "word",
@@ -4133,7 +4592,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_research].share": {
    "kind": "number",
@@ -4145,7 +4604,7 @@
    "min": 0.12,
    "max": 0.12,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_research].start_s": {
    "kind": "number",
@@ -4157,7 +4616,7 @@
    "min": 19.5,
    "max": 19.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_tokens].beat": {
    "kind": "word",
@@ -4170,7 +4629,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_tokens].devices": {
    "kind": "items",
@@ -4181,7 +4640,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_tokens].end_s": {
    "kind": "number",
@@ -4193,7 +4652,7 @@
    "min": 32.5,
    "max": 32.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_tokens].purpose": {
    "kind": "word",
@@ -4206,7 +4665,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_tokens].share": {
    "kind": "number",
@@ -4218,7 +4677,7 @@
    "min": 0.103,
    "max": 0.103,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_tokens].start_s": {
    "kind": "number",
@@ -4230,7 +4689,7 @@
    "min": 26.5,
    "max": 26.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_writing].beat": {
    "kind": "word",
@@ -4243,7 +4702,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_writing].devices": {
    "kind": "items",
@@ -4254,7 +4713,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_writing].end_s": {
    "kind": "number",
@@ -4266,7 +4725,7 @@
    "min": 46.0,
    "max": 46.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_writing].purpose": {
    "kind": "word",
@@ -4279,7 +4738,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_writing].share": {
    "kind": "number",
@@ -4291,7 +4750,7 @@
    "min": 0.111,
    "max": 0.111,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[row_writing].start_s": {
    "kind": "number",
@@ -4303,7 +4762,7 @@
    "min": 39.5,
    "max": 39.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[secret].beat": {
    "kind": "word",
@@ -4316,7 +4775,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[secret].devices": {
    "kind": "items",
@@ -4331,7 +4790,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[secret].end_s": {
    "kind": "number",
@@ -4343,7 +4802,7 @@
    "min": 25.4,
    "max": 25.4,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[secret].purpose": {
    "kind": "word",
@@ -4356,7 +4815,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[secret].share": {
    "kind": "number",
@@ -4368,7 +4827,7 @@
    "min": 0.268,
    "max": 0.268,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[secret].start_s": {
    "kind": "number",
@@ -4380,7 +4839,7 @@
    "min": 15.467,
    "max": 15.467,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[solution].beat": {
    "kind": "word",
@@ -4393,7 +4852,7 @@
      2
     ]
    ],
-   "coverage": 0.167
+   "coverage": 0.154
   },
   "structure[solution].devices": {
    "kind": "items",
@@ -4412,7 +4871,7 @@
      0.5
     ]
    ],
-   "coverage": 0.167
+   "coverage": 0.154
   },
   "structure[solution].end_s": {
    "kind": "number",
@@ -4424,7 +4883,7 @@
    "min": 11.383,
    "max": 22.0,
    "cv": 0.318,
-   "coverage": 0.167
+   "coverage": 0.154
   },
   "structure[solution].purpose": {
    "kind": "word",
@@ -4437,7 +4896,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[solution].share": {
    "kind": "number",
@@ -4449,7 +4908,7 @@
    "min": 0.115,
    "max": 0.338,
    "cv": 0.492,
-   "coverage": 0.167
+   "coverage": 0.154
   },
   "structure[solution].start_s": {
    "kind": "number",
@@ -4461,7 +4920,7 @@
    "min": 7.117,
    "max": 10.5,
    "cv": 0.192,
-   "coverage": 0.167
+   "coverage": 0.154
   },
   "structure[success].beat": {
    "kind": "word",
@@ -4474,7 +4933,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[success].devices": {
    "kind": "items",
@@ -4489,7 +4948,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[success].end_s": {
    "kind": "number",
@@ -4501,7 +4960,7 @@
    "min": 5.2,
    "max": 5.2,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[success].purpose": {
    "kind": "word",
@@ -4514,7 +4973,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[success].share": {
    "kind": "number",
@@ -4526,7 +4985,7 @@
    "min": 0.3,
    "max": 0.3,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[success].start_s": {
    "kind": "number",
@@ -4538,7 +4997,7 @@
    "min": 2.2,
    "max": 2.2,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[thesis].beat": {
    "kind": "word",
@@ -4551,7 +5010,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[thesis].devices": {
    "kind": "items",
@@ -4566,7 +5025,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[thesis].end_s": {
    "kind": "number",
@@ -4578,7 +5037,7 @@
    "min": 18.8,
    "max": 18.8,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[thesis].share": {
    "kind": "number",
@@ -4590,7 +5049,7 @@
    "min": 0.423,
    "max": 0.423,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[thesis].start_s": {
    "kind": "number",
@@ -4602,7 +5061,84 @@
    "min": 8.87,
    "max": 8.87,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
+  },
+  "structure[title claim].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "title claim",
+   "agreement": 1.0,
+   "top": [
+    [
+     "title claim",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[title claim].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "bold claim",
+     1.0
+    ],
+    [
+     "contrast of black sans and italic serif",
+     1.0
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[title claim].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 2.1,
+   "mean": 2.1,
+   "p25": 2.1,
+   "p75": 2.1,
+   "min": 2.1,
+   "max": 2.1,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[title claim].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "claude now does motion (text cut off in frame)",
+   "agreement": 1.0,
+   "top": [
+    [
+     "claude now does motion (text cut off in frame)",
+     1
+    ]
+   ],
+   "coverage": 0.077
+  },
+  "structure[title claim].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.109,
+   "mean": 0.109,
+   "p25": 0.109,
+   "p75": 0.109,
+   "min": 0.109,
+   "max": 0.109,
+   "cv": 0.0,
+   "coverage": 0.077
+  },
+  "structure[title claim].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.617,
+   "mean": 0.617,
+   "p25": 0.617,
+   "p75": 0.617,
+   "min": 0.617,
+   "max": 0.617,
+   "cv": 0.0,
+   "coverage": 0.077
   },
   "structure[turn].beat": {
    "kind": "word",
@@ -4615,7 +5151,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[turn].devices": {
    "kind": "items",
@@ -4626,7 +5162,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[turn].end_s": {
    "kind": "number",
@@ -4638,7 +5174,7 @@
    "min": 5.5,
    "max": 5.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[turn].purpose": {
    "kind": "word",
@@ -4651,7 +5187,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[turn].share": {
    "kind": "number",
@@ -4663,7 +5199,7 @@
    "min": 0.174,
    "max": 0.174,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[turn].start_s": {
    "kind": "number",
@@ -4675,7 +5211,7 @@
    "min": 3.2,
    "max": 3.2,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[twist].beat": {
    "kind": "word",
@@ -4688,7 +5224,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[twist].devices": {
    "kind": "items",
@@ -4703,7 +5239,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[twist].end_s": {
    "kind": "number",
@@ -4715,7 +5251,7 @@
    "min": 10.5,
    "max": 10.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[twist].purpose": {
    "kind": "word",
@@ -4728,7 +5264,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[twist].share": {
    "kind": "number",
@@ -4740,7 +5276,7 @@
    "min": 0.074,
    "max": 0.074,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[twist].start_s": {
    "kind": "number",
@@ -4752,7 +5288,7 @@
    "min": 8.0,
    "max": 8.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[value_anchor].beat": {
    "kind": "word",
@@ -4765,7 +5301,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[value_anchor].devices": {
    "kind": "items",
@@ -4780,7 +5316,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[value_anchor].end_s": {
    "kind": "number",
@@ -4792,7 +5328,7 @@
    "min": 35.5,
    "max": 35.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[value_anchor].share": {
    "kind": "number",
@@ -4804,7 +5340,7 @@
    "min": 0.114,
    "max": 0.114,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[value_anchor].start_s": {
    "kind": "number",
@@ -4816,7 +5352,7 @@
    "min": 31.0,
    "max": 31.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[warning].beat": {
    "kind": "word",
@@ -4829,7 +5365,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[warning].devices": {
    "kind": "items",
@@ -4844,7 +5380,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[warning].end_s": {
    "kind": "number",
@@ -4856,7 +5392,7 @@
    "min": 55.5,
    "max": 55.5,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[warning].purpose": {
    "kind": "word",
@@ -4869,7 +5405,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[warning].share": {
    "kind": "number",
@@ -4881,7 +5417,7 @@
    "min": 0.163,
    "max": 0.163,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[warning].start_s": {
    "kind": "number",
@@ -4893,7 +5429,7 @@
    "min": 46.0,
    "max": 46.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[when_to_use].beat": {
    "kind": "word",
@@ -4906,7 +5442,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[when_to_use].devices": {
    "kind": "items",
@@ -4921,7 +5457,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[when_to_use].end_s": {
    "kind": "number",
@@ -4933,7 +5469,7 @@
    "min": 42.0,
    "max": 42.0,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[when_to_use].share": {
    "kind": "number",
@@ -4945,7 +5481,7 @@
    "min": 0.267,
    "max": 0.267,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[when_to_use].start_s": {
    "kind": "number",
@@ -4957,7 +5493,7 @@
    "min": 23.1,
    "max": 23.1,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[workflow contrast].beat": {
    "kind": "word",
@@ -4970,7 +5506,7 @@
      1
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[workflow contrast].devices": {
    "kind": "items",
@@ -4985,7 +5521,7 @@
      1.0
     ]
    ],
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[workflow contrast].end_s": {
    "kind": "number",
@@ -4997,7 +5533,7 @@
    "min": 43.8,
    "max": 43.8,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[workflow contrast].share": {
    "kind": "number",
@@ -5009,7 +5545,7 @@
    "min": 0.26,
    "max": 0.26,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "structure[workflow contrast].start_s": {
    "kind": "number",
@@ -5021,43 +5557,43 @@
    "min": 30.4,
    "max": 30.4,
    "cv": 0.0,
-   "coverage": 0.083
+   "coverage": 0.077
   },
   "transcript_basis.complete": {
    "kind": "bool",
-   "n": 12,
+   "n": 13,
    "mode": true,
-   "agreement": 1.0,
+   "agreement": 0.923,
    "coverage": 1.0
   },
   "transcript_basis.coverage_ratio": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 0.97,
-   "mean": 0.967,
-   "p25": 0.958,
+   "mean": 0.892,
+   "p25": 0.95,
    "p75": 0.98,
-   "min": 0.93,
+   "min": 0.0,
    "max": 0.99,
-   "cv": 0.017,
+   "cv": 0.289,
    "coverage": 1.0
   },
   "transcript_basis.engine": {
    "kind": "word",
-   "n": 12,
-   "mode": "whisper auto pass (english, roman)",
-   "agreement": 0.25,
+   "n": 13,
+   "mode": "auto",
+   "agreement": 0.308,
    "top": [
+    [
+     "auto",
+     4
+    ],
     [
      "whisper auto pass (english, roman)",
      3
     ],
     [
      "auto pass (english)",
-     3
-    ],
-    [
-     "auto",
      3
     ],
     [
@@ -5069,35 +5605,39 @@
   },
   "transcript_basis.phonetic_only": {
    "kind": "bool",
-   "n": 12,
+   "n": 13,
    "mode": false,
    "agreement": 1.0,
    "coverage": 1.0
   },
   "voice.address_terms": {
    "kind": "items",
-   "n": 8,
+   "n": 9,
    "top": [
     [
      "you",
-     1.0
+     0.889
     ],
     [
      "your",
-     0.375
+     0.333
     ],
     [
      "your site",
-     0.125
+     0.111
+    ],
+    [
+     "none",
+     0.111
     ]
    ],
-   "coverage": 0.667
+   "coverage": 0.692
   },
   "voice.energy": {
    "kind": "word",
-   "n": 9,
+   "n": 10,
    "mode": "high, very expressive",
-   "agreement": 0.333,
+   "agreement": 0.3,
    "top": [
     [
      "high, very expressive",
@@ -5116,17 +5656,17 @@
      1
     ],
     [
-     "high, very fast and even",
+     "high visual energy, no voice",
      1
     ]
    ],
-   "coverage": 0.75
+   "coverage": 0.769
   },
   "voice.formality": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "casual",
-   "agreement": 0.25,
+   "agreement": 0.231,
    "top": [
     [
      "casual",
@@ -5145,21 +5685,21 @@
      2
     ],
     [
-     "elevated, polished",
-     1
+     "neutral",
+     2
     ]
    ],
    "coverage": 1.0
   },
   "voice.humor": {
    "kind": "word",
-   "n": 9,
+   "n": 10,
    "mode": "none",
-   "agreement": 0.667,
+   "agreement": 0.7,
    "top": [
     [
      "none",
-     6
+     7
     ],
     [
      "light, shock swearing censored on screen",
@@ -5174,7 +5714,7 @@
      1
     ]
    ],
-   "coverage": 0.75
+   "coverage": 0.769
   },
   "voice.humour": {
    "kind": "word",
@@ -5191,7 +5731,7 @@
      1
     ]
    ],
-   "coverage": 0.25
+   "coverage": 0.231
   },
   "voice.person": {
    "kind": "word",
@@ -5220,13 +5760,13 @@
      1
     ]
    ],
-   "coverage": 1.0
+   "coverage": 0.923
   },
   "voice.register": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "conversational explainer, tool-news tone",
-   "agreement": 0.25,
+   "agreement": 0.231,
    "top": [
     [
      "conversational explainer, tool-news tone",
@@ -5253,47 +5793,47 @@
   },
   "voice.tone_tags": {
    "kind": "items",
-   "n": 12,
+   "n": 13,
    "top": [
     [
      "punchy",
-     0.667
+     0.692
     ],
     [
      "confident",
-     0.5
+     0.538
     ],
     [
      "fast",
-     0.5
+     0.462
     ],
     [
      "no filler pauses",
-     0.25
+     0.231
     ],
     [
      "dramatic",
-     0.167
+     0.154
     ],
     [
      "curated",
-     0.167
+     0.154
     ],
     [
      "minimal",
-     0.083
+     0.077
     ],
     [
      "modern",
-     0.083
+     0.077
     ],
     [
      "epic",
-     0.083
+     0.077
     ],
     [
      "glamorous",
-     0.083
+     0.077
     ]
    ],
    "coverage": 1.0
@@ -5301,15 +5841,12 @@
  },
  "signature": [
   "hook.open_loop",
+  "language.code_switching",
   "language.primary",
   "language.script",
-  "pacing.speech_ratio",
-  "pacing.words_per_min_overall",
-  "pacing.words_per_min_speaking",
   "structure[hook].beat",
   "structure[hook].start_s",
   "transcript_basis.complete",
-  "transcript_basis.coverage_ratio",
   "transcript_basis.phonetic_only",
   "voice.address_terms",
   "voice.humor",
@@ -5329,7 +5866,6 @@
   "hook.kind",
   "hook.pattern",
   "hook.time_to_value_s",
-  "language.code_switching",
   "language.english_term_domains",
   "lexicon.filler_words",
   "lexicon.jargon_terms",
@@ -5340,9 +5876,18 @@
   "pacing.questions_per_min",
   "pacing.sentence_words_mean",
   "pacing.sentence_words_p90",
+  "pacing.speech_ratio",
+  "pacing.words_per_min_overall",
+  "pacing.words_per_min_speaking",
   "retention.open_loops",
   "retention.pattern_interrupts",
   "retention.payoff_at_s",
+  "structure[3D proof].beat",
+  "structure[3D proof].devices",
+  "structure[3D proof].end_s",
+  "structure[3D proof].purpose",
+  "structure[3D proof].share",
+  "structure[3D proof].start_s",
   "structure[agitate].beat",
   "structure[agitate].devices",
   "structure[agitate].end_s",
@@ -5355,6 +5900,18 @@
   "structure[before/after + brand].purpose",
   "structure[before/after + brand].share",
   "structure[before/after + brand].start_s",
+  "structure[brand open].beat",
+  "structure[brand open].devices",
+  "structure[brand open].end_s",
+  "structure[brand open].purpose",
+  "structure[brand open].share",
+  "structure[brand open].start_s",
+  "structure[build proof and payoff].beat",
+  "structure[build proof and payoff].devices",
+  "structure[build proof and payoff].end_s",
+  "structure[build proof and payoff].purpose",
+  "structure[build proof and payoff].share",
+  "structure[build proof and payoff].start_s",
   "structure[cause].beat",
   "structure[cause].devices",
   "structure[cause].end_s",
@@ -5388,6 +5945,12 @@
   "structure[cta_challenge].end_s",
   "structure[cta_challenge].share",
   "structure[cta_challenge].start_s",
+  "structure[data proof].beat",
+  "structure[data proof].devices",
+  "structure[data proof].end_s",
+  "structure[data proof].purpose",
+  "structure[data proof].share",
+  "structure[data proof].start_s",
   "structure[demo / proof].beat",
   "structure[demo / proof].devices",
   "structure[demo / proof].end_s",
@@ -5516,6 +6079,12 @@
   "structure[objection].purpose",
   "structure[objection].share",
   "structure[objection].start_s",
+  "structure[one-word punches].beat",
+  "structure[one-word punches].devices",
+  "structure[one-word punches].end_s",
+  "structure[one-word punches].purpose",
+  "structure[one-word punches].share",
+  "structure[one-word punches].start_s",
   "structure[pain point].beat",
   "structure[pain point].devices",
   "structure[pain point].end_s",
@@ -5528,6 +6097,12 @@
   "structure[pain].purpose",
   "structure[pain].share",
   "structure[pain].start_s",
+  "structure[particle spectacle].beat",
+  "structure[particle spectacle].devices",
+  "structure[particle spectacle].end_s",
+  "structure[particle spectacle].purpose",
+  "structure[particle spectacle].share",
+  "structure[particle spectacle].start_s",
   "structure[pattern_interrupt_scenario].beat",
   "structure[pattern_interrupt_scenario].devices",
   "structure[pattern_interrupt_scenario].end_s",
@@ -5640,6 +6215,12 @@
   "structure[thesis].end_s",
   "structure[thesis].share",
   "structure[thesis].start_s",
+  "structure[title claim].beat",
+  "structure[title claim].devices",
+  "structure[title claim].end_s",
+  "structure[title claim].purpose",
+  "structure[title claim].share",
+  "structure[title claim].start_s",
   "structure[turn].beat",
   "structure[turn].devices",
   "structure[turn].end_s",
@@ -5673,6 +6254,7 @@
   "structure[workflow contrast].end_s",
   "structure[workflow contrast].share",
   "structure[workflow contrast].start_s",
+  "transcript_basis.coverage_ratio",
   "transcript_basis.engine",
   "voice.energy",
   "voice.formality",
@@ -5682,15 +6264,12 @@
  ],
  "targets": {
   "hook.open_loop": true,
+  "language.code_switching": "none",
   "language.primary": "english",
   "language.script": "roman",
-  "pacing.speech_ratio": 0.886,
-  "pacing.words_per_min_overall": 200.95,
-  "pacing.words_per_min_speaking": 232.45,
   "structure[hook].beat": "hook",
   "structure[hook].start_s": 0.0,
   "transcript_basis.complete": true,
-  "transcript_basis.coverage_ratio": 0.97,
   "transcript_basis.phonetic_only": false,
   "voice.address_terms": [
    "you"
@@ -5698,8 +6277,7 @@
   "voice.humor": "none",
   "voice.tone_tags": [
    "punchy",
-   "confident",
-   "fast"
+   "confident"
   ]
  },
  "provisional": false,

@@ -3,13 +3,14 @@
  "schema_version": 2,
  "dna_type": "sound",
  "creator": "sansser.ai",
- "n_videos": 12,
+ "n_videos": 13,
  "job_ids": [
   "reel-DeMkkKdsO2_",
   "reel-Df97YXth1Y6",
   "reel-DfBQ1AgOC1S",
   "reel-DfMDZKfNER2",
   "reel-DfTxHLopj5m",
+  "reel-DfWN_TpptL7",
   "reel-Dfi6kGuOemV",
   "reel-DfkbSDuB04k",
   "reel-DfuYIvZA4Cd",
@@ -21,27 +22,27 @@
  "fields": {
   "beat_sync.cuts_checked": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 1.0,
-   "mean": 2.583,
+   "mean": 3.077,
    "p25": 0.0,
    "p75": 3.0,
    "min": 0.0,
    "max": 10.0,
-   "cv": 1.345,
+   "cv": 1.219,
    "coverage": 1.0
   },
   "beat_sync.median_offset_s": {
    "kind": "number",
-   "n": 9,
-   "median": 0.144,
-   "mean": 0.151,
-   "p25": 0.123,
-   "p75": 0.206,
+   "n": 10,
+   "median": 0.15,
+   "mean": 0.155,
+   "p25": 0.127,
+   "p75": 0.204,
    "min": 0.0,
    "max": 0.261,
-   "cv": 0.485,
-   "coverage": 0.75
+   "cv": 0.456,
+   "coverage": 0.769
   },
   "beat_sync.notes": {
    "kind": "word",
@@ -66,51 +67,51 @@
      1
     ]
    ],
-   "coverage": 0.333
+   "coverage": 0.308
   },
   "beat_sync.share_within_80ms": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 0.0,
-   "mean": 0.017,
+   "mean": 0.041,
    "p25": 0.0,
    "p75": 0.0,
    "min": 0.0,
-   "max": 0.1,
-   "cv": 2.236,
+   "max": 0.333,
+   "cv": 2.234,
    "coverage": 1.0
   },
   "loudness.integrated_lufs": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": -17.2,
-   "mean": -17.167,
+   "mean": -17.223,
    "p25": -17.2,
    "p75": -17.1,
-   "min": -17.3,
+   "min": -17.9,
    "max": -17.0,
-   "cv": 0.004,
+   "cv": 0.012,
    "coverage": 1.0
   },
   "loudness.lra_lu": {
    "kind": "number",
-   "n": 12,
-   "median": 2.45,
-   "mean": 2.817,
-   "p25": 1.85,
+   "n": 13,
+   "median": 2.5,
+   "mean": 2.808,
+   "p25": 1.9,
    "p75": 2.7,
    "min": 1.2,
    "max": 9.3,
-   "cv": 0.714,
+   "cv": 0.688,
    "coverage": 1.0
   },
   "loudness.short_term_max_lufs": {
    "kind": "number",
-   "n": 12,
-   "median": -15.55,
-   "mean": -15.625,
-   "p25": -16.05,
-   "p75": -15.375,
+   "n": 13,
+   "median": -15.6,
+   "mean": -15.677,
+   "p25": -16.2,
+   "p75": -15.4,
    "min": -16.5,
    "max": -14.3,
    "cv": 0.039,
@@ -118,38 +119,38 @@
   },
   "loudness.standard": {
    "kind": "word",
-   "n": 6,
-   "mode": "itu-r bs.1770 / ebu r128 (pyloudnorm, mono mix)",
-   "agreement": 0.5,
+   "n": 7,
+   "mode": "ebu r128 measured",
+   "agreement": 0.571,
    "top": [
+    [
+     "ebu r128 measured",
+     4
+    ],
     [
      "itu-r bs.1770 / ebu r128 (pyloudnorm, mono mix)",
      3
-    ],
-    [
-     "ebu r128 measured",
-     3
     ]
    ],
-   "coverage": 0.5
+   "coverage": 0.538
   },
   "loudness.true_peak_dbtp": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": -0.6,
-   "mean": -0.825,
-   "p25": -1.05,
-   "p75": -0.475,
+   "mean": -0.823,
+   "p25": -0.9,
+   "p75": -0.5,
    "min": -1.9,
    "max": -0.1,
-   "cv": 0.642,
+   "cv": 0.618,
    "coverage": 1.0
   },
   "mix.ducking": {
    "kind": "word",
-   "n": 7,
+   "n": 8,
    "mode": "unknown (no envelope measured)",
-   "agreement": 0.286,
+   "agreement": 0.25,
    "top": [
     [
      "unknown (no envelope measured)",
@@ -164,25 +165,25 @@
      1
     ],
     [
-     "music constant and very low (-38.8 lufs stem vs voice -17.1)",
+     "none (no voice)",
      1
     ],
     [
-     "music constant and very low (-38.3 lufs stem vs voice -17.1)",
+     "music constant and very low (-38.8 lufs stem vs voice -17.1)",
      1
     ]
    ],
-   "coverage": 0.583
+   "coverage": 0.615
   },
   "mix.music_genre": {
    "kind": "word",
-   "n": 12,
+   "n": 13,
    "mode": "unknown",
-   "agreement": 0.75,
+   "agreement": 0.769,
    "top": [
     [
      "unknown",
-     9
+     10
     ],
     [
      "soft electronic or lo-fi bed (estimated, not identified)",
@@ -201,13 +202,17 @@
   },
   "mix.music_mood": {
    "kind": "word",
-   "n": 10,
+   "n": 11,
    "mode": "unknown (not identified; no listen pass in pack)",
-   "agreement": 0.3,
+   "agreement": 0.273,
    "top": [
     [
      "unknown (not identified; no listen pass in pack)",
      3
+    ],
+    [
+     "unknown: not identifiable from metrics",
+     2
     ],
     [
      "light, tech-explainer, neutral",
@@ -218,19 +223,15 @@
      1
     ],
     [
-     "unknown: not identifiable from metrics",
-     1
-    ],
-    [
      "energetic, modern tech countdown",
      1
     ]
    ],
-   "coverage": 0.833
+   "coverage": 0.846
   },
   "mix.sfx_density_per_min": {
    "kind": "number",
-   "n": 6,
+   "n": 7,
    "median": 0.0,
    "mean": 0.0,
    "p25": 0.0,
@@ -238,65 +239,65 @@
    "min": 0.0,
    "max": 0.0,
    "cv": 0.0,
-   "coverage": 0.5
+   "coverage": 0.538
   },
   "mix.sfx_types": {
    "kind": "items",
-   "n": 9,
+   "n": 10,
    "top": [
     [
      "confirm tick on the check marks (14.8 s), estimated",
-     0.111
+     0.1
     ],
     [
      "listening chime near 16.7 s, estimated",
-     0.111
+     0.1
     ],
     [
      "split-flap clacks on the departure board 0-1.5 s, estimated",
-     0.111
+     0.1
     ],
     [
      "typing ticks for caret and counter '1_', estimated",
-     0.111
+     0.1
     ],
     [
      "ui pops / swishes for chips and cards, estimated",
-     0.111
+     0.1
     ],
     [
      "whoosh on the whip at 17.15 s, estimated",
-     0.111
+     0.1
     ],
     [
      "soft whoosh / paper swish on element swaps and magazine reveal, estimated",
-     0.111
+     0.1
     ],
     [
      "typing / click pop on the selection box at 1.5 s, estimated",
-     0.111
+     0.1
     ],
     [
      "no clear sfx judged",
-     0.111
+     0.1
     ],
     [
      "unknown: no sfx evidence available from collages or metrics",
-     0.111
+     0.1
     ]
    ],
-   "coverage": 0.75
+   "coverage": 0.769
   },
   "mix.voice_minus_music_lu": {
    "kind": "number",
-   "n": 12,
-   "median": 16.3,
-   "mean": 17.717,
-   "p25": 10.525,
-   "p75": 22.65,
-   "min": 3.7,
+   "n": 13,
+   "median": 15.1,
+   "mean": 12.538,
+   "p25": 10.3,
+   "p75": 21.7,
+   "min": -49.6,
    "max": 37.0,
-   "cv": 0.542,
+   "cv": 1.609,
    "coverage": 1.0
   },
   "mix.voice_over_music": {
@@ -318,37 +319,37 @@
      1
     ]
    ],
-   "coverage": 0.5
+   "coverage": 0.462
   },
   "silence.longest_s": {
    "kind": "number",
-   "n": 12,
-   "median": 0.63,
-   "mean": 0.593,
+   "n": 13,
+   "median": 0.58,
+   "mean": 0.547,
    "p25": 0.0,
-   "p75": 1.002,
+   "p75": 0.99,
    "min": 0.0,
    "max": 1.37,
-   "cv": 0.812,
+   "cv": 0.893,
    "coverage": 1.0
   },
   "silence.share": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 0.017,
-   "mean": 0.018,
+   "mean": 0.017,
    "p25": 0.0,
    "p75": 0.03,
    "min": 0.0,
    "max": 0.058,
-   "cv": 0.943,
+   "cv": 1.023,
    "coverage": 1.0
   },
   "silence.usage": {
    "kind": "word",
-   "n": 9,
+   "n": 10,
    "mode": "none inside the speech; only trailing tail",
-   "agreement": 0.222,
+   "agreement": 0.2,
    "top": [
     [
      "none inside the speech; only trailing tail",
@@ -367,22 +368,35 @@
      1
     ],
     [
-     "no silence at all",
+     "none, audio runs the whole clip",
      1
     ]
    ],
-   "coverage": 0.75
+   "coverage": 0.769
+  },
+  "speech.delivery": {
+   "kind": "word",
+   "n": 1,
+   "mode": "no voiceover",
+   "agreement": 1.0,
+   "top": [
+    [
+     "no voiceover",
+     1
+    ]
+   ],
+   "coverage": 0.077
   },
   "speech.speech_ratio": {
    "kind": "number",
-   "n": 12,
-   "median": 0.886,
-   "mean": 0.853,
-   "p25": 0.824,
-   "p75": 0.921,
-   "min": 0.658,
+   "n": 13,
+   "median": 0.873,
+   "mean": 0.787,
+   "p25": 0.782,
+   "p75": 0.919,
+   "min": 0.0,
    "max": 0.938,
-   "cv": 0.108,
+   "cv": 0.31,
    "coverage": 1.0
   },
   "speech.voice_character": {
@@ -400,18 +414,18 @@
      1
     ]
    ],
-   "coverage": 0.167
+   "coverage": 0.154
   },
   "tempo.bpm": {
    "kind": "number",
-   "n": 12,
+   "n": 13,
    "median": 117.5,
-   "mean": 114.392,
-   "p25": 103.85,
+   "mean": 112.446,
+   "p25": 92.3,
    "p75": 123.0,
-   "min": 92.3,
+   "min": 89.1,
    "max": 143.6,
-   "cv": 0.131,
+   "cv": 0.141,
    "coverage": 1.0
   },
   "tempo.feel": {
@@ -429,14 +443,13 @@
      1
     ]
    ],
-   "coverage": 0.167
+   "coverage": 0.154
   }
  },
  "signature": [
   "loudness.integrated_lufs",
   "loudness.short_term_max_lufs",
   "mix.music_genre",
-  "speech.speech_ratio",
   "tempo.bpm"
  ],
  "situational": [
@@ -456,14 +469,15 @@
   "silence.longest_s",
   "silence.share",
   "silence.usage",
+  "speech.delivery",
+  "speech.speech_ratio",
   "speech.voice_character",
   "tempo.feel"
  ],
  "targets": {
   "loudness.integrated_lufs": -17.2,
-  "loudness.short_term_max_lufs": -15.55,
+  "loudness.short_term_max_lufs": -15.6,
   "mix.music_genre": "unknown",
-  "speech.speech_ratio": 0.886,
   "tempo.bpm": 117.5
  },
  "provisional": false,

@@ -1,4 +1,4 @@
-# sansser.ai (Sansser) - style breakdown (12 reels, provisional until reel 13)
+# sansser.ai (Sansser) - style breakdown (13 reels)
 Clone rule: for screen-in-scene reels only the inner edited video is cloned, never monitor/room/desk.
 Numbers = corpus targets (measured). Look/fonts/sfx = judged from collages. Music + sfx names: not identified yet.
 
@@ -24,7 +24,7 @@ Numbers = corpus targets (measured). Look/fonts/sfx = judged from collages. Musi
 ## 4. Sound
 - Loudness -17.2 LUFS, short-term max about -15.5, true peak about -0.5 dBTP. Voice dominant; music 15-37 LU below voice (nearly inaudible) in most reels, audible in story reels (3.7 LU).
 - Tempo about 92-143 bpm (target 117.5). Music track NOT identified by fingerprint (no match: likely a licensed/library instrumental); mood = quiet modern electronic bed, mixed far below the voice.
-- Sound events heard (CLAP listen, 7 reels, score >= 0.4): glitch/digital stutter most common (51), splat/pop hits on card or item landing (15), bass drop at section starts (11), tick on counters (4), swoosh on whips (2), tape rewind (1). Rule: one soft digital glitch or splat on each new card/graphic, bass drop on the hook and big reveals, tick while numbers count, swoosh on whip cuts. Keep sfx short and under the voice.
+- Sound events heard (CLAP listen, 7 reels; the 6 screen reels were not listened, score >= 0.4): glitch/digital stutter most common (51), splat/pop hits on card or item landing (15), bass drop at section starts (11), tick on counters (4), swoosh on whips (2), tape rewind (1). Rule: one soft digital glitch or splat on each new card/graphic, bass drop on the hook and big reveals, tick while numbers count, swoosh on whip cuts. Keep sfx short and under the voice.
 - Frame note: DgLclCABIa3's bottom "Comment CLAUDE For The Full Guide" banner is part of the creator's frame (keep it).
 
 ## 5. Per-reel recipes (one line each, full DNA in dna/<reel>__<type>__v1.json)
@@ -35,7 +35,7 @@ Numbers = corpus targets (measured). Look/fonts/sfx = judged from collages. Musi
 - DfzNJuKB5PA 39 s: free Claude SEO skill, mock-ups (search box, phone, VS Code), $2,500 invoice card.
 - Dfi6kGuOemV 71 s: Claude Fable 5.2 explainer, four tabbed chapters, dissolves, no captions.
 - DfMDZKfNER2 37 s: $1 website, kinetic headline, browser mock-up, green gradient key words, "Comment SKILL".
-- Screen reels (inner video only): DgLclCABIa3 (3D stone busts, Potter story), DgNYH7ThrWb (dark green to cream, typed search captions), Df97YXth1Y6 (luxury editorial B&W + red), DeMkkKdsO2_ (Fairwind travel app promo), DfTxHLopj5m (orange-on-black Claude Code HUD, whip cuts). Pending: DfWN_TpptL7.
+- Screen reels (inner video only): DgLclCABIa3 (3D stone busts, Potter story), DgNYH7ThrWb (dark green to cream, typed search captions), Df97YXth1Y6 (luxury editorial B&W + red), DeMkkKdsO2_ (Fairwind travel app promo), DfTxHLopj5m (orange-on-black Claude Code HUD, whip cuts). DfWN_TpptL7 13.7 s: silent landscape Claude Code "Motion Lab" promo, 10 scenes, 39.6 cuts/min, music-only 89 bpm, no voice, HUD frame with orange accent.
 
 ## 6. How to use
 Give a topic -> pick the closest reel type above, copy brand frame + voice targets + hook/CTA pattern, build with Remotion (own components from library, no generic templates), voice at ~230 wpm, music low. Always run gate-check before "ready".
