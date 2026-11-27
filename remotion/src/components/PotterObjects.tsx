@@ -164,10 +164,13 @@ const Scalpel: React.FC<{t: number; m: Mats}> = ({m}) => {
     return new THREE.ExtrudeGeometry(s, {depth: 0.03, bevelEnabled: true, bevelSize: 0.012, bevelThickness: 0.012, bevelSegments: 3});
   }, []);
   return (
-    <group rotation={[0, 0, 0.45]} position={[-0.55, -0.3, 0]}>
+    <group position={[0, 0, 0]}>
+     <mesh position={[0, -0.78, 0]} material={m.marble}><boxGeometry args={[2.7, 0.14, 1.0]} /></mesh>
+     <group position={[0.2, -0.58, 0]}>
       <mesh rotation={[0, 0, Math.PI / 2]} position={[-0.45, 0, 0]} material={m.marble}><cylinderGeometry args={[0.1, 0.13, 1.7, 40]} /></mesh>
       <mesh rotation={[0, 0, Math.PI / 2]} position={[0.45, 0, 0]} material={m.satin}><cylinderGeometry args={[0.07, 0.1, 0.22, 40]} /></mesh>
       <mesh geometry={blade} position={[0.5, 0, -0.015]} material={m.marble} />
+     </group>
     </group>
   );
 };
@@ -223,19 +226,30 @@ const Bars: React.FC<{t: number; m: Mats}> = ({t, m}) => {
 };
 
 const Gavel: React.FC<{t: number; m: Mats}> = ({t, m}) => {
-  const cyc = (t % 1.2) / 1.2;
-  const swing = cyc < 0.5 ? ease(cyc / 0.5) * -0.9 : -0.9 * (1 - Math.pow((cyc - 0.5) / 0.5, 2.2)) - 0.0; // lifts, then drops hard
-  const hit = cyc > 0.9 ? 0.04 : 0;
+  // hinge at the hand (PX,PY); handle length L; the head hits the pad top at angle A_HIT: PY + L*sin(A_HIT) - R_HEAD = PAD_TOP
+  const PX = -1.29, PY = 1.355, L = 1.7, R_HEAD = 0.3, PAD_TOP = 0.24, A_HIT = -0.5, A_UP = 0.2;
+  const cyc = (t % 1.3) / 1.3;
+  let a: number;
+  if (cyc < 0.55) a = A_UP + (A_HIT - A_UP) * 0 + 0.0 + (ease(cyc / 0.55) * 0.0);   // hold up while lifting from rest
+  else a = A_UP;
+  if (cyc < 0.5) a = A_HIT + (A_UP - A_HIT) * ease(cyc / 0.5);                         // lift
+  else if (cyc < 0.62) a = A_UP + (A_HIT - A_UP) * Math.pow((cyc - 0.5) / 0.12, 2.2);   // fast strike
+  else if (cyc < 0.72) a = A_HIT + 0.16 * Math.sin(((cyc - 0.62) / 0.1) * Math.PI);      // small bounce (always above the pad)
+  else a = A_HIT;
+  a = Math.max(A_HIT, a);                                                                // never below the contact angle
+  const bottom = PY + L * Math.sin(a) - R_HEAD;
+  const guard = Math.max(0, PAD_TOP - bottom);                                           // belt and braces: lift if anything ever dips
   return (
-    <group position={[0, -0.55, 0]}>
+    <group position={[0, -0.6, 0]}>
       <mesh position={[0.2, 0.06, 0]} material={m.marble}><cylinderGeometry args={[0.95, 1.05, 0.12, 64]} /></mesh>
       <mesh position={[0.2, 0.18, 0]} material={m.satin}><cylinderGeometry args={[0.55, 0.6, 0.12, 48]} /></mesh>
-      <group position={[-0.3, 0.9 + hit, 0]} rotation={[0, 0, swing + 0.15]}>
-        <mesh position={[0.65, 0, 0]} rotation={[0, 0, Math.PI / 2]} material={m.marble}><cylinderGeometry args={[0.07, 0.09, 1.5, 32]} /></mesh>
-        <mesh position={[1.4, 0, 0]} material={m.marble}><cylinderGeometry args={[0.3, 0.3, 0.9, 48]} /></mesh>
-        <mesh position={[1.4, 0.0, 0]} material={m.satin}><cylinderGeometry args={[0.315, 0.315, 0.1, 48]} /></mesh>
-        <mesh position={[1.4, 0.38, 0]} material={m.satin}><cylinderGeometry args={[0.315, 0.315, 0.1, 48]} /></mesh>
-        <mesh position={[1.4, -0.38, 0]} material={m.satin}><cylinderGeometry args={[0.315, 0.315, 0.1, 48]} /></mesh>
+      <group position={[PX, PY + guard, 0]} rotation={[0, 0, a]}>
+        <mesh position={[L / 2, 0, 0]} rotation={[0, 0, Math.PI / 2]} material={m.marble}><cylinderGeometry args={[0.07, 0.09, L, 32]} /></mesh>
+        <group position={[L, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <mesh material={m.marble}><cylinderGeometry args={[R_HEAD, R_HEAD, 0.9, 48]} /></mesh>
+          <mesh position={[0, 0.4, 0]} material={m.satin}><cylinderGeometry args={[R_HEAD + 0.015, R_HEAD + 0.015, 0.1, 48]} /></mesh>
+          <mesh position={[0, -0.4, 0]} material={m.satin}><cylinderGeometry args={[R_HEAD + 0.015, R_HEAD + 0.015, 0.1, 48]} /></mesh>
+        </group>
       </group>
     </group>
   );
@@ -252,9 +266,9 @@ const Hourglass: React.FC<{t: number; m: Mats}> = ({t, m}) => {
       {[0, 1, 2].map((i) => (
         <mesh key={i} position={[Math.cos(i * 2.094 + 0.5) * 0.7, 0, Math.sin(i * 2.094 + 0.5) * 0.7]} material={m.marble}><cylinderGeometry args={[0.035, 0.035, 1.9, 16]} /></mesh>
       ))}
-      <group position={[0, 0.04, 0]}><mesh geometry={cone} material={m.glass} scale={[1, 1, 1]} /></group>
-      <group position={[0, -0.04, 0]} rotation={[Math.PI, 0, 0]}><mesh geometry={cone} material={m.glass} /></group>
-      <mesh position={[0, 0.1 + topH * 0.35, 0]} scale={[0.55 * (0.4 + 0.6 * (1 - prog)), topH * 0.55, 0.55 * (0.4 + 0.6 * (1 - prog))]} material={m.blush}><sphereGeometry args={[1, 32, 20, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} /></mesh>
+      <group position={[0, 0.92, 0]} rotation={[Math.PI, 0, 0]}><mesh geometry={cone} material={m.glass} /></group>
+      <group position={[0, -0.92, 0]}><mesh geometry={cone} material={m.glass} /></group>
+      <mesh position={[0, 0.1 + topH * 0.35, 0]} scale={[0.3 * (0.5 + 0.5 * (1 - prog)), topH * 0.55, 0.3 * (0.5 + 0.5 * (1 - prog))]} material={m.blush}><sphereGeometry args={[1, 32, 20, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2]} /></mesh>
       <mesh position={[0, -0.9 + botH * 0.35, 0]} scale={[0.5, botH * 0.7, 0.5]} material={m.blush}><sphereGeometry args={[1, 32, 20, 0, Math.PI * 2, 0, Math.PI / 2]} /></mesh>
       {prog < 1 ? <mesh position={[0, -0.4, 0]} material={m.blush}><cylinderGeometry args={[0.012, 0.012, 1.0, 8]} /></mesh> : null}
     </group>

@@ -77,7 +77,7 @@ O = [  # (object, token_from, token_to, box, decor)
     ("bed", 27, 32, STD, "ring"),
     ("soap", 32, 42, STD, "brackets"),
     ("bars", 42, 50, STD, "dots"),
-    ("gavel", 50, 57, STD, "frame"),
+    ("gavel", 50, 57, STD, "brackets"),
     ("hourglass", 57, 68, STD, "ring"),
     ("globe", 68, 76, STD, "brackets"),
     ("capsule", 76, 85, STD, "dots"),
