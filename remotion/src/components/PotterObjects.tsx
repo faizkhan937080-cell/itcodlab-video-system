@@ -125,7 +125,7 @@ const Five: React.FC<{t: number; m: Mats}> = ({t, m}) => {
         const mix = last ? ease((t - 1.1) / 0.5) : 0;
         const mt = mix > 0.5 ? m.satin : m.marble;
         return (
-          <group key={i} position={[(i - 2) * 0.5, 0, 0]} scale={s} rotation={[0, Math.sin(t * 1.3 + i) * 0.25, 0]}>
+          <group key={i} position={[(i - 2) * 0.46, 0, 0]} scale={[s, s * 1.3, s]} rotation={[0, Math.sin(t * 1.3 + i) * 0.25, 0]}>
             <mesh geometry={body} material={mt} />
             <mesh position={[0, 0.88, 0]} material={mt}><sphereGeometry args={[0.2, 40, 28]} /></mesh>
           </group>
@@ -241,7 +241,7 @@ const Gavel: React.FC<{t: number; m: Mats}> = ({t, m}) => {
   a = Math.max(A_HIT, a);
   const guard = Math.max(0, PAD_TOP - low(PY, a));
   return (
-    <group position={[0, -0.75, 0]} scale={0.8}>
+    <group position={[0, -0.75, 0]}>
       <mesh position={[0.2, 0.06, 0]} material={m.marble}><cylinderGeometry args={[0.95, 1.05, 0.12, 64]} /></mesh>
       <mesh position={[0.2, 0.18, 0]} material={m.satin}><cylinderGeometry args={[0.55, 0.6, 0.12, 48]} /></mesh>
       <group position={[PX, PY + guard, 0]} rotation={[0, 0, a]}>
@@ -343,7 +343,7 @@ export const POSE: Record<ObjName, {yaw: number; sway: number; spin: number; til
   scalpel: {yaw: 0.0, sway: 0.45, spin: 0, tilt: 0.5, scale: 1.0},
   soap: {yaw: -0.3, sway: 0.4, spin: 0, tilt: 0.3, scale: 1.0},
   bars: {yaw: -0.35, sway: 0.25, spin: 0, tilt: 0.22, scale: 1.0},
-  gavel: {yaw: -0.4, sway: 0.2, spin: 0, tilt: 0.28, scale: 1.0},
+  gavel: {yaw: -0.4, sway: 0.2, spin: 0, tilt: 0.28, scale: 0.8},
   hourglass: {yaw: 0, sway: 0, spin: 0.7, tilt: 0.1, scale: 1.0},
   globe: {yaw: 0, sway: 0.15, spin: 0, tilt: 0.12, scale: 1.0},
   capsule: {yaw: 0, sway: 0, spin: 0.8, tilt: 0.1, scale: 1.0},
