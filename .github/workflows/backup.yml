@@ -17,7 +17,7 @@ jobs:
       ITCOD_RCLONE_REMOTE: 'gdrive,root_folder_id=1l9hOcWgtrDiYmqLMeLw9I8HjEW_BAJ1c:'
       RCLONE_TOKEN: ${{ secrets.RCLONE_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Bundle and upload
