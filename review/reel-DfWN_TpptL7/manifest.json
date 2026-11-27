@@ -1,0 +1,15 @@
+{
+  "job_id": "reel-DfWN_TpptL7",
+  "mode": "both",
+  "created": "2026-11-27T00:15:27Z",
+  "files": [
+    "collage_01.jpg",
+    "collage_02.jpg",
+    "collage_03.jpg",
+    "metrics_summary.json"
+  ],
+  "collage_count": 3,
+  "collage_max": 10,
+  "summary_bytes": 8654,
+  "collage_bytes": 665754
+}
