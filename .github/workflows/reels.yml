@@ -166,11 +166,16 @@ jobs:
         if: steps.chk.outputs.ready == 'true' && inputs.action == 'creator'
         timeout-minutes: 10
         run: ./run creator-upload sansser.ai
+      - name: Listen to the reel (music + sound events)
+        if: steps.chk.outputs.ready == 'true' && inputs.action == 'listen'
+        timeout-minutes: 30
+        run: |
+          J="${{ matrix.job }}"; ./run listen-reel "sansser.ai/${J#reel-}" | tail -40
       - name: Republish pack to review branch
         if: steps.chk.outputs.ready == 'true' && inputs.action == 'republish'
         timeout-minutes: 15
         run: ./run republish ${{ matrix.job }}
       - name: Work on this one reel
-        if: steps.chk.outputs.ready == 'true' && inputs.action != 'republish' && inputs.action != 'candidates' && inputs.action != 'creator'
+        if: steps.chk.outputs.ready == 'true' && inputs.action != 'republish' && inputs.action != 'candidates' && inputs.action != 'creator' && inputs.action != 'listen'
         timeout-minutes: 120
         run: ./run worker --until-idle --no-sheet --grace 120 --max-minutes 110
