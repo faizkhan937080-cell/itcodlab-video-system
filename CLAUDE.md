@@ -28,6 +28,7 @@ Do NOT guess. Read only the files your task needs. Keep every rule, lesson and m
    - voice (realistic, cloning, consent) -> `20-voice.md`
    - after EVERY generation (evaluator), footage engines LTX/MiniMax/Veo -> `21-evaluator.md`
    - copyright / licence alerts, YouTube + Reels policies, memes, trending audio -> `18-platform-copyright.md`
+   - 3D motion graphics objects (contact/pivot, size, clipping, movement), `./run motion-check` before any render -> `25-motion-qa.md`
    - Director (whole video run by `.claude/agents/director.md`), beats table, gates, motion graphics (`./run catalog`), Remotion skills -> `24-director.md`
 3. Every step that saves, adds or renders needs approval: `rulebooks/04-approvals.md`.
 3a. After writing any job, approval or candidate: `./run wake` (starts the no-PC worker). Hosting: `rulebooks/11-hosting.md`.

@@ -1,0 +1,651 @@
+{
+ "_doc": "Kinematic mirror of PotterObjects.tsx. Update with the TSX, then ./run motion-check --stamp.",
+ "objects": {
+  "bed": {
+   "pose": {
+    "yaw": -0.6,
+    "sway": 0.35,
+    "spin": 0,
+    "tilt": 0.38
+   },
+   "scale": 1.0,
+   "root": [
+    0,
+    -0.35,
+    0
+   ],
+   "parts": [
+    {
+     "id": "frame",
+     "shape": "box",
+     "dims": [
+      2.1,
+      0.14,
+      1.15
+     ],
+     "pos": [
+      0,
+      0.3,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "mattress",
+     "shape": "box",
+     "dims": [
+      1.95,
+      0.26,
+      1.0
+     ],
+     "pos": [
+      0,
+      0.5,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "head",
+     "shape": "box",
+     "dims": [
+      0.1,
+      0.85,
+      1.15
+     ],
+     "pos": [
+      -1.02,
+      0.7,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "legs",
+     "shape": "box",
+     "dims": [
+      2.0,
+      0.3,
+      1.1
+     ],
+     "pos": [
+      0,
+      0.12,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {},
+   "approx": true,
+   "tsx_sha": "b0430c7fab58"
+  },
+  "five": {
+   "pose": {
+    "yaw": 0,
+    "sway": 0,
+    "spin": 0,
+    "tilt": 0.12
+   },
+   "scale": 1.0,
+   "root": [
+    0,
+    -0.35,
+    0
+   ],
+   "parts": [
+    {
+     "id": "row",
+     "shape": "box",
+     "dims": [
+      3.0,
+      0.95,
+      0.55
+     ],
+     "pos": [
+      0,
+      0.45,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {
+    "last_grow": [
+     "back((t-0.1-4*0.14)/0.35)",
+     false
+    ]
+   },
+   "approx": true,
+   "tsx_sha": "648256e47305"
+  },
+  "bust": {
+   "pose": {
+    "yaw": -0.1,
+    "sway": 0.4,
+    "spin": 0,
+    "tilt": 0.04
+   },
+   "scale": 1.0,
+   "root": [
+    0,
+    -0.05,
+    0
+   ],
+   "parts": [
+    {
+     "id": "shoulders",
+     "shape": "box",
+     "dims": [
+      2.2,
+      1.0,
+      1.0
+     ],
+     "pos": [
+      0,
+      -0.6,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "head",
+     "shape": "sphere",
+     "dims": [
+      0.8,
+      1.1,
+      0.9
+     ],
+     "pos": [
+      0,
+      0.62,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "cap",
+     "shape": "sphere",
+     "dims": [
+      0.8,
+      0.8,
+      0.9
+     ],
+     "pos": [
+      0,
+      0.8,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {},
+   "approx": true,
+   "tsx_sha": "cf12a02bf3c9"
+  },
+  "scalpel": {
+   "pose": {
+    "yaw": 0,
+    "sway": 0.5,
+    "spin": 0,
+    "tilt": 0.2
+   },
+   "scale": 1.0,
+   "root": [
+    -0.55,
+    -0.3,
+    0
+   ],
+   "parts": [
+    {
+     "id": "handle",
+     "shape": "box",
+     "dims": [
+      1.9,
+      0.26,
+      0.26
+     ],
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "role": "deco",
+     "rotz": 0.45
+    },
+    {
+     "id": "blade",
+     "shape": "box",
+     "dims": [
+      1.3,
+      0.3,
+      0.1
+     ],
+     "pos": [
+      1.1,
+      0.5,
+      0
+     ],
+     "role": "deco",
+     "rotz": 0.45
+    }
+   ],
+   "signals": {},
+   "approx": true,
+   "tsx_sha": "19f221fb7f1e"
+  },
+  "soap": {
+   "pose": {
+    "yaw": -0.3,
+    "sway": 0.4,
+    "spin": 0,
+    "tilt": 0.3
+   },
+   "scale": 1.0,
+   "root": [
+    0,
+    -0.7,
+    0
+   ],
+   "parts": [
+    {
+     "id": "bar",
+     "shape": "box",
+     "dims": [
+      1.45,
+      0.5,
+      0.9
+     ],
+     "pos": [
+      0,
+      0.25,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "bubbles",
+     "shape": "sphere",
+     "dims": [
+      1.9,
+      1.9,
+      0.7
+     ],
+     "pos": [
+      0,
+      1.4,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {
+    "bubble_y": [
+     "((t+0.7)%2.5)/2.5*1.6",
+     true
+    ]
+   },
+   "approx": true,
+   "tsx_sha": "6c6710121f34"
+  },
+  "bars": {
+   "pose": {
+    "yaw": -0.35,
+    "sway": 0.25,
+    "spin": 0,
+    "tilt": 0.22
+   },
+   "scale": 1.0,
+   "root": [
+    0,
+    -0.95,
+    0
+   ],
+   "parts": [
+    {
+     "id": "base",
+     "shape": "box",
+     "dims": [
+      2.2,
+      0.16,
+      1.0
+     ],
+     "pos": [
+      0,
+      0.08,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "bar1",
+     "shape": "box",
+     "dims": [
+      0.62,
+      2.0,
+      0.62
+     ],
+     "pos": [
+      -0.5,
+      1.16,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "bar2",
+     "shape": "box",
+     "dims": [
+      0.62,
+      0.22,
+      0.62
+     ],
+     "pos": [
+      0.55,
+      0.27,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {
+    "bar_h": [
+     "2.0-(2.0-0.22)*ease((t-0.7)/1.0)",
+     false
+    ]
+   },
+   "approx": true,
+   "tsx_sha": "e82f49159151"
+  },
+  "hourglass": {
+   "pose": {
+    "yaw": 0,
+    "sway": 0,
+    "spin": 0.7,
+    "tilt": 0.1
+   },
+   "scale": 0.95,
+   "root": [
+    0,
+    -0.1,
+    0
+   ],
+   "parts": [
+    {
+     "id": "body",
+     "shape": "box",
+     "dims": [
+      1.6,
+      2.1,
+      1.6
+     ],
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {
+    "sand": [
+     "min(1,max(0,(t-0.4)/2.2))",
+     false
+    ]
+   },
+   "approx": true,
+   "tsx_sha": "9631fbf71abe"
+  },
+  "globe": {
+   "pose": {
+    "yaw": 0,
+    "sway": 0.15,
+    "spin": 0,
+    "tilt": 0.12
+   },
+   "scale": 0.92,
+   "root": [
+    0,
+    0,
+    0
+   ],
+   "parts": [
+    {
+     "id": "ball",
+     "shape": "sphere",
+     "dims": [
+      1.64,
+      1.64,
+      1.64
+     ],
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "role": "deco"
+    },
+    {
+     "id": "ring",
+     "shape": "box",
+     "dims": [
+      2.1,
+      0.07,
+      2.1
+     ],
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "role": "deco",
+     "rotz": 0.41
+    },
+    {
+     "id": "stand",
+     "shape": "box",
+     "dims": [
+      1.2,
+      0.4,
+      1.2
+     ],
+     "pos": [
+      0,
+      -1.0,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {
+    "spin": [
+     "t*0.9",
+     true
+    ]
+   },
+   "approx": true,
+   "tsx_sha": "58c2871f6183"
+  },
+  "capsule": {
+   "pose": {
+    "yaw": 0,
+    "sway": 0,
+    "spin": 0.8,
+    "tilt": 0.1
+   },
+   "scale": 1.0,
+   "root": [
+    0,
+    0,
+    0
+   ],
+   "parts": [
+    {
+     "id": "shell",
+     "shape": "box",
+     "dims": [
+      0.84,
+      2.1,
+      0.84
+     ],
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "role": "deco",
+     "rotz": 0.6
+    }
+   ],
+   "signals": {
+    "gap": [
+     "0.05+0.55*max(0,sin(max(0,t-0.5)*1.6))**2",
+     true
+    ]
+   },
+   "approx": true,
+   "tsx_sha": "ebafda08c23b"
+  },
+  "heart": {
+   "pose": {
+    "yaw": 0,
+    "sway": 0.55,
+    "spin": 0,
+    "tilt": 0
+   },
+   "scale": 0.95,
+   "root": [
+    0,
+    0,
+    0
+   ],
+   "parts": [
+    {
+     "id": "heart",
+     "shape": "sphere",
+     "dims": [
+      2.2,
+      2.0,
+      0.8
+     ],
+     "pos": [
+      0,
+      0,
+      0
+     ],
+     "role": "deco"
+    }
+   ],
+   "signals": {
+    "beat": [
+     "1+0.09*exp(-pow(((t*1.25)%1-0.08)*9,2))",
+     true
+    ]
+   },
+   "approx": true,
+   "tsx_sha": "a7fe093d1f59"
+  },
+  "gavel": {
+   "pose": {
+    "yaw": -0.4,
+    "sway": 0.2,
+    "spin": 0,
+    "tilt": 0.28
+   },
+   "scale": 1.0,
+   "root": [
+    0,
+    -0.6,
+    0
+   ],
+   "pivot": {
+    "pos": [
+     -1.29,
+     1.355,
+     0
+    ],
+    "vars": {
+     "c": "(t%1.3)/1.3",
+     "a0": "-0.5+0.7*ease(c/0.5) if c<0.5 else (0.2-0.7*((c-0.5)/0.12)**2.2 if c<0.62 else (-0.5+0.16*sin((c-0.62)/0.1*pi) if c<0.72 else -0.5))",
+     "a": "max(-0.5,a0)",
+     "guard": "max(0,0.24-(1.355+1.7*sin(a)-0.3))"
+    },
+    "rot": "a",
+    "dy": "guard"
+   },
+   "parts": [
+    {
+     "id": "plate",
+     "shape": "cyl",
+     "dims": [
+      2.0,
+      0.12,
+      2.0
+     ],
+     "pos": [
+      0.2,
+      0.06,
+      0
+     ],
+     "role": "base"
+    },
+    {
+     "id": "pad",
+     "shape": "cyl",
+     "dims": [
+      1.2,
+      0.12,
+      1.2
+     ],
+     "pos": [
+      0.2,
+      0.18,
+      0
+     ],
+     "role": "base"
+    },
+    {
+     "id": "handle",
+     "shape": "box",
+     "dims": [
+      1.7,
+      0.16,
+      0.16
+     ],
+     "pos": [
+      0.85,
+      0,
+      0
+     ],
+     "role": "mover",
+     "pivot": true
+    },
+    {
+     "id": "head",
+     "shape": "round_xy",
+     "dims": [
+      0.6,
+      0.6,
+      0.9
+     ],
+     "pos": [
+      1.7,
+      0,
+      0
+     ],
+     "role": "striker",
+     "pivot": true
+    }
+   ],
+   "signals": {
+    "swing": [
+     "a",
+     true
+    ]
+   },
+   "contact": true,
+   "approx": false,
+   "tsx_sha": "43e56c4d0300"
+  }
+ }
+}

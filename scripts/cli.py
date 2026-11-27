@@ -230,6 +230,18 @@ def cmd_tools(a):
     return 0
 
 
+def cmd_motion_check(a):
+    """Motion-graphics QA gate (contact/penetration, frame, fill, movement, captions). --stamp = spec verified vs TSX."""
+    from . import motion_check
+    if a.stamp:
+        motion_check.stamp()
+        print("spec stamped with the current PotterObjects.tsx hashes")
+        return 0
+    ok, m = motion_check.render(motion_check.check_plan(json.loads(Path(a.plan).read_text(encoding="utf-8"))))
+    print(m)
+    return 0 if ok else 1
+
+
 def cmd_gate(a):
     """Repeat-proofing checks. gate-check <kind> ... | looked | waiting | approved"""
     from . import guards as g
@@ -242,6 +254,9 @@ def cmd_gate(a):
         ok, m = g.motion_honest(json.loads(Path(a.file).read_text(encoding="utf-8")), a.faiz_ok)
     elif k == "looked":
         ok, m = (g.record_look(a.file, a.score, a.note) and True, f"recorded look for {a.file}: {a.score}/10") if a.score is not None else g.looked(a.file)
+    elif k in ("motion-geom", "motion-check"):
+        from . import motion_check
+        ok, m = motion_check.render(motion_check.check_plan(json.loads(Path(a.file).read_text(encoding="utf-8"))))
     elif k == "shots":
         from . import shotbook
         d = json.loads(Path(a.file).read_text(encoding="utf-8"))
@@ -1499,7 +1514,7 @@ def build_parser():
     s.add_argument("--out")
     s.set_defaults(fn=cmd_look_ok)
 
-    s = sub.add_parser("gate-check", help="repeat-proofing: voice | prompts | motion | looked | waiting | approved")
+    s = sub.add_parser("gate-check", help="repeat-proofing: voice | prompts | motion | motion-geom | looked | waiting | approved")
     s.add_argument("kind")
     s.add_argument("file", help="file or key")
     s.add_argument("--seconds", type=float, default=0)
@@ -1507,6 +1522,11 @@ def build_parser():
     s.add_argument("--note", default="")
     s.add_argument("--faiz-ok", action="store_true")
     s.set_defaults(fn=cmd_gate)
+
+    s = sub.add_parser("motion-check", help="3D motion QA gate on a plan (no render): contact, frame, fill, movement, captions")
+    s.add_argument("plan", nargs="?", default="")
+    s.add_argument("--stamp", action="store_true")
+    s.set_defaults(fn=cmd_motion_check)
 
     s = sub.add_parser("tools", help="inventory of every tool/model/runner we own (read before building)")
     s.set_defaults(fn=cmd_tools)

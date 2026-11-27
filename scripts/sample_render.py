@@ -75,6 +75,8 @@ def _prepared(spec, storage, log=print):
     from .common import stage
     plan = json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8"))
     sec = float(spec.get("seconds", 6.5))
+    from . import motion_check
+    motion_check.gate(plan, log)    # BLOCK = the render never starts (gate first)
     with stage("assets"):
         ensure_music(plan, storage, log)
         ensure_sfx(plan, storage, log)
@@ -169,11 +171,20 @@ def _finish(spec, storage, out, final, log, res=None):
     log(f"SAMPLE render ok={res.get('ok')} {sec}s")
     times = spec.get("times") or [round(sec * k / 7, 2) for k in range(1, 7)]
     sheet = wd / "frames.jpg"
+    from . import motion_check
+    bt = None if spec.get("times") else motion_check.beat_times(json.loads(Path(spec["plan_file"]).read_text(encoding="utf-8")))
     with stage("collage"):
-        render.contact_sheet(str(out), times, str(sheet), cols=int(spec.get('cols', 3)), tile_w=int(spec.get('tile_w', 360)))
+        if bt:   # look gate: every beat judged at 3 moments, 6 beats (18 tiles) per sheet, one row = one beat
+            sheets = motion_check.chunk(bt, 18)
+            for i, ch in enumerate(sheets):
+                render.contact_sheet(str(out), ch, str(sheet if i == 0 else wd / f"frames_{i + 1}.jpg"), cols=3, tile_w=300)
+        else:
+            render.contact_sheet(str(out), times, str(sheet), cols=int(spec.get('cols', 3)), tile_w=int(spec.get('tile_w', 360)))
     pack = wd / "pack"
     pack.mkdir()
     (pack / "collage_frames.jpg").write_bytes(sheet.read_bytes())
+    for extra in sorted(wd.glob("frames_*.jpg")):
+        (pack / f"collage_{extra.stem}.jpg").write_bytes(extra.read_bytes())
     (pack / "video.mp4").write_bytes(out.read_bytes())   # small preview, so Faiz can watch it
     for i, rp in enumerate(spec.get("ref_paths", []), 1):   # reference collages from Drive, so Claude can compare side by side
         storage.fetch(rp, pack / f"collage_ref_{i:02d}.jpg")

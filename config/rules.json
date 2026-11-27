@@ -202,5 +202,11 @@
   "rule": "pixel parts are canvas-drawn per frame, no Img/staticFile (test_eightbit); remotion.media blocks local render here, so sample look-check runs on worker",
   "enforcer": "tests/test_eightbit.py",
   "added": "2026-11-26"
+ },
+ {
+  "id": "motion_check_before_render",
+  "rule": "3D motion graphics: objects must tap (not sink through) their base, move, fill the frame and not clip; ./run motion-check must PASS before any render; collage shows 3 moments per beat",
+  "enforcer": "tests/test_motion_check.py",
+  "added": "2026-11-27"
  }
 ]
