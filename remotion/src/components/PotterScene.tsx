@@ -114,7 +114,7 @@ const Decor: React.FC<{kind: PotterObj['decor']; cx: number; cy: number; r: numb
 // ---------- one 3D object layer ----------
 const ObjLayer: React.FC<{o: PotterObj; dur: number}> = ({o, dur}) => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
+  const {fps, width: vw} = useVideoConfig();
   const lt = frame / fps;
   const m = useMats();
   const name = o.obj === 'soap_pink' ? 'soap' : (o.obj as ObjName);
@@ -137,7 +137,7 @@ const ObjLayer: React.FC<{o: PotterObj; dur: number}> = ({o, dur}) => {
         <Decor kind={o.decor} cx={b.x * CW} cy={b.y * CH} r={Math.min(pw, ph) * 0.5} lt={lt} />
       </div>
       <div style={{position: 'absolute', left, top, width: pw, height: ph, opacity: op, filter: `blur(${blur}px) drop-shadow(0px 22px 18px rgba(80,35,50,0.32))`}}>
-        <ThreeCanvas width={pw} height={ph} camera={{fov: 30, position: [0, 0.9, cam], near: 0.1, far: 40}} gl={{alpha: true, antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05}} style={{background: 'transparent'}}
+        <ThreeCanvas dpr={vw / 1080} width={pw} height={ph} camera={{fov: 30, position: [0, 0.9, cam], near: 0.1, far: 40}} gl={{alpha: true, antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05}} style={{background: 'transparent'}}
           onCreated={({camera}) => camera.lookAt(0, 0.0, 0)}>
           <Studio />
           <group position={[0, bob, 0]} rotation={[P.tilt, yaw, 0]} scale={sc}>
@@ -210,13 +210,15 @@ const Banner: React.FC<{t: number; keyWord: string; big: string}> = ({t, keyWord
 
 export const PotterScene: React.FC<PotterProps> = ({ghost, key_word, cta_big, caps, objs}) => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
+  const {fps, width} = useVideoConfig();
+  const sc = width / 1080;
   const t = frame / fps;
   // the stage (card + banner) is a tilted plane that sways: real camera-like motion, no zoom on stills
   const rz = Math.sin(t * 0.55) * 1.1 - 0.6, ry = Math.sin(t * 0.42 + 1) * 3.2, rx = Math.sin(t * 0.37) * 1.6 + 0.5;
   const cap = caps.find((c) => t >= c.t0 && t < c.t1);
   return (
     <AbsoluteFill>
+     <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transform: `scale(${sc})`, transformOrigin: '0 0', overflow: 'hidden'}}>
       <Fabric t={t} />
       <AppTile t={t} />
       <AbsoluteFill style={{perspective: 2000, perspectiveOrigin: '50% 45%'}}>
@@ -239,6 +241,7 @@ export const PotterScene: React.FC<PotterProps> = ({ghost, key_word, cta_big, ca
           <Banner t={t} keyWord={key_word} big={cta_big} />
         </AbsoluteFill>
       </AbsoluteFill>
+     </div>
     </AbsoluteFill>
   );
 };
