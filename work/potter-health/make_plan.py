@@ -100,7 +100,7 @@ def sfx(name, at, vol, dur=0.8):
     return {"src": f"{SFX}/{name}.wav", "at_s": round(max(0.0, at), 3), "duration_s": dur, "role": "sfx", "volume": vol}
 
 
-sf = [sfx("softpop", o["t0"] + 0.04, 0.6) for o in objs] + [sfx("swish", o["t0"] - 0.05, 0.22, 0.5) for o in objs[1:]]
+sf = [sfx("softpop", o["t0"] + 0.04, 0.6) for o in objs] + [sfx("swish", o["t0"] - 0.05, 0.22, 0.5) for o in objs[1::2]]
 sf += [sfx("softpop", t, 0.32, 0.4) for t in pink_times]
 sf.append(sfx("softpop", LOGO_T + 0.25, 0.6))
 sf = [s for s in sf if s["at_s"] < total]

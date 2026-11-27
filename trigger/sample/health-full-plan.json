@@ -786,21 +786,7 @@
   },
   {
    "src": "assets/library/sfx/swish.wav",
-   "at_s": 5.952,
-   "duration_s": 0.5,
-   "role": "sfx",
-   "volume": 0.22
-  },
-  {
-   "src": "assets/library/sfx/swish.wav",
    "at_s": 8.338,
-   "duration_s": 0.5,
-   "role": "sfx",
-   "volume": 0.22
-  },
-  {
-   "src": "assets/library/sfx/swish.wav",
-   "at_s": 10.401,
    "duration_s": 0.5,
    "role": "sfx",
    "volume": 0.22
@@ -814,21 +800,7 @@
   },
   {
    "src": "assets/library/sfx/swish.wav",
-   "at_s": 15.001,
-   "duration_s": 0.5,
-   "role": "sfx",
-   "volume": 0.22
-  },
-  {
-   "src": "assets/library/sfx/swish.wav",
    "at_s": 17.928,
-   "duration_s": 0.5,
-   "role": "sfx",
-   "volume": 0.22
-  },
-  {
-   "src": "assets/library/sfx/swish.wav",
-   "at_s": 20.376,
    "duration_s": 0.5,
    "role": "sfx",
    "volume": 0.22
@@ -842,21 +814,7 @@
   },
   {
    "src": "assets/library/sfx/swish.wav",
-   "at_s": 27.111,
-   "duration_s": 0.5,
-   "role": "sfx",
-   "volume": 0.22
-  },
-  {
-   "src": "assets/library/sfx/swish.wav",
    "at_s": 30.697,
-   "duration_s": 0.5,
-   "role": "sfx",
-   "volume": 0.22
-  },
-  {
-   "src": "assets/library/sfx/swish.wav",
-   "at_s": 31.796,
    "duration_s": 0.5,
    "role": "sfx",
    "volume": 0.22
