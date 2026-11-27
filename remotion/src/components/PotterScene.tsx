@@ -129,7 +129,7 @@ const ObjLayer: React.FC<{o: PotterObj; dur: number}> = ({o, dur}) => {
   const pw = Math.round(b.w * CW), ph = Math.round(b.h * CH);
   const sc = (0.7 + 0.3 * inK) * (1 - outK * 0.1) * P.scale;
   const yaw = P.yaw + P.sway * Math.sin(lt * 1.5) + P.spin * lt;
-  const cam = 7.4;
+  const cam = 5.0;
   const bob = Math.sin(lt * 2.0) * 0.04;
   return (
     <>
@@ -137,7 +137,7 @@ const ObjLayer: React.FC<{o: PotterObj; dur: number}> = ({o, dur}) => {
         <Decor kind={o.decor} cx={b.x * CW} cy={b.y * CH} r={Math.min(pw, ph) * 0.5} lt={lt} />
       </div>
       <div style={{position: 'absolute', left, top, width: pw, height: ph, opacity: op, filter: `blur(${blur}px) drop-shadow(0px 22px 18px rgba(80,35,50,0.32))`}}>
-        <ThreeCanvas dpr={vw / 1080} width={pw} height={ph} camera={{fov: 30, position: [0, 0.9, cam], near: 0.1, far: 40}} gl={{alpha: true, antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05}} style={{background: 'transparent'}}
+        <ThreeCanvas dpr={vw / 1080} width={pw} height={ph} camera={{fov: 30, position: [0, 0.9, cam], near: 0.1, far: 40}} gl={{alpha: true, antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.85}} style={{background: 'transparent'}}
           onCreated={({camera}) => camera.lookAt(0, 0.0, 0)}>
           <Studio />
           <group position={[0, bob, 0]} rotation={[P.tilt, yaw, 0]} scale={sc}>
@@ -152,12 +152,12 @@ const ObjLayer: React.FC<{o: PotterObj; dur: number}> = ({o, dur}) => {
 // ---------- captions ----------
 const wordStyle = (st: W['st'], ff: {serif: string; sans: string}): React.CSSProperties => {
   switch (st) {
-    case 's': return {fontFamily: ff.serif, fontWeight: 400, fontSize: 60, color: INK, letterSpacing: -0.5};
-    case 'i': return {fontFamily: ff.serif, fontStyle: 'italic', fontWeight: 400, fontSize: 60, color: INK};
-    case 'b': return {fontFamily: ff.sans, fontWeight: 800, fontSize: 84, color: INK, letterSpacing: -2};
-    case 'p': return {fontFamily: ff.sans, fontWeight: 700, fontSize: 112, color: PINK, letterSpacing: -3};
+    case 's': return {fontFamily: ff.serif, fontWeight: 400, fontSize: 76, color: INK, letterSpacing: -0.5};
+    case 'i': return {fontFamily: ff.serif, fontStyle: 'italic', fontWeight: 400, fontSize: 76, color: INK};
+    case 'b': return {fontFamily: ff.sans, fontWeight: 800, fontSize: 98, color: INK, letterSpacing: -2};
+    case 'p': return {fontFamily: ff.sans, fontWeight: 700, fontSize: 124, color: PINK, letterSpacing: -3};
     case 'r': return {fontFamily: ff.sans, fontWeight: 400, fontSize: 62, color: INK, letterSpacing: -1};
-    default: return {fontFamily: ff.sans, fontWeight: 800, fontSize: 84, color: CORAL};
+    default: return {fontFamily: ff.sans, fontWeight: 800, fontSize: 98, color: CORAL};
   }
 };
 
@@ -166,8 +166,13 @@ const Caption: React.FC<{c: PotterCap; t: number}> = ({c, t}) => {
   const out = interpolate(t, [c.t1 - 0.16, c.t1], [0, 1], clamp);
   return (
     <div style={{position: 'absolute', left: 0, right: 0, top: (c.y ?? 0.27) * CH, transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 1 - out, filter: `blur(${out * 10}px)`}}>
-      {c.lines.map((ln, li) => (
-        <div key={li} style={{display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 18, whiteSpace: 'nowrap'}}>
+      {c.lines.map((ln, li) => {
+        const EM: Record<string, number> = {s: 0.47, i: 0.44, b: 0.62, p: 0.6, r: 0.52, c: 0.62};
+        const SZ: Record<string, number> = {s: 76, i: 76, b: 98, p: 124, r: 78, c: 98};
+        const est = ln.reduce((a, w) => a + w.w.length * EM[w.st] * SZ[w.st] + 20, -20);
+        const fit = Math.min(1, 700 / est);
+        return (
+        <div key={li} style={{display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 20, whiteSpace: 'nowrap', transform: `scale(${fit})`, transformOrigin: '50% 60%'}}>
           {ln.map((w, wi) => {
             const k = bez(Math.min(1, Math.max(0, (t - w.at) / 0.3)));
             return (
@@ -175,7 +180,8 @@ const Caption: React.FC<{c: PotterCap; t: number}> = ({c, t}) => {
             );
           })}
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
@@ -225,7 +231,7 @@ export const PotterScene: React.FC<PotterProps> = ({ghost, key_word, cta_big, ca
         <AbsoluteFill style={{transform: `rotateZ(${rz}deg) rotateY(${ry}deg) rotateX(${rx}deg) translateY(${Math.sin(t * 0.9) * 6}px)`, transformOrigin: '50% 50%'}}>
           <div style={{position: 'absolute', left: 154, top: 280, width: CW, height: CH, borderRadius: 56, overflow: 'hidden', background: '#F7EEED', boxShadow: '0 34px 70px rgba(70,30,45,0.38), 0 0 0 3px rgba(255,214,196,0.9)'}}>
             <div style={{position: 'absolute', inset: 0, background: 'repeating-linear-gradient(115deg, rgba(255,255,255,0.7) 0 26px, rgba(206,178,184,0.16) 26px 56px)', transform: `translateX(${(t * 14) % 56}px)`}} />
-            <div style={{position: 'absolute', left: -20, right: -20, top: 150, textAlign: 'center', fontFamily: FONTS['Poppins'], fontWeight: 800, fontSize: 168, letterSpacing: -6, color: 'rgba(60,30,40,0.075)', whiteSpace: 'nowrap', filter: `blur(${Math.max(0, 8 - t * 20)}px)`}}>{ghost}</div>
+            <div style={{position: 'absolute', left: -20, right: -20, top: 150, textAlign: 'center', fontFamily: FONTS['Poppins'], fontWeight: 800, fontSize: 112, letterSpacing: -4, color: 'rgba(60,30,40,0.075)', whiteSpace: 'nowrap', filter: `blur(${Math.max(0, 8 - t * 20)}px)`}}>{ghost}</div>
             <Chevron x={-6} y={-6} rot={-8} s={1.1} />
             <Chevron x={CW - 120} y={CH - 150} rot={180} s={0.6} />
             {objs.map((o, i) => {

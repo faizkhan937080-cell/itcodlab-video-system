@@ -43,7 +43,7 @@ const getMarbleTex = () => {
       const thin = Math.pow(1 - vein, 14);                // thin dark veins
       const cloud = fbm(u * 2, v * 2, 11) * 0.10;         // soft grey clouds
       const speck = noise2(x * 3.1, y * 3.1, 77) > 0.93 ? 0.07 : 0;
-      const k = 0.93 - cloud - thin * 0.38 - speck;
+      const k = 0.74 - cloud * 1.6 - thin * 0.5 - speck;
       const i = (y * N + x) * 4;
       img.data[i] = 238 * k + 4; img.data[i + 1] = 233 * k + 4; img.data[i + 2] = 230 * k + 4; img.data[i + 3] = 255;
     }
@@ -58,9 +58,9 @@ const getMarbleTex = () => {
 export const useMats = () =>
   useMemo(() => {
     const t = getMarbleTex();
-    const marble = new THREE.MeshPhysicalMaterial({map: t, roughness: 0.32, metalness: 0, clearcoat: 0.35, clearcoatRoughness: 0.25, envMapIntensity: 0.9});
+    const marble = new THREE.MeshPhysicalMaterial({map: t, roughness: 0.32, metalness: 0, clearcoat: 0.35, clearcoatRoughness: 0.25, envMapIntensity: 0.55});
     const satin = new THREE.MeshPhysicalMaterial({color: '#B8324F', roughness: 0.38, metalness: 0, sheen: 1, sheenRoughness: 0.35, sheenColor: new THREE.Color('#ff9bb0'), clearcoat: 0.25, envMapIntensity: 1.1});
-    const blush = new THREE.MeshPhysicalMaterial({map: t, color: '#f3c6cf', roughness: 0.3, clearcoat: 0.4, clearcoatRoughness: 0.2, envMapIntensity: 0.9});
+    const blush = new THREE.MeshPhysicalMaterial({map: t, color: '#e8aeba', roughness: 0.3, clearcoat: 0.4, clearcoatRoughness: 0.2, envMapIntensity: 0.9});
     const dark = new THREE.MeshPhysicalMaterial({color: '#3a1d27', roughness: 0.4, clearcoat: 0.3, envMapIntensity: 0.8});
     const glass = new THREE.MeshPhysicalMaterial({color: '#ffffff', roughness: 0.05, metalness: 0, transparent: true, opacity: 0.28, clearcoat: 1, envMapIntensity: 1.4, side: THREE.DoubleSide, depthWrite: false});
     const bubble = new THREE.MeshPhysicalMaterial({color: '#ffffff', roughness: 0.02, transparent: true, opacity: 0.45, clearcoat: 1, envMapIntensity: 1.8, iridescence: 1, iridescenceIOR: 1.4, depthWrite: false});
@@ -78,10 +78,10 @@ export const Studio: React.FC = () => {
   }, [gl, scene]);
   return (
     <>
-      <ambientLight intensity={0.25} color="#ffeef0" />
-      <directionalLight position={[-3, 4.5, 4]} intensity={2.1} color="#fff1e3" />
-      <directionalLight position={[4, 1.5, 2]} intensity={0.9} color="#f2b9c6" />
-      <directionalLight position={[0, 2, -4]} intensity={0.8} color="#ffffff" />
+      <ambientLight intensity={0.12} color="#ffeef0" />
+      <directionalLight position={[-3, 4.5, 4]} intensity={1.5} color="#fff1e3" />
+      <directionalLight position={[4, 1.5, 2]} intensity={0.55} color="#f2b9c6" />
+      <directionalLight position={[0, 2, -4]} intensity={0.5} color="#ffffff" />
     </>
   );
 };
