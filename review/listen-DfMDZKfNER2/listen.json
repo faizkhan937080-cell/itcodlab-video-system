@@ -1,0 +1,68 @@
+{
+ "music": {
+  "title": null,
+  "note": "not identified (no named track, no fingerprint match)"
+ },
+ "sound_events": [
+  {
+   "label": "glitch",
+   "t": 4.0,
+   "end": 6.0,
+   "score": 0.549
+  },
+  {
+   "label": "glitch",
+   "t": 7.5,
+   "end": 9.0,
+   "score": 0.525
+  },
+  {
+   "label": "bass drop",
+   "t": 10.5,
+   "end": 11.5,
+   "score": 0.363
+  },
+  {
+   "label": "glitch",
+   "t": 11.0,
+   "end": 16.0,
+   "score": 0.588
+  },
+  {
+   "label": "bass drop",
+   "t": 15.5,
+   "end": 16.5,
+   "score": 0.353
+  },
+  {
+   "label": "glitch",
+   "t": 16.0,
+   "end": 17.0,
+   "score": 0.386
+  },
+  {
+   "label": "pop",
+   "t": 19.0,
+   "end": 20.0,
+   "score": 0.372
+  },
+  {
+   "label": "glitch",
+   "t": 21.5,
+   "end": 23.5,
+   "score": 0.536
+  },
+  {
+   "label": "glitch",
+   "t": 26.0,
+   "end": 35.0,
+   "score": 0.638
+  },
+  {
+   "label": "tick",
+   "t": 35.0,
+   "end": 36.5,
+   "score": 0.802
+  }
+ ]
+}
