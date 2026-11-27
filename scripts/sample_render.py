@@ -34,10 +34,15 @@ def trim_plan(plan, seconds):
 
 def ensure_music(plan, storage, log=print):
     """A music file the library does not have is made by scripts/ambient.py and added by name (never stops the run)."""
-    from . import ambient
+    from . import ambient, groove
     for a in plan.get("audio", []):
         if a.get("role") == "music" and not storage.exists(a["src"]):
             with tempfile.TemporaryDirectory() as td:
+                if Path(a["src"]).stem.startswith("groove"):
+                    f = groove.make(Path(td) / "bed.mp3", 60)
+                    storage.put_file(f, a["src"])
+                    log(f"MUSIC {a['src']} made own 143 bpm groove bed")
+                    continue
                 f = ambient.make(Path(td) / "bed.mp3", 60)
                 storage.put_file(f, a["src"])
             log(f"MUSIC missing in library -> made own dark ambient bed at {a['src']}")

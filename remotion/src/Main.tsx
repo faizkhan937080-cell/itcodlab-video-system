@@ -28,6 +28,7 @@ import {Stroke} from './components/Stroke';
 import {Title} from './components/Title';
 import {VideoScene} from './components/VideoScene';
 import {Three3D} from './components/Three3D';
+import {PotterScene} from './components/PotterScene';
 import {SkillTest} from './components/SkillTest';
 import {EightBitShots} from './components/EightBitShots';
 import {SunburnShots} from './components/SunburnShots';
@@ -67,6 +68,8 @@ const SceneBody: React.FC<{scene: SceneDef; colors: Colors}> = ({scene, colors})
           layout={p.layout}
         />
       );
+    case 'potter':
+      return <PotterScene {...(p as any)} />;
     case 'three3d':
       return <Three3D shot={p.shot ?? 'cup_cig'} seed={p.seed} />;
     case 'clean_bg':

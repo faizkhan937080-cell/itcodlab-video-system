@@ -1,0 +1,75 @@
+{
+ "text": "In eighteen forty-seven, one Vienna hospital ward was losing nearly one in five new mothers. Doctor Ignaz Semmelweis noticed something. Doctors were walking from dead bodies straight into the delivery room. So he told them to wash their hands in chlorine. Deaths fell from eighteen percent, to about two. But the doctors laughed. They rejected him, and he died in an asylum in eighteen sixty-five, forgotten. Today, the World Health Organization says clean hands can prevent up to half of avoidable hospital infections. He wasn't selling soap. He was selling life.",
+ "hook_formula": "underdog-number (one in five mothers) -> reveal -> big result -> reframe",
+ "topic": "Ignaz Semmelweis, handwashing, 1847",
+ "facts": [
+  {
+   "number": "five",
+   "source": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+   "note": "nearly one in five = 18.3% maternal deaths, First Clinic, April 1847"
+  },
+  {
+   "number": "forty",
+   "source": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+   "note": "1847 (forty-seven), Vienna General Hospital"
+  },
+  {
+   "number": "seven",
+   "source": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+   "note": "1847 (forty-seven)"
+  },
+  {
+   "number": "two",
+   "source": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+   "note": "about 2.2% in June 1847 after chlorinated-lime handwashing"
+  },
+  {
+   "number": "eighteen",
+   "source": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+   "note": "18.3% April 1847"
+  },
+  {
+   "number": "sixty-five",
+   "source": "https://www.britannica.com/biography/Ignaz-Semmelweis",
+   "note": "died 13 Aug 1865 in asylum"
+  },
+  {
+   "number": "half",
+   "source": "https://www.who.int/campaigns/world-hand-hygiene-day",
+   "note": "WHO: hand hygiene can prevent up to half of avoidable infections in health care (verify wording)"
+  }
+ ],
+ "segments": [
+  {
+   "id": "s1",
+   "text": "In eighteen forty-seven, one Vienna hospital ward was losing nearly one in five new mothers."
+  },
+  {
+   "id": "s2",
+   "text": "Doctor Ignaz Semmelweis noticed something. Doctors were walking from dead bodies straight into the delivery room."
+  },
+  {
+   "id": "s3",
+   "text": "So he told them to wash their hands in chlorine. Deaths fell from eighteen percent, to about two."
+  },
+  {
+   "id": "s4",
+   "text": "But the doctors laughed. They rejected him, and he died in an asylum in eighteen sixty-five, forgotten."
+  },
+  {
+   "id": "s5",
+   "text": "Today, the World Health Organization says clean hands can prevent up to half of avoidable hospital infections."
+  },
+  {
+   "id": "s6",
+   "text": "He wasn't selling soap. He was selling life."
+  }
+ ],
+ "ref": {
+  "text": "Her first book was rejected six times. Today, Peter Rabbit has sold over 45 million copies, but Beatrix Potter wasn't selling rabbits. She was selling the wonder of childhood. Comment \"CLAUDE\" For The Full Guide",
+  "sentences": {
+   "words_mean": 9.7
+  },
+  "cta_words": []
+ }
+}

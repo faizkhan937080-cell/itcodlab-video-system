@@ -12,6 +12,11 @@ RECIPES = {
     "ding": "sine=f=1318:d=0.8[a];sine=f=1976:d=0.8[b];[a][b]amix=inputs=2:normalize=0,volume=0.8,afade=t=out:st=0.05:d=0.75[o]",
     "pop": "sine=f=520:d=0.12[a];[a]volume=1.2,afade=t=out:st=0.02:d=0.1[o]",
 }
+RECIPES.update({
+    # soft UI pop: quick falling sine + tiny click, rounded (the reel's object / caption entry sound)
+    "softpop": "aevalsrc='sin(2*PI*(900-1300*t)*t)*exp(-t*38)*0.9':d=0.18[a];[a]lowpass=f=2600,afade=t=in:d=0.004[o]",
+    "swish": "anoisesrc=d=0.4:c=pink:a=0.7[n];[n]bandpass=f=2200:width_type=h:w=2600,afade=t=in:d=0.12,afade=t=out:st=0.14:d=0.26,volume=0.8[o]",
+})
 # 8-bit square-wave sounds for the pixel videos (own synth, licence-free); keys = scripts/sfx.py cue kinds
 SQ = "sgn(sin(2*PI*({f})*t))*{a}"
 RECIPES.update({

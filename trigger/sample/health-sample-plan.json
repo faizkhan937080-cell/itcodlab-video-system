@@ -1,0 +1,748 @@
+{
+ "title": "Semmelweis handwashing (health reel, potter style)",
+ "fps": 30,
+ "orientation": "portrait",
+ "width": 1080,
+ "height": 1920,
+ "scenes": [
+  {
+   "id": "s1",
+   "duration_s": 9.5,
+   "template": "potter",
+   "props": {
+    "ghost": "SEMMELWEIS",
+    "key_word": "HEALTH",
+    "cta_big": "Full Story",
+    "caps": [
+     {
+      "t0": 0.0,
+      "t1": 2.073,
+      "lines": [
+       [
+        {
+         "w": "In",
+         "st": "s",
+         "at": 0.15
+        },
+        {
+         "w": "1847",
+         "st": "p",
+         "at": 0.34
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 2.003,
+      "t1": 4.072,
+      "lines": [
+       [
+        {
+         "w": "one Vienna",
+         "st": "s",
+         "at": 2.053
+        }
+       ],
+       [
+        {
+         "w": "hospital ward",
+         "st": "b",
+         "at": 2.91
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 4.002,
+      "t1": 6.356,
+      "lines": [
+       [
+        {
+         "w": "was losing nearly",
+         "st": "s",
+         "at": 4.052
+        }
+       ],
+       [
+        {
+         "w": "1 in 5",
+         "st": "p",
+         "at": 5.48
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 6.286,
+      "t1": 7.658,
+      "lines": [
+       [
+        {
+         "w": "new",
+         "st": "s",
+         "at": 6.336
+        }
+       ],
+       [
+        {
+         "w": "mothers",
+         "st": "b",
+         "at": 6.622
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 7.588,
+      "t1": 9.494,
+      "lines": [
+       [
+        {
+         "w": "Doctor Ignaz",
+         "st": "i",
+         "at": 7.638
+        }
+       ],
+       [
+        {
+         "w": "Semmelweis",
+         "st": "p",
+         "at": 8.599
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 9.424,
+      "t1": 10.892,
+      "lines": [
+       [
+        {
+         "w": "noticed",
+         "st": "s",
+         "at": 9.474
+        }
+       ],
+       [
+        {
+         "w": "something",
+         "st": "b",
+         "at": 10.085
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 10.822,
+      "t1": 13.689,
+      "lines": [
+       [
+        {
+         "w": "Doctors were walking from",
+         "st": "s",
+         "at": 10.872
+        }
+       ],
+       [
+        {
+         "w": "dead bodies",
+         "st": "p",
+         "at": 12.795
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 13.619,
+      "t1": 16.399,
+      "lines": [
+       [
+        {
+         "w": "straight into the",
+         "st": "s",
+         "at": 13.669
+        }
+       ],
+       [
+        {
+         "w": "delivery room",
+         "st": "b",
+         "at": 14.98
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 16.329,
+      "t1": 18.041,
+      "lines": [
+       [
+        {
+         "w": "So he told them to",
+         "st": "s",
+         "at": 16.379
+        }
+       ],
+       [
+        {
+         "w": "wash",
+         "st": "b",
+         "at": 17.656
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 17.971,
+      "t1": 19.866,
+      "lines": [
+       [
+        {
+         "w": "their hands in",
+         "st": "s",
+         "at": 18.021
+        }
+       ],
+       [
+        {
+         "w": "chlorine",
+         "st": "p",
+         "at": 19.116
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 19.796,
+      "t1": 21.143,
+      "lines": [
+       [
+        {
+         "w": "Deaths fell from",
+         "st": "s",
+         "at": 19.846
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 21.073,
+      "t1": 22.512,
+      "lines": [
+       [
+        {
+         "w": "18%",
+         "st": "p",
+         "at": 21.123
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 22.442,
+      "t1": 23.774,
+      "lines": [
+       [
+        {
+         "w": "to about",
+         "st": "s",
+         "at": 22.492
+        }
+       ],
+       [
+        {
+         "w": "2%",
+         "st": "p",
+         "at": 23.13
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 23.704,
+      "t1": 26.17,
+      "lines": [
+       [
+        {
+         "w": "But the doctors",
+         "st": "s",
+         "at": 23.754
+        }
+       ],
+       [
+        {
+         "w": "laughed",
+         "st": "b",
+         "at": 25.312
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 26.1,
+      "t1": 27.968,
+      "lines": [
+       [
+        {
+         "w": "They",
+         "st": "s",
+         "at": 26.15
+        }
+       ],
+       [
+        {
+         "w": "rejected him",
+         "st": "p",
+         "at": 26.63
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 27.898,
+      "t1": 30.244,
+      "lines": [
+       [
+        {
+         "w": "and he died in an",
+         "st": "s",
+         "at": 27.948
+        }
+       ],
+       [
+        {
+         "w": "asylum",
+         "st": "b",
+         "at": 29.505
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 30.174,
+      "t1": 33.949,
+      "lines": [
+       [
+        {
+         "w": "in",
+         "st": "s",
+         "at": 30.224
+        },
+        {
+         "w": "1865,",
+         "st": "p",
+         "at": 30.464
+        }
+       ],
+       [
+        {
+         "w": "forgotten",
+         "st": "b",
+         "at": 32.501
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 33.879,
+      "t1": 36.321,
+      "lines": [
+       [
+        {
+         "w": "Today, the",
+         "st": "i",
+         "at": 33.929
+        }
+       ],
+       [
+        {
+         "w": "World Health",
+         "st": "b",
+         "at": 34.541
+        }
+       ],
+       [
+        {
+         "w": "Organization",
+         "st": "b",
+         "at": 35.383
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 36.251,
+      "t1": 37.392,
+      "lines": [
+       [
+        {
+         "w": "says",
+         "st": "s",
+         "at": 36.301
+        }
+       ],
+       [
+        {
+         "w": "clean hands",
+         "st": "p",
+         "at": 36.607
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 37.322,
+      "t1": 38.77,
+      "lines": [
+       [
+        {
+         "w": "can prevent up to",
+         "st": "s",
+         "at": 37.372
+        }
+       ],
+       [
+        {
+         "w": "half",
+         "st": "p",
+         "at": 38.444
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 38.7,
+      "t1": 41.339,
+      "lines": [
+       [
+        {
+         "w": "of avoidable",
+         "st": "s",
+         "at": 38.75
+        }
+       ],
+       [
+        {
+         "w": "hospital infections",
+         "st": "b",
+         "at": 39.592
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 41.269,
+      "t1": 43.623,
+      "lines": [
+       [
+        {
+         "w": "He wasn't selling",
+         "st": "s",
+         "at": 41.319
+        }
+       ],
+       [
+        {
+         "w": "soap",
+         "st": "p",
+         "at": 43.095
+        }
+       ]
+      ]
+     },
+     {
+      "t0": 43.553,
+      "t1": 46.68,
+      "lines": [
+       [
+        {
+         "w": "He was selling",
+         "st": "s",
+         "at": 43.603
+        }
+       ],
+       [
+        {
+         "w": "life",
+         "st": "p",
+         "at": 45.125
+        }
+       ]
+      ]
+     }
+    ],
+    "objs": [
+     {
+      "obj": "bed",
+      "t0": 0.0,
+      "t1": 4.182,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "dots"
+     },
+     {
+      "obj": "five",
+      "t0": 3.982,
+      "t1": 7.768,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "brackets"
+     },
+     {
+      "obj": "bust",
+      "t0": 7.568,
+      "t1": 11.002,
+      "box": {
+       "x": 0.5,
+       "y": 0.69,
+       "w": 1.0,
+       "h": 0.54
+      },
+      "decor": "curves"
+     },
+     {
+      "obj": "scalpel",
+      "t0": 10.802,
+      "t1": 13.799,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "cross"
+     },
+     {
+      "obj": "bed",
+      "t0": 13.599,
+      "t1": 16.509,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "ring"
+     },
+     {
+      "obj": "soap",
+      "t0": 16.309,
+      "t1": 19.976,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "brackets"
+     },
+     {
+      "obj": "bars",
+      "t0": 19.776,
+      "t1": 23.884,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "dots"
+     },
+     {
+      "obj": "gavel",
+      "t0": 23.684,
+      "t1": 28.078,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "frame"
+     },
+     {
+      "obj": "hourglass",
+      "t0": 27.878,
+      "t1": 34.059,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "ring"
+     },
+     {
+      "obj": "globe",
+      "t0": 33.859,
+      "t1": 37.502,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "brackets"
+     },
+     {
+      "obj": "capsule",
+      "t0": 37.302,
+      "t1": 41.449,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "dots"
+     },
+     {
+      "obj": "soap_pink",
+      "t0": 41.249,
+      "t1": 43.733,
+      "box": {
+       "x": 0.5,
+       "y": 0.665,
+       "w": 0.94,
+       "h": 0.46
+      },
+      "decor": "cross"
+     },
+     {
+      "obj": "heart",
+      "t0": 43.533,
+      "t1": 46.68,
+      "box": {
+       "x": 0.5,
+       "y": 0.69,
+       "w": 1.0,
+       "h": 0.54
+      },
+      "decor": "ring"
+     }
+    ],
+    "end_s": 46.68
+   },
+   "transition_in": {
+    "type": "cut"
+   }
+  }
+ ],
+ "captions": [],
+ "audio": [
+  {
+   "src": "output/voice/health-semmelweis-v1/health-semmelweis-v1.wav",
+   "at_s": 0,
+   "role": "voice",
+   "volume": 1.0
+  },
+  {
+   "src": "assets/library/music/groove-143.mp3",
+   "at_s": 0,
+   "duration_s": 9.5,
+   "role": "music",
+   "volume": 0.34,
+   "fade_in_s": 0.4,
+   "fade_out_s": 1.5,
+   "duck": [
+    {
+     "from_s": 0.2,
+     "to_s": 7.338,
+     "gain": 0.62
+    },
+    {
+     "from_s": 7.688,
+     "to_s": 16.079,
+     "gain": 0.62
+    },
+    {
+     "from_s": 16.429,
+     "to_s": 23.454,
+     "gain": 0.62
+    },
+    {
+     "from_s": 23.804,
+     "to_s": 33.629,
+     "gain": 0.62
+    },
+    {
+     "from_s": 33.979,
+     "to_s": 41.019,
+     "gain": 0.62
+    },
+    {
+     "from_s": 41.369,
+     "to_s": 45.683,
+     "gain": 0.62
+    }
+   ]
+  },
+  {
+   "src": "assets/library/sfx/softpop.wav",
+   "at_s": 0.04,
+   "duration_s": 0.8,
+   "role": "sfx",
+   "volume": 0.6
+  },
+  {
+   "src": "assets/library/sfx/softpop.wav",
+   "at_s": 4.022,
+   "duration_s": 0.8,
+   "role": "sfx",
+   "volume": 0.6
+  },
+  {
+   "src": "assets/library/sfx/softpop.wav",
+   "at_s": 7.608,
+   "duration_s": 0.8,
+   "role": "sfx",
+   "volume": 0.6
+  },
+  {
+   "src": "assets/library/sfx/swish.wav",
+   "at_s": 3.932,
+   "duration_s": 0.5,
+   "role": "sfx",
+   "volume": 0.22
+  },
+  {
+   "src": "assets/library/sfx/swish.wav",
+   "at_s": 7.518,
+   "duration_s": 0.5,
+   "role": "sfx",
+   "volume": 0.22
+  },
+  {
+   "src": "assets/library/sfx/softpop.wav",
+   "at_s": 0.39,
+   "duration_s": 0.4,
+   "role": "sfx",
+   "volume": 0.32
+  },
+  {
+   "src": "assets/library/sfx/softpop.wav",
+   "at_s": 5.53,
+   "duration_s": 0.4,
+   "role": "sfx",
+   "volume": 0.32
+  },
+  {
+   "src": "assets/library/sfx/softpop.wav",
+   "at_s": 8.649,
+   "duration_s": 0.4,
+   "role": "sfx",
+   "volume": 0.32
+  }
+ ],
+ "audio_target_lufs": -17,
+ "vignette": 0.0,
+ "grain": false
+}
