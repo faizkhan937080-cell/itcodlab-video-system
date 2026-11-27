@@ -1,0 +1,3418 @@
+{
+ "type": "corpus",
+ "schema_version": 2,
+ "dna_type": "scripting",
+ "creator": "edita.visuals",
+ "n_videos": 6,
+ "job_ids": [
+  "reel-DfTxHLopj5m",
+  "reel-Df97YXth1Y6",
+  "reel-DeMkkKdsO2_",
+  "reel-DgNYH7ThrWb",
+  "reel-DgLclCABIa3",
+  "reel-DfWN_TpptL7"
+ ],
+ "fields": {
+  "cta.ask": {
+   "kind": "word",
+   "n": 4,
+   "mode": "",
+   "agreement": 0.25,
+   "top": [
+    [
+     "",
+     1
+    ],
+    [
+     "go anywhere.",
+     1
+    ],
+    [
+     "comment claude for the full guide.",
+     1
+    ],
+    [
+     "comment \"claude\" for the full guide",
+     1
+    ]
+   ],
+   "coverage": 0.667
+  },
+  "cta.incentive": {
+   "kind": "word",
+   "n": 6,
+   "mode": "none",
+   "agreement": 0.5,
+   "top": [
+    [
+     "none",
+     3
+    ],
+    [
+     "the full guide",
+     1
+    ],
+    [
+     "full guide",
+     1
+    ],
+    [
+     "unknown, text cut off (likely a link or file)",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "cta.keyword": {
+   "kind": "word",
+   "n": 4,
+   "mode": "claude",
+   "agreement": 0.75,
+   "top": [
+    [
+     "claude",
+     3
+    ],
+    [
+     "none",
+     1
+    ]
+   ],
+   "coverage": 0.667
+  },
+  "cta.placement_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 15.85,
+   "mean": 17.367,
+   "p25": 3.225,
+   "p75": 21.275,
+   "min": 0.0,
+   "max": 50.4,
+   "cv": 0.98,
+   "coverage": 1.0
+  },
+  "cta.repeats": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.0,
+   "mean": 0.167,
+   "p25": 0.0,
+   "p75": 0.0,
+   "min": 0.0,
+   "max": 1.0,
+   "cv": 2.236,
+   "coverage": 1.0
+  },
+  "cta.type": {
+   "kind": "word",
+   "n": 6,
+   "mode": "comment-keyword",
+   "agreement": 0.333,
+   "top": [
+    [
+     "comment-keyword",
+     2
+    ],
+    [
+     "none in the inner video",
+     1
+    ],
+    [
+     "none",
+     1
+    ],
+    [
+     "brand sign-off tagline (no ask)",
+     1
+    ],
+    [
+     "comment keyword (visual only, not spoken)",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "framework.name": {
+   "kind": "word",
+   "n": 4,
+   "mode": "rise-and-legacy mini biography (story arc)",
+   "agreement": 0.25,
+   "top": [
+    [
+     "rise-and-legacy mini biography (story arc)",
+     1
+    ],
+    [
+     "problem-solution product promo (hook-pain-demo-proof-brand)",
+     1
+    ],
+    [
+     "hook-problem-thesis-cta (myth-bust / hot take)",
+     1
+    ],
+    [
+     "story twist (rejection to success, reframe)",
+     1
+    ]
+   ],
+   "coverage": 0.667
+  },
+  "hook.duration_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 3.0,
+   "mean": 2.683,
+   "p25": 2.4,
+   "p75": 3.15,
+   "min": 1.5,
+   "max": 3.2,
+   "cv": 0.234,
+   "coverage": 1.0
+  },
+  "hook.first_word_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.0,
+   "mean": 0.16,
+   "p25": 0.0,
+   "p75": 0.255,
+   "min": 0.0,
+   "max": 0.617,
+   "cv": 1.5,
+   "coverage": 1.0
+  },
+  "hook.first_words": {
+   "kind": "word",
+   "n": 4,
+   "mode": "holy shit! you are not ready for this.",
+   "agreement": 0.25,
+   "top": [
+    [
+     "holy shit! you are not ready for this.",
+     1
+    ],
+    [
+     "ever worn a style that was never cut for you this is",
+     1
+    ],
+    [
+     "her first book was rejected six times",
+     1
+    ],
+    [
+     "claude now does moti..",
+     1
+    ]
+   ],
+   "coverage": 0.667
+  },
+  "hook.kind": {
+   "kind": "word",
+   "n": 6,
+   "mode": "pattern interrupt plus bold claim",
+   "agreement": 0.167,
+   "top": [
+    [
+     "pattern interrupt plus bold claim",
+     1
+    ],
+    [
+     "contrarian claim + story-open",
+     1
+    ],
+    [
+     "question + one-word answer (pattern interrupt)",
+     1
+    ],
+    [
+     "question + metaphor (curiosity gap / problem-agitate)",
+     1
+    ],
+    [
+     "story fact / struggle",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "hook.open_loop": {
+   "kind": "bool",
+   "n": 6,
+   "mode": true,
+   "agreement": 1.0,
+   "coverage": 1.0
+  },
+  "hook.pattern": {
+   "kind": "word",
+   "n": 3,
+   "mode": "'she never [wanted x], yet [huge result]'",
+   "agreement": 0.333,
+   "top": [
+    [
+     "'she never [wanted x], yet [huge result]'",
+     1
+    ],
+    [
+     "underdog rejection number",
+     1
+    ],
+    [
+     "brand title then immediate 3d spectacle; no words spoken",
+     1
+    ]
+   ],
+   "coverage": 0.5
+  },
+  "hook.time_to_value_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 3.3,
+   "mean": 3.261,
+   "p25": 2.45,
+   "p75": 4.188,
+   "min": 0.617,
+   "max": 5.7,
+   "cv": 0.493,
+   "coverage": 1.0
+  },
+  "language.code_switching": {
+   "kind": "word",
+   "n": 6,
+   "mode": "none",
+   "agreement": 0.833,
+   "top": [
+    [
+     "none",
+     5
+    ],
+    [
+     "none (pure english)",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "language.english_term_domains": {
+   "kind": "items",
+   "n": 6,
+   "top": [
+    [
+     "ai tools",
+     0.333
+    ],
+    [
+     "motion design",
+     0.333
+    ],
+    [
+     "video editing",
+     0.333
+    ],
+    [
+     "after effects",
+     0.167
+    ],
+    [
+     "celebrity",
+     0.167
+    ],
+    [
+     "couture",
+     0.167
+    ],
+    [
+     "fashion",
+     0.167
+    ],
+    [
+     "apps",
+     0.167
+    ],
+    [
+     "product launch",
+     0.167
+    ],
+    [
+     "travel",
+     0.167
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "language.primary": {
+   "kind": "word",
+   "n": 6,
+   "mode": "english",
+   "agreement": 1.0,
+   "top": [
+    [
+     "english",
+     6
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "language.script": {
+   "kind": "word",
+   "n": 6,
+   "mode": "roman",
+   "agreement": 1.0,
+   "top": [
+    [
+     "roman",
+     6
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "lexicon.filler_words": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "and",
+     1.0
+    ],
+    [
+     "so",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "lexicon.jargon_terms": {
+   "kind": "items",
+   "n": 5,
+   "top": [
+    [
+     "claude code",
+     0.4
+    ],
+    [
+     "keyframes",
+     0.4
+    ],
+    [
+     "after effects",
+     0.2
+    ],
+    [
+     "graph editor",
+     0.2
+    ],
+    [
+     "kinetic type",
+     0.2
+    ],
+    [
+     "mcp",
+     0.2
+    ],
+    [
+     "couture",
+     0.2
+    ],
+    [
+     "runway",
+     0.2
+    ],
+    [
+     "budget",
+     0.2
+    ],
+    [
+     "taps",
+     0.2
+    ]
+   ],
+   "coverage": 0.833
+  },
+  "lexicon.power_words": {
+   "kind": "items",
+   "n": 6,
+   "top": [
+    [
+     "one prompt",
+     0.333
+    ],
+    [
+     "never",
+     0.333
+    ],
+    [
+     "hell yes",
+     0.167
+    ],
+    [
+     "holy",
+     0.167
+    ],
+    [
+     "not ready",
+     0.167
+    ],
+    [
+     "seamless",
+     0.167
+    ],
+    [
+     "crowned",
+     0.167
+    ],
+    [
+     "icon",
+     0.167
+    ],
+    [
+     "kingdom",
+     0.167
+    ],
+    [
+     "sharpest weapon",
+     0.167
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "lexicon.signature_phrases": {
+   "kind": "items",
+   "n": 6,
+   "top": [
+    [
+     "i made these motion graphics without even opening after effects",
+     0.167
+    ],
+    [
+     "one prompt and that's it",
+     0.167
+    ],
+    [
+     "you are not ready for this",
+     0.167
+    ],
+    [
+     "every runway still whispers",
+     0.167
+    ],
+    [
+     "it became her kingdom",
+     0.167
+    ],
+    [
+     "she never begged for fame",
+     0.167
+    ],
+    [
+     "go anywhere.",
+     0.167
+    ],
+    [
+     "just tell it where, when, and how much.",
+     0.167
+    ],
+    [
+     "meet fairwind.",
+     0.167
+    ],
+    [
+     "comment claude for the full guide.",
+     0.167
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "pacing.numbers_per_min": {
+   "kind": "number",
+   "n": 6,
+   "median": 1.165,
+   "mean": 3.388,
+   "p25": 0.0,
+   "p75": 5.082,
+   "min": 0.0,
+   "max": 12.0,
+   "cv": 1.301,
+   "coverage": 1.0
+  },
+  "pacing.pause_mean_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.555,
+   "mean": 0.603,
+   "p25": 0.4,
+   "p75": 0.68,
+   "min": 0.0,
+   "max": 1.44,
+   "cv": 0.725,
+   "coverage": 1.0
+  },
+  "pacing.questions_per_min": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.0,
+   "mean": 1.227,
+   "p25": 0.0,
+   "p75": 1.92,
+   "min": 0.0,
+   "max": 4.8,
+   "cv": 1.509,
+   "coverage": 1.0
+  },
+  "pacing.sentence_words_mean": {
+   "kind": "number",
+   "n": 6,
+   "median": 7.2,
+   "mean": 6.533,
+   "p25": 4.825,
+   "p75": 9.125,
+   "min": 0.0,
+   "max": 11.0,
+   "cv": 0.557,
+   "coverage": 1.0
+  },
+  "pacing.sentence_words_p90": {
+   "kind": "number",
+   "n": 6,
+   "median": 11.6,
+   "mean": 10.367,
+   "p25": 8.45,
+   "p75": 14.975,
+   "min": 0.0,
+   "max": 15.5,
+   "cv": 0.521,
+   "coverage": 1.0
+  },
+  "pacing.speech_ratio": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.732,
+   "mean": 0.639,
+   "p25": 0.664,
+   "p75": 0.824,
+   "min": 0.0,
+   "max": 0.873,
+   "cv": 0.463,
+   "coverage": 1.0
+  },
+  "pacing.words_per_min_overall": {
+   "kind": "number",
+   "n": 6,
+   "median": 148.25,
+   "mean": 129.333,
+   "p25": 136.95,
+   "p75": 166.3,
+   "min": 0.0,
+   "max": 174.0,
+   "cv": 0.46,
+   "coverage": 1.0
+  },
+  "pacing.words_per_min_speaking": {
+   "kind": "number",
+   "n": 6,
+   "median": 195.15,
+   "mean": 170.767,
+   "p25": 168.575,
+   "p75": 218.875,
+   "min": 0.0,
+   "max": 247.8,
+   "cv": 0.474,
+   "coverage": 1.0
+  },
+  "retention.open_loops": {
+   "kind": "number",
+   "n": 6,
+   "median": 1.0,
+   "mean": 1.167,
+   "p25": 1.0,
+   "p75": 1.0,
+   "min": 1.0,
+   "max": 2.0,
+   "cv": 0.319,
+   "coverage": 1.0
+  },
+  "retention.pattern_interrupts": {
+   "kind": "word",
+   "n": 1,
+   "mode": "new 3d object and caption style per beat",
+   "agreement": 1.0,
+   "top": [
+    [
+     "new 3d object and caption style per beat",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "retention.payoff_at_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 13.4,
+   "mean": 17.583,
+   "p25": 11.3,
+   "p75": 15.95,
+   "min": 7.5,
+   "max": 43.8,
+   "cv": 0.686,
+   "coverage": 1.0
+  },
+  "structure[3D proof].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "3d proof",
+   "agreement": 1.0,
+   "top": [
+    [
+     "3d proof",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[3D proof].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "demo",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[3D proof].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.05,
+   "mean": 4.05,
+   "p25": 4.05,
+   "p75": 4.05,
+   "min": 4.05,
+   "max": 4.05,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[3D proof].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "cube field shows motion capability",
+   "agreement": 1.0,
+   "top": [
+    [
+     "cube field shows motion capability",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[3D proof].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.143,
+   "mean": 0.143,
+   "p25": 0.143,
+   "p75": 0.143,
+   "min": 0.143,
+   "max": 0.143,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[3D proof].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 2.1,
+   "mean": 2.1,
+   "p25": 2.1,
+   "p75": 2.1,
+   "min": 2.1,
+   "max": 2.1,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[before/after + brand].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "before/after + brand",
+   "agreement": 1.0,
+   "top": [
+    [
+     "before/after + brand",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[before/after + brand].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast (strike-through)",
+     1.0
+    ],
+    [
+     "tagline",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[before/after + brand].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 25.0,
+   "mean": 25.0,
+   "p25": 25.0,
+   "p75": 25.0,
+   "min": 25.0,
+   "max": 25.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[before/after + brand].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "11 hours -> 10 seconds, brand name and tagline",
+   "agreement": 1.0,
+   "top": [
+    [
+     "11 hours -> 10 seconds, brand name and tagline",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[before/after + brand].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.22,
+   "mean": 0.22,
+   "p25": 0.22,
+   "p75": 0.22,
+   "min": 0.22,
+   "max": 0.22,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[before/after + brand].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.5,
+   "mean": 19.5,
+   "p25": 19.5,
+   "p75": 19.5,
+   "min": 19.5,
+   "max": 19.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[brand open].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "brand open",
+   "agreement": 1.0,
+   "top": [
+    [
+     "brand open",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[brand open].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "brand mark",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[brand open].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.617,
+   "mean": 0.617,
+   "p25": 0.617,
+   "p75": 0.617,
+   "min": 0.617,
+   "max": 0.617,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[brand open].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "asterisk logo with hud",
+   "agreement": 1.0,
+   "top": [
+    [
+     "asterisk logo with hud",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[brand open].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.045,
+   "mean": 0.045,
+   "p25": 0.045,
+   "p75": 0.045,
+   "min": 0.045,
+   "max": 0.045,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[brand open].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.0,
+   "mean": 0.0,
+   "p25": 0.0,
+   "p75": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[build proof and payoff].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "build proof and payoff",
+   "agreement": 1.0,
+   "top": [
+    [
+     "build proof and payoff",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[build proof and payoff].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "callback",
+     1.0
+    ],
+    [
+     "cta",
+     1.0
+    ],
+    [
+     "demo",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[build proof and payoff].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 13.65,
+   "mean": 13.65,
+   "p25": 13.65,
+   "p75": 13.65,
+   "min": 13.65,
+   "max": 13.65,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[build proof and payoff].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "terminal build, 12 rays 1 prompt, logo and comment cta",
+   "agreement": 1.0,
+   "top": [
+    [
+     "terminal build, 12 rays 1 prompt, logo and comment cta",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[build proof and payoff].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.361,
+   "mean": 0.361,
+   "p25": 0.361,
+   "p75": 0.361,
+   "min": 0.361,
+   "max": 0.361,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[build proof and payoff].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.717,
+   "mean": 8.717,
+   "p25": 8.717,
+   "p75": 8.717,
+   "min": 8.717,
+   "max": 8.717,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[cause].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "cause",
+   "agreement": 1.0,
+   "top": [
+    [
+     "cause",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[cause].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "cause-effect",
+     1.0
+    ],
+    [
+     "second person",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[cause].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.87,
+   "mean": 8.87,
+   "p25": 8.87,
+   "p75": 8.87,
+   "min": 8.87,
+   "max": 8.87,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[cause].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.172,
+   "mean": 0.172,
+   "p25": 0.172,
+   "p75": 0.172,
+   "min": 0.172,
+   "max": 0.172,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[cause].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.83,
+   "mean": 4.83,
+   "p25": 4.83,
+   "p75": 4.83,
+   "min": 4.83,
+   "max": 4.83,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[claim].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "claim",
+   "agreement": 1.0,
+   "top": [
+    [
+     "claim",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[claim].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast",
+     1.0
+    ],
+    [
+     "named tool",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[claim].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.0,
+   "mean": 11.0,
+   "p25": 11.0,
+   "p75": 11.0,
+   "min": 11.0,
+   "max": 11.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[claim].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "motion graphics made without opening after effects",
+   "agreement": 1.0,
+   "top": [
+    [
+     "motion graphics made without opening after effects",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[claim].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.127,
+   "mean": 0.127,
+   "p25": 0.127,
+   "p75": 0.127,
+   "min": 0.127,
+   "max": 0.127,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[claim].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.45,
+   "mean": 4.45,
+   "p25": 4.45,
+   "p75": 4.45,
+   "min": 4.45,
+   "max": 4.45,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[crowning].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "crowning",
+   "agreement": 1.0,
+   "top": [
+    [
+     "crowning",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[crowning].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "authority",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[crowning].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.5,
+   "mean": 11.5,
+   "p25": 11.5,
+   "p75": 11.5,
+   "min": 11.5,
+   "max": 11.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[crowning].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "external validation: crowned the icon",
+   "agreement": 1.0,
+   "top": [
+    [
+     "external validation: crowned the icon",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[crowning].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.129,
+   "mean": 0.129,
+   "p25": 0.129,
+   "p75": 0.129,
+   "min": 0.129,
+   "max": 0.129,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[crowning].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 9.8,
+   "mean": 9.8,
+   "p25": 9.8,
+   "p75": 9.8,
+   "min": 9.8,
+   "max": 9.8,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[cta].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "cta",
+   "agreement": 1.0,
+   "top": [
+    [
+     "cta",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[cta].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "comment keyword",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[cta].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 23.467,
+   "mean": 23.467,
+   "p25": 23.467,
+   "p75": 23.467,
+   "min": 23.467,
+   "max": 23.467,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[cta].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "comment keyword for the full guide, then end card",
+   "agreement": 1.0,
+   "top": [
+    [
+     "comment keyword for the full guide, then end card",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[cta].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.199,
+   "mean": 0.199,
+   "p25": 0.199,
+   "p75": 0.199,
+   "min": 0.199,
+   "max": 0.199,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[cta].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 18.8,
+   "mean": 18.8,
+   "p25": 18.8,
+   "p75": 18.8,
+   "min": 18.8,
+   "max": 18.8,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[data proof].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "data proof",
+   "agreement": 1.0,
+   "top": [
+    [
+     "data proof",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[data proof].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "before/after",
+     1.0
+    ],
+    [
+     "numbers",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[data proof].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 6.933,
+   "mean": 6.933,
+   "p25": 6.933,
+   "p75": 6.933,
+   "min": 6.933,
+   "max": 6.933,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[data proof].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "edit time by hand vs claude, -98 percent",
+   "agreement": 1.0,
+   "top": [
+    [
+     "edit time by hand vs claude, -98 percent",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[data proof].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.128,
+   "mean": 0.128,
+   "p25": 0.128,
+   "p75": 0.128,
+   "min": 0.128,
+   "max": 0.128,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[data proof].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.183,
+   "mean": 5.183,
+   "p25": 5.183,
+   "p75": 5.183,
+   "min": 5.183,
+   "max": 5.183,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[demo / proof].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "demo / proof",
+   "agreement": 1.0,
+   "top": [
+    [
+     "demo / proof",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[demo / proof].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "benefit stack",
+     1.0
+    ],
+    [
+     "list of three",
+     1.0
+    ],
+    [
+     "timer counter",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[demo / proof].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 16.5,
+   "mean": 16.5,
+   "p25": 16.5,
+   "p75": 16.5,
+   "min": 16.5,
+   "max": 16.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[demo / proof].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.26,
+   "mean": 0.26,
+   "p25": 0.26,
+   "p75": 0.26,
+   "min": 0.26,
+   "max": 0.26,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[demo / proof].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 10.0,
+   "mean": 10.0,
+   "p25": 10.0,
+   "p75": 10.0,
+   "min": 10.0,
+   "max": 10.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[demo prompt].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "demo prompt",
+   "agreement": 1.0,
+   "top": [
+    [
+     "demo prompt",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[demo prompt].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "enumeration",
+     1.0
+    ],
+    [
+     "proof",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[demo prompt].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 26.767,
+   "mean": 26.767,
+   "p25": 26.767,
+   "p75": 26.767,
+   "min": 26.767,
+   "max": 26.767,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[demo prompt].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "the exact prompt given",
+   "agreement": 1.0,
+   "top": [
+    [
+     "the exact prompt given",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[demo prompt].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.165,
+   "mean": 0.165,
+   "p25": 0.165,
+   "p75": 0.165,
+   "min": 0.165,
+   "max": 0.165,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[demo prompt].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 18.25,
+   "mean": 18.25,
+   "p25": 18.25,
+   "p75": 18.25,
+   "min": 18.25,
+   "max": 18.25,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[flexibility].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "flexibility",
+   "agreement": 1.0,
+   "top": [
+    [
+     "flexibility",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[flexibility].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "question + answer",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[flexibility].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.5,
+   "mean": 19.5,
+   "p25": 19.5,
+   "p75": 19.5,
+   "min": 19.5,
+   "max": 19.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[flexibility].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "change of plans? just say it (voice input)",
+   "agreement": 1.0,
+   "top": [
+    [
+     "change of plans? just say it (voice input)",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[flexibility].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.12,
+   "mean": 0.12,
+   "p25": 0.12,
+   "p75": 0.12,
+   "min": 0.12,
+   "max": 0.12,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[flexibility].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 16.5,
+   "mean": 16.5,
+   "p25": 16.5,
+   "p75": 16.5,
+   "min": 16.5,
+   "max": 16.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[hook].beat": {
+   "kind": "word",
+   "n": 5,
+   "mode": "hook",
+   "agreement": 1.0,
+   "top": [
+    [
+     "hook",
+     5
+    ]
+   ],
+   "coverage": 0.833
+  },
+  "structure[hook].devices": {
+   "kind": "items",
+   "n": 5,
+   "top": [
+    [
+     "question",
+     0.4
+    ],
+    [
+     "bold claim",
+     0.2
+    ],
+    [
+     "pattern interrupt",
+     0.2
+    ],
+    [
+     "contrast",
+     0.2
+    ],
+    [
+     "hyperbole ('every single camera')",
+     0.2
+    ],
+    [
+     "one-word reply",
+     0.2
+    ],
+    [
+     "metaphor",
+     0.2
+    ],
+    [
+     "number",
+     0.2
+    ],
+    [
+     "underdog",
+     0.2
+    ]
+   ],
+   "coverage": 0.833
+  },
+  "structure[hook].end_s": {
+   "kind": "number",
+   "n": 5,
+   "median": 3.17,
+   "mean": 2.898,
+   "p25": 2.2,
+   "p75": 3.2,
+   "min": 1.47,
+   "max": 4.45,
+   "cv": 0.349,
+   "coverage": 0.833
+  },
+  "structure[hook].purpose": {
+   "kind": "word",
+   "n": 5,
+   "mode": "shock and readiness challenge",
+   "agreement": 0.2,
+   "top": [
+    [
+     "shock and readiness challenge",
+     1
+    ],
+    [
+     "contrast: no begging for fame, yet cameras went wild",
+     1
+    ],
+    [
+     "question and one-word answer on the flap board",
+     1
+    ],
+    [
+     "relatable question using a clothing metaphor",
+     1
+    ],
+    [
+     "first book rejected six times",
+     1
+    ]
+   ],
+   "coverage": 0.833
+  },
+  "structure[hook].share": {
+   "kind": "number",
+   "n": 5,
+   "median": 0.135,
+   "mean": 0.148,
+   "p25": 0.086,
+   "p75": 0.22,
+   "min": 0.059,
+   "max": 0.242,
+   "cv": 0.485,
+   "coverage": 0.833
+  },
+  "structure[hook].start_s": {
+   "kind": "number",
+   "n": 5,
+   "median": 0.0,
+   "mean": 0.0,
+   "p25": 0.0,
+   "p75": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.833
+  },
+  "structure[legacy close].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "legacy close",
+   "agreement": 1.0,
+   "top": [
+    [
+     "legacy close",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[legacy close].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "callback",
+     1.0
+    ],
+    [
+     "name drop",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[legacy close].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 13.2,
+   "mean": 13.2,
+   "p25": 13.2,
+   "p75": 13.2,
+   "min": 13.2,
+   "max": 13.2,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[legacy close].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "callback line ending on the name",
+   "agreement": 1.0,
+   "top": [
+    [
+     "callback line ending on the name",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[legacy close].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.129,
+   "mean": 0.129,
+   "p25": 0.129,
+   "p75": 0.129,
+   "min": 0.129,
+   "max": 0.129,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[legacy close].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.5,
+   "mean": 11.5,
+   "p25": 11.5,
+   "p75": 11.5,
+   "min": 11.5,
+   "max": 11.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[name the problem].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "name the problem",
+   "agreement": 1.0,
+   "top": [
+    [
+     "name the problem",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[name the problem].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "list of clean cuts / moody cinematic / viral templates on screen",
+     1.0
+    ],
+    [
+     "named concept",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[name the problem].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.83,
+   "mean": 4.83,
+   "p25": 4.83,
+   "p75": 4.83,
+   "min": 4.83,
+   "max": 4.83,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[name the problem].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "label it 'the trend trap in a nutshell'",
+   "agreement": 1.0,
+   "top": [
+    [
+     "label it 'the trend trap in a nutshell'",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[name the problem].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.071,
+   "mean": 0.071,
+   "p25": 0.071,
+   "p75": 0.071,
+   "min": 0.071,
+   "max": 0.071,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[name the problem].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 3.17,
+   "mean": 3.17,
+   "p25": 3.17,
+   "p75": 3.17,
+   "min": 3.17,
+   "max": 3.17,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[objection].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "objection",
+   "agreement": 1.0,
+   "top": [
+    [
+     "objection",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[objection].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "diagram",
+     1.0
+    ],
+    [
+     "myth-bust",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[objection].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.0,
+   "mean": 11.0,
+   "p25": 11.0,
+   "p75": 11.0,
+   "min": 11.0,
+   "max": 11.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[objection].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "not an mcp controlling after effects",
+   "agreement": 1.0,
+   "top": [
+    [
+     "not an mcp controlling after effects",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[objection].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.103,
+   "mean": 0.103,
+   "p25": 0.103,
+   "p75": 0.103,
+   "min": 0.103,
+   "max": 0.103,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[objection].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.7,
+   "mean": 5.7,
+   "p25": 5.7,
+   "p75": 5.7,
+   "min": 5.7,
+   "max": 5.7,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[one-word punches].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "one-word punches",
+   "agreement": 1.0,
+   "top": [
+    [
+     "one-word punches",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[one-word punches].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "negation then replacement",
+     1.0
+    ],
+    [
+     "rule of three",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[one-word punches].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.183,
+   "mean": 5.183,
+   "p25": 5.183,
+   "p75": 5.183,
+   "min": 5.183,
+   "max": 5.183,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[one-word punches].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "no / timeline (struck) / keyframes / one prompt.",
+   "agreement": 1.0,
+   "top": [
+    [
+     "no / timeline (struck) / keyframes / one prompt.",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[one-word punches].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.083,
+   "mean": 0.083,
+   "p25": 0.083,
+   "p75": 0.083,
+   "min": 0.083,
+   "max": 0.083,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[one-word punches].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.05,
+   "mean": 4.05,
+   "p25": 4.05,
+   "p75": 4.05,
+   "min": 4.05,
+   "max": 4.05,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[pain].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "pain",
+   "agreement": 1.0,
+   "top": [
+    [
+     "pain",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[pain].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "chaos visual of search chips",
+     1.0
+    ],
+    [
+     "specific numbers",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[pain].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.7,
+   "mean": 5.7,
+   "p25": 5.7,
+   "p75": 5.7,
+   "min": 5.7,
+   "max": 5.7,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[pain].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "planning a weekend takes 11 hours and 38 taps",
+   "agreement": 1.0,
+   "top": [
+    [
+     "planning a weekend takes 11 hours and 38 taps",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[pain].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.169,
+   "mean": 0.169,
+   "p25": 0.169,
+   "p75": 0.169,
+   "min": 0.169,
+   "max": 0.169,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[pain].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 1.47,
+   "mean": 1.47,
+   "p25": 1.47,
+   "p75": 1.47,
+   "min": 1.47,
+   "max": 1.47,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[particle spectacle].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "particle spectacle",
+   "agreement": 1.0,
+   "top": [
+    [
+     "particle spectacle",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[particle spectacle].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "pattern interrupt",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[particle spectacle].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.717,
+   "mean": 8.717,
+   "p25": 8.717,
+   "p75": 8.717,
+   "min": 8.717,
+   "max": 8.717,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[particle spectacle].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "visual re-hook",
+   "agreement": 1.0,
+   "top": [
+    [
+     "visual re-hook",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[particle spectacle].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.131,
+   "mean": 0.131,
+   "p25": 0.131,
+   "p75": 0.131,
+   "min": 0.131,
+   "max": 0.131,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[particle spectacle].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 6.933,
+   "mean": 6.933,
+   "p25": 6.933,
+   "p75": 6.933,
+   "min": 6.933,
+   "max": 6.933,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[payoff].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "payoff",
+   "agreement": 1.0,
+   "top": [
+    [
+     "payoff",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[payoff].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "callback",
+     1.0
+    ],
+    [
+     "punchline",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[payoff].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 51.533,
+   "mean": 51.533,
+   "p25": 51.533,
+   "p75": 51.533,
+   "min": 51.533,
+   "max": 51.533,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[payoff].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "first idea to final frame, one prompt",
+   "agreement": 1.0,
+   "top": [
+    [
+     "first idea to final frame, one prompt",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[payoff].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.15,
+   "mean": 0.15,
+   "p25": 0.15,
+   "p75": 0.15,
+   "min": 0.15,
+   "max": 0.15,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[payoff].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 43.8,
+   "mean": 43.8,
+   "p25": 43.8,
+   "p75": 43.8,
+   "min": 43.8,
+   "max": 43.8,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[product intro].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "product intro",
+   "agreement": 1.0,
+   "top": [
+    [
+     "product intro",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[product intro].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "rule of three (where, when, how much)",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[product intro].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 10.0,
+   "mean": 10.0,
+   "p25": 10.0,
+   "p75": 10.0,
+   "min": 10.0,
+   "max": 10.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[product intro].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "meet fairwind: just tell it where, when and how much",
+   "agreement": 1.0,
+   "top": [
+    [
+     "meet fairwind: just tell it where, when and how much",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[product intro].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.172,
+   "mean": 0.172,
+   "p25": 0.172,
+   "p75": 0.172,
+   "min": 0.172,
+   "max": 0.172,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[product intro].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.7,
+   "mean": 5.7,
+   "p25": 5.7,
+   "p75": 5.7,
+   "min": 5.7,
+   "max": 5.7,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[reframe].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "reframe",
+   "agreement": 1.0,
+   "top": [
+    [
+     "reframe",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[reframe].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "moral",
+     1.0
+    ],
+    [
+     "reframe",
+     1.0
+    ],
+    [
+     "twist",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[reframe].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 10.0,
+   "mean": 10.0,
+   "p25": 10.0,
+   "p75": 10.0,
+   "min": 10.0,
+   "max": 10.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[reframe].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "she was selling the wonder of childhood, not rabbits",
+   "agreement": 1.0,
+   "top": [
+    [
+     "she was selling the wonder of childhood, not rabbits",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[reframe].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.48,
+   "mean": 0.48,
+   "p25": 0.48,
+   "p75": 0.48,
+   "min": 0.48,
+   "max": 0.48,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[reframe].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.2,
+   "mean": 5.2,
+   "p25": 5.2,
+   "p75": 5.2,
+   "min": 5.2,
+   "max": 5.2,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[result reaction].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "result reaction",
+   "agreement": 1.0,
+   "top": [
+    [
+     "result reaction",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[result reaction].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "rule of three",
+     1.0
+    ],
+    [
+     "show then tell",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[result reaction].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 30.4,
+   "mean": 30.4,
+   "p25": 30.4,
+   "p75": 30.4,
+   "min": 30.4,
+   "max": 30.4,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[result reaction].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "letters stretch, seamless camera, transition: hell yes",
+   "agreement": 1.0,
+   "top": [
+    [
+     "letters stretch, seamless camera, transition: hell yes",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[result reaction].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.07,
+   "mean": 0.07,
+   "p25": 0.07,
+   "p75": 0.07,
+   "min": 0.07,
+   "max": 0.07,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[result reaction].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 26.767,
+   "mean": 26.767,
+   "p25": 26.767,
+   "p75": 26.767,
+   "min": 26.767,
+   "max": 26.767,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[reveal].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "reveal",
+   "agreement": 1.0,
+   "top": [
+    [
+     "reveal",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[reveal].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "reveal",
+     1.0
+    ],
+    [
+     "simple instruction",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[reveal].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 18.25,
+   "mean": 18.25,
+   "p25": 18.25,
+   "p75": 18.25,
+   "min": 18.25,
+   "max": 18.25,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[reveal].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "this is claude code; you describe, claude handles the rest",
+   "agreement": 1.0,
+   "top": [
+    [
+     "this is claude code; you describe, claude handles the rest",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[reveal].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.141,
+   "mean": 0.141,
+   "p25": 0.141,
+   "p75": 0.141,
+   "min": 0.141,
+   "max": 0.141,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[reveal].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.0,
+   "mean": 11.0,
+   "p25": 11.0,
+   "p75": 11.0,
+   "min": 11.0,
+   "max": 11.0,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[rise].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "rise",
+   "agreement": 1.0,
+   "top": [
+    [
+     "rise",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[rise].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast (hobby vs kingdom)",
+     1.0
+    ],
+    [
+     "metaphor",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[rise].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 9.8,
+   "mean": 9.8,
+   "p25": 9.8,
+   "p75": 9.8,
+   "min": 9.8,
+   "max": 9.8,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[rise].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "couture was not a hobby, it became a kingdom",
+   "agreement": 1.0,
+   "top": [
+    [
+     "couture was not a hobby, it became a kingdom",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[rise].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.326,
+   "mean": 0.326,
+   "p25": 0.326,
+   "p75": 0.326,
+   "min": 0.326,
+   "max": 0.326,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[rise].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.5,
+   "mean": 5.5,
+   "p25": 5.5,
+   "p75": 5.5,
+   "min": 5.5,
+   "max": 5.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[success].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "success",
+   "agreement": 1.0,
+   "top": [
+    [
+     "success",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[success].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "big number",
+     1.0
+    ],
+    [
+     "contrast",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[success].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.2,
+   "mean": 5.2,
+   "p25": 5.2,
+   "p75": 5.2,
+   "min": 5.2,
+   "max": 5.2,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[success].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "peter rabbit sold 45 million copies",
+   "agreement": 1.0,
+   "top": [
+    [
+     "peter rabbit sold 45 million copies",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[success].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.3,
+   "mean": 0.3,
+   "p25": 0.3,
+   "p75": 0.3,
+   "min": 0.3,
+   "max": 0.3,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[success].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 2.2,
+   "mean": 2.2,
+   "p25": 2.2,
+   "p75": 2.2,
+   "min": 2.2,
+   "max": 2.2,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[thesis].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "thesis",
+   "agreement": 1.0,
+   "top": [
+    [
+     "thesis",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[thesis].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "concession ('even if it goes viral')",
+     1.0
+    ],
+    [
+     "contrast (imitation vs own voice)",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[thesis].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 18.8,
+   "mean": 18.8,
+   "p25": 18.8,
+   "p75": 18.8,
+   "min": 18.8,
+   "max": 18.8,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[thesis].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.423,
+   "mean": 0.423,
+   "p25": 0.423,
+   "p75": 0.423,
+   "min": 0.423,
+   "max": 0.423,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[thesis].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.87,
+   "mean": 8.87,
+   "p25": 8.87,
+   "p75": 8.87,
+   "min": 8.87,
+   "max": 8.87,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[title claim].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "title claim",
+   "agreement": 1.0,
+   "top": [
+    [
+     "title claim",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[title claim].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "bold claim",
+     1.0
+    ],
+    [
+     "contrast of black sans and italic serif",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[title claim].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 2.1,
+   "mean": 2.1,
+   "p25": 2.1,
+   "p75": 2.1,
+   "min": 2.1,
+   "max": 2.1,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[title claim].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "claude now does motion (text cut off in frame)",
+   "agreement": 1.0,
+   "top": [
+    [
+     "claude now does motion (text cut off in frame)",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[title claim].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.109,
+   "mean": 0.109,
+   "p25": 0.109,
+   "p75": 0.109,
+   "min": 0.109,
+   "max": 0.109,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[title claim].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.617,
+   "mean": 0.617,
+   "p25": 0.617,
+   "p75": 0.617,
+   "min": 0.617,
+   "max": 0.617,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[turn].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "turn",
+   "agreement": 1.0,
+   "top": [
+    [
+     "turn",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[turn].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "metaphor",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[turn].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 5.5,
+   "mean": 5.5,
+   "p25": 5.5,
+   "p75": 5.5,
+   "min": 5.5,
+   "max": 5.5,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[turn].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "grace reframed as a weapon",
+   "agreement": 1.0,
+   "top": [
+    [
+     "grace reframed as a weapon",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[turn].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.174,
+   "mean": 0.174,
+   "p25": 0.174,
+   "p75": 0.174,
+   "min": 0.174,
+   "max": 0.174,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[turn].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 3.2,
+   "mean": 3.2,
+   "p25": 3.2,
+   "p75": 3.2,
+   "min": 3.2,
+   "max": 3.2,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[workflow contrast].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "workflow contrast",
+   "agreement": 1.0,
+   "top": [
+    [
+     "workflow contrast",
+     1
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[workflow contrast].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast",
+     1.0
+    ],
+    [
+     "counter of hours",
+     1.0
+    ]
+   ],
+   "coverage": 0.167
+  },
+  "structure[workflow contrast].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 43.8,
+   "mean": 43.8,
+   "p25": 43.8,
+   "p75": 43.8,
+   "min": 43.8,
+   "max": 43.8,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[workflow contrast].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.26,
+   "mean": 0.26,
+   "p25": 0.26,
+   "p75": 0.26,
+   "min": 0.26,
+   "max": 0.26,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "structure[workflow contrast].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 30.4,
+   "mean": 30.4,
+   "p25": 30.4,
+   "p75": 30.4,
+   "min": 30.4,
+   "max": 30.4,
+   "cv": 0.0,
+   "coverage": 0.167
+  },
+  "transcript_basis.complete": {
+   "kind": "bool",
+   "n": 6,
+   "mode": true,
+   "agreement": 0.833,
+   "coverage": 1.0
+  },
+  "transcript_basis.coverage_ratio": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.95,
+   "mean": 0.8,
+   "p25": 0.935,
+   "p75": 0.972,
+   "min": 0.0,
+   "max": 0.99,
+   "cv": 0.448,
+   "coverage": 1.0
+  },
+  "transcript_basis.engine": {
+   "kind": "word",
+   "n": 6,
+   "mode": "auto",
+   "agreement": 0.5,
+   "top": [
+    [
+     "auto",
+     3
+    ],
+    [
+     "whisper auto pass (english, roman)",
+     3
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "transcript_basis.phonetic_only": {
+   "kind": "bool",
+   "n": 6,
+   "mode": false,
+   "agreement": 1.0,
+   "coverage": 1.0
+  },
+  "voice.address_terms": {
+   "kind": "items",
+   "n": 2,
+   "top": [
+    [
+     "you",
+     0.5
+    ],
+    [
+     "none",
+     0.5
+    ]
+   ],
+   "coverage": 0.333
+  },
+  "voice.energy": {
+   "kind": "word",
+   "n": 6,
+   "mode": "high, very expressive",
+   "agreement": 0.333,
+   "top": [
+    [
+     "high, very expressive",
+     2
+    ],
+    [
+     "fast, crisp, confident",
+     1
+    ],
+    [
+     "fast, upbeat, short punchy lines",
+     1
+    ],
+    [
+     "high, very fast (measured very fast tempo)",
+     1
+    ],
+    [
+     "high visual energy, no voice",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.formality": {
+   "kind": "word",
+   "n": 6,
+   "mode": "informal-professional",
+   "agreement": 0.333,
+   "top": [
+    [
+     "informal-professional",
+     2
+    ],
+    [
+     "neutral",
+     2
+    ],
+    [
+     "informal",
+     1
+    ],
+    [
+     "elevated, polished",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.humor": {
+   "kind": "word",
+   "n": 6,
+   "mode": "none",
+   "agreement": 0.833,
+   "top": [
+    [
+     "none",
+     5
+    ],
+    [
+     "light, shock swearing censored on screen",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.person": {
+   "kind": "word",
+   "n": 5,
+   "mode": "first person ('i made', 'i gave it') with direct 'you'",
+   "agreement": 0.2,
+   "top": [
+    [
+     "first person ('i made', 'i gave it') with direct 'you'",
+     1
+    ],
+    [
+     "third person (she / her)",
+     1
+    ],
+    [
+     "you (implied) / brand voice 'it'",
+     1
+    ],
+    [
+     "you (second person); no 'i'",
+     1
+    ],
+    [
+     "third person narration",
+     1
+    ]
+   ],
+   "coverage": 0.833
+  },
+  "voice.register": {
+   "kind": "word",
+   "n": 6,
+   "mode": "excited casual explainer",
+   "agreement": 0.167,
+   "top": [
+    [
+     "excited casual explainer",
+     1
+    ],
+    [
+     "dramatic documentary / fashion-biography narration",
+     1
+    ],
+    [
+     "crisp product-launch narration",
+     1
+    ],
+    [
+     "confident creator-coach, short declarative opinions",
+     1
+    ],
+    [
+     "storyteller, documentary-lite",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.tone_tags": {
+   "kind": "items",
+   "n": 6,
+   "top": [
+    [
+     "punchy",
+     0.667
+    ],
+    [
+     "confident",
+     0.5
+    ],
+    [
+     "fast",
+     0.333
+    ],
+    [
+     "demo",
+     0.167
+    ],
+    [
+     "excited",
+     0.167
+    ],
+    [
+     "dramatic",
+     0.167
+    ],
+    [
+     "epic",
+     0.167
+    ],
+    [
+     "glamorous",
+     0.167
+    ],
+    [
+     "mythologising",
+     0.167
+    ],
+    [
+     "minimal",
+     0.167
+    ]
+   ],
+   "coverage": 1.0
+  }
+ },
+ "signature": [
+  "cta.keyword",
+  "hook.duration_s",
+  "hook.open_loop",
+  "language.code_switching",
+  "language.primary",
+  "language.script",
+  "structure[hook].beat",
+  "structure[hook].start_s",
+  "transcript_basis.complete",
+  "transcript_basis.phonetic_only",
+  "voice.humor",
+  "voice.tone_tags"
+ ],
+ "situational": [
+  "cta.ask",
+  "cta.incentive",
+  "cta.placement_s",
+  "cta.repeats",
+  "cta.type",
+  "framework.name",
+  "hook.first_word_s",
+  "hook.first_words",
+  "hook.kind",
+  "hook.pattern",
+  "hook.time_to_value_s",
+  "language.english_term_domains",
+  "lexicon.filler_words",
+  "lexicon.jargon_terms",
+  "lexicon.power_words",
+  "lexicon.signature_phrases",
+  "pacing.numbers_per_min",
+  "pacing.pause_mean_s",
+  "pacing.questions_per_min",
+  "pacing.sentence_words_mean",
+  "pacing.sentence_words_p90",
+  "pacing.speech_ratio",
+  "pacing.words_per_min_overall",
+  "pacing.words_per_min_speaking",
+  "retention.open_loops",
+  "retention.pattern_interrupts",
+  "retention.payoff_at_s",
+  "structure[3D proof].beat",
+  "structure[3D proof].devices",
+  "structure[3D proof].end_s",
+  "structure[3D proof].purpose",
+  "structure[3D proof].share",
+  "structure[3D proof].start_s",
+  "structure[before/after + brand].beat",
+  "structure[before/after + brand].devices",
+  "structure[before/after + brand].end_s",
+  "structure[before/after + brand].purpose",
+  "structure[before/after + brand].share",
+  "structure[before/after + brand].start_s",
+  "structure[brand open].beat",
+  "structure[brand open].devices",
+  "structure[brand open].end_s",
+  "structure[brand open].purpose",
+  "structure[brand open].share",
+  "structure[brand open].start_s",
+  "structure[build proof and payoff].beat",
+  "structure[build proof and payoff].devices",
+  "structure[build proof and payoff].end_s",
+  "structure[build proof and payoff].purpose",
+  "structure[build proof and payoff].share",
+  "structure[build proof and payoff].start_s",
+  "structure[cause].beat",
+  "structure[cause].devices",
+  "structure[cause].end_s",
+  "structure[cause].share",
+  "structure[cause].start_s",
+  "structure[claim].beat",
+  "structure[claim].devices",
+  "structure[claim].end_s",
+  "structure[claim].purpose",
+  "structure[claim].share",
+  "structure[claim].start_s",
+  "structure[crowning].beat",
+  "structure[crowning].devices",
+  "structure[crowning].end_s",
+  "structure[crowning].purpose",
+  "structure[crowning].share",
+  "structure[crowning].start_s",
+  "structure[cta].beat",
+  "structure[cta].devices",
+  "structure[cta].end_s",
+  "structure[cta].purpose",
+  "structure[cta].share",
+  "structure[cta].start_s",
+  "structure[data proof].beat",
+  "structure[data proof].devices",
+  "structure[data proof].end_s",
+  "structure[data proof].purpose",
+  "structure[data proof].share",
+  "structure[data proof].start_s",
+  "structure[demo / proof].beat",
+  "structure[demo / proof].devices",
+  "structure[demo / proof].end_s",
+  "structure[demo / proof].share",
+  "structure[demo / proof].start_s",
+  "structure[demo prompt].beat",
+  "structure[demo prompt].devices",
+  "structure[demo prompt].end_s",
+  "structure[demo prompt].purpose",
+  "structure[demo prompt].share",
+  "structure[demo prompt].start_s",
+  "structure[flexibility].beat",
+  "structure[flexibility].devices",
+  "structure[flexibility].end_s",
+  "structure[flexibility].purpose",
+  "structure[flexibility].share",
+  "structure[flexibility].start_s",
+  "structure[hook].devices",
+  "structure[hook].end_s",
+  "structure[hook].purpose",
+  "structure[hook].share",
+  "structure[legacy close].beat",
+  "structure[legacy close].devices",
+  "structure[legacy close].end_s",
+  "structure[legacy close].purpose",
+  "structure[legacy close].share",
+  "structure[legacy close].start_s",
+  "structure[name the problem].beat",
+  "structure[name the problem].devices",
+  "structure[name the problem].end_s",
+  "structure[name the problem].purpose",
+  "structure[name the problem].share",
+  "structure[name the problem].start_s",
+  "structure[objection].beat",
+  "structure[objection].devices",
+  "structure[objection].end_s",
+  "structure[objection].purpose",
+  "structure[objection].share",
+  "structure[objection].start_s",
+  "structure[one-word punches].beat",
+  "structure[one-word punches].devices",
+  "structure[one-word punches].end_s",
+  "structure[one-word punches].purpose",
+  "structure[one-word punches].share",
+  "structure[one-word punches].start_s",
+  "structure[pain].beat",
+  "structure[pain].devices",
+  "structure[pain].end_s",
+  "structure[pain].purpose",
+  "structure[pain].share",
+  "structure[pain].start_s",
+  "structure[particle spectacle].beat",
+  "structure[particle spectacle].devices",
+  "structure[particle spectacle].end_s",
+  "structure[particle spectacle].purpose",
+  "structure[particle spectacle].share",
+  "structure[particle spectacle].start_s",
+  "structure[payoff].beat",
+  "structure[payoff].devices",
+  "structure[payoff].end_s",
+  "structure[payoff].purpose",
+  "structure[payoff].share",
+  "structure[payoff].start_s",
+  "structure[product intro].beat",
+  "structure[product intro].devices",
+  "structure[product intro].end_s",
+  "structure[product intro].purpose",
+  "structure[product intro].share",
+  "structure[product intro].start_s",
+  "structure[reframe].beat",
+  "structure[reframe].devices",
+  "structure[reframe].end_s",
+  "structure[reframe].purpose",
+  "structure[reframe].share",
+  "structure[reframe].start_s",
+  "structure[result reaction].beat",
+  "structure[result reaction].devices",
+  "structure[result reaction].end_s",
+  "structure[result reaction].purpose",
+  "structure[result reaction].share",
+  "structure[result reaction].start_s",
+  "structure[reveal].beat",
+  "structure[reveal].devices",
+  "structure[reveal].end_s",
+  "structure[reveal].purpose",
+  "structure[reveal].share",
+  "structure[reveal].start_s",
+  "structure[rise].beat",
+  "structure[rise].devices",
+  "structure[rise].end_s",
+  "structure[rise].purpose",
+  "structure[rise].share",
+  "structure[rise].start_s",
+  "structure[success].beat",
+  "structure[success].devices",
+  "structure[success].end_s",
+  "structure[success].purpose",
+  "structure[success].share",
+  "structure[success].start_s",
+  "structure[thesis].beat",
+  "structure[thesis].devices",
+  "structure[thesis].end_s",
+  "structure[thesis].share",
+  "structure[thesis].start_s",
+  "structure[title claim].beat",
+  "structure[title claim].devices",
+  "structure[title claim].end_s",
+  "structure[title claim].purpose",
+  "structure[title claim].share",
+  "structure[title claim].start_s",
+  "structure[turn].beat",
+  "structure[turn].devices",
+  "structure[turn].end_s",
+  "structure[turn].purpose",
+  "structure[turn].share",
+  "structure[turn].start_s",
+  "structure[workflow contrast].beat",
+  "structure[workflow contrast].devices",
+  "structure[workflow contrast].end_s",
+  "structure[workflow contrast].share",
+  "structure[workflow contrast].start_s",
+  "transcript_basis.coverage_ratio",
+  "transcript_basis.engine",
+  "voice.address_terms",
+  "voice.energy",
+  "voice.formality",
+  "voice.person",
+  "voice.register"
+ ],
+ "targets": {
+  "cta.keyword": "claude",
+  "hook.duration_s": 3.0,
+  "hook.open_loop": true,
+  "language.code_switching": "none",
+  "language.primary": "english",
+  "language.script": "roman",
+  "structure[hook].beat": "hook",
+  "structure[hook].start_s": 0.0,
+  "transcript_basis.complete": true,
+  "transcript_basis.phonetic_only": false,
+  "voice.humor": "none",
+  "voice.tone_tags": [
+   "punchy",
+   "confident"
+  ]
+ },
+ "provisional": true,
+ "min_videos_stable": 10
+}

@@ -1283,7 +1283,7 @@ def cmd_creator_upload(a):
     """Worker: copy trigger/cand/_creator/{corpus-<type>-v1.json,BREAKDOWN.md} into creators/<h>/ on Drive."""
     from pathlib import Path
     st = _storage()
-    src = Path("trigger/cand/_creator")
+    src = Path("trigger/cand") / ("_creator_" + a.creator)
     base = f"creators/{a.creator}"
     for t in ("editing", "scripting", "sound"):
         f = src / f"corpus-{t}-v1.json"

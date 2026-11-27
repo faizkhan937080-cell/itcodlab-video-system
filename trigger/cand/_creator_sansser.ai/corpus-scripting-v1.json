@@ -1,0 +1,3968 @@
+{
+ "type": "corpus",
+ "schema_version": 2,
+ "dna_type": "scripting",
+ "creator": "sansser.ai",
+ "n_videos": 7,
+ "job_ids": [
+  "reel-DfMDZKfNER2",
+  "reel-DfBQ1AgOC1S",
+  "reel-Dfi6kGuOemV",
+  "reel-DgNJdLjB5Mq",
+  "reel-DfuYIvZA4Cd",
+  "reel-DfkbSDuB04k",
+  "reel-DfzNJuKB5PA"
+ ],
+ "fields": {
+  "cta.ask": {
+   "kind": "word",
+   "n": 3,
+   "mode": "comment skill for the three skills",
+   "agreement": 0.333,
+   "top": [
+    [
+     "comment skill for the three skills",
+     1
+    ],
+    [
+     "comment plug-ins and i will send you all 30 links",
+     1
+    ],
+    [
+     "comment speed, and we'll send you the exact prompt",
+     1
+    ]
+   ],
+   "coverage": 0.429
+  },
+  "cta.incentive": {
+   "kind": "word",
+   "n": 7,
+   "mode": "the three skills",
+   "agreement": 0.143,
+   "top": [
+    [
+     "the three skills",
+     1
+    ],
+    [
+     "all 30 links sent",
+     1
+    ],
+    [
+     "none stated",
+     1
+    ],
+    [
+     "all nine links by dm",
+     1
+    ],
+    [
+     "the exact prompt",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "cta.keyword": {
+   "kind": "word",
+   "n": 7,
+   "mode": "skill",
+   "agreement": 0.143,
+   "top": [
+    [
+     "skill",
+     1
+    ],
+    [
+     "plugins",
+     1
+    ],
+    [
+     "",
+     1
+    ],
+    [
+     "stars",
+     1
+    ],
+    [
+     "speed",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "cta.placement_s": {
+   "kind": "number",
+   "n": 7,
+   "median": 35.5,
+   "mean": 41.643,
+   "p25": 30.75,
+   "p75": 50.75,
+   "min": 27.5,
+   "max": 65.5,
+   "cv": 0.324,
+   "coverage": 1.0
+  },
+  "cta.repeats": {
+   "kind": "number",
+   "n": 7,
+   "median": 1.0,
+   "mean": 1.0,
+   "p25": 1.0,
+   "p75": 1.0,
+   "min": 0.0,
+   "max": 2.0,
+   "cv": 0.535,
+   "coverage": 1.0
+  },
+  "cta.type": {
+   "kind": "word",
+   "n": 7,
+   "mode": "comment-keyword",
+   "agreement": 0.429,
+   "top": [
+    [
+     "comment-keyword",
+     3
+    ],
+    [
+     "comment keyword",
+     1
+    ],
+    [
+     "challenge / action prompt (no comment keyword)",
+     1
+    ],
+    [
+     "comment-keyword dm + follow gate",
+     1
+    ],
+    [
+     "comment-keyword (skill + prompt delivery)",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "framework.name": {
+   "kind": "word",
+   "n": 5,
+   "mode": "listicle",
+   "agreement": 0.2,
+   "top": [
+    [
+     "listicle",
+     1
+    ],
+    [
+     "listicle countdown (hook-list-cta)",
+     1
+    ],
+    [
+     "pas (problem-agitate-solve) with comment-keyword cta",
+     1
+    ],
+    [
+     "countdown listicle",
+     1
+    ],
+    [
+     "hook-problem example-demo-value anchor-cta",
+     1
+    ]
+   ],
+   "coverage": 0.714
+  },
+  "hook.duration_s": {
+   "kind": "number",
+   "n": 7,
+   "median": 3.9,
+   "mean": 4.3,
+   "p25": 3.0,
+   "p75": 4.85,
+   "min": 3.0,
+   "max": 7.5,
+   "cv": 0.362,
+   "coverage": 1.0
+  },
+  "hook.first_word_s": {
+   "kind": "number",
+   "n": 7,
+   "median": 0.0,
+   "mean": 0.0,
+   "p25": 0.0,
+   "p75": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 1.0
+  },
+  "hook.first_words": {
+   "kind": "word",
+   "n": 3,
+   "mode": "this website cost me $1 and nobody can tell ai made it",
+   "agreement": 0.333,
+   "top": [
+    [
+     "this website cost me $1 and nobody can tell ai made it",
+     1
+    ],
+    [
+     "these are the 30 best claude plugins on github right now and",
+     1
+    ],
+    [
+     "your wi fi has been robbing you this whole time and claude",
+     1
+    ]
+   ],
+   "coverage": 0.429
+  },
+  "hook.kind": {
+   "kind": "word",
+   "n": 7,
+   "mode": "price/result claim with curiosity gap",
+   "agreement": 0.143,
+   "top": [
+    [
+     "price/result claim with curiosity gap",
+     1
+    ],
+    [
+     "result-first, bold claim",
+     1
+    ],
+    [
+     "news-open + time-boxed offer",
+     1
+    ],
+    [
+     "bold claim + list promise (result-first)",
+     1
+    ],
+    [
+     "problem-agitate, bold claim",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "hook.open_loop": {
+   "kind": "bool",
+   "n": 7,
+   "mode": true,
+   "agreement": 0.714,
+   "coverage": 1.0
+  },
+  "hook.pattern": {
+   "kind": "word",
+   "n": 2,
+   "mode": "surprising low cost + nobody can tell it is ai",
+   "agreement": 0.5,
+   "top": [
+    [
+     "surprising low cost + nobody can tell it is ai",
+     1
+    ],
+    [
+     "numbered countdown list; last item teased as the wildest",
+     1
+    ]
+   ],
+   "coverage": 0.286
+  },
+  "hook.time_to_value_s": {
+   "kind": "number",
+   "n": 7,
+   "median": 0.0,
+   "mean": 1.414,
+   "p25": 0.0,
+   "p75": 3.0,
+   "min": 0.0,
+   "max": 3.9,
+   "cv": 1.171,
+   "coverage": 1.0
+  },
+  "language.code_switching": {
+   "kind": "word",
+   "n": 7,
+   "mode": "none",
+   "agreement": 0.429,
+   "top": [
+    [
+     "none",
+     3
+    ],
+    [
+     "none (no hindi detected, devanagari share 0.0)",
+     3
+    ],
+    [
+     "none; product names spoken as written (g-stack, claude mem)",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "language.english_term_domains": {
+   "kind": "items",
+   "n": 7,
+   "top": [
+    [
+     "ai tools",
+     0.571
+    ],
+    [
+     "ai coding",
+     0.429
+    ],
+    [
+     "software/github",
+     0.429
+    ],
+    [
+     "github",
+     0.286
+    ],
+    [
+     "claude models",
+     0.286
+    ],
+    [
+     "pricing",
+     0.143
+    ],
+    [
+     "web",
+     0.143
+    ],
+    [
+     "claude plugins",
+     0.143
+    ],
+    [
+     "networking",
+     0.143
+    ],
+    [
+     "design",
+     0.143
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "language.primary": {
+   "kind": "word",
+   "n": 7,
+   "mode": "english",
+   "agreement": 1.0,
+   "top": [
+    [
+     "english",
+     7
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "language.script": {
+   "kind": "word",
+   "n": 7,
+   "mode": "roman",
+   "agreement": 1.0,
+   "top": [
+    [
+     "roman",
+     7
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "lexicon.filler_words": {
+   "kind": "items",
+   "n": 4,
+   "top": [
+    [
+     "and",
+     0.75
+    ],
+    [
+     "then",
+     0.75
+    ],
+    [
+     "so",
+     0.5
+    ],
+    [
+     "now",
+     0.25
+    ]
+   ],
+   "coverage": 0.571
+  },
+  "lexicon.jargon_terms": {
+   "kind": "items",
+   "n": 7,
+   "top": [
+    [
+     "claude code",
+     0.429
+    ],
+    [
+     "github",
+     0.286
+    ],
+    [
+     "agents",
+     0.286
+    ],
+    [
+     ".top domain",
+     0.143
+    ],
+    [
+     "clarity",
+     0.143
+    ],
+    [
+     "claude design",
+     0.143
+    ],
+    [
+     "kit",
+     0.143
+    ],
+    [
+     "netlify",
+     0.143
+    ],
+    [
+     "plugins",
+     0.143
+    ],
+    [
+     "repo",
+     0.143
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "lexicon.power_words": {
+   "kind": "items",
+   "n": 7,
+   "top": [
+    [
+     "free",
+     0.571
+    ],
+    [
+     "cost",
+     0.143
+    ],
+    [
+     "live",
+     0.143
+    ],
+    [
+     "nothing",
+     0.143
+    ],
+    [
+     "skills",
+     0.143
+    ],
+    [
+     "all 30",
+     0.143
+    ],
+    [
+     "best",
+     0.143
+    ],
+    [
+     "noise",
+     0.143
+    ],
+    [
+     "right now",
+     0.143
+    ],
+    [
+     "cheaper",
+     0.143
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "lexicon.signature_phrases": {
+   "kind": "items",
+   "n": 7,
+   "top": [
+    [
+     "comment skill",
+     0.143
+    ],
+    [
+     "most ai sites look the same",
+     0.143
+    ],
+    [
+     "nobody can tell ai made it",
+     0.143
+    ],
+    [
+     "comment plug-ins and i will send you all 30 links",
+     0.143
+    ],
+    [
+     "if you write code, take this first row.",
+     0.143
+    ],
+    [
+     "now dont go installing all 30",
+     0.143
+    ],
+    [
+     "hand it to fable this week",
+     0.143
+    ],
+    [
+     "now, what to use it for?",
+     0.143
+    ],
+    [
+     "so pick the one problem you gave up on",
+     0.143
+    ],
+    [
+     "take this first.",
+     0.143
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "pacing.numbers_per_min": {
+   "kind": "number",
+   "n": 7,
+   "median": 4.11,
+   "mean": 3.631,
+   "p25": 1.68,
+   "p75": 4.735,
+   "min": 0.0,
+   "max": 8.48,
+   "cv": 0.714,
+   "coverage": 1.0
+  },
+  "pacing.pause_mean_s": {
+   "kind": "number",
+   "n": 7,
+   "median": 0.25,
+   "mean": 0.256,
+   "p25": 0.21,
+   "p75": 0.285,
+   "min": 0.2,
+   "max": 0.35,
+   "cv": 0.205,
+   "coverage": 1.0
+  },
+  "pacing.questions_per_min": {
+   "kind": "number",
+   "n": 7,
+   "median": 0.0,
+   "mean": 0.373,
+   "p25": 0.0,
+   "p75": 0.425,
+   "min": 0.0,
+   "max": 1.76,
+   "cv": 1.71,
+   "coverage": 1.0
+  },
+  "pacing.sentence_words_mean": {
+   "kind": "number",
+   "n": 7,
+   "median": 16.9,
+   "mean": 16.157,
+   "p25": 13.85,
+   "p75": 18.35,
+   "min": 12.4,
+   "max": 19.4,
+   "cv": 0.166,
+   "coverage": 1.0
+  },
+  "pacing.sentence_words_p90": {
+   "kind": "number",
+   "n": 7,
+   "median": 25.9,
+   "mean": 24.314,
+   "p25": 18.8,
+   "p75": 29.3,
+   "min": 16.6,
+   "max": 31.5,
+   "cv": 0.235,
+   "coverage": 1.0
+  },
+  "pacing.speech_ratio": {
+   "kind": "number",
+   "n": 7,
+   "median": 0.919,
+   "mean": 0.914,
+   "p25": 0.903,
+   "p75": 0.931,
+   "min": 0.872,
+   "max": 0.938,
+   "cv": 0.024,
+   "coverage": 1.0
+  },
+  "pacing.words_per_min_overall": {
+   "kind": "number",
+   "n": 7,
+   "median": 227.3,
+   "mean": 220.9,
+   "p25": 208.1,
+   "p75": 230.9,
+   "min": 199.3,
+   "max": 241.7,
+   "cv": 0.067,
+   "coverage": 1.0
+  },
+  "pacing.words_per_min_speaking": {
+   "kind": "number",
+   "n": 7,
+   "median": 243.1,
+   "mean": 241.8,
+   "p25": 232.45,
+   "p75": 250.2,
+   "min": 215.2,
+   "max": 269.0,
+   "cv": 0.066,
+   "coverage": 1.0
+  },
+  "retention.open_loops": {
+   "kind": "number",
+   "n": 7,
+   "median": 1.0,
+   "mean": 1.0,
+   "p25": 0.5,
+   "p75": 1.5,
+   "min": 0.0,
+   "max": 2.0,
+   "cv": 0.756,
+   "coverage": 1.0
+  },
+  "retention.pattern_interrupts": {
+   "kind": "word",
+   "n": 2,
+   "mode": "now dont go installing all 30 turns the list into advice",
+   "agreement": 0.5,
+   "top": [
+    [
+     "now dont go installing all 30 turns the list into advice",
+     1
+    ],
+    [
+     "each then starts a new ranked item every ~2.8 s",
+     1
+    ]
+   ],
+   "coverage": 0.286
+  },
+  "retention.payoff_at_s": {
+   "kind": "number",
+   "n": 7,
+   "median": 25.5,
+   "mean": 35.071,
+   "p25": 23.0,
+   "p75": 45.5,
+   "min": 17.5,
+   "max": 65.5,
+   "cv": 0.487,
+   "coverage": 1.0
+  },
+  "structure[agitate].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "agitate",
+   "agreement": 1.0,
+   "top": [
+    [
+     "agitate",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[agitate].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[agitate].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.0,
+   "mean": 8.0,
+   "p25": 8.0,
+   "p75": 8.0,
+   "min": 8.0,
+   "max": 8.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[agitate].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "pay for one speed, get half",
+   "agreement": 1.0,
+   "top": [
+    [
+     "pay for one speed, get half",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[agitate].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.103,
+   "mean": 0.103,
+   "p25": 0.103,
+   "p75": 0.103,
+   "min": 0.103,
+   "max": 0.103,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[agitate].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.5,
+   "mean": 4.5,
+   "p25": 4.5,
+   "p75": 4.5,
+   "min": 4.5,
+   "max": 4.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[closing_question].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "closing_question",
+   "agreement": 1.0,
+   "top": [
+    [
+     "closing_question",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[closing_question].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "humour",
+     1.0
+    ],
+    [
+     "question",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[closing_question].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 34.005,
+   "mean": 34.005,
+   "p25": 34.005,
+   "p75": 34.005,
+   "min": 34.005,
+   "max": 34.005,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[closing_question].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.103,
+   "mean": 0.103,
+   "p25": 0.103,
+   "p75": 0.103,
+   "min": 0.103,
+   "max": 0.103,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[closing_question].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 30.5,
+   "mean": 30.5,
+   "p25": 30.5,
+   "p75": 30.5,
+   "min": 30.5,
+   "max": 30.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[cta].beat": {
+   "kind": "word",
+   "n": 5,
+   "mode": "cta",
+   "agreement": 1.0,
+   "top": [
+    [
+     "cta",
+     5
+    ]
+   ],
+   "coverage": 0.714
+  },
+  "structure[cta].devices": {
+   "kind": "items",
+   "n": 5,
+   "top": [
+    [
+     "keyword cta",
+     0.6
+    ],
+    [
+     "countdown list",
+     0.2
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     0.2
+    ],
+    [
+     "incentive",
+     0.2
+    ],
+    [
+     "explain-then-demo",
+     0.2
+    ],
+    [
+     "worked example (dentist in dallas)",
+     0.2
+    ]
+   ],
+   "coverage": 0.714
+  },
+  "structure[cta].end_s": {
+   "kind": "number",
+   "n": 5,
+   "median": 39.3,
+   "mean": 42.608,
+   "p25": 32.725,
+   "p75": 52.1,
+   "min": 30.5,
+   "max": 58.417,
+   "cv": 0.256,
+   "coverage": 0.714
+  },
+  "structure[cta].purpose": {
+   "kind": "word",
+   "n": 4,
+   "mode": "comment keyword for links",
+   "agreement": 0.25,
+   "top": [
+    [
+     "comment keyword for links",
+     1
+    ],
+    [
+     "comment speed for prompt",
+     1
+    ],
+    [
+     "comment rank for all seven with install commands",
+     1
+    ],
+    [
+     "comment keyword \"seo\" -> skill + exact prompt",
+     1
+    ]
+   ],
+   "coverage": 0.571
+  },
+  "structure[cta].share": {
+   "kind": "number",
+   "n": 5,
+   "median": 0.097,
+   "mean": 0.103,
+   "p25": 0.088,
+   "p75": 0.136,
+   "min": 0.05,
+   "max": 0.144,
+   "cv": 0.332,
+   "coverage": 0.714
+  },
+  "structure[cta].start_s": {
+   "kind": "number",
+   "n": 5,
+   "median": 35.5,
+   "mean": 38.3,
+   "p25": 28.0,
+   "p75": 45.0,
+   "min": 27.5,
+   "max": 55.5,
+   "cv": 0.279,
+   "coverage": 0.714
+  },
+  "structure[cta_challenge].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "cta_challenge",
+   "agreement": 1.0,
+   "top": [
+    [
+     "cta_challenge",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[cta_challenge].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast (use for / waste on)",
+     1.0
+    ],
+    [
+     "signposted chapters (tabs)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[cta_challenge].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 70.792,
+   "mean": 70.792,
+   "p25": 70.792,
+   "p75": 70.792,
+   "min": 70.792,
+   "max": 70.792,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[cta_challenge].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.075,
+   "mean": 0.075,
+   "p25": 0.075,
+   "p75": 0.075,
+   "min": 0.075,
+   "max": 0.075,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[cta_challenge].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 65.5,
+   "mean": 65.5,
+   "p25": 65.5,
+   "p75": 65.5,
+   "min": 65.5,
+   "max": 65.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[demo_how].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "demo_how",
+   "agreement": 1.0,
+   "top": [
+    [
+     "demo_how",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[demo_how].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "explain-then-demo",
+     1.0
+    ],
+    [
+     "worked example (dentist in dallas)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[demo_how].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 31.0,
+   "mean": 31.0,
+   "p25": 31.0,
+   "p75": 31.0,
+   "min": 31.0,
+   "max": 31.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[demo_how].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.343,
+   "mean": 0.343,
+   "p25": 0.343,
+   "p75": 0.343,
+   "min": 0.343,
+   "max": 0.343,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[demo_how].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 17.5,
+   "mean": 17.5,
+   "p25": 17.5,
+   "p75": 17.5,
+   "min": 17.5,
+   "max": 17.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[extras and CTA].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "extras and cta",
+   "agreement": 1.0,
+   "top": [
+    [
+     "extras and cta",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[extras and CTA].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "comment keyword cta",
+     1.0
+    ],
+    [
+     "stack add-ons",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[extras and CTA].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 37.013,
+   "mean": 37.013,
+   "p25": 37.013,
+   "p75": 37.013,
+   "min": 37.013,
+   "max": 37.013,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[extras and CTA].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "kit for emails, clarity to watch users; comment skill",
+   "agreement": 1.0,
+   "top": [
+    [
+     "kit for emails, clarity to watch users; comment skill",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[extras and CTA].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.173,
+   "mean": 0.173,
+   "p25": 0.173,
+   "p75": 0.173,
+   "min": 0.173,
+   "max": 0.173,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[extras and CTA].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 30.617,
+   "mean": 30.617,
+   "p25": 30.617,
+   "p75": 30.617,
+   "min": 30.617,
+   "max": 30.617,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[hook+what_it_is].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "hook+what_it_is",
+   "agreement": 1.0,
+   "top": [
+    [
+     "hook+what_it_is",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[hook+what_it_is].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast (use for / waste on)",
+     1.0
+    ],
+    [
+     "signposted chapters (tabs)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[hook+what_it_is].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 23.1,
+   "mean": 23.1,
+   "p25": 23.1,
+   "p75": 23.1,
+   "min": 23.1,
+   "max": 23.1,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[hook+what_it_is].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.326,
+   "mean": 0.326,
+   "p25": 0.326,
+   "p75": 0.326,
+   "min": 0.326,
+   "max": 0.326,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[hook+what_it_is].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.0,
+   "mean": 0.0,
+   "p25": 0.0,
+   "p75": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[hook].beat": {
+   "kind": "word",
+   "n": 6,
+   "mode": "hook",
+   "agreement": 1.0,
+   "top": [
+    [
+     "hook",
+     6
+    ]
+   ],
+   "coverage": 0.857
+  },
+  "structure[hook].devices": {
+   "kind": "items",
+   "n": 6,
+   "top": [
+    [
+     "bold claim",
+     0.333
+    ],
+    [
+     "number claim",
+     0.333
+    ],
+    [
+     "price anchor",
+     0.167
+    ],
+    [
+     "curation promise",
+     0.167
+    ],
+    [
+     "countdown list",
+     0.167
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     0.167
+    ],
+    [
+     "personification",
+     0.167
+    ],
+    [
+     "free angle",
+     0.167
+    ],
+    [
+     "explain-then-demo",
+     0.167
+    ],
+    [
+     "worked example (dentist in dallas)",
+     0.167
+    ]
+   ],
+   "coverage": 0.857
+  },
+  "structure[hook].end_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 5.25,
+   "mean": 6.097,
+   "p25": 4.275,
+   "p75": 7.125,
+   "min": 3.883,
+   "max": 10.5,
+   "cv": 0.381,
+   "coverage": 0.857
+  },
+  "structure[hook].purpose": {
+   "kind": "word",
+   "n": 4,
+   "mode": "$1 site nobody can tell is ai",
+   "agreement": 0.25,
+   "top": [
+    [
+     "$1 site nobody can tell is ai",
+     1
+    ],
+    [
+     "state the list and promise role sorting",
+     1
+    ],
+    [
+     "accuse wifi, claim claude caught it",
+     1
+    ],
+    [
+     "number, ranking basis and free",
+     1
+    ]
+   ],
+   "coverage": 0.571
+  },
+  "structure[hook].share": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.156,
+   "mean": 0.145,
+   "p25": 0.112,
+   "p75": 0.182,
+   "min": 0.081,
+   "max": 0.191,
+   "cv": 0.29,
+   "coverage": 0.857
+  },
+  "structure[hook].start_s": {
+   "kind": "number",
+   "n": 6,
+   "median": 0.0,
+   "mean": 0.0,
+   "p25": 0.0,
+   "p75": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.857
+  },
+  "structure[how_to_switch].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "how_to_switch",
+   "agreement": 1.0,
+   "top": [
+    [
+     "how_to_switch",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[how_to_switch].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast (use for / waste on)",
+     1.0
+    ],
+    [
+     "signposted chapters (tabs)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[how_to_switch].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 58.0,
+   "mean": 58.0,
+   "p25": 58.0,
+   "p75": 58.0,
+   "min": 58.0,
+   "max": 58.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[how_to_switch].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.226,
+   "mean": 0.226,
+   "p25": 0.226,
+   "p75": 0.226,
+   "min": 0.226,
+   "max": 0.226,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[how_to_switch].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 42.0,
+   "mean": 42.0,
+   "p25": 42.0,
+   "p75": 42.0,
+   "min": 42.0,
+   "max": 42.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item1_2].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item1_2",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item1_2",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item1_2].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "one line benefit per item",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item1_2].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.5,
+   "mean": 11.5,
+   "p25": 11.5,
+   "p75": 11.5,
+   "min": 11.5,
+   "max": 11.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item1_2].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "cloudflare audit, matt pocock skills",
+   "agreement": 1.0,
+   "top": [
+    [
+     "cloudflare audit, matt pocock skills",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item1_2].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.168,
+   "mean": 0.168,
+   "p25": 0.168,
+   "p75": 0.168,
+   "min": 0.168,
+   "max": 0.168,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item1_2].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 6.0,
+   "mean": 6.0,
+   "p25": 6.0,
+   "p75": 6.0,
+   "min": 6.0,
+   "max": 6.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item1_t3].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item1_t3",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item1_t3",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item1_t3].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item1_t3].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 9.7,
+   "mean": 9.7,
+   "p25": 9.7,
+   "p75": 9.7,
+   "min": 9.7,
+   "max": 9.7,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item1_t3].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.106,
+   "mean": 0.106,
+   "p25": 0.106,
+   "p75": 0.106,
+   "min": 0.106,
+   "max": 0.106,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item1_t3].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 4.2,
+   "mean": 4.2,
+   "p25": 4.2,
+   "p75": 4.2,
+   "min": 4.2,
+   "max": 4.2,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item2_free_model].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item2_free_model",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item2_free_model",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item2_free_model].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item2_free_model].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 13.7,
+   "mean": 13.7,
+   "p25": 13.7,
+   "p75": 13.7,
+   "min": 13.7,
+   "max": 13.7,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item2_free_model].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "#2 plugin giving deepseek and kimi free, no api key",
+   "agreement": 1.0,
+   "top": [
+    [
+     "#2 plugin giving deepseek and kimi free, no api key",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item2_free_model].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.077,
+   "mean": 0.077,
+   "p25": 0.077,
+   "p75": 0.077,
+   "min": 0.077,
+   "max": 0.077,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item2_free_model].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 9.7,
+   "mean": 9.7,
+   "p25": 9.7,
+   "p75": 9.7,
+   "min": 9.7,
+   "max": 9.7,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item3_5].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item3_5",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item3_5",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item3_5].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "then ... pattern",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item3_5].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.5,
+   "mean": 19.5,
+   "p25": 19.5,
+   "p75": 19.5,
+   "min": 19.5,
+   "max": 19.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item3_5].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "ponytail, impeccable, everything claude code",
+   "agreement": 1.0,
+   "top": [
+    [
+     "ponytail, impeccable, everything claude code",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item3_5].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.244,
+   "mean": 0.244,
+   "p25": 0.244,
+   "p75": 0.244,
+   "min": 0.244,
+   "max": 0.244,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item3_5].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.5,
+   "mean": 11.5,
+   "p25": 11.5,
+   "p75": 11.5,
+   "min": 11.5,
+   "max": 11.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item3_cloudflare].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item3_cloudflare",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item3_cloudflare",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item3_cloudflare].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item3_cloudflare].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.0,
+   "mean": 19.0,
+   "p25": 19.0,
+   "p75": 19.0,
+   "min": 19.0,
+   "max": 19.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item3_cloudflare].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "#3 cloudflare security-audit skill",
+   "agreement": 1.0,
+   "top": [
+    [
+     "#3 cloudflare security-audit skill",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item3_cloudflare].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.102,
+   "mean": 0.102,
+   "p25": 0.102,
+   "p75": 0.102,
+   "min": 0.102,
+   "max": 0.102,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item3_cloudflare].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 13.7,
+   "mean": 13.7,
+   "p25": 13.7,
+   "p75": 13.7,
+   "min": 13.7,
+   "max": 13.7,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item6_7].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item6_7",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item6_7",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item6_7].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "then ... pattern",
+     1.0
+    ],
+    [
+     "vivid metaphor little working machine",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item6_7].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 28.0,
+   "mean": 28.0,
+   "p25": 28.0,
+   "p75": 28.0,
+   "min": 28.0,
+   "max": 28.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item6_7].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "anatomy, hallmark",
+   "agreement": 1.0,
+   "top": [
+    [
+     "anatomy, hallmark",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item6_7].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.26,
+   "mean": 0.26,
+   "p25": 0.26,
+   "p75": 0.26,
+   "min": 0.26,
+   "max": 0.26,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item6_7].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.5,
+   "mean": 19.5,
+   "p25": 19.5,
+   "p75": 19.5,
+   "min": 19.5,
+   "max": 19.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item6_sherlock].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item6_sherlock",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item6_sherlock",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item6_sherlock].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item6_sherlock].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 26.5,
+   "mean": 26.5,
+   "p25": 26.5,
+   "p75": 26.5,
+   "min": 26.5,
+   "max": 26.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item6_sherlock].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "#6 sherlock: find social accounts from one username",
+   "agreement": 1.0,
+   "top": [
+    [
+     "#6 sherlock: find social accounts from one username",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item6_sherlock].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.092,
+   "mean": 0.092,
+   "p25": 0.092,
+   "p75": 0.092,
+   "min": 0.092,
+   "max": 0.092,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item6_sherlock].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 21.7,
+   "mean": 21.7,
+   "p25": 21.7,
+   "p75": 21.7,
+   "min": 21.7,
+   "max": 21.7,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item7_openmausbot].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item7_openmausbot",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item7_openmausbot",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item7_openmausbot].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item7_openmausbot].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 30.8,
+   "mean": 30.8,
+   "p25": 30.8,
+   "p75": 30.8,
+   "min": 30.8,
+   "max": 30.8,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item7_openmausbot].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "#7 openmausbot: bot with its own virtual computer",
+   "agreement": 1.0,
+   "top": [
+    [
+     "#7 openmausbot: bot with its own virtual computer",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item7_openmausbot].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.083,
+   "mean": 0.083,
+   "p25": 0.083,
+   "p75": 0.083,
+   "min": 0.083,
+   "max": 0.083,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item7_openmausbot].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 26.5,
+   "mean": 26.5,
+   "p25": 26.5,
+   "p75": 26.5,
+   "min": 26.5,
+   "max": 26.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item8_magpie].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item8_magpie",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item8_magpie",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item8_magpie].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item8_magpie].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 35.3,
+   "mean": 35.3,
+   "p25": 35.3,
+   "p75": 35.3,
+   "min": 35.3,
+   "max": 35.3,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item8_magpie].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.086,
+   "mean": 0.086,
+   "p25": 0.086,
+   "p75": 0.086,
+   "min": 0.086,
+   "max": 0.086,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item8_magpie].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 30.8,
+   "mean": 30.8,
+   "p25": 30.8,
+   "p75": 30.8,
+   "min": 30.8,
+   "max": 30.8,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item9_wildest].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "item9_wildest",
+   "agreement": 1.0,
+   "top": [
+    [
+     "item9_wildest",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item9_wildest].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[item9_wildest].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 45.0,
+   "mean": 45.0,
+   "p25": 45.0,
+   "p75": 45.0,
+   "min": 45.0,
+   "max": 45.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item9_wildest].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.186,
+   "mean": 0.186,
+   "p25": 0.186,
+   "p75": 0.186,
+   "min": 0.186,
+   "max": 0.186,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[item9_wildest].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 35.3,
+   "mean": 35.3,
+   "p25": 35.3,
+   "p75": 35.3,
+   "min": 35.3,
+   "max": 35.3,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[items4_5].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "items4_5",
+   "agreement": 1.0,
+   "top": [
+    [
+     "items4_5",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[items4_5].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "countdown list",
+     1.0
+    ],
+    [
+     "rule of three-free (\"all nine are free\")",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[items4_5].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 21.7,
+   "mean": 21.7,
+   "p25": 21.7,
+   "p75": 21.7,
+   "min": 21.7,
+   "max": 21.7,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[items4_5].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "#4/#5 impeccable and hallmark (cards not in sampled frames)",
+   "agreement": 1.0,
+   "top": [
+    [
+     "#4/#5 impeccable and hallmark (cards not in sampled frames)",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[items4_5].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.052,
+   "mean": 0.052,
+   "p25": 0.052,
+   "p75": 0.052,
+   "min": 0.052,
+   "max": 0.052,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[items4_5].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.0,
+   "mean": 19.0,
+   "p25": 19.0,
+   "p75": 19.0,
+   "min": 19.0,
+   "max": 19.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[limits].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "limits",
+   "agreement": 1.0,
+   "top": [
+    [
+     "limits",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[limits].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast (use for / waste on)",
+     1.0
+    ],
+    [
+     "signposted chapters (tabs)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[limits].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 65.5,
+   "mean": 65.5,
+   "p25": 65.5,
+   "p75": 65.5,
+   "min": 65.5,
+   "max": 65.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[limits].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.106,
+   "mean": 0.106,
+   "p25": 0.106,
+   "p75": 0.106,
+   "min": 0.106,
+   "max": 0.106,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[limits].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 58.0,
+   "mean": 58.0,
+   "p25": 58.0,
+   "p75": 58.0,
+   "min": 58.0,
+   "max": 58.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[pain point].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "pain point",
+   "agreement": 1.0,
+   "top": [
+    [
+     "pain point",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[pain point].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "common enemy",
+     1.0
+    ],
+    [
+     "pattern interrupt",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[pain point].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 15.467,
+   "mean": 15.467,
+   "p25": 15.467,
+   "p75": 15.467,
+   "min": 15.467,
+   "max": 15.467,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[pain point].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "most ai sites look the same: purple gradient, three boxes",
+   "agreement": 1.0,
+   "top": [
+    [
+     "most ai sites look the same: purple gradient, three boxes",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[pain point].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.11,
+   "mean": 0.11,
+   "p25": 0.11,
+   "p75": 0.11,
+   "min": 0.11,
+   "max": 0.11,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[pain point].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 11.383,
+   "mean": 11.383,
+   "p25": 11.383,
+   "p75": 11.383,
+   "min": 11.383,
+   "max": 11.383,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[pattern_interrupt_scenario].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "pattern_interrupt_scenario",
+   "agreement": 1.0,
+   "top": [
+    [
+     "pattern_interrupt_scenario",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[pattern_interrupt_scenario].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "explain-then-demo",
+     1.0
+    ],
+    [
+     "worked example (dentist in dallas)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[pattern_interrupt_scenario].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 17.5,
+   "mean": 17.5,
+   "p25": 17.5,
+   "p75": 17.5,
+   "min": 17.5,
+   "max": 17.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[pattern_interrupt_scenario].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.254,
+   "mean": 0.254,
+   "p25": 0.254,
+   "p75": 0.254,
+   "min": 0.254,
+   "max": 0.254,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[pattern_interrupt_scenario].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 7.5,
+   "mean": 7.5,
+   "p25": 7.5,
+   "p75": 7.5,
+   "min": 7.5,
+   "max": 7.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[problem anchor].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "problem anchor",
+   "agreement": 1.0,
+   "top": [
+    [
+     "problem anchor",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[problem anchor].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast",
+     1.0
+    ],
+    [
+     "named competitors",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[problem anchor].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 7.117,
+   "mean": 7.117,
+   "p25": 7.117,
+   "p75": 7.117,
+   "min": 7.117,
+   "max": 7.117,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[problem anchor].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "builders charge about $20 a month",
+   "agreement": 1.0,
+   "top": [
+    [
+     "builders charge about $20 a month",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[problem anchor].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.087,
+   "mean": 0.087,
+   "p25": 0.087,
+   "p75": 0.087,
+   "min": 0.087,
+   "max": 0.087,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[problem anchor].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 3.883,
+   "mean": 3.883,
+   "p25": 3.883,
+   "p75": 3.883,
+   "min": 3.883,
+   "max": 3.883,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[proof].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "proof",
+   "agreement": 1.0,
+   "top": [
+    [
+     "proof",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[proof].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "claim of proof",
+     1.0
+    ],
+    [
+     "demo",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[proof].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 27.5,
+   "mean": 27.5,
+   "p25": 27.5,
+   "p75": 27.5,
+   "min": 27.5,
+   "max": 27.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[proof].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "fix with yes, speed jumps, double speed",
+   "agreement": 1.0,
+   "top": [
+    [
+     "fix with yes, speed jumps, double speed",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[proof].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.162,
+   "mean": 0.162,
+   "p25": 0.162,
+   "p75": 0.162,
+   "min": 0.162,
+   "max": 0.162,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[proof].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 22.0,
+   "mean": 22.0,
+   "p25": 22.0,
+   "p75": 22.0,
+   "min": 22.0,
+   "max": 22.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[publish and domain].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "publish and domain",
+   "agreement": 1.0,
+   "top": [
+    [
+     "publish and domain",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[publish and domain].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "cost payoff",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[publish and domain].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 30.617,
+   "mean": 30.617,
+   "p25": 30.617,
+   "p75": 30.617,
+   "min": 30.617,
+   "max": 30.617,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[publish and domain].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "share to netlify, free live; .top domain $1",
+   "agreement": 1.0,
+   "top": [
+    [
+     "share to netlify, free live; .top domain $1",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[publish and domain].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.247,
+   "mean": 0.247,
+   "p25": 0.247,
+   "p75": 0.247,
+   "min": 0.247,
+   "max": 0.247,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[publish and domain].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 21.467,
+   "mean": 21.467,
+   "p25": 21.467,
+   "p75": 21.467,
+   "min": 21.467,
+   "max": 21.467,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_code].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row_code",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row_code",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_code].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "list of names",
+     1.0
+    ],
+    [
+     "role address if you write code",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_code].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.5,
+   "mean": 19.5,
+   "p25": 19.5,
+   "p75": 19.5,
+   "min": 19.5,
+   "max": 19.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_code].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row 1 coding plugins",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row 1 coding plugins",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_code].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.154,
+   "mean": 0.154,
+   "p25": 0.154,
+   "p75": 0.154,
+   "min": 0.154,
+   "max": 0.154,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_code].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 10.5,
+   "mean": 10.5,
+   "p25": 10.5,
+   "p75": 10.5,
+   "min": 10.5,
+   "max": 10.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_design].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row_design",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row_design",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_design].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "list of names",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_design].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 39.5,
+   "mean": 39.5,
+   "p25": 39.5,
+   "p75": 39.5,
+   "min": 39.5,
+   "max": 39.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_design].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row 4 design",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row 4 design",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_design].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.12,
+   "mean": 0.12,
+   "p25": 0.12,
+   "p75": 0.12,
+   "min": 0.12,
+   "max": 0.12,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_design].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 32.5,
+   "mean": 32.5,
+   "p25": 32.5,
+   "p75": 32.5,
+   "min": 32.5,
+   "max": 32.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_research].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row_research",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row_research",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_research].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "list of names",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_research].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 26.5,
+   "mean": 26.5,
+   "p25": 26.5,
+   "p75": 26.5,
+   "min": 26.5,
+   "max": 26.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_research].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row 2 research",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row 2 research",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_research].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.12,
+   "mean": 0.12,
+   "p25": 0.12,
+   "p75": 0.12,
+   "min": 0.12,
+   "max": 0.12,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_research].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 19.5,
+   "mean": 19.5,
+   "p25": 19.5,
+   "p75": 19.5,
+   "min": 19.5,
+   "max": 19.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_tokens].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row_tokens",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row_tokens",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_tokens].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "list of names",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_tokens].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 32.5,
+   "mean": 32.5,
+   "p25": 32.5,
+   "p75": 32.5,
+   "min": 32.5,
+   "max": 32.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_tokens].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row 3 big projects, tokens",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row 3 big projects, tokens",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_tokens].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.103,
+   "mean": 0.103,
+   "p25": 0.103,
+   "p75": 0.103,
+   "min": 0.103,
+   "max": 0.103,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_tokens].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 26.5,
+   "mean": 26.5,
+   "p25": 26.5,
+   "p75": 26.5,
+   "min": 26.5,
+   "max": 26.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_writing].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row_writing",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row_writing",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_writing].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "list of names",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_writing].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 46.0,
+   "mean": 46.0,
+   "p25": 46.0,
+   "p75": 46.0,
+   "min": 46.0,
+   "max": 46.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_writing].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "row 5 writing and video",
+   "agreement": 1.0,
+   "top": [
+    [
+     "row 5 writing and video",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[row_writing].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.111,
+   "mean": 0.111,
+   "p25": 0.111,
+   "p75": 0.111,
+   "min": 0.111,
+   "max": 0.111,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[row_writing].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 39.5,
+   "mean": 39.5,
+   "p25": 39.5,
+   "p75": 39.5,
+   "min": 39.5,
+   "max": 39.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[secret].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "secret",
+   "agreement": 1.0,
+   "top": [
+    [
+     "secret",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[secret].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "enumeration",
+     1.0
+    ],
+    [
+     "reveal",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[secret].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 25.4,
+   "mean": 25.4,
+   "p25": 25.4,
+   "p75": 25.4,
+   "min": 25.4,
+   "max": 25.4,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[secret].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "three skills: one to write human, two to design",
+   "agreement": 1.0,
+   "top": [
+    [
+     "three skills: one to write human, two to design",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[secret].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.268,
+   "mean": 0.268,
+   "p25": 0.268,
+   "p75": 0.268,
+   "min": 0.268,
+   "max": 0.268,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[secret].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 15.467,
+   "mean": 15.467,
+   "p25": 15.467,
+   "p75": 15.467,
+   "min": 15.467,
+   "max": 15.467,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[solution].beat": {
+   "kind": "word",
+   "n": 2,
+   "mode": "solution",
+   "agreement": 1.0,
+   "top": [
+    [
+     "solution",
+     2
+    ]
+   ],
+   "coverage": 0.286
+  },
+  "structure[solution].devices": {
+   "kind": "items",
+   "n": 2,
+   "top": [
+    [
+     "simple instruction",
+     0.5
+    ],
+    [
+     "analogy detective",
+     0.5
+    ],
+    [
+     "rule of three",
+     0.5
+    ]
+   ],
+   "coverage": 0.286
+  },
+  "structure[solution].end_s": {
+   "kind": "number",
+   "n": 2,
+   "median": 16.691,
+   "mean": 16.691,
+   "p25": 14.037,
+   "p75": 19.346,
+   "min": 11.383,
+   "max": 22.0,
+   "cv": 0.318,
+   "coverage": 0.286
+  },
+  "structure[solution].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "claude design builds whole page from a prompt",
+   "agreement": 1.0,
+   "top": [
+    [
+     "claude design builds whole page from a prompt",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[solution].share": {
+   "kind": "number",
+   "n": 2,
+   "median": 0.227,
+   "mean": 0.227,
+   "p25": 0.171,
+   "p75": 0.282,
+   "min": 0.115,
+   "max": 0.338,
+   "cv": 0.492,
+   "coverage": 0.286
+  },
+  "structure[solution].start_s": {
+   "kind": "number",
+   "n": 2,
+   "median": 8.809,
+   "mean": 8.809,
+   "p25": 7.963,
+   "p75": 9.654,
+   "min": 7.117,
+   "max": 10.5,
+   "cv": 0.192,
+   "coverage": 0.286
+  },
+  "structure[twist].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "twist",
+   "agreement": 1.0,
+   "top": [
+    [
+     "twist",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[twist].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "curiosity gap",
+     1.0
+    ],
+    [
+     "twist",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[twist].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 10.5,
+   "mean": 10.5,
+   "p25": 10.5,
+   "p75": 10.5,
+   "min": 10.5,
+   "max": 10.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[twist].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "your isp is not the culprit",
+   "agreement": 1.0,
+   "top": [
+    [
+     "your isp is not the culprit",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[twist].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.074,
+   "mean": 0.074,
+   "p25": 0.074,
+   "p75": 0.074,
+   "min": 0.074,
+   "max": 0.074,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[twist].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 8.0,
+   "mean": 8.0,
+   "p25": 8.0,
+   "p75": 8.0,
+   "min": 8.0,
+   "max": 8.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[value_anchor].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "value_anchor",
+   "agreement": 1.0,
+   "top": [
+    [
+     "value_anchor",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[value_anchor].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "explain-then-demo",
+     1.0
+    ],
+    [
+     "worked example (dentist in dallas)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[value_anchor].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 35.5,
+   "mean": 35.5,
+   "p25": 35.5,
+   "p75": 35.5,
+   "min": 35.5,
+   "max": 35.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[value_anchor].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.114,
+   "mean": 0.114,
+   "p25": 0.114,
+   "p75": 0.114,
+   "min": 0.114,
+   "max": 0.114,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[value_anchor].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 31.0,
+   "mean": 31.0,
+   "p25": 31.0,
+   "p75": 31.0,
+   "min": 31.0,
+   "max": 31.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[warning].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "warning",
+   "agreement": 1.0,
+   "top": [
+    [
+     "warning",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[warning].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast",
+     1.0
+    ],
+    [
+     "safety advice",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[warning].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 55.5,
+   "mean": 55.5,
+   "p25": 55.5,
+   "p75": 55.5,
+   "min": 55.5,
+   "max": 55.5,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[warning].purpose": {
+   "kind": "word",
+   "n": 1,
+   "mode": "dont install all 30, pick one row, check repo permissions",
+   "agreement": 1.0,
+   "top": [
+    [
+     "dont install all 30, pick one row, check repo permissions",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[warning].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.163,
+   "mean": 0.163,
+   "p25": 0.163,
+   "p75": 0.163,
+   "min": 0.163,
+   "max": 0.163,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[warning].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 46.0,
+   "mean": 46.0,
+   "p25": 46.0,
+   "p75": 46.0,
+   "min": 46.0,
+   "max": 46.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[when_to_use].beat": {
+   "kind": "word",
+   "n": 1,
+   "mode": "when_to_use",
+   "agreement": 1.0,
+   "top": [
+    [
+     "when_to_use",
+     1
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[when_to_use].devices": {
+   "kind": "items",
+   "n": 1,
+   "top": [
+    [
+     "contrast (use for / waste on)",
+     1.0
+    ],
+    [
+     "signposted chapters (tabs)",
+     1.0
+    ]
+   ],
+   "coverage": 0.143
+  },
+  "structure[when_to_use].end_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 42.0,
+   "mean": 42.0,
+   "p25": 42.0,
+   "p75": 42.0,
+   "min": 42.0,
+   "max": 42.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[when_to_use].share": {
+   "kind": "number",
+   "n": 1,
+   "median": 0.267,
+   "mean": 0.267,
+   "p25": 0.267,
+   "p75": 0.267,
+   "min": 0.267,
+   "max": 0.267,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "structure[when_to_use].start_s": {
+   "kind": "number",
+   "n": 1,
+   "median": 23.1,
+   "mean": 23.1,
+   "p25": 23.1,
+   "p75": 23.1,
+   "min": 23.1,
+   "max": 23.1,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "transcript_basis.complete": {
+   "kind": "bool",
+   "n": 7,
+   "mode": true,
+   "agreement": 1.0,
+   "coverage": 1.0
+  },
+  "transcript_basis.coverage_ratio": {
+   "kind": "number",
+   "n": 7,
+   "median": 0.97,
+   "mean": 0.971,
+   "p25": 0.965,
+   "p75": 0.98,
+   "min": 0.96,
+   "max": 0.98,
+   "cv": 0.009,
+   "coverage": 1.0
+  },
+  "transcript_basis.engine": {
+   "kind": "word",
+   "n": 7,
+   "mode": "auto pass (english)",
+   "agreement": 0.429,
+   "top": [
+    [
+     "auto pass (english)",
+     3
+    ],
+    [
+     "whisper auto pass (roman english)",
+     3
+    ],
+    [
+     "auto",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "transcript_basis.phonetic_only": {
+   "kind": "bool",
+   "n": 7,
+   "mode": false,
+   "agreement": 1.0,
+   "coverage": 1.0
+  },
+  "voice.address_terms": {
+   "kind": "items",
+   "n": 7,
+   "top": [
+    [
+     "you",
+     1.0
+    ],
+    [
+     "your",
+     0.429
+    ],
+    [
+     "your site",
+     0.143
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.energy": {
+   "kind": "word",
+   "n": 4,
+   "mode": "high, very fast",
+   "agreement": 0.5,
+   "top": [
+    [
+     "high, very fast",
+     2
+    ],
+    [
+     "high, very expressive",
+     1
+    ],
+    [
+     "high, very fast and even",
+     1
+    ]
+   ],
+   "coverage": 0.571
+  },
+  "voice.formality": {
+   "kind": "word",
+   "n": 7,
+   "mode": "casual",
+   "agreement": 0.429,
+   "top": [
+    [
+     "casual",
+     3
+    ],
+    [
+     "casual-professional",
+     3
+    ],
+    [
+     "informal",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.humor": {
+   "kind": "word",
+   "n": 4,
+   "mode": "none",
+   "agreement": 0.5,
+   "top": [
+    [
+     "none",
+     2
+    ],
+    [
+     "dry roast (yelling at your internet company)",
+     1
+    ],
+    [
+     "light dry (ai slot tests)",
+     1
+    ]
+   ],
+   "coverage": 0.571
+  },
+  "voice.humour": {
+   "kind": "word",
+   "n": 3,
+   "mode": "minimal",
+   "agreement": 0.667,
+   "top": [
+    [
+     "minimal",
+     2
+    ],
+    [
+     "light, dry",
+     1
+    ]
+   ],
+   "coverage": 0.429
+  },
+  "voice.person": {
+   "kind": "word",
+   "n": 7,
+   "mode": "i/we implied, addresses viewer as \"you\"",
+   "agreement": 0.429,
+   "top": [
+    [
+     "i/we implied, addresses viewer as \"you\"",
+     3
+    ],
+    [
+     "first person ('cost me', 'i gave claude')",
+     1
+    ],
+    [
+     "second-person (you), occasional i will",
+     1
+    ],
+    [
+     "second-person (you), we in cta",
+     1
+    ],
+    [
+     "second-person implied; we in cta",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.register": {
+   "kind": "word",
+   "n": 7,
+   "mode": "conversational explainer, tool-news tone",
+   "agreement": 0.429,
+   "top": [
+    [
+     "conversational explainer, tool-news tone",
+     3
+    ],
+    [
+     "casual, confident explainer",
+     1
+    ],
+    [
+     "confident, plain-spoken tech explainer",
+     1
+    ],
+    [
+     "playful, accusatory-funny explainer",
+     1
+    ],
+    [
+     "fast punchy news-ticker explainer",
+     1
+    ]
+   ],
+   "coverage": 1.0
+  },
+  "voice.tone_tags": {
+   "kind": "items",
+   "n": 7,
+   "top": [
+    [
+     "punchy",
+     0.714
+    ],
+    [
+     "confident",
+     0.571
+    ],
+    [
+     "fast",
+     0.571
+    ],
+    [
+     "no filler pauses",
+     0.429
+    ],
+    [
+     "curated",
+     0.286
+    ],
+    [
+     "tutorial",
+     0.143
+    ],
+    [
+     "authoritative",
+     0.143
+    ],
+    [
+     "helpful",
+     0.143
+    ],
+    [
+     "dramatic",
+     0.143
+    ],
+    [
+     "playful",
+     0.143
+    ]
+   ],
+   "coverage": 1.0
+  }
+ },
+ "signature": [
+  "hook.first_word_s",
+  "hook.open_loop",
+  "language.english_term_domains",
+  "language.primary",
+  "language.script",
+  "lexicon.power_words",
+  "pacing.pause_mean_s",
+  "pacing.sentence_words_mean",
+  "pacing.sentence_words_p90",
+  "pacing.speech_ratio",
+  "pacing.words_per_min_overall",
+  "pacing.words_per_min_speaking",
+  "structure[cta].beat",
+  "structure[cta].devices",
+  "structure[hook].beat",
+  "structure[hook].start_s",
+  "transcript_basis.complete",
+  "transcript_basis.coverage_ratio",
+  "transcript_basis.phonetic_only",
+  "voice.address_terms",
+  "voice.tone_tags"
+ ],
+ "situational": [
+  "cta.ask",
+  "cta.incentive",
+  "cta.keyword",
+  "cta.placement_s",
+  "cta.repeats",
+  "cta.type",
+  "framework.name",
+  "hook.duration_s",
+  "hook.first_words",
+  "hook.kind",
+  "hook.pattern",
+  "hook.time_to_value_s",
+  "language.code_switching",
+  "lexicon.filler_words",
+  "lexicon.jargon_terms",
+  "lexicon.signature_phrases",
+  "pacing.numbers_per_min",
+  "pacing.questions_per_min",
+  "retention.open_loops",
+  "retention.pattern_interrupts",
+  "retention.payoff_at_s",
+  "structure[agitate].beat",
+  "structure[agitate].devices",
+  "structure[agitate].end_s",
+  "structure[agitate].purpose",
+  "structure[agitate].share",
+  "structure[agitate].start_s",
+  "structure[closing_question].beat",
+  "structure[closing_question].devices",
+  "structure[closing_question].end_s",
+  "structure[closing_question].share",
+  "structure[closing_question].start_s",
+  "structure[cta].end_s",
+  "structure[cta].purpose",
+  "structure[cta].share",
+  "structure[cta].start_s",
+  "structure[cta_challenge].beat",
+  "structure[cta_challenge].devices",
+  "structure[cta_challenge].end_s",
+  "structure[cta_challenge].share",
+  "structure[cta_challenge].start_s",
+  "structure[demo_how].beat",
+  "structure[demo_how].devices",
+  "structure[demo_how].end_s",
+  "structure[demo_how].share",
+  "structure[demo_how].start_s",
+  "structure[extras and CTA].beat",
+  "structure[extras and CTA].devices",
+  "structure[extras and CTA].end_s",
+  "structure[extras and CTA].purpose",
+  "structure[extras and CTA].share",
+  "structure[extras and CTA].start_s",
+  "structure[hook+what_it_is].beat",
+  "structure[hook+what_it_is].devices",
+  "structure[hook+what_it_is].end_s",
+  "structure[hook+what_it_is].share",
+  "structure[hook+what_it_is].start_s",
+  "structure[hook].devices",
+  "structure[hook].end_s",
+  "structure[hook].purpose",
+  "structure[hook].share",
+  "structure[how_to_switch].beat",
+  "structure[how_to_switch].devices",
+  "structure[how_to_switch].end_s",
+  "structure[how_to_switch].share",
+  "structure[how_to_switch].start_s",
+  "structure[item1_2].beat",
+  "structure[item1_2].devices",
+  "structure[item1_2].end_s",
+  "structure[item1_2].purpose",
+  "structure[item1_2].share",
+  "structure[item1_2].start_s",
+  "structure[item1_t3].beat",
+  "structure[item1_t3].devices",
+  "structure[item1_t3].end_s",
+  "structure[item1_t3].share",
+  "structure[item1_t3].start_s",
+  "structure[item2_free_model].beat",
+  "structure[item2_free_model].devices",
+  "structure[item2_free_model].end_s",
+  "structure[item2_free_model].purpose",
+  "structure[item2_free_model].share",
+  "structure[item2_free_model].start_s",
+  "structure[item3_5].beat",
+  "structure[item3_5].devices",
+  "structure[item3_5].end_s",
+  "structure[item3_5].purpose",
+  "structure[item3_5].share",
+  "structure[item3_5].start_s",
+  "structure[item3_cloudflare].beat",
+  "structure[item3_cloudflare].devices",
+  "structure[item3_cloudflare].end_s",
+  "structure[item3_cloudflare].purpose",
+  "structure[item3_cloudflare].share",
+  "structure[item3_cloudflare].start_s",
+  "structure[item6_7].beat",
+  "structure[item6_7].devices",
+  "structure[item6_7].end_s",
+  "structure[item6_7].purpose",
+  "structure[item6_7].share",
+  "structure[item6_7].start_s",
+  "structure[item6_sherlock].beat",
+  "structure[item6_sherlock].devices",
+  "structure[item6_sherlock].end_s",
+  "structure[item6_sherlock].purpose",
+  "structure[item6_sherlock].share",
+  "structure[item6_sherlock].start_s",
+  "structure[item7_openmausbot].beat",
+  "structure[item7_openmausbot].devices",
+  "structure[item7_openmausbot].end_s",
+  "structure[item7_openmausbot].purpose",
+  "structure[item7_openmausbot].share",
+  "structure[item7_openmausbot].start_s",
+  "structure[item8_magpie].beat",
+  "structure[item8_magpie].devices",
+  "structure[item8_magpie].end_s",
+  "structure[item8_magpie].share",
+  "structure[item8_magpie].start_s",
+  "structure[item9_wildest].beat",
+  "structure[item9_wildest].devices",
+  "structure[item9_wildest].end_s",
+  "structure[item9_wildest].share",
+  "structure[item9_wildest].start_s",
+  "structure[items4_5].beat",
+  "structure[items4_5].devices",
+  "structure[items4_5].end_s",
+  "structure[items4_5].purpose",
+  "structure[items4_5].share",
+  "structure[items4_5].start_s",
+  "structure[limits].beat",
+  "structure[limits].devices",
+  "structure[limits].end_s",
+  "structure[limits].share",
+  "structure[limits].start_s",
+  "structure[pain point].beat",
+  "structure[pain point].devices",
+  "structure[pain point].end_s",
+  "structure[pain point].purpose",
+  "structure[pain point].share",
+  "structure[pain point].start_s",
+  "structure[pattern_interrupt_scenario].beat",
+  "structure[pattern_interrupt_scenario].devices",
+  "structure[pattern_interrupt_scenario].end_s",
+  "structure[pattern_interrupt_scenario].share",
+  "structure[pattern_interrupt_scenario].start_s",
+  "structure[problem anchor].beat",
+  "structure[problem anchor].devices",
+  "structure[problem anchor].end_s",
+  "structure[problem anchor].purpose",
+  "structure[problem anchor].share",
+  "structure[problem anchor].start_s",
+  "structure[proof].beat",
+  "structure[proof].devices",
+  "structure[proof].end_s",
+  "structure[proof].purpose",
+  "structure[proof].share",
+  "structure[proof].start_s",
+  "structure[publish and domain].beat",
+  "structure[publish and domain].devices",
+  "structure[publish and domain].end_s",
+  "structure[publish and domain].purpose",
+  "structure[publish and domain].share",
+  "structure[publish and domain].start_s",
+  "structure[row_code].beat",
+  "structure[row_code].devices",
+  "structure[row_code].end_s",
+  "structure[row_code].purpose",
+  "structure[row_code].share",
+  "structure[row_code].start_s",
+  "structure[row_design].beat",
+  "structure[row_design].devices",
+  "structure[row_design].end_s",
+  "structure[row_design].purpose",
+  "structure[row_design].share",
+  "structure[row_design].start_s",
+  "structure[row_research].beat",
+  "structure[row_research].devices",
+  "structure[row_research].end_s",
+  "structure[row_research].purpose",
+  "structure[row_research].share",
+  "structure[row_research].start_s",
+  "structure[row_tokens].beat",
+  "structure[row_tokens].devices",
+  "structure[row_tokens].end_s",
+  "structure[row_tokens].purpose",
+  "structure[row_tokens].share",
+  "structure[row_tokens].start_s",
+  "structure[row_writing].beat",
+  "structure[row_writing].devices",
+  "structure[row_writing].end_s",
+  "structure[row_writing].purpose",
+  "structure[row_writing].share",
+  "structure[row_writing].start_s",
+  "structure[secret].beat",
+  "structure[secret].devices",
+  "structure[secret].end_s",
+  "structure[secret].purpose",
+  "structure[secret].share",
+  "structure[secret].start_s",
+  "structure[solution].beat",
+  "structure[solution].devices",
+  "structure[solution].end_s",
+  "structure[solution].purpose",
+  "structure[solution].share",
+  "structure[solution].start_s",
+  "structure[twist].beat",
+  "structure[twist].devices",
+  "structure[twist].end_s",
+  "structure[twist].purpose",
+  "structure[twist].share",
+  "structure[twist].start_s",
+  "structure[value_anchor].beat",
+  "structure[value_anchor].devices",
+  "structure[value_anchor].end_s",
+  "structure[value_anchor].share",
+  "structure[value_anchor].start_s",
+  "structure[warning].beat",
+  "structure[warning].devices",
+  "structure[warning].end_s",
+  "structure[warning].purpose",
+  "structure[warning].share",
+  "structure[warning].start_s",
+  "structure[when_to_use].beat",
+  "structure[when_to_use].devices",
+  "structure[when_to_use].end_s",
+  "structure[when_to_use].share",
+  "structure[when_to_use].start_s",
+  "transcript_basis.engine",
+  "voice.energy",
+  "voice.formality",
+  "voice.humor",
+  "voice.humour",
+  "voice.person",
+  "voice.register"
+ ],
+ "targets": {
+  "hook.first_word_s": 0.0,
+  "hook.open_loop": true,
+  "language.english_term_domains": [
+   "ai tools"
+  ],
+  "language.primary": "english",
+  "language.script": "roman",
+  "lexicon.power_words": [
+   "free"
+  ],
+  "pacing.pause_mean_s": 0.25,
+  "pacing.sentence_words_mean": 16.9,
+  "pacing.sentence_words_p90": 25.9,
+  "pacing.speech_ratio": 0.919,
+  "pacing.words_per_min_overall": 227.3,
+  "pacing.words_per_min_speaking": 243.1,
+  "structure[cta].beat": "cta",
+  "structure[cta].devices": [
+   "keyword cta"
+  ],
+  "structure[hook].beat": "hook",
+  "structure[hook].start_s": 0.0,
+  "transcript_basis.complete": true,
+  "transcript_basis.coverage_ratio": 0.97,
+  "transcript_basis.phonetic_only": false,
+  "voice.address_terms": [
+   "you"
+  ],
+  "voice.tone_tags": [
+   "punchy",
+   "confident",
+   "fast"
+  ]
+ },
+ "provisional": true,
+ "min_videos_stable": 10
+}

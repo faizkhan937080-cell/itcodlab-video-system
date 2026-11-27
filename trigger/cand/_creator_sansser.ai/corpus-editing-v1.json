@@ -3,52 +3,46 @@
  "schema_version": 2,
  "dna_type": "editing",
  "creator": "sansser.ai",
- "n_videos": 13,
+ "n_videos": 7,
  "job_ids": [
-  "reel-DeMkkKdsO2_",
-  "reel-Df97YXth1Y6",
-  "reel-DfBQ1AgOC1S",
   "reel-DfMDZKfNER2",
-  "reel-DfTxHLopj5m",
-  "reel-DfWN_TpptL7",
+  "reel-DfBQ1AgOC1S",
   "reel-Dfi6kGuOemV",
-  "reel-DfkbSDuB04k",
-  "reel-DfuYIvZA4Cd",
-  "reel-DfzNJuKB5PA",
-  "reel-DgLclCABIa3",
   "reel-DgNJdLjB5Mq",
-  "reel-DgNYH7ThrWb"
+  "reel-DfuYIvZA4Cd",
+  "reel-DfkbSDuB04k",
+  "reel-DfzNJuKB5PA"
  ],
  "fields": {
   "color.grade.brightness_mean": {
    "kind": "number",
-   "n": 13,
-   "median": 0.713,
-   "mean": 0.659,
-   "p25": 0.435,
-   "p75": 0.905,
-   "min": 0.185,
+   "n": 7,
+   "median": 0.905,
+   "mean": 0.783,
+   "p25": 0.777,
+   "p75": 0.932,
+   "min": 0.218,
    "max": 0.943,
-   "cv": 0.395,
+   "cv": 0.317,
    "coverage": 1.0
   },
   "color.grade.contrast": {
    "kind": "word",
-   "n": 13,
-   "mode": "high",
-   "agreement": 0.462,
+   "n": 7,
+   "mode": "low",
+   "agreement": 0.571,
    "top": [
-    [
-     "high",
-     6
-    ],
     [
      "low",
      4
     ],
     [
+     "high",
+     2
+    ],
+    [
      "medium",
-     3
+     1
     ]
    ],
    "coverage": 1.0
@@ -64,33 +58,33 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.grade.saturation_mean": {
    "kind": "number",
-   "n": 13,
-   "median": 0.154,
-   "mean": 0.213,
-   "p25": 0.035,
-   "p75": 0.347,
+   "n": 7,
+   "median": 0.035,
+   "mean": 0.148,
+   "p25": 0.032,
+   "p75": 0.116,
    "min": 0.025,
    "max": 0.679,
-   "cv": 0.958,
+   "cv": 1.513,
    "coverage": 1.0
   },
   "color.grade.temperature": {
    "kind": "word",
-   "n": 13,
+   "n": 7,
    "mode": "neutral",
-   "agreement": 0.538,
+   "agreement": 0.714,
    "top": [
     [
      "neutral",
-     7
+     5
     ],
     [
      "warm",
-     5
+     1
     ],
     [
      "cool",
@@ -98,56 +92,6 @@
     ]
    ],
    "coverage": 1.0
-  },
-  "color.palette[#060A0F].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#060a0f",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#060a0f",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#060A0F].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.133,
-   "mean": 0.133,
-   "p25": 0.133,
-   "p75": 0.133,
-   "min": 0.133,
-   "max": 0.133,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#061008].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#061008",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#061008",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#061008].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.117,
-   "mean": 0.117,
-   "p25": 0.117,
-   "p75": 0.117,
-   "min": 0.117,
-   "max": 0.117,
-   "cv": 0.0,
-   "coverage": 0.077
   },
   "color.palette[#06140E].hex": {
    "kind": "word",
@@ -160,7 +104,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#06140E].share": {
    "kind": "number",
@@ -172,182 +116,7 @@
    "min": 0.55,
    "max": 0.55,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#070B0F].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#070b0f",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#070b0f",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#070B0F].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.121,
-   "mean": 0.121,
-   "p25": 0.121,
-   "p75": 0.121,
-   "min": 0.121,
-   "max": 0.121,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#07130A].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#07130a",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#07130a",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#07130A].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.063,
-   "mean": 0.063,
-   "p25": 0.063,
-   "p75": 0.063,
-   "min": 0.063,
-   "max": 0.063,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#080B0F].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#080b0f",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#080b0f",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#080B0F].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.128,
-   "mean": 0.128,
-   "p25": 0.128,
-   "p75": 0.128,
-   "min": 0.128,
-   "max": 0.128,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#090C11].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#090c11",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#090c11",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#090C11].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.21,
-   "mean": 0.21,
-   "p25": 0.21,
-   "p75": 0.21,
-   "min": 0.21,
-   "max": 0.21,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#0B090E].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#0b090e",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#0b090e",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#0B090E].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.057,
-   "mean": 0.057,
-   "p25": 0.057,
-   "p75": 0.057,
-   "min": 0.057,
-   "max": 0.057,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#0B0E14].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#0b0e14",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#0b0e14",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#0B0E14].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.09,
-   "mean": 0.09,
-   "p25": 0.09,
-   "p75": 0.09,
-   "min": 0.09,
-   "max": 0.09,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#0F1115].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#0f1115",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#0f1115",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#0F1115].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.072,
-   "mean": 0.072,
-   "p25": 0.072,
-   "p75": 0.072,
-   "min": 0.072,
-   "max": 0.072,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#101416].hex": {
    "kind": "word",
@@ -360,7 +129,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#101416].share": {
    "kind": "number",
@@ -372,7 +141,7 @@
    "min": 0.073,
    "max": 0.073,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#111516].hex": {
    "kind": "word",
@@ -385,7 +154,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#111516].share": {
    "kind": "number",
@@ -397,7 +166,7 @@
    "min": 0.072,
    "max": 0.072,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#121617].hex": {
    "kind": "word",
@@ -410,7 +179,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#121617].share": {
    "kind": "number",
@@ -422,32 +191,7 @@
    "min": 0.073,
    "max": 0.073,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#171617].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#171617",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#171617",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#171617].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.041,
-   "mean": 0.041,
-   "p25": 0.041,
-   "p75": 0.041,
-   "min": 0.041,
-   "max": 0.041,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#181C18].hex": {
    "kind": "word",
@@ -460,7 +204,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#181C18].share": {
    "kind": "number",
@@ -472,7 +216,7 @@
    "min": 0.035,
    "max": 0.035,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#201D21].hex": {
    "kind": "word",
@@ -485,7 +229,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#201D21].share": {
    "kind": "number",
@@ -497,132 +241,7 @@
    "min": 0.182,
    "max": 0.182,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#21211D].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#21211d",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#21211d",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#21211D].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.063,
-   "mean": 0.063,
-   "p25": 0.063,
-   "p75": 0.063,
-   "min": 0.063,
-   "max": 0.063,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#266047].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#266047",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#266047",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#266047].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.042,
-   "mean": 0.042,
-   "p25": 0.042,
-   "p75": 0.042,
-   "min": 0.042,
-   "max": 0.042,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#2C261F].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#2c261f",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#2c261f",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#2C261F].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.059,
-   "mean": 0.059,
-   "p25": 0.059,
-   "p75": 0.059,
-   "min": 0.059,
-   "max": 0.059,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#393A35].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#393a35",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#393a35",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#393A35].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.013,
-   "mean": 0.013,
-   "p25": 0.013,
-   "p75": 0.013,
-   "min": 0.013,
-   "max": 0.013,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#3D232C].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#3d232c",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#3d232c",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#3D232C].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.152,
-   "mean": 0.152,
-   "p25": 0.152,
-   "p75": 0.152,
-   "min": 0.152,
-   "max": 0.152,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#414345].hex": {
    "kind": "word",
@@ -635,7 +254,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#414345].share": {
    "kind": "number",
@@ -647,7 +266,7 @@
    "min": 0.005,
    "max": 0.005,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#427B5C].hex": {
    "kind": "word",
@@ -660,7 +279,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#427B5C].share": {
    "kind": "number",
@@ -672,32 +291,7 @@
    "min": 0.247,
    "max": 0.247,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#75777F].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#75777f",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#75777f",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#75777F].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.015,
-   "mean": 0.015,
-   "p25": 0.015,
-   "p75": 0.015,
-   "min": 0.015,
-   "max": 0.015,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#87A99C].hex": {
    "kind": "word",
@@ -710,7 +304,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#87A99C].share": {
    "kind": "number",
@@ -722,32 +316,7 @@
    "min": 0.025,
    "max": 0.025,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#8A978E].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#8a978e",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#8a978e",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#8A978E].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.024,
-   "mean": 0.024,
-   "p25": 0.024,
-   "p75": 0.024,
-   "min": 0.024,
-   "max": 0.024,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#A09BA3].hex": {
    "kind": "word",
@@ -760,7 +329,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#A09BA3].share": {
    "kind": "number",
@@ -772,32 +341,7 @@
    "min": 0.011,
    "max": 0.011,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#A7A396].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#a7a396",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#a7a396",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#A7A396].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.21,
-   "mean": 0.21,
-   "p25": 0.21,
-   "p75": 0.21,
-   "min": 0.21,
-   "max": 0.21,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#A7A9A8].hex": {
    "kind": "word",
@@ -810,7 +354,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#A7A9A8].share": {
    "kind": "number",
@@ -822,57 +366,7 @@
    "min": 0.08,
    "max": 0.08,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#A8A69A].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#a8a69a",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#a8a69a",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#A8A69A].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.16,
-   "mean": 0.16,
-   "p25": 0.16,
-   "p75": 0.16,
-   "min": 0.16,
-   "max": 0.16,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#AC9A9B].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#ac9a9b",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#ac9a9b",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#AC9A9B].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.132,
-   "mean": 0.132,
-   "p25": 0.132,
-   "p75": 0.132,
-   "min": 0.132,
-   "max": 0.132,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#ACA8A7].hex": {
    "kind": "word",
@@ -885,7 +379,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#ACA8A7].share": {
    "kind": "number",
@@ -897,82 +391,7 @@
    "min": 0.012,
    "max": 0.012,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#ACABA1].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#acaba1",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#acaba1",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#ACABA1].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.116,
-   "mean": 0.116,
-   "p25": 0.116,
-   "p75": 0.116,
-   "min": 0.116,
-   "max": 0.116,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#AEACA4].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#aeaca4",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#aeaca4",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#AEACA4].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.187,
-   "mean": 0.187,
-   "p25": 0.187,
-   "p75": 0.187,
-   "min": 0.187,
-   "max": 0.187,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#B3AC9F].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#b3ac9f",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#b3ac9f",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#B3AC9F].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.079,
-   "mean": 0.079,
-   "p25": 0.079,
-   "p75": 0.079,
-   "min": 0.079,
-   "max": 0.079,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#B3ADAD].hex": {
    "kind": "word",
@@ -985,7 +404,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#B3ADAD].share": {
    "kind": "number",
@@ -997,7 +416,7 @@
    "min": 0.029,
    "max": 0.029,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#C4C3BF].hex": {
    "kind": "word",
@@ -1010,7 +429,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#C4C3BF].share": {
    "kind": "number",
@@ -1022,7 +441,7 @@
    "min": 0.036,
    "max": 0.036,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#C7D8D2].hex": {
    "kind": "word",
@@ -1035,7 +454,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#C7D8D2].share": {
    "kind": "number",
@@ -1047,7 +466,7 @@
    "min": 0.018,
    "max": 0.018,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#CCD6D1].hex": {
    "kind": "word",
@@ -1060,7 +479,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#CCD6D1].share": {
    "kind": "number",
@@ -1072,7 +491,7 @@
    "min": 0.102,
    "max": 0.102,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#CDD5CB].hex": {
    "kind": "word",
@@ -1085,7 +504,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#CDD5CB].share": {
    "kind": "number",
@@ -1097,32 +516,7 @@
    "min": 0.203,
    "max": 0.203,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#D4CDBC].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#d4cdbc",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#d4cdbc",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#D4CDBC].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.48,
-   "mean": 0.48,
-   "p25": 0.48,
-   "p75": 0.48,
-   "min": 0.48,
-   "max": 0.48,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#D5DAD3].hex": {
    "kind": "word",
@@ -1135,7 +529,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#D5DAD3].share": {
    "kind": "number",
@@ -1147,7 +541,7 @@
    "min": 0.017,
    "max": 0.017,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#D68268].hex": {
    "kind": "word",
@@ -1160,7 +554,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#D68268].share": {
    "kind": "number",
@@ -1172,32 +566,7 @@
    "min": 0.019,
    "max": 0.019,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#D6D2C5].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#d6d2c5",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#d6d2c5",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#D6D2C5].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.156,
-   "mean": 0.156,
-   "p25": 0.156,
-   "p75": 0.156,
-   "min": 0.156,
-   "max": 0.156,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#DDDAE1].hex": {
    "kind": "word",
@@ -1210,7 +579,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#DDDAE1].share": {
    "kind": "number",
@@ -1222,157 +591,7 @@
    "min": 0.076,
    "max": 0.076,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#DDDCD7].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#dddcd7",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#dddcd7",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#DDDCD7].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.106,
-   "mean": 0.106,
-   "p25": 0.106,
-   "p75": 0.106,
-   "min": 0.106,
-   "max": 0.106,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#E27C4E].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#e27c4e",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#e27c4e",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#E27C4E].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.051,
-   "mean": 0.051,
-   "p25": 0.051,
-   "p75": 0.051,
-   "min": 0.051,
-   "max": 0.051,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#EBE8DB].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#ebe8db",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#ebe8db",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#EBE8DB].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.596,
-   "mean": 0.596,
-   "p25": 0.596,
-   "p75": 0.596,
-   "min": 0.596,
-   "max": 0.596,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#ECECEE].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#ececee",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#ececee",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#ECECEE].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.571,
-   "mean": 0.571,
-   "p25": 0.571,
-   "p75": 0.571,
-   "min": 0.571,
-   "max": 0.571,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#ECEFF4].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#eceff4",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#eceff4",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#ECEFF4].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.224,
-   "mean": 0.224,
-   "p25": 0.224,
-   "p75": 0.224,
-   "min": 0.224,
-   "max": 0.224,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#EF5F2A].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#ef5f2a",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#ef5f2a",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#EF5F2A].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.054,
-   "mean": 0.054,
-   "p25": 0.054,
-   "p75": 0.054,
-   "min": 0.054,
-   "max": 0.054,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#EFEFEA].hex": {
    "kind": "word",
@@ -1385,7 +604,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#EFEFEA].share": {
    "kind": "number",
@@ -1397,57 +616,7 @@
    "min": 0.257,
    "max": 0.257,
    "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#F0E7E6].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#f0e7e6",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#f0e7e6",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#F0E7E6].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.716,
-   "mean": 0.716,
-   "p25": 0.716,
-   "p75": 0.716,
-   "min": 0.716,
-   "max": 0.716,
-   "cv": 0.0,
-   "coverage": 0.077
-  },
-  "color.palette[#F1E9E4].hex": {
-   "kind": "word",
-   "n": 1,
-   "mode": "#f1e9e4",
-   "agreement": 1.0,
-   "top": [
-    [
-     "#f1e9e4",
-     1
-    ]
-   ],
-   "coverage": 0.077
-  },
-  "color.palette[#F1E9E4].share": {
-   "kind": "number",
-   "n": 1,
-   "median": 0.082,
-   "mean": 0.082,
-   "p25": 0.082,
-   "p75": 0.082,
-   "min": 0.082,
-   "max": 0.082,
-   "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F1F2ED].hex": {
    "kind": "word",
@@ -1460,7 +629,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F1F2ED].share": {
    "kind": "number",
@@ -1472,7 +641,7 @@
    "min": 0.647,
    "max": 0.647,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F5F8F5].hex": {
    "kind": "word",
@@ -1485,7 +654,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F5F8F5].share": {
    "kind": "number",
@@ -1497,7 +666,7 @@
    "min": 0.738,
    "max": 0.738,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F5F9F8].hex": {
    "kind": "word",
@@ -1510,7 +679,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F5F9F8].share": {
    "kind": "number",
@@ -1522,7 +691,7 @@
    "min": 0.095,
    "max": 0.095,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F6F9F8].hex": {
    "kind": "word",
@@ -1535,7 +704,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F6F9F8].share": {
    "kind": "number",
@@ -1547,7 +716,7 @@
    "min": 0.873,
    "max": 0.873,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F85F31].hex": {
    "kind": "word",
@@ -1560,7 +729,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F85F31].share": {
    "kind": "number",
@@ -1572,7 +741,7 @@
    "min": 0.011,
    "max": 0.011,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F8FAF9].hex": {
    "kind": "word",
@@ -1585,7 +754,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F8FAF9].share": {
    "kind": "number",
@@ -1597,7 +766,7 @@
    "min": 0.093,
    "max": 0.093,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F8FBFA].hex": {
    "kind": "word",
@@ -1610,7 +779,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#F8FBFA].share": {
    "kind": "number",
@@ -1622,7 +791,7 @@
    "min": 0.138,
    "max": 0.138,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FBFBFB].hex": {
    "kind": "word",
@@ -1635,7 +804,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FBFBFB].share": {
    "kind": "number",
@@ -1647,7 +816,7 @@
    "min": 0.095,
    "max": 0.095,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FCFCFC].hex": {
    "kind": "word",
@@ -1660,7 +829,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FCFCFC].share": {
    "kind": "number",
@@ -1672,7 +841,7 @@
    "min": 0.384,
    "max": 0.384,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FCFDFD].hex": {
    "kind": "word",
@@ -1685,7 +854,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FCFDFD].share": {
    "kind": "number",
@@ -1697,7 +866,7 @@
    "min": 0.172,
    "max": 0.172,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FCFEFD].hex": {
    "kind": "word",
@@ -1710,7 +879,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FCFEFD].share": {
    "kind": "number",
@@ -1722,7 +891,7 @@
    "min": 0.332,
    "max": 0.332,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FDFDFD].hex": {
    "kind": "word",
@@ -1735,7 +904,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "color.palette[#FDFDFD].share": {
    "kind": "number",
@@ -1747,78 +916,78 @@
    "min": 0.801,
    "max": 0.801,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "cut_rhythm.asl_s": {
    "kind": "number",
-   "n": 13,
-   "median": 10.0,
-   "mean": 17.559,
-   "p25": 5.867,
-   "p75": 29.209,
-   "min": 1.365,
+   "n": 7,
+   "median": 29.209,
+   "mean": 27.345,
+   "p25": 17.351,
+   "p75": 36.021,
+   "min": 3.365,
    "max": 52.1,
-   "cv": 0.874,
+   "cv": 0.547,
    "coverage": 1.0
   },
   "cut_rhythm.beat_synced_share": {
    "kind": "number",
-   "n": 9,
+   "n": 4,
    "median": 0.0,
-   "mean": 0.059,
+   "mean": 0.025,
    "p25": 0.0,
-   "p75": 0.1,
+   "p75": 0.025,
    "min": 0.0,
-   "max": 0.333,
-   "cv": 1.774,
-   "coverage": 0.692
+   "max": 0.1,
+   "cv": 1.732,
+   "coverage": 0.571
   },
   "cut_rhythm.cuts_per_min": {
    "kind": "number",
-   "n": 13,
-   "median": 2.54,
-   "mean": 6.905,
+   "n": 7,
+   "median": 1.03,
+   "mean": 3.077,
    "p25": 0.0,
-   "p75": 7.67,
+   "p75": 2.15,
    "min": 0.0,
-   "max": 39.56,
-   "cv": 1.533,
+   "max": 16.21,
+   "cv": 1.768,
    "coverage": 1.0
   },
   "cut_rhythm.max_shot_s": {
    "kind": "number",
-   "n": 13,
-   "median": 15.683,
-   "mean": 23.068,
-   "p25": 10.0,
-   "p75": 32.725,
-   "min": 4.933,
+   "n": 7,
+   "median": 32.725,
+   "mean": 33.048,
+   "p25": 24.673,
+   "p75": 45.584,
+   "min": 6.0,
    "max": 52.1,
-   "cv": 0.682,
+   "cv": 0.462,
    "coverage": 1.0
   },
   "cut_rhythm.median_shot_s": {
    "kind": "number",
-   "n": 13,
-   "median": 10.0,
-   "mean": 17.355,
-   "p25": 4.45,
-   "p75": 29.209,
-   "min": 1.05,
+   "n": 7,
+   "median": 29.209,
+   "mean": 27.438,
+   "p25": 17.742,
+   "p75": 36.021,
+   "min": 3.234,
    "max": 52.1,
-   "cv": 0.897,
+   "cv": 0.543,
    "coverage": 1.0
   },
   "cut_rhythm.min_shot_s": {
    "kind": "number",
-   "n": 13,
-   "median": 6.567,
-   "mean": 12.803,
-   "p25": 1.467,
-   "p75": 10.117,
-   "min": 0.2,
+   "n": 7,
+   "median": 10.117,
+   "mean": 21.376,
+   "p25": 7.471,
+   "p75": 36.021,
+   "min": 0.434,
    "max": 52.1,
-   "cv": 1.287,
+   "cv": 0.857,
    "coverage": 1.0
   },
   "cut_rhythm.pace_curve[closing third (47.2-70.8 s)].cuts_per_min": {
@@ -1831,7 +1000,7 @@
    "min": 5.09,
    "max": 5.09,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "cut_rhythm.pace_curve[closing third (47.2-70.8 s)].part": {
    "kind": "word",
@@ -1844,7 +1013,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "cut_rhythm.pace_curve[closing third].cuts_per_min": {
    "kind": "number",
@@ -1856,7 +1025,7 @@
    "min": 0.0,
    "max": 0.0,
    "cv": 0.0,
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "cut_rhythm.pace_curve[closing third].part": {
    "kind": "word",
@@ -1869,32 +1038,32 @@
      2
     ]
    ],
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "cut_rhythm.pace_curve[closing].cuts_per_min": {
    "kind": "number",
-   "n": 10,
-   "median": 1.745,
-   "mean": 7.849,
+   "n": 4,
+   "median": 0.0,
+   "mean": 3.65,
    "p25": 0.0,
-   "p75": 12.03,
+   "p75": 3.65,
    "min": 0.0,
-   "max": 39.56,
-   "cv": 1.514,
-   "coverage": 0.769
+   "max": 14.6,
+   "cv": 1.732,
+   "coverage": 0.571
   },
   "cut_rhythm.pace_curve[closing].part": {
    "kind": "word",
-   "n": 10,
+   "n": 4,
    "mode": "closing",
    "agreement": 1.0,
    "top": [
     [
      "closing",
-     10
+     4
     ]
    ],
-   "coverage": 0.769
+   "coverage": 0.571
   },
   "cut_rhythm.pace_curve[middle third (23.6-47.2 s)].cuts_per_min": {
    "kind": "number",
@@ -1906,7 +1075,7 @@
    "min": 0.0,
    "max": 0.0,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "cut_rhythm.pace_curve[middle third (23.6-47.2 s)].part": {
    "kind": "word",
@@ -1919,7 +1088,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "cut_rhythm.pace_curve[middle third].cuts_per_min": {
    "kind": "number",
@@ -1931,7 +1100,7 @@
    "min": 0.0,
    "max": 0.0,
    "cv": 0.0,
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "cut_rhythm.pace_curve[middle third].part": {
    "kind": "word",
@@ -1944,32 +1113,32 @@
      2
     ]
    ],
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "cut_rhythm.pace_curve[middle].cuts_per_min": {
    "kind": "number",
-   "n": 10,
+   "n": 4,
    "median": 0.0,
-   "mean": 7.789,
+   "mean": 2.425,
    "p25": 0.0,
-   "p75": 9.192,
+   "p75": 2.425,
    "min": 0.0,
-   "max": 39.56,
-   "cv": 1.599,
-   "coverage": 0.769
+   "max": 9.7,
+   "cv": 1.732,
+   "coverage": 0.571
   },
   "cut_rhythm.pace_curve[middle].part": {
    "kind": "word",
-   "n": 10,
+   "n": 4,
    "mode": "middle",
    "agreement": 1.0,
    "top": [
     [
      "middle",
-     10
+     4
     ]
    ],
-   "coverage": 0.769
+   "coverage": 0.571
   },
   "cut_rhythm.pace_curve[opening third (0-23.6 s)].cuts_per_min": {
    "kind": "number",
@@ -1981,7 +1150,7 @@
    "min": 2.54,
    "max": 2.54,
    "cv": 0.0,
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "cut_rhythm.pace_curve[opening third (0-23.6 s)].part": {
    "kind": "word",
@@ -1994,7 +1163,7 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "cut_rhythm.pace_curve[opening third].cuts_per_min": {
    "kind": "number",
@@ -2006,7 +1175,7 @@
    "min": 0.0,
    "max": 0.0,
    "cv": 0.0,
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "cut_rhythm.pace_curve[opening third].part": {
    "kind": "word",
@@ -2019,137 +1188,117 @@
      2
     ]
    ],
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "cut_rhythm.pace_curve[opening].cuts_per_min": {
    "kind": "number",
-   "n": 10,
-   "median": 6.245,
-   "mean": 10.525,
-   "p25": 0.77,
-   "p75": 14.125,
+   "n": 4,
+   "median": 4.185,
+   "mean": 8.168,
+   "p25": 2.31,
+   "p75": 10.043,
    "min": 0.0,
-   "max": 39.56,
-   "cv": 1.157,
-   "coverage": 0.769
+   "max": 24.3,
+   "cv": 1.163,
+   "coverage": 0.571
   },
   "cut_rhythm.pace_curve[opening].part": {
    "kind": "word",
-   "n": 10,
+   "n": 4,
    "mode": "opening",
    "agreement": 1.0,
    "top": [
     [
      "opening",
-     10
+     4
     ]
    ],
-   "coverage": 0.769
+   "coverage": 0.571
   },
   "cut_rhythm.std_shot_s": {
    "kind": "number",
-   "n": 13,
-   "median": 3.333,
-   "mean": 4.439,
+   "n": 7,
+   "median": 1.604,
+   "mean": 5.436,
    "p25": 0.0,
-   "p75": 5.814,
+   "p75": 6.903,
    "min": 0.0,
    "max": 22.642,
-   "cv": 1.316,
+   "cv": 1.397,
    "coverage": 1.0
   },
   "format.aspect": {
    "kind": "word",
-   "n": 13,
+   "n": 7,
    "mode": "9:16",
-   "agreement": 0.538,
+   "agreement": 1.0,
    "top": [
     [
      "9:16",
      7
-    ],
-    [
-     "510:930",
-     1
-    ],
-    [
-     "418:694",
-     1
-    ],
-    [
-     "16:9",
-     1
-    ],
-    [
-     "3:2 (810x538 crop of tracked screen quad)",
-     1
     ]
    ],
    "coverage": 1.0
   },
   "format.duration_s": {
    "kind": "number",
-   "n": 13,
-   "median": 34.005,
-   "mean": 35.478,
-   "p25": 23.467,
-   "p75": 51.533,
-   "min": 10.0,
+   "n": 7,
+   "median": 39.317,
+   "mean": 46.338,
+   "p25": 35.509,
+   "p75": 55.258,
+   "min": 32.725,
    "max": 70.792,
-   "cv": 0.507,
+   "cv": 0.288,
    "coverage": 1.0
   },
   "format.fps": {
    "kind": "number",
-   "n": 13,
+   "n": 7,
    "median": 60.0,
-   "mean": 49.846,
-   "p25": 30.0,
+   "mean": 49.714,
+   "p25": 42.0,
    "p75": 60.0,
    "min": 24.0,
    "max": 60.0,
-   "cv": 0.307,
+   "cv": 0.327,
    "coverage": 1.0
   },
   "format.height": {
    "kind": "number",
-   "n": 13,
+   "n": 7,
    "median": 1920.0,
-   "mean": 1405.385,
-   "p25": 694.0,
+   "mean": 1920.0,
+   "p25": 1920.0,
    "p75": 1920.0,
-   "min": 492.0,
+   "min": 1920.0,
    "max": 1920.0,
-   "cv": 0.436,
+   "cv": 0.0,
    "coverage": 1.0
   },
   "format.orientation": {
    "kind": "word",
-   "n": 13,
+   "n": 7,
    "mode": "portrait",
-   "agreement": 0.846,
+   "agreement": 1.0,
    "top": [
     [
      "portrait",
-     11
-    ],
-    [
-     "landscape",
-     2
+     7
     ]
    ],
    "coverage": 1.0
   },
   "format.width": {
    "kind": "number",
-   "n": 13,
+   "n": 7,
    "median": 1080.0,
-   "mean": 870.0,
-   "p25": 798.0,
+   "mean": 1080.0,
+   "p25": 1080.0,
    "p75": 1080.0,
-   "min": 338.0,
+   "min": 1080.0,
    "max": 1080.0,
-   "cv": 0.308,
+   "cv": 0.0,
    "coverage": 1.0
   },
   "layout.framing_notes": {
@@ -2163,21 +1312,17 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "layout.orientation": {
    "kind": "word",
-   "n": 13,
+   "n": 7,
    "mode": "portrait",
-   "agreement": 0.846,
+   "agreement": 1.0,
    "top": [
     [
      "portrait",
-     11
-    ],
-    [
-     "landscape",
-     2
+     7
     ]
    ],
    "coverage": 1.0
@@ -2193,184 +1338,156 @@
      3
     ]
    ],
-   "coverage": 0.231
+   "coverage": 0.429
   },
   "motion.camera.intensity": {
    "kind": "word",
-   "n": 13,
-   "mode": "slow",
-   "agreement": 0.462,
+   "n": 7,
+   "mode": "static",
+   "agreement": 0.714,
    "top": [
-    [
-     "slow",
-     6
-    ],
     [
      "static",
      5
     ],
     [
+     "slow",
+     1
+    ],
+    [
      "medium",
-     2
+     1
     ]
    ],
    "coverage": 1.0
   },
   "motion.camera.moves": {
    "kind": "items",
-   "n": 13,
+   "n": 7,
    "top": [
     [
-     "static",
-     0.308
-    ],
-    [
      "none",
-     0.308
+     0.571
     ],
     [
-     "push-in",
-     0.154
-    ],
-    [
-     "floating card drift with slight perspective tilt",
-     0.077
-    ],
-    [
-     "static frame",
-     0.077
-    ],
-    [
-     "whip at 17.15 s",
-     0.077
-    ],
-    [
-     "defocus blur-in / blur-out on portrait (3.2 s)",
-     0.077
-    ],
-    [
-     "slow pan up with slight push",
-     0.077
-    ],
-    [
-     "static poster hold in last scene",
-     0.077
+     "static",
+     0.286
     ],
     [
      "whip-style swipe between scenes (measured)",
-     0.077
+     0.143
+    ],
+    [
+     "lateral dolly along bars",
+     0.143
+    ],
+    [
+     "pull-back to full chart at end",
+     0.143
+    ],
+    [
+     "push-in",
+     0.143
     ]
    ],
    "coverage": 1.0
   },
   "motion.elements.easing": {
    "kind": "word",
-   "n": 2,
+   "n": 1,
    "mode": "ease in-out camera glide; value labels pop with glow",
-   "agreement": 0.5,
+   "agreement": 1.0,
    "top": [
     [
      "ease in-out camera glide; value labels pop with glow",
      1
-    ],
-    [
-     "ease-out with soft blur reveal on words",
-     1
     ]
    ],
-   "coverage": 0.154
+   "coverage": 0.143
   },
   "motion.elements.stagger_s": {
    "kind": "number",
-   "n": 9,
+   "n": 6,
    "median": 0.1,
-   "mean": 0.122,
+   "mean": 0.125,
    "p25": 0.1,
-   "p75": 0.15,
+   "p75": 0.138,
    "min": 0.1,
    "max": 0.2,
-   "cv": 0.28,
-   "coverage": 0.692
+   "cv": 0.306,
+   "coverage": 0.857
   },
   "motion.elements.typical_duration_s": {
    "kind": "number",
-   "n": 13,
+   "n": 7,
    "median": 0.4,
-   "mean": 0.462,
+   "mean": 0.486,
    "p25": 0.4,
-   "p75": 0.5,
+   "p75": 0.55,
    "min": 0.3,
    "max": 0.8,
-   "cv": 0.301,
+   "cv": 0.319,
    "coverage": 1.0
   },
   "motion.speed_ramps": {
    "kind": "word",
-   "n": 12,
+   "n": 7,
    "mode": "none seen",
-   "agreement": 0.583,
+   "agreement": 0.571,
    "top": [
     [
      "none seen",
-     7
+     4
     ],
     [
      "none",
      3
-    ],
-    [
-     "none detected",
-     2
     ]
    ],
-   "coverage": 0.923
+   "coverage": 1.0
   },
   "recipe.remotion_templates": {
    "kind": "items",
-   "n": 13,
+   "n": 7,
    "top": [
+    [
+     "banner",
+     1.0
+    ],
     [
      "kinetic_text",
      1.0
     ],
     [
-     "banner",
-     0.923
-    ],
-    [
      "image",
-     0.692
-    ],
-    [
-     "video",
-     0.538
+     0.857
     ],
     [
      "lower_third",
-     0.385
+     0.429
     ],
     [
-     "title",
-     0.385
+     "video",
+     0.429
     ]
    ],
    "coverage": 1.0
   },
   "recipe.spring.damping": {
    "kind": "number",
-   "n": 10,
-   "median": 15.0,
-   "mean": 15.6,
+   "n": 7,
+   "median": 18.0,
+   "mean": 16.0,
    "p25": 14.0,
    "p75": 18.0,
    "min": 12.0,
    "max": 18.0,
-   "cv": 0.138,
-   "coverage": 0.769
+   "cv": 0.149,
+   "coverage": 1.0
   },
   "recipe.spring.mass": {
    "kind": "number",
-   "n": 7,
+   "n": 4,
    "median": 1.0,
    "mean": 1.0,
    "p25": 1.0,
@@ -2378,7 +1495,7 @@
    "min": 1.0,
    "max": 1.0,
    "cv": 0.0,
-   "coverage": 0.538
+   "coverage": 0.571
   },
   "recipe.spring.note": {
    "kind": "word",
@@ -2391,35 +1508,35 @@
      3
     ]
    ],
-   "coverage": 0.231
+   "coverage": 0.429
   },
   "recipe.spring.stiffness": {
    "kind": "number",
-   "n": 10,
-   "median": 120.0,
-   "mean": 124.0,
+   "n": 7,
+   "median": 140.0,
+   "mean": 128.571,
    "p25": 120.0,
    "p75": 140.0,
    "min": 100.0,
    "max": 140.0,
-   "cv": 0.121,
-   "coverage": 0.769
+   "cv": 0.113,
+   "coverage": 1.0
   },
   "recipe.typical_scene_s": {
    "kind": "number",
-   "n": 13,
-   "median": 6.6,
-   "mean": 10.75,
-   "p25": 3.2,
-   "p75": 17.0,
-   "min": 1.4,
+   "n": 7,
+   "median": 17.0,
+   "mean": 15.114,
+   "p25": 3.1,
+   "p75": 23.45,
+   "min": 3.0,
    "max": 32.7,
-   "cv": 0.927,
+   "cv": 0.772,
    "coverage": 1.0
   },
   "shots.broll_share": {
    "kind": "number",
-   "n": 13,
+   "n": 7,
    "median": 0.0,
    "mean": 0.0,
    "p25": 0.0,
@@ -2431,115 +1548,111 @@
   },
   "shots.camera_angle": {
    "kind": "word",
-   "n": 7,
+   "n": 6,
    "mode": "none: flat designed graphics, no camera",
-   "agreement": 0.429,
+   "agreement": 0.5,
    "top": [
     [
      "none: flat designed graphics, no camera",
      3
     ],
     [
-     "flat frontal graphic, no camera footage",
+     "none: flat motion-graphics board, no camera footage",
      1
     ],
     [
-     "none: flat motion-graphics board, no camera footage",
+     "flat frontal graphic, no camera footage",
      1
     ],
     [
      "flat frontal vector ui illustrations",
      1
-    ],
-    [
-     "none: designed 3d-render/motion-graphic card",
-     1
     ]
    ],
-   "coverage": 0.538
+   "coverage": 0.857
   },
   "shots.scale_mix.cu": {
    "kind": "number",
-   "n": 7,
+   "n": 1,
    "median": 0.0,
-   "mean": 0.071,
+   "mean": 0.0,
    "p25": 0.0,
-   "p75": 0.125,
+   "p75": 0.0,
    "min": 0.0,
-   "max": 0.25,
-   "cv": 1.393,
-   "coverage": 0.538
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.143
   },
   "shots.scale_mix.ecu": {
    "kind": "number",
-   "n": 7,
+   "n": 1,
    "median": 0.0,
-   "mean": 0.007,
+   "mean": 0.0,
    "p25": 0.0,
    "p75": 0.0,
    "min": 0.0,
-   "max": 0.05,
-   "cv": 2.449,
-   "coverage": 0.538
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.143
   },
   "shots.scale_mix.ews": {
    "kind": "number",
-   "n": 7,
+   "n": 1,
    "median": 1.0,
-   "mean": 0.571,
-   "p25": 0.0,
+   "mean": 1.0,
+   "p25": 1.0,
    "p75": 1.0,
-   "min": 0.0,
+   "min": 1.0,
    "max": 1.0,
-   "cv": 0.866,
-   "coverage": 0.538
+   "cv": 0.0,
+   "coverage": 0.143
   },
   "shots.scale_mix.mcu": {
    "kind": "number",
-   "n": 7,
+   "n": 1,
    "median": 0.0,
-   "mean": 0.071,
-   "p25": 0.0,
-   "p75": 0.125,
-   "min": 0.0,
-   "max": 0.25,
-   "cv": 1.288,
-   "coverage": 0.538
-  },
-  "shots.scale_mix.ms": {
-   "kind": "number",
-   "n": 11,
-   "median": 0.5,
-   "mean": 0.441,
-   "p25": 0.0,
-   "p75": 0.85,
-   "min": 0.0,
-   "max": 1.0,
-   "cv": 0.946,
-   "coverage": 0.846
-  },
-  "shots.scale_mix.ws": {
-   "kind": "number",
-   "n": 10,
-   "median": 0.2,
-   "mean": 0.31,
-   "p25": 0.0,
-   "p75": 0.375,
-   "min": 0.0,
-   "max": 1.0,
-   "cv": 1.202,
-   "coverage": 0.769
-  },
-  "shots.screen_recording_share": {
-   "kind": "number",
-   "n": 13,
-   "median": 0.0,
-   "mean": 0.069,
+   "mean": 0.0,
    "p25": 0.0,
    "p75": 0.0,
    "min": 0.0,
+   "max": 0.0,
+   "cv": 0.0,
+   "coverage": 0.143
+  },
+  "shots.scale_mix.ms": {
+   "kind": "number",
+   "n": 5,
+   "median": 1.0,
+   "mean": 0.74,
+   "p25": 0.7,
+   "p75": 1.0,
+   "min": 0.0,
+   "max": 1.0,
+   "cv": 0.524,
+   "coverage": 0.714
+  },
+  "shots.scale_mix.ws": {
+   "kind": "number",
+   "n": 4,
+   "median": 0.65,
+   "mean": 0.575,
+   "p25": 0.225,
+   "p75": 1.0,
+   "min": 0.0,
+   "max": 1.0,
+   "cv": 0.762,
+   "coverage": 0.571
+  },
+  "shots.screen_recording_share": {
+   "kind": "number",
+   "n": 7,
+   "median": 0.0,
+   "mean": 0.129,
+   "p25": 0.0,
+   "p75": 0.1,
+   "min": 0.0,
    "max": 0.7,
-   "cv": 2.74,
+   "cv": 1.892,
    "coverage": 1.0
   },
   "text.animation_in": {
@@ -2553,32 +1666,32 @@
      1
     ]
    ],
-   "coverage": 0.077
+   "coverage": 0.143
   },
   "text.animation_out": {
    "kind": "word",
-   "n": 13,
-   "mode": "fade",
-   "agreement": 0.154,
+   "n": 7,
+   "mode": "whole caption line blur-fades out between sentences",
+   "agreement": 0.286,
    "top": [
-    [
-     "fade",
-     2
-    ],
     [
      "whole caption line blur-fades out between sentences",
      2
     ],
     [
-     "cut or element swap",
-     1
+     "fade",
+     2
     ],
     [
-     "cut or blur dissolve to next element",
+     "replaced at next cut/phrase; some phrases swap in place",
      1
     ],
     [
      "blur and fade",
+     1
+    ],
+    [
+     "card dissolve/slide out",
      1
     ]
    ],
@@ -2586,146 +1699,118 @@
   },
   "text.avg_on_screen_s": {
    "kind": "number",
-   "n": 13,
-   "median": 1.6,
-   "mean": 1.777,
-   "p25": 1.5,
-   "p75": 2.0,
-   "min": 0.4,
+   "n": 7,
+   "median": 1.5,
+   "mean": 1.9,
+   "p25": 1.35,
+   "p75": 2.25,
+   "min": 1.2,
    "max": 3.4,
-   "cv": 0.401,
+   "cv": 0.394,
    "coverage": 1.0
   },
   "text.case": {
    "kind": "word",
-   "n": 10,
+   "n": 6,
    "mode": "sentence case",
-   "agreement": 0.4,
+   "agreement": 0.667,
    "top": [
     [
      "sentence case",
      4
     ],
     [
-     "sentence / lower case; the icon in caps on the magazine mast",
-     1
-    ],
-    [
-     "uppercase key words, sentence case captions",
-     1
-    ],
-    [
-     "uppercase key words, lowercase italic subtitle",
-     1
-    ],
-    [
      "sentence case; tab labels title case",
+     1
+    ],
+    [
+     "sentence case captions, all-caps tracked header pill",
      1
     ]
    ],
-   "coverage": 0.769
+   "coverage": 0.857
   },
   "text.font_class": {
    "kind": "word",
-   "n": 13,
+   "n": 7,
    "mode": "sans",
-   "agreement": 0.615,
+   "agreement": 1.0,
    "top": [
     [
      "sans",
-     8
-    ],
-    [
-     "mixed",
-     5
+     7
     ]
    ],
    "coverage": 1.0
   },
   "text.position": {
    "kind": "word",
-   "n": 9,
+   "n": 4,
    "mode": "caption centered ~63% of frame height; footer links ~81%",
-   "agreement": 0.222,
+   "agreement": 0.5,
    "top": [
     [
      "caption centered ~63% of frame height; footer links ~81%",
      2
     ],
     [
-     "centre, 25-60% height",
-     1
-    ],
-    [
      "top-left aligned, upper ~8-22% of frame",
      1
     ],
     [
-     "key word centered; caption top-left ~y 5-12%",
-     1
-    ],
-    [
-     "key words centered; hud in the frame margins",
+     "tab nav ~12% height, content mid-frame, footer links ~81%",
      1
     ]
    ],
-   "coverage": 0.692
+   "coverage": 0.571
   },
   "text.present": {
    "kind": "bool",
-   "n": 13,
+   "n": 7,
    "mode": true,
    "agreement": 1.0,
    "coverage": 1.0
   },
   "text.role": {
    "kind": "word",
-   "n": 5,
+   "n": 3,
    "mode": "word-by-word caption + card titles + big numeral",
-   "agreement": 0.4,
+   "agreement": 0.667,
    "top": [
     [
      "word-by-word caption + card titles + big numeral",
      2
     ],
     [
-     "kinetic captions + ui labels + hero numbers",
-     1
-    ],
-    [
      "karaoke captions plus on-object ui labels",
-     1
-    ],
-    [
-     "kinetic caption plus fixed cta banner",
      1
     ]
    ],
-   "coverage": 0.385
+   "coverage": 0.429
   },
   "text.safe_zone_respected": {
    "kind": "bool",
-   "n": 13,
+   "n": 7,
    "mode": true,
-   "agreement": 0.538,
+   "agreement": 0.571,
    "coverage": 1.0
   },
   "text.size_class": {
    "kind": "word",
-   "n": 9,
-   "mode": "large captions",
-   "agreement": 0.222,
+   "n": 7,
+   "mode": "caption ~4% of frame height; numeral ~8%",
+   "agreement": 0.286,
    "top": [
-    [
-     "large captions",
-     2
-    ],
     [
      "caption ~4% of frame height; numeral ~8%",
      2
     ],
     [
-     "key word about 2-3x the connector size",
+     "large captions",
+     2
+    ],
+    [
+     "very large (cap height ~5% of frame height)",
      1
     ],
     [
@@ -2733,52 +1818,52 @@
      1
     ],
     [
-     "very large (cap height ~5% of frame height)",
+     "titles ~3%, big \"50%\"/\"17\" ~4-6%",
      1
     ]
    ],
-   "coverage": 0.692
+   "coverage": 1.0
   },
   "text.weight": {
    "kind": "word",
-   "n": 8,
+   "n": 7,
    "mode": "bold captions (~700), light (~300) big numerals",
-   "agreement": 0.25,
+   "agreement": 0.286,
    "top": [
     [
      "bold captions (~700), light (~300) big numerals",
      2
     ],
     [
-     "bold headline, regular body, mono for repo path",
-     1
-    ],
-    [
      "extra-bold/black, tight tracking",
      1
     ],
     [
-     "black for key words, regular for caption",
+     "bold headline, regular body, mono for repo path",
      1
     ],
     [
      "semibold titles, mono in terminal",
      1
+    ],
+    [
+     "bold captions, regular labels",
+     1
     ]
    ],
-   "coverage": 0.615
+   "coverage": 1.0
   },
   "text.words_per_caption": {
    "kind": "number",
-   "n": 12,
-   "median": 3.25,
-   "mean": 3.333,
+   "n": 6,
+   "median": 3.5,
+   "mean": 3.583,
    "p25": 3.0,
    "p75": 4.0,
-   "min": 1.5,
+   "min": 3.0,
    "max": 4.5,
-   "cv": 0.224,
-   "coverage": 0.923
+   "cv": 0.169,
+   "coverage": 0.857
   },
   "transitions[dissolve].share": {
    "kind": "number",
@@ -2790,7 +1875,7 @@
    "min": 0.667,
    "max": 1.0,
    "cv": 0.2,
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "transitions[dissolve].type": {
    "kind": "word",
@@ -2803,7 +1888,7 @@
      2
     ]
    ],
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "transitions[dissolve].typical_duration_s": {
    "kind": "number",
@@ -2815,48 +1900,36 @@
    "min": 0.5,
    "max": 0.5,
    "cv": 0.0,
-   "coverage": 0.154
+   "coverage": 0.286
   },
   "transitions[hard_cut].share": {
    "kind": "number",
-   "n": 7,
-   "median": 0.889,
-   "mean": 0.76,
-   "p25": 0.55,
-   "p75": 1.0,
+   "n": 2,
+   "median": 0.666,
+   "mean": 0.666,
+   "p25": 0.5,
+   "p75": 0.833,
    "min": 0.333,
    "max": 1.0,
-   "cv": 0.339,
-   "coverage": 0.538
+   "cv": 0.5,
+   "coverage": 0.286
   },
   "transitions[hard_cut].type": {
    "kind": "word",
-   "n": 7,
+   "n": 2,
    "mode": "hard_cut",
    "agreement": 1.0,
    "top": [
     [
      "hard_cut",
-     7
+     2
     ]
    ],
-   "coverage": 0.538
-  },
-  "transitions[hard_cut].typical_duration_s": {
-   "kind": "number",
-   "n": 3,
-   "median": 0.0,
-   "mean": 0.0,
-   "p25": 0.0,
-   "p75": 0.0,
-   "min": 0.0,
-   "max": 0.0,
-   "cv": 0.0,
-   "coverage": 0.231
+   "coverage": 0.286
   },
   "transitions[other].share": {
    "kind": "number",
-   "n": 4,
+   "n": 3,
    "median": 1.0,
    "mean": 1.0,
    "p25": 1.0,
@@ -2864,61 +1937,61 @@
    "min": 1.0,
    "max": 1.0,
    "cv": 0.0,
-   "coverage": 0.308
+   "coverage": 0.429
   },
   "transitions[other].type": {
    "kind": "word",
-   "n": 4,
+   "n": 3,
    "mode": "other",
    "agreement": 1.0,
    "top": [
     [
      "other",
-     4
+     3
     ]
    ],
-   "coverage": 0.308
+   "coverage": 0.429
   },
   "transitions[other].typical_duration_s": {
    "kind": "number",
-   "n": 4,
+   "n": 3,
    "median": 0.4,
-   "mean": 0.475,
-   "p25": 0.375,
-   "p75": 0.5,
-   "min": 0.3,
+   "mean": 0.533,
+   "p25": 0.4,
+   "p75": 0.6,
+   "min": 0.4,
    "max": 0.8,
-   "cv": 0.404,
-   "coverage": 0.308
+   "cv": 0.354,
+   "coverage": 0.429
   },
   "transitions[whip_pan].share": {
    "kind": "number",
-   "n": 4,
-   "median": 0.45,
-   "mean": 0.503,
-   "p25": 0.328,
-   "p75": 0.625,
-   "min": 0.111,
+   "n": 1,
+   "median": 1.0,
+   "mean": 1.0,
+   "p25": 1.0,
+   "p75": 1.0,
+   "min": 1.0,
    "max": 1.0,
-   "cv": 0.638,
-   "coverage": 0.308
+   "cv": 0.0,
+   "coverage": 0.143
   },
   "transitions[whip_pan].type": {
    "kind": "word",
-   "n": 4,
+   "n": 1,
    "mode": "whip_pan",
    "agreement": 1.0,
    "top": [
     [
      "whip_pan",
-     4
+     1
     ]
    ],
-   "coverage": 0.308
+   "coverage": 0.143
   },
   "transitions[whip_pan].typical_duration_s": {
    "kind": "number",
-   "n": 2,
+   "n": 1,
    "median": 0.3,
    "mean": 0.3,
    "p25": 0.3,
@@ -2926,19 +1999,23 @@
    "min": 0.3,
    "max": 0.3,
    "cv": 0.0,
-   "coverage": 0.154
+   "coverage": 0.143
   }
  },
  "signature": [
-  "cut_rhythm.pace_curve[closing].part",
-  "cut_rhythm.pace_curve[middle].part",
-  "cut_rhythm.pace_curve[opening].part",
+  "color.grade.temperature",
+  "format.aspect",
+  "format.height",
   "format.orientation",
+  "format.width",
   "layout.orientation",
+  "motion.camera.intensity",
+  "motion.camera.moves",
   "recipe.remotion_templates",
   "recipe.spring.damping",
   "recipe.spring.stiffness",
   "shots.broll_share",
+  "text.case",
   "text.font_class",
   "text.present",
   "text.words_per_caption"
@@ -2948,77 +2025,30 @@
   "color.grade.contrast",
   "color.grade.look",
   "color.grade.saturation_mean",
-  "color.grade.temperature",
-  "color.palette[#060A0F].hex",
-  "color.palette[#060A0F].share",
-  "color.palette[#061008].hex",
-  "color.palette[#061008].share",
   "color.palette[#06140E].hex",
   "color.palette[#06140E].share",
-  "color.palette[#070B0F].hex",
-  "color.palette[#070B0F].share",
-  "color.palette[#07130A].hex",
-  "color.palette[#07130A].share",
-  "color.palette[#080B0F].hex",
-  "color.palette[#080B0F].share",
-  "color.palette[#090C11].hex",
-  "color.palette[#090C11].share",
-  "color.palette[#0B090E].hex",
-  "color.palette[#0B090E].share",
-  "color.palette[#0B0E14].hex",
-  "color.palette[#0B0E14].share",
-  "color.palette[#0F1115].hex",
-  "color.palette[#0F1115].share",
   "color.palette[#101416].hex",
   "color.palette[#101416].share",
   "color.palette[#111516].hex",
   "color.palette[#111516].share",
   "color.palette[#121617].hex",
   "color.palette[#121617].share",
-  "color.palette[#171617].hex",
-  "color.palette[#171617].share",
   "color.palette[#181C18].hex",
   "color.palette[#181C18].share",
   "color.palette[#201D21].hex",
   "color.palette[#201D21].share",
-  "color.palette[#21211D].hex",
-  "color.palette[#21211D].share",
-  "color.palette[#266047].hex",
-  "color.palette[#266047].share",
-  "color.palette[#2C261F].hex",
-  "color.palette[#2C261F].share",
-  "color.palette[#393A35].hex",
-  "color.palette[#393A35].share",
-  "color.palette[#3D232C].hex",
-  "color.palette[#3D232C].share",
   "color.palette[#414345].hex",
   "color.palette[#414345].share",
   "color.palette[#427B5C].hex",
   "color.palette[#427B5C].share",
-  "color.palette[#75777F].hex",
-  "color.palette[#75777F].share",
   "color.palette[#87A99C].hex",
   "color.palette[#87A99C].share",
-  "color.palette[#8A978E].hex",
-  "color.palette[#8A978E].share",
   "color.palette[#A09BA3].hex",
   "color.palette[#A09BA3].share",
-  "color.palette[#A7A396].hex",
-  "color.palette[#A7A396].share",
   "color.palette[#A7A9A8].hex",
   "color.palette[#A7A9A8].share",
-  "color.palette[#A8A69A].hex",
-  "color.palette[#A8A69A].share",
-  "color.palette[#AC9A9B].hex",
-  "color.palette[#AC9A9B].share",
   "color.palette[#ACA8A7].hex",
   "color.palette[#ACA8A7].share",
-  "color.palette[#ACABA1].hex",
-  "color.palette[#ACABA1].share",
-  "color.palette[#AEACA4].hex",
-  "color.palette[#AEACA4].share",
-  "color.palette[#B3AC9F].hex",
-  "color.palette[#B3AC9F].share",
   "color.palette[#B3ADAD].hex",
   "color.palette[#B3ADAD].share",
   "color.palette[#C4C3BF].hex",
@@ -3029,34 +2059,14 @@
   "color.palette[#CCD6D1].share",
   "color.palette[#CDD5CB].hex",
   "color.palette[#CDD5CB].share",
-  "color.palette[#D4CDBC].hex",
-  "color.palette[#D4CDBC].share",
   "color.palette[#D5DAD3].hex",
   "color.palette[#D5DAD3].share",
   "color.palette[#D68268].hex",
   "color.palette[#D68268].share",
-  "color.palette[#D6D2C5].hex",
-  "color.palette[#D6D2C5].share",
   "color.palette[#DDDAE1].hex",
   "color.palette[#DDDAE1].share",
-  "color.palette[#DDDCD7].hex",
-  "color.palette[#DDDCD7].share",
-  "color.palette[#E27C4E].hex",
-  "color.palette[#E27C4E].share",
-  "color.palette[#EBE8DB].hex",
-  "color.palette[#EBE8DB].share",
-  "color.palette[#ECECEE].hex",
-  "color.palette[#ECECEE].share",
-  "color.palette[#ECEFF4].hex",
-  "color.palette[#ECEFF4].share",
-  "color.palette[#EF5F2A].hex",
-  "color.palette[#EF5F2A].share",
   "color.palette[#EFEFEA].hex",
   "color.palette[#EFEFEA].share",
-  "color.palette[#F0E7E6].hex",
-  "color.palette[#F0E7E6].share",
-  "color.palette[#F1E9E4].hex",
-  "color.palette[#F1E9E4].share",
   "color.palette[#F1F2ED].hex",
   "color.palette[#F1F2ED].share",
   "color.palette[#F5F8F5].hex",
@@ -3092,26 +2102,24 @@
   "cut_rhythm.pace_curve[closing third].cuts_per_min",
   "cut_rhythm.pace_curve[closing third].part",
   "cut_rhythm.pace_curve[closing].cuts_per_min",
+  "cut_rhythm.pace_curve[closing].part",
   "cut_rhythm.pace_curve[middle third (23.6-47.2 s)].cuts_per_min",
   "cut_rhythm.pace_curve[middle third (23.6-47.2 s)].part",
   "cut_rhythm.pace_curve[middle third].cuts_per_min",
   "cut_rhythm.pace_curve[middle third].part",
   "cut_rhythm.pace_curve[middle].cuts_per_min",
+  "cut_rhythm.pace_curve[middle].part",
   "cut_rhythm.pace_curve[opening third (0-23.6 s)].cuts_per_min",
   "cut_rhythm.pace_curve[opening third (0-23.6 s)].part",
   "cut_rhythm.pace_curve[opening third].cuts_per_min",
   "cut_rhythm.pace_curve[opening third].part",
   "cut_rhythm.pace_curve[opening].cuts_per_min",
+  "cut_rhythm.pace_curve[opening].part",
   "cut_rhythm.std_shot_s",
-  "format.aspect",
   "format.duration_s",
   "format.fps",
-  "format.height",
-  "format.width",
   "layout.framing_notes",
   "layout.safe_zones",
-  "motion.camera.intensity",
-  "motion.camera.moves",
   "motion.elements.easing",
   "motion.elements.stagger_s",
   "motion.elements.typical_duration_s",
@@ -3130,7 +2138,6 @@
   "text.animation_in",
   "text.animation_out",
   "text.avg_on_screen_s",
-  "text.case",
   "text.position",
   "text.role",
   "text.safe_zone_respected",
@@ -3141,7 +2148,6 @@
   "transitions[dissolve].typical_duration_s",
   "transitions[hard_cut].share",
   "transitions[hard_cut].type",
-  "transitions[hard_cut].typical_duration_s",
   "transitions[other].share",
   "transitions[other].type",
   "transitions[other].typical_duration_s",
@@ -3150,24 +2156,29 @@
   "transitions[whip_pan].typical_duration_s"
  ],
  "targets": {
-  "cut_rhythm.pace_curve[closing].part": "closing",
-  "cut_rhythm.pace_curve[middle].part": "middle",
-  "cut_rhythm.pace_curve[opening].part": "opening",
+  "color.grade.temperature": "neutral",
+  "format.aspect": "9:16",
+  "format.height": 1920.0,
   "format.orientation": "portrait",
+  "format.width": 1080.0,
   "layout.orientation": "portrait",
-  "recipe.remotion_templates": [
-   "kinetic_text",
-   "banner",
-   "image",
-   "video"
+  "motion.camera.intensity": "static",
+  "motion.camera.moves": [
+   "none"
   ],
-  "recipe.spring.damping": 15.0,
-  "recipe.spring.stiffness": 120.0,
+  "recipe.remotion_templates": [
+   "banner",
+   "kinetic_text",
+   "image"
+  ],
+  "recipe.spring.damping": 18.0,
+  "recipe.spring.stiffness": 140.0,
   "shots.broll_share": 0.0,
+  "text.case": "sentence case",
   "text.font_class": "sans",
   "text.present": true,
-  "text.words_per_caption": 3.25
+  "text.words_per_caption": 3.5
  },
- "provisional": false,
+ "provisional": true,
  "min_videos_stable": 10
 }

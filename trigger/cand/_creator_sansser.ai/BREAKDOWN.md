@@ -1,5 +1,4 @@
-# sansser.ai (Sansser) - style breakdown (13 reels)
-Clone rule: for screen-in-scene reels only the inner edited video is cloned, never monitor/room/desk.
+# sansser.ai (Sansser) - style breakdown (7 reels)
 Numbers = corpus targets (measured). Look/fonts/sfx = judged from collages. Music + sfx names: not identified yet.
 
 ## 1. Brand frame (every reel)
@@ -27,7 +26,7 @@ Numbers = corpus targets (measured). Look/fonts/sfx = judged from collages. Musi
 - Sound events heard (CLAP listen, 7 reels; the 6 screen reels were not listened, score >= 0.4): glitch/digital stutter most common (51), splat/pop hits on card or item landing (15), bass drop at section starts (11), tick on counters (4), swoosh on whips (2), tape rewind (1). Rule: one soft digital glitch or splat on each new card/graphic, bass drop on the hook and big reveals, tick while numbers count, swoosh on whip cuts. Keep sfx short and under the voice.
 - Frame note: DgLclCABIa3's bottom "Comment CLAUDE For The Full Guide" banner is part of the creator's frame (keep it).
 
-## 5. Per-reel recipes (one line each, full DNA in dna/<reel>__<type>__v1.json)
+## 5. Per-reel recipes (full DNA in dna/<reel>__<type>__v1.json)
 - DfBQ1AgOC1S 58 s: "30 best Claude plugins" icon grid + star counter, card carousel, typed CTA.
 - DfkbSDuB04k 33 s: one 3D scene, glowing emerald glass bars ranked +40.4K..+22.5K, camera glide, "Comment RANK".
 - DfuYIvZA4Cd 34 s: Wi-Fi robbing you, one hero UI illustration per sentence, green karaoke captions.
@@ -35,7 +34,6 @@ Numbers = corpus targets (measured). Look/fonts/sfx = judged from collages. Musi
 - DfzNJuKB5PA 39 s: free Claude SEO skill, mock-ups (search box, phone, VS Code), $2,500 invoice card.
 - Dfi6kGuOemV 71 s: Claude Fable 5.2 explainer, four tabbed chapters, dissolves, no captions.
 - DfMDZKfNER2 37 s: $1 website, kinetic headline, browser mock-up, green gradient key words, "Comment SKILL".
-- Screen reels (inner video only): DgLclCABIa3 (3D stone busts, Potter story), DgNYH7ThrWb (dark green to cream, typed search captions), Df97YXth1Y6 (luxury editorial B&W + red), DeMkkKdsO2_ (Fairwind travel app promo), DfTxHLopj5m (orange-on-black Claude Code HUD, whip cuts). DfWN_TpptL7 13.7 s: silent landscape Claude Code "Motion Lab" promo, 10 scenes, 39.6 cuts/min, music-only 89 bpm, no voice, HUD frame with orange accent.
 
 ## 6. How to use
 Give a topic -> pick the closest reel type above, copy brand frame + voice targets + hook/CTA pattern, build with Remotion (own components from library, no generic templates), voice at ~230 wpm, music low. Always run gate-check before "ready".

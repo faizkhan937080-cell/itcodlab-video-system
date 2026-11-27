@@ -6,6 +6,9 @@ on:
       jobs:
         description: 'JSON list of job ids, e.g. ["reel-AAA","reel-BBB"]'
         required: true
+      creator:
+        description: 'creator folder for action=creator'
+        default: 'sansser.ai'
       action:
         description: 'work (default) or republish'
         default: 'work'
@@ -165,7 +168,7 @@ jobs:
       - name: Upload creator corpus + breakdown
         if: steps.chk.outputs.ready == 'true' && inputs.action == 'creator'
         timeout-minutes: 10
-        run: ./run creator-upload sansser.ai
+        run: ./run creator-upload ${{ inputs.creator || 'sansser.ai' }}
       - name: Listen to the reel (music + sound events)
         if: steps.chk.outputs.ready == 'true' && inputs.action == 'listen'
         timeout-minutes: 30
