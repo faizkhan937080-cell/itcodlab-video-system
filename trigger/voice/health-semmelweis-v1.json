@@ -1,0 +1,49 @@
+{
+ "provider": "gemini",
+ "lang": "en-US",
+ "voice": "Puck",
+ "speed": 1.0,
+ "target_lufs": -14,
+ "lead_in_s": 0.2,
+ "lexicon": {},
+ "rev": 1,
+ "style": "Speak like an energetic, warm storyteller on a short documentary reel. Clear, well articulated, medium pace, not rushed, with small dramatic pauses and a lift on the key numbers",
+ "segments": [
+  {
+   "id": "s1",
+   "text": "In eighteen forty-seven, one Vienna hospital ward was losing nearly one in five new mothers.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "s2",
+   "text": "Doctor Ignaz Semmelweis noticed something. Doctors were walking from dead bodies straight into the delivery room.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "s3",
+   "text": "So he told them to wash their hands in chlorine. Deaths fell from eighteen percent, to about two.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "s4",
+   "text": "But the doctors laughed. They rejected him, and he died in an asylum in eighteen sixty-five, forgotten.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "s5",
+   "text": "Today, the World Health Organization says clean hands can prevent up to half of avoidable hospital infections.",
+   "pause_after_s": 0.35
+  },
+  {
+   "id": "s6",
+   "text": "He wasn't selling soap. He was selling life.",
+   "pause_after_s": 0.35
+  }
+ ],
+ "fallback": [
+  "google"
+ ],
+ "fallback_voices": {
+  "google": "en-US-Chirp3-HD-Puck"
+ }
+}

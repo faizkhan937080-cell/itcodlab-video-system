@@ -502,6 +502,7 @@ def cmd_voice_run(a):
         stg.put_file(js, f"{rel}/{name}.json")
     print(json.dumps(to_native({k: v for k, v in res.items() if k != "segments"}), ensure_ascii=False))
     print(f"uploaded to Drive {rel}")
+    print("SEGTIMES " + json.dumps([[s["id"], s["start_s"], s["end_s"]] for s in res.get("segments", [])]))   # so Claude reads times from the Actions log
     return 0
 
 
